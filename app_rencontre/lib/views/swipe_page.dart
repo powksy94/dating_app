@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:card_swiper/card_swiper.dart'; // ou flutter_swiper selon ta dépendance
-import 'models/gamer_profile.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../models/alternative_profile.dart';
+import '../services/firestore_service.dart';
+import '../widgets/swipe_card.dart';
+import '../widgets/swipe_buttons.dart';
 
 class SwipePage extends StatefulWidget {
   const SwipePage({super.key});
@@ -10,62 +14,163 @@ class SwipePage extends StatefulWidget {
 }
 
 class _SwipePageState extends State<SwipePage> {
-  // Liste d'exemple, à remplacer par Firestore
-  final List<GamerProfile> profiles = [];
+  final _controller = CardSwiperController();
+  final _firestore  = FirestoreService();
+
+  List<AlternativeProfile> _profiles = [];
+  bool _loading = true;
+
+  String get _currentUid => FirebaseAuth.instance.currentUser!.uid;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfiles();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadProfiles() async {
+    // TODO: remplacer par _firestore.fetchSwipeProfiles(_currentUid)
+    final profiles = _mockProfiles();
+    if (mounted) setState(() { _profiles = profiles; _loading = false; });
+  }
+
+  List<AlternativeProfile> _mockProfiles() => [
+    AlternativeProfile(
+      id: 'mock_1', uid: 'mock_1',
+      username: 'Morgana', avatarUrl: '', age: 24, pronouns: 'elle/her',
+      bio: 'Fan de darkwave et de concerts sous la pluie. Collectionneuse de vinyles.',
+      aesthetics: ['goth', 'dark academia'],
+      musicGenres: ['darkwave', 'gothic rock'],
+      musicVibes: ['dark', 'melancholic'],
+      musicEras: ['80s goth'],
+      soundIntensity: ['intense'],
+      discoveryFormats: ['concerts', 'vinyl collector'],
+    ),
+    AlternativeProfile(
+      id: 'mock_2', uid: 'mock_2',
+      username: 'Corvus', avatarUrl: '', age: 27, pronouns: 'il/lui',
+      bio: 'Musicien post-punk, passionné de synthés vintage et de cinéma noir.',
+      aesthetics: ['punk DIY', 'cyber goth'],
+      musicGenres: ['post-punk', 'EBM'],
+      musicVibes: ['cold', 'hypnotic'],
+      musicEras: ['2000s industrial'],
+      soundIntensity: ['chaotic'],
+      discoveryFormats: ['bandcamp', 'concerts'],
+    ),
+    AlternativeProfile(
+      id: 'mock_3', uid: 'mock_3',
+      username: 'Séléné', avatarUrl: '', age: 22,
+      bio: 'Emo kid forever. Passionnée de screamo et de zines DIY.',
+      aesthetics: ['emo kid', 'scene'],
+      musicGenres: ['screamo', 'post-hardcore'],
+      musicVibes: ['emotional', 'raw'],
+      musicEras: ['2000s emo', 'tumblr era'],
+      soundIntensity: ['soft', 'intense'],
+      discoveryFormats: ['playlists', 'concerts'],
+    ),
+  ];
+
+  void _onSwipe(int? prev, int? next, CardSwiperDirection direction) {
+    if (prev == null) return;
+    final profile = _profiles[prev];
+    if (direction == CardSwiperDirection.right) {
+      _firestore.saveLike(_currentUid, profile.id).then((isMatch) {
+        if (isMatch && mounted) _showMatchDialog(profile);
+      });
+    } else if (direction == CardSwiperDirection.left) {
+      _firestore.saveDislike(_currentUid, profile.id);
+    }
+  }
+
+  void _showMatchDialog(AlternativeProfile profile) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: const Color(0xFF1A0A1F),
+        title: const Text('C\'est un match !',
+            style: TextStyle(color: Color(0xFF7B00D4))),
+        content: Text('Toi et ${profile.username} vous êtes maintenant amis!',
+            style: const TextStyle(color: Color(0xFFE8E0EE))),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Super !'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Gamer Dating App"),
-        backgroundColor: Colors.black87,
-      ),
-      body: profiles.isEmpty
-          ? const Center(child: Text("Aucun profil disponible", style: TextStyle(color: Colors.white70)))
-          : Swiper(
-              itemCount: profiles.length,
-              itemBuilder: (context, index) {
-                final profile = profiles[index];
-                return GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/profile', arguments: profile),
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          profile.avatarUrl,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 20,
-                        left: 20,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            profile.username,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+      appBar: AppBar(title: const Text('NOCTURNE')),
+      body: _profiles.isEmpty
+          ? const _EmptyState()
+          : SafeArea(
+              top: false,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: CardSwiper(
+                      controller: _controller,
+                      cardsCount: _profiles.length,
+                      onSwipe: _onSwipe,
+                      numberOfCardsDisplayed: 2,
+                      scale: 0.95,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      cardBuilder: (context, index) =>
+                          SwipeCard(
+                            profile: _profiles[index],
+                            horizontalOffset: 0,
+                            onTap: () => Navigator.pushNamed(
+                              context, '/profile',
+                              arguments: _profiles[index],
                             ),
                           ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                );
-              },
-              viewportFraction: 0.85,
-              scale: 0.9,
-              pagination: const SwiperPagination(),
+                  SwipeActionButtons(
+                    onDislike: () => _controller.swipeLeft(),
+                    onLike:    () => _controller.swipeRight(),
+                  ),
+                ],
+              ),
             ),
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),
+          SizedBox(height: 16),
+          Text(
+            'Aucun profil dans les parages...',
+            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 16),
+          ),
+        ],
+      ),
     );
   }
 }
