@@ -1,63 +1,70 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../models/alternative_profile.dart';
+import 'api_service.dart';
 
 class FirestoreService {
-  final _db = FirebaseFirestore.instance;
-
-  // ── Profil ──────────────────────────────────────────────────────────────
-
   Future<AlternativeProfile?> getProfile(String uid) async {
-    final doc = await _db.collection('profiles').doc(uid).get();
-    if (!doc.exists) return null;
-    return AlternativeProfile.fromFirestore(doc);
+    final headers = await ApiService.authHeaders();
+    final res = await http.get(
+      Uri.parse('${ApiService.baseUrl}/profiles/$uid'),
+      headers: headers,
+    );
+    if (res.statusCode == 200) {
+      return AlternativeProfile.fromJson(jsonDecode(res.body));
+    }
+    return null;
   }
 
-  Future<void> saveProfile(String uid, Map<String, dynamic> data) =>
-      _db.collection('profiles').doc(uid).set(data, SetOptions(merge: true));
-
-  // ── Swipe ────────────────────────────────────────────────────────────────
-
-  /// Charge des profils à swiper (exclut l'utilisateur courant et les déjà vus).
-  Future<List<AlternativeProfile>> fetchSwipeProfiles(String currentUid) async {
-    final snap = await _db
-        .collection('profiles')
-        .where(FieldPath.documentId, isNotEqualTo: currentUid)
-        .limit(20)
-        .get();
-    return snap.docs.map(AlternativeProfile.fromFirestore).toList();
+  Future<AlternativeProfile?> getMyProfile() async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.get(
+      Uri.parse('${ApiService.baseUrl}/profile/me'),
+      headers: headers,
+    );
+    if (res.statusCode == 200) {
+      return AlternativeProfile.fromJson(jsonDecode(res.body));
+    }
+    return null;
   }
 
-  /// Enregistre un like : currentUid → targetUid.
-  /// Retourne true si c'est un match (l'autre a déjà liké).
-  Future<bool> saveLike(String currentUid, String targetUid) async {
-    final batch = _db.batch();
-
-    final likeRef = _db
-        .collection('likes')
-        .doc(currentUid)
-        .collection('liked')
-        .doc(targetUid);
-    batch.set(likeRef, {'likedAt': FieldValue.serverTimestamp()});
-
-    await batch.commit();
-
-    // Vérifie si l'autre a déjà liké → match
-    final reverse = await _db
-        .collection('likes')
-        .doc(targetUid)
-        .collection('liked')
-        .doc(currentUid)
-        .get();
-
-    return reverse.exists;
+  Future<void> saveProfile(Map<String, dynamic> data) async {
+    final headers = await ApiService.authHeaders();
+    await http.put(
+      Uri.parse('${ApiService.baseUrl}/profile/me'),
+      headers: headers,
+      body: jsonEncode(data),
+    );
   }
 
-  /// Enregistre un dislike : currentUid → targetUid.
-  Future<void> saveDislike(String currentUid, String targetUid) =>
-      _db
-          .collection('dislikes')
-          .doc(currentUid)
-          .collection('disliked')
-          .doc(targetUid)
-          .set({'dislikedAt': FieldValue.serverTimestamp()});
+  Future<List<AlternativeProfile>> fetchSwipeProfiles() async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.get(
+      Uri.parse('${ApiService.baseUrl}/swipe/feed'),
+      headers: headers,
+    );
+    if (res.statusCode == 200) {
+      final List list = jsonDecode(res.body);
+      return list.map((e) => AlternativeProfile.fromJson(e)).toList();
+    }
+    return [];
+  }
+
+  Future<bool> saveLike(String targetId) async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/swipe/like/$targetId'),
+      headers: headers,
+    );
+    final data = jsonDecode(res.body);
+    return data['match'] == true;
+  }
+
+  Future<void> saveDisLike(String targetId) async {
+    final headers = await ApiService.authHeaders();
+    await http.post(
+      Uri.parse('${ApiService.baseUrl}/swipe/dislike/$targetId'),
+      headers: headers,
+    );
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../models/alternative_profile.dart';
 import '../services/firestore_service.dart';
 import '../core/music_tags.dart';
@@ -46,8 +45,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   Future<void> _save() async {
     try {
-      final uid = FirebaseAuth.instance.currentUser!.uid;
-      await FirestoreService().saveProfile(uid, {
+      await FirestoreService().saveProfile({
         'bio':              _bioCtrl.text.trim(),
         'musicGenres':      _genres,
         'musicVibes':       _vibes,

@@ -1,0 +1,28 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+class ApiService {
+    static const String baseUrl = 'http://10.0.2.2:3000/api';
+
+    static Future<String?> getToken() async {
+        final prefs = await SharedPreferences.getInstance();
+        return prefs.getString('jwt_token');
+    }
+
+    static Future<void> saveToken(String token) async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwt_token', token);
+    }
+
+    static Future<void> clearToken() async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove('jwt_token');
+    }
+
+    static Future<Map<String, String>> authHeaders() async {
+        final token = await getToken();
+        return {
+            'Content-Type': 'application/json',
+            if (token != null) 'Authorization': 'Bearer $token',
+        };
+    }
+}

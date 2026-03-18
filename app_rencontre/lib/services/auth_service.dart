@@ -1,24 +1,42 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'api_service.dart';
 
 class AuthService {
-  final _auth = FirebaseAuth.instance;
-
-  User? get currentUser => _auth.currentUser;
-
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
-
-  Future<UserCredential> register(String email, String password) {
-    if (password.length < 12) {
-      throw FirebaseAuthException(
-        code: 'weak-password',
-        message: 'Le mot de passe doit contenir au moins 12 caractères.',
-      );
+  Future<String> register(String email, String password, String username) async {
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/auth/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password, 'username': username}),
+    );
+    final data = jsonDecode(res.body);
+    if (res.statusCode == 201) {
+      await ApiService.saveToken(data['token']);
+      return data['userId'];
     }
-    return _auth.createUserWithEmailAndPassword(email: email, password: password);
+    throw Exception(data['message']);
   }
 
-  Future<UserCredential> login(String email, String password) =>
-      _auth.signInWithEmailAndPassword(email: email, password: password);
+  Future<String> login(String email, String password) async {
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/auth/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password}),
+    );
+    final data = jsonDecode(res.body);
+    if (res.statusCode == 200) {
+      await ApiService.saveToken(data['token']);
+      return data['userId'];
+    }
+    throw Exception(data['message']);
+  }
 
-  Future<void> logout() => _auth.signOut();
+  Future<void> logout() async {
+    await ApiService.clearToken();
+  }
+
+  Future<bool> isLoggedIn() async {
+    final token = await ApiService.getToken();
+    return token != null;
+  }
 }

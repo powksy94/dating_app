@@ -73,6 +73,27 @@ class AlternativeProfile {
     );
   }
 
+  factory AlternativeProfile.fromJson(Map<String, dynamic> data) {
+    return AlternativeProfile(
+      id:               data['_id']       ?? '',
+      uid:              data['owner']     ?? '',
+      username:         data['username']  ?? '',
+      avatarUrl:        data['avatarUrl'] ?? '',
+      bio:              data['bio']       ?? '',
+      age:              data['age']       as int?,
+      pronouns:         data['pronouns']  as String?,
+      musicGenres:      List<String>.from(data['musicGenres']      ?? []),
+      musicVibes:       List<String>.from(data['musicVibes']       ?? []),
+      aesthetics:       List<String>.from(data['aesthetics']       ?? []),
+      soundIntensity:   List<String>.from(data['soundIntensity']   ?? []),
+      musicEras:        List<String>.from(data['musicEras']        ?? []),
+      discoveryFormats: List<String>.from(data['discoveryFormats'] ?? []),
+      favoriteBands:    List<String>.from(data['favoriteBands']    ?? []),
+      upcomingEvents:   List<String>.from(data['upcomingEvents']   ?? []),
+      socialLinks:      Map<String, String>.from(data['socialLinks'] ?? {}),
+    );
+  }
+
   Map<String, dynamic> toMap() => {
     'username':         username,
     'avatarUrl':        avatarUrl,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../models/alternative_profile.dart';
 import '../services/firestore_service.dart';
 import '../widgets/swipe_card.dart';
@@ -19,8 +18,6 @@ class _SwipePageState extends State<SwipePage> {
 
   List<AlternativeProfile> _profiles = [];
   bool _loading = true;
-
-  String get _currentUid => FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
@@ -80,11 +77,11 @@ class _SwipePageState extends State<SwipePage> {
     if (prev == null) return;
     final profile = _profiles[prev];
     if (direction == CardSwiperDirection.right) {
-      _firestore.saveLike(_currentUid, profile.id).then((isMatch) {
+      _firestore.saveLike(profile.id).then((isMatch) {
         if (isMatch && mounted) _showMatchDialog(profile);
       });
     } else if (direction == CardSwiperDirection.left) {
-      _firestore.saveDislike(_currentUid, profile.id);
+      _firestore.saveDisLike(profile.id);
     }
   }
 

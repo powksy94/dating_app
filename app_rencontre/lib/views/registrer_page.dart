@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,6 +10,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _auth = AuthService();
+  final _usernameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   final _confirmCtrl = TextEditingController();
@@ -19,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
+    _usernameCtrl.dispose();
     _emailCtrl.dispose();
     _passCtrl.dispose();
     _confirmCtrl.dispose();
@@ -32,21 +33,16 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     setState(() { _loading = true; _error = null; });
     try {
-      await _auth.register(_emailCtrl.text.trim(), _passCtrl.text.trim());
+      await _auth.register(
+        _emailCtrl.text.trim(),
+        _passCtrl.text.trim(),
+        _usernameCtrl.text.trim(),
+      );
       // authStateChanges redirige automatiquement vers HomePage
-    } on FirebaseAuthException catch (e) {
-      setState(() => _error = _friendlyError(e.code));
+    } catch (e) {
+      setState(() => _error = e.toString());
     } finally {
       if (mounted) setState(() => _loading = false);
-    }
-  }
-
-  String _friendlyError(String code) {
-    switch (code) {
-      case 'email-already-in-use': return 'Cet email est déjà utilisé.';
-      case 'invalid-email':        return 'Email invalide.';
-      case 'weak-password':        return 'Mot de passe trop court (12 caractères minimum).';
-      default:                     return 'Erreur d\'inscription. Réessaie.';
     }
   }
 
@@ -62,6 +58,11 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              TextField(
+                controller: _usernameCtrl,
+                decoration: const InputDecoration(labelText: 'Nom d\'utilisateur'),
+              ),
+              const SizedBox(height: 16),
               TextField(
                 controller: _emailCtrl,
                 keyboardType: TextInputType.emailAddress,
