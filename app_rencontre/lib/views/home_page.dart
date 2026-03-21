@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../models/alternative_profile.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
@@ -75,20 +74,10 @@ class _MyProfileTabState extends State<_MyProfileTab> {
   }
 
   Future<void> _loadProfile() async {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
     AlternativeProfile? profile;
     try {
-      profile = await _firestore.getProfile(uid);
-    } catch (_) {
-      // Firestore indisponible — profil mock pour le dev
-      profile = AlternativeProfile(
-        id: uid, uid: uid,
-        username: 'Moi (mock)', avatarUrl: '', age: 25,
-        bio: 'Profil de test — Firestore non connecté.',
-        aesthetics: ['goth', 'dark academia'],
-        musicGenres: ['darkwave'],
-      );
-    }
+      profile = await _firestore.getMyProfile();
+    } catch (_) {}
     if (mounted) setState(() { _profile = profile; _loading = false; });
   }
 
@@ -139,11 +128,8 @@ class _MyProfileTabState extends State<_MyProfileTab> {
             onPressed: () => Navigator.pushNamed(
               context, '/edit-profile',
               arguments: AlternativeProfile(
-                id: FirebaseAuth.instance.currentUser!.uid,
-                uid: FirebaseAuth.instance.currentUser!.uid,
-                username: '',
-                avatarUrl: '',
-                bio: '',
+                id: '', uid: '',
+                username: '', avatarUrl: '', bio: '',
               ),
             ).then((_) => _loadProfile()),
             icon: const Icon(Icons.edit),

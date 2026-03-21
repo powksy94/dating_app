@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'widgets/progress_bar.dart';
+import 'steps/step_credentials.dart';
+import 'steps/step_identity.dart';
+import 'steps/step_photos.dart';
+import 'steps/step_tags.dart';
+import 'steps/step_location.dart';
+import 'steps/step_preferences.dart';
+
+class RegisterFlow extends StatefulWidget {
+    const RegisterFlow({super.key});
+
+    @override
+    State<RegisterFlow> createState() => _RegisterFlowState();
+}
+
+class _RegisterFlowState extends State<RegisterFlow> {
+    final PageController _pageController = PageController();
+    int _currentStep = 1;
+    final int _totalSteps = 6;
+
+    // Données accumulées sur tout le parcours 
+    final Map<String, dynamic> _data = {};
+
+    void nextStep(Map<String, dynamic> stepData) {
+        _data.addAll(stepData);
+        if (_currentStep < _totalSteps) {
+            setState(() => _currentStep++);
+            _pageController.nextPage(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+            );
+        }
+    }
+
+    void previousStep() {
+        if (_currentStep > 1) {
+            setState(() => _currentStep--);
+            _pageController.previousPage(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+            );
+        }
+    }
+
+    @override
+    void dispose() {
+        _pageController.dispose();
+        super.dispose();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            backgroundColor: const Color(0xFF0D0010),
+            appBar: AppBar(
+                backgroundColor: const Color(0xFF0D0010),
+                elevation: 0,
+                leading: _currentStep > 1
+                    ? IconButton(
+                        icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFAA9AB5)),
+                        onPressed: previousStep,
+                      )
+                    : const SizedBox.shrink(),
+                bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(48),
+                    child: RegisterProgressBar(
+                        currentStep: _currentStep,
+                        totalSteps: _totalSteps,
+                    ),
+                ),
+            ),
+            body: PageView(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                    StepCredentials(onNext: nextStep),
+                    StepIdentity(onNext: nextStep),
+                    StepPhotos(onNext: nextStep),
+                    StepTags(onNext: nextStep),
+                    StepLocation(onNext: nextStep),
+                    StepPreferences(data: _data, onNext: nextStep),
+                ],
+            ),
+        );
+    }
+}

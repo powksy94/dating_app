@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'roads.dart';
 import 'views/login_page.dart';
 import 'views/home_page.dart';
+import 'services/api_service.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -14,15 +14,15 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: _nocturneTheme(),
       onGenerateRoute: Routes.generateRoute,
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
+      home: FutureBuilder<String?>(
+        future: ApiService.getToken(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          return snapshot.hasData ? const HomePage() : const LoginPage();
+          return snapshot.data != null ? const HomePage() : const LoginPage();
         },
       ),
     );

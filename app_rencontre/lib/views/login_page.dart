@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,23 +26,14 @@ class _LoginPageState extends State<LoginPage> {
     setState(() { _loading = true; _error = null; });
     try {
       await _auth.login(_emailCtrl.text.trim(), _passCtrl.text.trim());
-      // authStateChanges dans app.dart redirige automatiquement
-    } on FirebaseAuthException catch (e) {
-      setState(() => _error = _friendlyError(e.code));
+      if (mounted) Navigator.pushReplacementNamed(context, '/home');
+    } catch (e) {
+      setState(() => _error = 'Email ou mot de passe incorrect.');
     } finally {
       if (mounted) setState(() => _loading = false);
     }
   }
 
-  String _friendlyError(String code) {
-    switch (code) {
-      case 'user-not-found':   return 'Aucun compte avec cet email.';
-      case 'wrong-password':   return 'Mot de passe incorrect.';
-      case 'invalid-email':    return 'Email invalide.';
-      case 'user-disabled':    return 'Compte désactivé.';
-      default:                 return 'Erreur de connexion. Réessaie.';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
