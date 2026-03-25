@@ -1,4 +1,4 @@
-import 'package:/flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -35,7 +35,7 @@ class _StepPhotosState extends State<StepPhotos> {
             setState(() => _error = 'Ajoute au moins une photo.');
             return;
         }
-        widget.onNext({'photos': _photos.map((f) => f.path).toList});
+        widget.onNext({'photos': _photos.map((f) => f.path).toList()});
     }
 
     @override
@@ -59,7 +59,7 @@ class _StepPhotosState extends State<StepPhotos> {
                         const Text(
                             'Ajoute jusq\'à 6 photos. La première sera ta photo principale.',
                             style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
-                        ).animate().fadeIn(delay: 200, duration: 400),
+                        ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
                         Expanded(
@@ -69,7 +69,7 @@ class _StepPhotosState extends State<StepPhotos> {
                                     crossAxisSpacing: 8,
                                     mainAxisSpacing: 8,
                                 ),
-                                itemCount: _photos.length < 6 ? _photos.length + 1 : 6;
+                                itemCount: _photos.length < 6 ? _photos.length + 1 : 6,
                                 itemBuilder: (context, index) {
                                     if (index == _photos.length) {
                                         return GestureDetector(
