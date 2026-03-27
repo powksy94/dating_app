@@ -1,5 +1,17 @@
 // lib/models/alternative_profile.dart
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+int? _ageFromBirthDate(dynamic birthDate) {
+  if (birthDate == null) return null;
+  try {
+    final birth = DateTime.parse(birthDate.toString());
+    final now = DateTime.now();
+    int age = now.year - birth.year;
+    if (now.month < birth.month || (now.month == birth.month && now.day < birth.day)) age--;
+    return age;
+  } catch (_) {
+    return null;
+  }
+}
 
 class AlternativeProfile {
   final String id;
@@ -10,24 +22,12 @@ class AlternativeProfile {
   final int? age;
   final String? pronouns;
 
-  /// 1. Genres musicaux (gothic rock, darkwave, screamo...)
   final List<String> musicGenres;
-
-  /// 2. Ambiance musicale (dark, melancholic, dreamy...)
   final List<String> musicVibes;
-
-  /// 3. Esthétique / culture (goth, emo kid, punk DIY...)
   final List<String> aesthetics;
-
-  /// 4. Intensité sonore (soft, intense, chaotic...)
   final List<String> soundIntensity;
-
-  /// 5. Époque / scène (80s goth, 2000s emo, tumblr era...)
   final List<String> musicEras;
-
-  /// 6. Format de découverte (concerts, vinyl collector...)
   final List<String> discoveryFormats;
-
   final List<String> favoriteBands;
   final List<String> upcomingEvents;
   final Map<String, String> socialLinks;
@@ -51,28 +51,6 @@ class AlternativeProfile {
     this.socialLinks      = const {},
   });
 
-  factory AlternativeProfile.fromFirestore(DocumentSnapshot snap) {
-    final data = snap.data() as Map<String, dynamic>;
-    return AlternativeProfile(
-      id:               snap.id,
-      uid:              snap.id,
-      username:         data['username']  ?? '',
-      avatarUrl:        data['avatarUrl'] ?? '',
-      bio:              data['bio']       ?? '',
-      age:              data['age']       as int?,
-      pronouns:         data['pronouns']  as String?,
-      musicGenres:      List<String>.from(data['musicGenres']      ?? []),
-      musicVibes:       List<String>.from(data['musicVibes']       ?? []),
-      aesthetics:       List<String>.from(data['aesthetics']       ?? []),
-      soundIntensity:   List<String>.from(data['soundIntensity']   ?? []),
-      musicEras:        List<String>.from(data['musicEras']        ?? []),
-      discoveryFormats: List<String>.from(data['discoveryFormats'] ?? []),
-      favoriteBands:    List<String>.from(data['favoriteBands']    ?? []),
-      upcomingEvents:   List<String>.from(data['upcomingEvents']   ?? []),
-      socialLinks:      Map<String, String>.from(data['socialLinks'] ?? {}),
-    );
-  }
-
   factory AlternativeProfile.fromJson(Map<String, dynamic> data) {
     return AlternativeProfile(
       id:               data['_id']       ?? '',
@@ -80,10 +58,10 @@ class AlternativeProfile {
       username:         data['username']  ?? '',
       avatarUrl:        data['avatarUrl'] ?? '',
       bio:              data['bio']       ?? '',
-      age:              data['age']       as int?,
+      age:              _ageFromBirthDate(data['birthDate']),
       pronouns:         data['pronouns']  as String?,
-      musicGenres:      List<String>.from(data['musicGenres']      ?? []),
-      musicVibes:       List<String>.from(data['musicVibes']       ?? []),
+      musicGenres:      List<String>.from(data['musicsGenres']     ?? []),
+      musicVibes:       List<String>.from(data['musicsVibes']      ?? []),
       aesthetics:       List<String>.from(data['aesthetics']       ?? []),
       soundIntensity:   List<String>.from(data['soundIntensity']   ?? []),
       musicEras:        List<String>.from(data['musicEras']        ?? []),
@@ -100,8 +78,8 @@ class AlternativeProfile {
     'bio':              bio,
     if (age != null)      'age':      age,
     if (pronouns != null) 'pronouns': pronouns,
-    'musicGenres':      musicGenres,
-    'musicVibes':       musicVibes,
+    'musicsGenres':     musicGenres,
+    'musicsVibes':      musicVibes,
     'aesthetics':       aesthetics,
     'soundIntensity':   soundIntensity,
     'musicEras':        musicEras,

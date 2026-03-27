@@ -14,14 +14,14 @@ class StepPreferences extends StatefulWidget {
 }
 
 class _StepPreferencesState extends State<StepPreferences> {
-    RangesValues _ageRange = const RangesValues(18, 40);
+    RangeValues _ageRange = const RangeValues(18, 40);
     double _maxDistance = 50;
     List<String> _genderPrefs = [];
     bool _loading = false;
     String? _error;
 
     static const _genders = [
-        'Homme', 'Femme', 'Nom-binaire', 'Genderfluid',
+        'Homme', 'Femme', 'Non-binaire', 'Genderfluid',
         'Agenre', 'Transmasculin', 'Transféminin', 'Tous',
     ];
 
@@ -52,8 +52,8 @@ class _StepPreferencesState extends State<StepPreferences> {
                 'birthDate':            d['birthDate'],
                 'gender':               d['gender'],
                 'pronouns':             d['pronouns'],
-                'musicGenres':          d['musicGenres']        ?? [],
-                'musicVibes':           d['musicVibes']         ?? [],
+                'musicsGenres':         d['musicGenres']        ?? [],
+                'musicsVibes':          d['musicVibes']         ?? [],
                 'aesthetics':           d['aesthetics']         ?? [],
                 'soundIntensity':       d['soundIntensity']     ?? [],
                 'musicEras':            d['musicEras']          ?? [],
@@ -66,7 +66,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                 if (d['location'] != null) 'location': d['location'],
             });
 
-            if (mounted) Navigator.pushRemplacementNamed(context, '/home');
+            if (mounted) Navigator.pushReplacementNamed(context, '/home');
         } catch (e) {
             setState(() {_error = e.toString(); _loading = false;});
         }
@@ -93,12 +93,12 @@ class _StepPreferencesState extends State<StepPreferences> {
                         const Text(
                             'Qui veux-tu rencontrer ?',
                             style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
-                        ).animate().fadeIn(delay 200.ms, duration: 400.ms),
+                        ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
                         // TRANCHE D'ÂGE
                         Text(
-                            'Tranched\'âge : ${_ageRange.start.round()} - ${_ageRange.end.round()} ans',
+                            'Tranche d\'âge : ${_ageRange.start.round()} - ${_ageRange.end.round()} ans',
                             style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
                                 letterSpacing: 1.2, fontWeight: FontWeight.bold),
                         ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
@@ -159,7 +159,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                             child: ElevatedButton(
                                 onPressed: _loading ? null : _submit,
                                 child: _loading
-                                    ? const SizedBox(width: 20, height: 20
+                                    ? const SizedBox(width: 20, height: 20,
                                         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                                     : const Text('Créer mon compte'),
                             ),

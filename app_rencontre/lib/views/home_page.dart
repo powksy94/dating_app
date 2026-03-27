@@ -83,7 +83,7 @@ class _MyProfileTabState extends State<_MyProfileTab> {
 
   Future<void> _logout() async {
     await _auth.logout();
-    // authStateChanges dans app.dart redirige vers LoginPage
+    if (mounted) Navigator.pushReplacementNamed(context, '/login');
   }
 
   @override

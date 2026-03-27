@@ -45,16 +45,23 @@ class _UsernameFieldState extends State<UsernameField> {
     }
 
     Future<void> _checkUsername(String username) async {
-        final res = await http.get(
-            Uri.parse('${ApiService.baseUrl}/auth/check-username?username=$username'),
-        );
-        if (!mounted) return;
-        final data = jsonDecode(res.body);
-        final status = res.statusCode != 200
-            ? 'invalid'
-            : (data['available'] == true ? 'available' : 'taken');
-        setState(() => _status = status);
-        widget.onStatusChanged(status);
+        try {
+            final res = await http.get(
+                Uri.parse('${ApiService.baseUrl}/auth/check-username?username=$username'),
+            ).timeout(const Duration(seconds: 5));
+            if (!mounted) return;
+            final data = jsonDecode(res.body);
+            final status = res.statusCode != 200
+                ? 'invalid'
+                : (data['available'] == true ? 'available' : 'taken');
+            setState(() => _status = status);
+            widget.onStatusChanged(status);
+        } catch (e) {
+            debugPrint('checkUsername error: $e');
+            if (!mounted) return;
+            setState(() => _status = 'invalid');
+            widget.onStatusChanged('invalid');
+        }
     }
 
     Widget _icon() {

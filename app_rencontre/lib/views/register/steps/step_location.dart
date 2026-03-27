@@ -29,8 +29,17 @@ class _StepLocationState extends State<StepLocation> {
             return;
         }
 
-        final pos = await Geolocator.getCurrentPosition();
-        setState(() { _position = pos; _loading = false; });
+        try {
+            final pos = await Geolocator.getCurrentPosition(
+                desiredAccuracy: LocationAccuracy.medium,
+            ).timeout(const Duration(seconds: 10));
+            setState(() { _position = pos; _loading = false; });
+        } catch (_) {
+            setState(() {
+                _error = 'Impossible d\'obtenir la position. Tu peux passer cette étape.';
+                _loading = false;
+            });
+        }
     }
 
     void _next() {
