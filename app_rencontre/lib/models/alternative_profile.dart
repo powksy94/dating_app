@@ -31,6 +31,7 @@ class AlternativeProfile {
   final List<String> favoriteBands;
   final List<String> upcomingEvents;
   final Map<String, String> socialLinks;
+  final List<String> photos;
 
   AlternativeProfile({
     required this.id,
@@ -49,6 +50,7 @@ class AlternativeProfile {
     this.favoriteBands    = const [],
     this.upcomingEvents   = const [],
     this.socialLinks      = const {},
+    this.photos           = const [],
   });
 
   factory AlternativeProfile.fromJson(Map<String, dynamic> data) {
@@ -69,6 +71,7 @@ class AlternativeProfile {
       favoriteBands:    List<String>.from(data['favoriteBands']    ?? []),
       upcomingEvents:   List<String>.from(data['upcomingEvents']   ?? []),
       socialLinks:      Map<String, String>.from(data['socialLinks'] ?? {}),
+      photos:           List<String>.from(data['photos']           ?? []),
     );
   }
 
@@ -87,5 +90,6 @@ class AlternativeProfile {
     'favoriteBands':    favoriteBands,
     'upcomingEvents':   upcomingEvents,
     'socialLinks':      socialLinks,
+    'photos':           photos,
   };
 }

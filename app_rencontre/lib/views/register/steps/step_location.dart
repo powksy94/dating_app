@@ -58,11 +58,12 @@ class _StepLocationState extends State<StepLocation> {
     @override
     Widget build(BuildContext context) {
         return AnimatedStep(
-            child: Padding(
+            child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                        const SizedBox(height: 32),
                         const Text(
                             'Ta localisation',
                             style: TextStyle(
@@ -76,12 +77,12 @@ class _StepLocationState extends State<StepLocation> {
                             'Pour te montrer des profils proches de chez toi. Tu peux passer cette étape.',
                             style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
-                        const Spacer(),
+                        const SizedBox(height: 48),
 
                         if (_position != null)
                             Center(
                                 child: Column(
-                                    children : [
+                                    children: [
                                         const Icon(Icons.location_on, color: Color(0xFF7B00D4), size: 64),
                                         const SizedBox(height: 12),
                                         Text(
@@ -112,7 +113,7 @@ class _StepLocationState extends State<StepLocation> {
                                 ),
                             ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
 
-                        const Spacer(),
+                        const SizedBox(height: 48),
 
                         if (_position == null)
                             SizedBox(
@@ -125,19 +126,18 @@ class _StepLocationState extends State<StepLocation> {
                                     label: const Text('Autoriser la localisation'),
                                 ),
                             ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
-
-                            const SizedBox(height: 12),
-                            SizedBox(
-                                width: double.infinity,
-                                child: TextButton(
-                                    onPressed: _next,
-                                    child: Text(
-                                        _position != null ? 'Continuer' : 'Passer cette étape',
-                                        style: const TextStyle(color: Color(0xFFAA9AB5)),
-                                    ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                            width: double.infinity,
+                            child: TextButton(
+                                onPressed: _next,
+                                child: Text(
+                                    _position != null ? 'Continuer' : 'Passer cette étape',
+                                    style: const TextStyle(color: Color(0xFFAA9AB5)),
                                 ),
-                            ).animate().fadeIn(delay: 500.ms, duration: 400.ms),
-                            const SizedBox(height: 32),
+                            ),
+                        ).animate().fadeIn(delay: 500.ms, duration: 400.ms),
+                        const SizedBox(height: 32),
                     ],
                 ),
             ),

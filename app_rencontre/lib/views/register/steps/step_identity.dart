@@ -14,6 +14,7 @@ class StepIdentity extends StatefulWidget {
 
 class _StepIdentityState extends State<StepIdentity> {
     final _usernameCtrl = TextEditingController();
+    final _bioCtrl = TextEditingController();
     DateTime? _birthDate;
     String? _gender;
     String? _genderCustom;
@@ -34,6 +35,7 @@ class _StepIdentityState extends State<StepIdentity> {
     @override
     void dispose() {
         _usernameCtrl.dispose();
+        _bioCtrl.dispose();
         super.dispose();
     }
 
@@ -63,6 +65,7 @@ class _StepIdentityState extends State<StepIdentity> {
             'birthDate': _birthDate!.toIso8601String(),
             'gender':    _gender == 'Autre' ? (_genderCustom ?? 'Autre') : _gender,
             'pronouns':  _pronouns == 'Autre' ? (_pronounsCustom ?? 'Autre') : _pronouns,
+            'bio':       _bioCtrl.text.trim(),
         });
     }
 
@@ -70,7 +73,7 @@ class _StepIdentityState extends State<StepIdentity> {
     Widget build(BuildContext context) {
         return AnimatedStep(
             child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 28),
+                padding: EdgeInsets.fromLTRB(28, 0, 28, MediaQuery.viewInsetsOf(context).bottom + 32),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,6 +140,45 @@ class _StepIdentityState extends State<StepIdentity> {
                             onCustomChanged: (v) => _pronounsCustom = v,
                             fadeDelayMs: 600,
                         ),
+                        const SizedBox(height: 24),
+
+                        const Text(
+                            'BIO',
+                            style: TextStyle(
+                                color: Color(0xFF7B00D4), fontSize: 12,
+                                letterSpacing: 1.2, fontWeight: FontWeight.bold,
+                            ),
+                        ).animate().fadeIn(delay: 650.ms, duration: 400.ms),
+                        const SizedBox(height: 8),
+                        ValueListenableBuilder(
+                            valueListenable: _bioCtrl,
+                            builder: (context, value, _) {
+                                return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                        TextField(
+                                            controller: _bioCtrl,
+                                            maxLines: 4,
+                                            maxLength: 700,
+                                            buildCounter: (_, {required currentLength, required isFocused, maxLength}) => null,
+                                            style: const TextStyle(color: Color(0xFFE8E0EE)),
+                                            decoration: InputDecoration(
+                                                hintText: 'Parle de toi, de ta musique, de ton univers...',
+                                                hintStyle: const TextStyle(color: Color(0xFFAA9AB5)),
+                                                filled: true,
+                                                fillColor: const Color(0xFF1A0A1F),
+                                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                            ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                            '${value.text.length}/700',
+                                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 12),
+                                        ),
+                                    ],
+                                );
+                            },
+                        ).animate().fadeIn(delay: 650.ms, duration: 400.ms),
 
                         if (_error != null) ...[
                             const SizedBox(height: 12),

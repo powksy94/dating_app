@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../services/auth_service.dart';
 import '../../../../services/firestore_service.dart';
+import '../../../../services/photo_service.dart';
 import '../widgets/animated_step.dart';
 
 class StepPreferences extends StatefulWidget {
@@ -48,10 +49,17 @@ class _StepPreferencesState extends State<StepPreferences> {
                 d['username'],
             );
 
+            final photos = d['photos'] as List<String>? ?? [];
+            List<String> photosUrls = [];
+            if (photos.isNotEmpty) {
+                photosUrls = await PhotoService.uploadPhotos(photos);
+            }
+
             await FirestoreService().saveProfile({
                 'birthDate':            d['birthDate'],
                 'gender':               d['gender'],
                 'pronouns':             d['pronouns'],
+                'bio':                  d['bio'] ?? '',
                 'musicsGenres':         d['musicGenres']        ?? [],
                 'musicsVibes':          d['musicVibes']         ?? [],
                 'aesthetics':           d['aesthetics']         ?? [],
@@ -63,6 +71,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                 'maxDistance':          _maxDistance.round(),
                 'genderPreferences':    _genderPrefs,
                 'profileComplete':      true,
+                if (photosUrls.isNotEmpty) 'photos': photosUrls,
                 if (d['location'] != null) 'location': d['location'],
             });
 

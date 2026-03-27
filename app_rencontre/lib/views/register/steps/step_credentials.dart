@@ -51,9 +51,10 @@ class _StepCredentialsState extends State<StepCredentials> {
 
     @override
     Widget build(BuildContext context) {
+        final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
         return AnimatedStep(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(28, 0, 28, bottomInset + 32),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,7 +73,7 @@ class _StepCredentialsState extends State<StepCredentials> {
                             'Crée ton compte pour rejoindre Nocturne.',
                             style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
-                        const SizedBox(height:40),
+                        const SizedBox(height: 40),
                         _Field(
                             ctrl: _emailCtrl,
                             label: 'Email',
@@ -98,7 +99,7 @@ class _StepCredentialsState extends State<StepCredentials> {
                                 style: const TextStyle(color: Color(0xFF8B0000), fontSize: 13),
                             ),
                         ],
-                        const Spacer(),
+                        const SizedBox(height: 32),
                         SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -106,7 +107,6 @@ class _StepCredentialsState extends State<StepCredentials> {
                                 child: const Text('Continuer'),
                             ),
                         ).animate().fadeIn(delay: 600.ms, duration: 400.ms),
-                        const SizedBox(height: 32),
                     ],
                 ),
             ),

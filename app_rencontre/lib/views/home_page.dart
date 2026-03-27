@@ -147,20 +147,14 @@ class _MyProfileTabState extends State<_MyProfileTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfileCard(profile: p),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: () => Navigator.pushNamed(
-                context, '/edit-profile',
-                arguments: p,
-              ).then((_) => _loadProfile()),
-              icon: const Icon(Icons.edit),
-              label: const Text('Éditer mon profil'),
-            ),
+          ProfileCard(
+            profile: p,
+            onEdit: () => Navigator.pushNamed(
+              context, '/edit-profile',
+              arguments: p,
+            ).then((_) => _loadProfile()),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(
