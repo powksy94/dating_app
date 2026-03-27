@@ -3,7 +3,6 @@ import '../models/alternative_profile.dart';
 
 class ProfileCard extends StatelessWidget {
   final AlternativeProfile profile;
-  const ProfileCard({super.key, required this.profile});
   final VoidCallback? onEdit;
   const ProfileCard({super.key, required this.profile, this.onEdit});
 
@@ -29,7 +28,7 @@ class ProfileCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(color: const Color(0xFF7B00D4)),
                     ),
-                    child: const Icon(Icon.edit, color: Color(0xFF7B00D4), size: 20),
+                    child: const Icon(Icons.edit, color: Color(0xFF7B00D4), size: 20),
                   ),
                 ),
               ),

@@ -147,24 +147,14 @@ class _MyProfileTabState extends State<_MyProfileTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfileCard(
-            profile: p,
-            onEdit: () => Navigator.pushNamed(
-              context, '/edit-profile',
-              arguments: p,
-            ).then((_) => _loadProfile()),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: _logout,
-              icon: const Icon(Icons.logout, color: Color(0xFF8B0000)),
-              label: const Text('Se déconnecter',
-                  style: TextStyle(color: Color(0xFF8B0000))),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Color(0xFF8B0000)),
-              ),
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/profile', arguments: p),
+            child: ProfileCard(
+              profile: p,
+              onEdit: () => Navigator.pushNamed(
+                context, '/edit-profile',
+                arguments: p,
+              ).then((_) => _loadProfile()),
             ),
           ),
           const SizedBox(height: 20),
