@@ -12,6 +12,7 @@ class AuthService {
     final data = jsonDecode(res.body);
     if (res.statusCode == 201) {
       await ApiService.saveToken(data['token']);
+      await ApiService.saveUserId(data['userId']);
       return data['userId'];
     }
     throw Exception(data['message']);
@@ -26,6 +27,7 @@ class AuthService {
     final data = jsonDecode(res.body);
     if (res.statusCode == 200) {
       await ApiService.saveToken(data['token']);
+      await ApiService.saveUserId(data['userId']);
       return data['userId'];
     }
     throw Exception(data['message']);

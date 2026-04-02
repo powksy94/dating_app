@@ -32,56 +32,24 @@ class _SwipePageState extends State<SwipePage> {
   }
 
   Future<void> _loadProfiles() async {
-    // TODO: remplacer par _firestore.fetchSwipeProfiles(_currentUid)
-    final profiles = _mockProfiles();
-    if (mounted) setState(() { _profiles = profiles; _loading = false; });
+    try {
+      await _firestore.seedDemoLikes();
+      final profiles = await _firestore.fetchSwipeProfiles();
+      if (mounted) setState(() { _profiles = profiles; _loading = false; });
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
+    }
   }
-
-  List<AlternativeProfile> _mockProfiles() => [
-    AlternativeProfile(
-      id: 'mock_1', uid: 'mock_1',
-      username: 'Morgana', avatarUrl: '', age: 24, pronouns: 'elle/her',
-      bio: 'Fan de darkwave et de concerts sous la pluie. Collectionneuse de vinyles.',
-      aesthetics: ['goth', 'dark academia'],
-      musicGenres: ['darkwave', 'gothic rock'],
-      musicVibes: ['dark', 'melancholic'],
-      musicEras: ['80s goth'],
-      soundIntensity: ['intense'],
-      discoveryFormats: ['concerts', 'vinyl collector'],
-    ),
-    AlternativeProfile(
-      id: 'mock_2', uid: 'mock_2',
-      username: 'Corvus', avatarUrl: '', age: 27, pronouns: 'il/lui',
-      bio: 'Musicien post-punk, passionné de synthés vintage et de cinéma noir.',
-      aesthetics: ['punk DIY', 'cyber goth'],
-      musicGenres: ['post-punk', 'EBM'],
-      musicVibes: ['cold', 'hypnotic'],
-      musicEras: ['2000s industrial'],
-      soundIntensity: ['chaotic'],
-      discoveryFormats: ['bandcamp', 'concerts'],
-    ),
-    AlternativeProfile(
-      id: 'mock_3', uid: 'mock_3',
-      username: 'Séléné', avatarUrl: '', age: 22,
-      bio: 'Emo kid forever. Passionnée de screamo et de zines DIY.',
-      aesthetics: ['emo kid', 'scene'],
-      musicGenres: ['screamo', 'post-hardcore'],
-      musicVibes: ['emotional', 'raw'],
-      musicEras: ['2000s emo', 'tumblr era'],
-      soundIntensity: ['soft', 'intense'],
-      discoveryFormats: ['playlists', 'concerts'],
-    ),
-  ];
 
   void _onSwipe(int? prev, int? next, CardSwiperDirection direction) {
     if (prev == null) return;
     final profile = _profiles[prev];
     if (direction == CardSwiperDirection.right) {
-      _firestore.saveLike(profile.id).then((isMatch) {
+      _firestore.saveLike(profile.uid).then((isMatch) {
         if (isMatch && mounted) _showMatchDialog(profile);
       });
     } else if (direction == CardSwiperDirection.left) {
-      _firestore.saveDisLike(profile.id);
+      _firestore.saveDisLike(profile.uid);
     }
   }
 
@@ -92,7 +60,7 @@ class _SwipePageState extends State<SwipePage> {
         backgroundColor: const Color(0xFF1A0A1F),
         title: const Text('C\'est un match !',
             style: TextStyle(color: Color(0xFF7B00D4))),
-        content: Text('Toi et ${profile.username} vous êtes maintenant amis!',
+        content: Text('Toi et ${profile.username} vous êtes maintenant connectés !',
             style: const TextStyle(color: Color(0xFFE8E0EE))),
         actions: [
           TextButton(

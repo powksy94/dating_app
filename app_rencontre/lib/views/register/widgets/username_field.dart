@@ -51,16 +51,19 @@ class _UsernameFieldState extends State<UsernameField> {
             ).timeout(const Duration(seconds: 5));
             if (!mounted) return;
             final data = jsonDecode(res.body);
-            final status = res.statusCode != 200
-                ? 'invalid'
-                : (data['available'] == true ? 'available' : 'taken');
-            setState(() => _status = status);
-            widget.onStatusChanged(status);
+            if (res.statusCode == 200) {
+                final status = data['available'] == true ? 'available' : 'taken';
+                setState(() => _status = status);
+                widget.onStatusChanged(status);
+            } else {
+                setState(() => _status = 'invalid');
+                widget.onStatusChanged('invalid');
+            }
         } catch (e) {
             debugPrint('checkUsername error: $e');
             if (!mounted) return;
-            setState(() => _status = 'invalid');
-            widget.onStatusChanged('invalid');
+            setState(() => _status = null);
+            widget.onStatusChanged(null);
         }
     }
 

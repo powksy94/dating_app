@@ -1,1 +1,8 @@
 app_rencontre_backend/
+
+# Android — fichiers locaux et signing
+**/android/local.properties
+**/android/key.properties
+**/*.jks
+**/*.keystore
+**/*.p12

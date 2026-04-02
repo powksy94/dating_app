@@ -108,9 +108,12 @@ class ProfilePage extends StatelessWidget {
                               const Icon(Icons.event,
                                   size: 16, color: Color(0xFF7B00D4)),
                               const SizedBox(width: 6),
-                              Text(e,
-                                  style: const TextStyle(
-                                      color: Color(0xFFE8E0EE))),
+                              Expanded(
+                                child: Text(e,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Color(0xFFE8E0EE))),
+                              ),
                             ]),
                           ))
                       .toList(),

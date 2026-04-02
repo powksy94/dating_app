@@ -18,6 +18,16 @@ class ApiService {
         await prefs.remove('jwt_token');
     }
 
+    static Future<void> saveUserId(String userId) async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_id', userId);
+    }
+
+    static Future<String?> getUserId() async {
+        final prefs = await SharedPreferences.getInstance();
+        return prefs.getString('user_id');
+    }
+
     static Future<Map<String, String>> authHeaders() async {
         final token = await getToken();
         return {

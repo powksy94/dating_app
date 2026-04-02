@@ -6,6 +6,7 @@ import 'views/profil_edit_page.dart';
 import 'views/chat_page.dart';
 import 'models/alternative_profile.dart';
 import 'views/register/register_flow.dart';
+import 'views/subscription_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -26,6 +27,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => ChatPage(chatId: chatId));
       case '/register':
         return MaterialPageRoute(builder: (_) => const RegisterFlow());
+      case '/subscription':
+        return MaterialPageRoute(builder: (_) => const SubscriptionPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

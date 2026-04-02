@@ -4,6 +4,7 @@ import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../widgets/profile_card.dart';
 import 'swipe_page.dart';
+import 'conversation_list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     final List<Widget> pages = [
       const SwipePage(),
       const _EventsPlaceholder(),
+      const ConversationListPage(),
       const _MyProfileTab(),
     ];
 
@@ -32,14 +34,19 @@ class _HomePageState extends State<HomePage> {
         onDestinationSelected: (i) => setState(() => _tab = i),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.nightlight),
+            icon: Icon(Icons.nightlight_outlined),
             selectedIcon: Icon(Icons.nightlight),
             label: 'Découvrir',
           ),
           NavigationDestination(
-            icon: Icon(Icons.local_activity),
+            icon: Icon(Icons.local_activity_outlined),
             selectedIcon: Icon(Icons.local_activity),
             label: 'Événements',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline),
+            selectedIcon: Icon(Icons.chat_bubble),
+            label: 'Messages',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
@@ -155,6 +162,26 @@ class _MyProfileTabState extends State<_MyProfileTab> {
                 context, '/edit-profile',
                 arguments: p,
               ).then((_) => _loadProfile()),
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: ElevatedButton.icon(
+              onPressed: () => Navigator.pushNamed(context, '/subscription'),
+              icon: const Icon(Icons.auto_awesome, size: 18),
+              label: const Text(
+                'NOCTURNE PREMIUM',
+                style: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4A0072),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  side: const BorderSide(color: Color(0xFF7B00D4)),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 20),

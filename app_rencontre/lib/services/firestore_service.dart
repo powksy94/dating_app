@@ -60,6 +60,14 @@ class FirestoreService {
     return data['match'] == true;
   }
 
+  Future<void> seedDemoLikes() async {
+    final headers = await ApiService.authHeaders();
+    await http.post(
+      Uri.parse('${ApiService.baseUrl}/dev/seed-likes'),
+      headers: headers,
+    );
+  }
+
   Future<void> saveDisLike(String targetId) async {
     final headers = await ApiService.authHeaders();
     await http.post(
