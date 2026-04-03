@@ -4,6 +4,7 @@ import '../models/alternative_profile.dart';
 import '../services/firestore_service.dart';
 import '../widgets/swipe_card.dart';
 import '../widgets/swipe_buttons.dart';
+import '../widgets/match/match_overlay.dart';
 
 class SwipePage extends StatefulWidget {
   const SwipePage({super.key});

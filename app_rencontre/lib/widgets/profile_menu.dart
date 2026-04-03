@@ -66,7 +66,7 @@ class ProfileMenu extends StatelessWidget {
             color: const Color(0xFF8B0000),
             onTap: onLogout,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
         ],
       ),
     );

@@ -108,7 +108,7 @@ class PlanCard extends StatelessWidget {
                     ],
                 ),
             ),
-        ),
+        );
     }
 }
 
@@ -140,6 +140,6 @@ class _FeatureRow extends StatelessWidget {
                     ),
                 ],
             ),
-        ),
+        );
     }
 }
