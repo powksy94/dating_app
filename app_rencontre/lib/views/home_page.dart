@@ -3,6 +3,7 @@ import '../models/alternative_profile.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../widgets/profile_card.dart';
+import '../widgets/profile_menu.dart';
 import 'swipe_page.dart';
 import 'conversation_list_page.dart';
 
@@ -93,6 +94,26 @@ class _MyProfileTabState extends State<_MyProfileTab> {
     if (mounted) Navigator.pushReplacementNamed(context, '/login');
   }
 
+  void _openMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => ProfileMenu(
+        onEdit: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(
+            context, '/edit-profile',
+            arguments: _profile ?? AlternativeProfile(
+              id: '', uid: '', username: '', avatarUrl: '', bio: '',
+            ),
+          ).then((_) => _loadProfile());
+        },
+        onLogout: _logout,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_loading) {
@@ -104,9 +125,8 @@ class _MyProfileTabState extends State<_MyProfileTab> {
         title: const Text('MON PROFIL'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: 'Se déconnecter',
-            onPressed: _logout,
+            icon: const Icon(Icons.tune),
+            onPressed: () => _openMenu(context),
           ),
         ],
       ),
