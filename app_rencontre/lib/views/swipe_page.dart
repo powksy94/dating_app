@@ -55,20 +55,14 @@ class _SwipePageState extends State<SwipePage> {
   }
 
   void _showMatchDialog(AlternativeProfile profile) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF1A0A1F),
-        title: const Text('C\'est un match !',
-            style: TextStyle(color: Color(0xFF7B00D4))),
-        content: Text('Toi et ${profile.username} vous êtes maintenant connectés !',
-            style: const TextStyle(color: Color(0xFFE8E0EE))),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Super !'),
-          ),
-        ],
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (_, __, ___) => MatchOverlay(
+          matchedProfile: profile,
+          myAvatarUrl: null,
+        ),
       ),
     );
   }
