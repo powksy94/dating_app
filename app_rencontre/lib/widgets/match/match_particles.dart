@@ -7,15 +7,15 @@ class MatchParticles extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         final size = MediaQuery.of(context).size;
-        return CustomPlaint(
+        return CustomPaint(
             size: Size(size.width, size.height),
             painter: _ParticlesPainter(),
         );
     }
 }
 
-class _ParticlesPainter extends CustomPlainter {
-    final List<_Particles> particles = List.generate(30, (_) => _Particles());
+class _ParticlesPainter extends CustomPainter {
+    final List<_Particle> particles = List.generate(30, (_) => _Particle());
 
     @override
     void paint(Canvas canvas, Size size) {
@@ -23,7 +23,7 @@ class _ParticlesPainter extends CustomPlainter {
         for (final p in particles) {
             paint.color = p.color.withOpacity(p.opacity);
             canvas.drawCircle(
-                Offset(p.x * size.width, p.y * size.weight),
+                Offset(p.x * size.width, p.y * size.height),
                 p.radius,
                 paint,
             );

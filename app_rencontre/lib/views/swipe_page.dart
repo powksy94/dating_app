@@ -88,7 +88,7 @@ class _SwipePageState extends State<SwipePage> {
                       controller: _controller,
                       cardsCount: _profiles.length,
                       onSwipe: _onSwipe,
-                      numberOfCardsDisplayed: 2,
+                      numberOfCardsDisplayed: _profiles.length >= 2 ? 2 : 1,
                       scale: 0.95,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),

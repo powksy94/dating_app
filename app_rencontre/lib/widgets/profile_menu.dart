@@ -43,12 +43,18 @@ class ProfileMenu extends StatelessWidget {
           _MenuItem(
             icon: Icons.favorite_border,
             label: 'Historique des likes',
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/likes-history');
+            },
           ),
           _MenuItem(
             icon: Icons.people_outline,
             label: 'Mes matchs',
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/matches');
+            },
           ),
           _MenuItem(
             icon: Icons.settings_outlined,

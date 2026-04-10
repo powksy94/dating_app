@@ -12,7 +12,7 @@ class MatchAvatarRow extends StatelessWidget {
         required this.myAvatarUrl,
         required this.matchAvatarUrl,
         required this.matchUsername,
-        required this/slideValue,
+        required this.slideValue,
         required this.glowValue,
     });
 
@@ -45,7 +45,7 @@ class MatchAvatarRow extends StatelessWidget {
                             height: 44,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                const: const Color(0xFF0D0010),
+                                color: const Color(0xFF0D0010),
                                 border: Border.all(
                                     color: const Color(0xFF7B00D4),
                                     width: 1.5,

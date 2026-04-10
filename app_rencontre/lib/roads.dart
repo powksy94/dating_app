@@ -7,6 +7,8 @@ import 'views/chat_page.dart';
 import 'models/alternative_profile.dart';
 import 'views/register/register_flow.dart';
 import 'views/subscription_page.dart';
+import 'views/likes_history_page.dart';
+import 'views/matches_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,6 +31,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const RegisterFlow());
       case '/subscription':
         return MaterialPageRoute(builder: (_) => const SubscriptionPage());
+      case '/likes-history':
+        return MaterialPageRoute(builder: (_) => const LikesHistoryPage());
+      case '/matches':
+        return MaterialPageRoute(builder: (_) => const MatchesPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

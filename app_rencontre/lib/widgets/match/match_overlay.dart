@@ -34,7 +34,7 @@ class _MatchOverlayState extends State<MatchOverlay>
         late final Animation<double> _particlesFade;
 
         @override
-        void iniState() {
+        void initState() {
             super.initState();
 
             _bgCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
@@ -164,7 +164,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                             const SizedBox(height: 48),
 
                             // Avatars
-                            MatchAvatarsRow(
+                            MatchAvatarRow(
                             myAvatarUrl: widget.myAvatarUrl ?? '',
                             matchAvatarUrl: widget.matchedProfile.avatarUrl,
                             matchUsername: widget.matchedProfile.username,

@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/alternative_profile.dart';
+import '../models/liked_profile.dart';
 import 'api_service.dart';
 
 class FirestoreService {
   Future<AlternativeProfile?> getProfile(String uid) async {
     final headers = await ApiService.authHeaders();
     final res = await http.get(
-      Uri.parse('${ApiService.baseUrl}/profiles/$uid'),
+      Uri.parse('${ApiService.baseUrl}/profile/$uid'),
       headers: headers,
     );
     if (res.statusCode == 200) {
@@ -66,6 +67,19 @@ class FirestoreService {
       Uri.parse('${ApiService.baseUrl}/dev/seed-likes'),
       headers: headers,
     );
+  }
+
+  Future<List<LikedProfile>> getLikedProfiles() async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.get(
+      Uri.parse('${ApiService.baseUrl}/swipe/liked'),
+      headers: headers,
+    );
+    if (res.statusCode == 200) {
+      final List list = jsonDecode(res.body);
+      return list.map((e) => LikedProfile.fromJson(e)).toList();
+    }
+    return [];
   }
 
   Future<void> saveDisLike(String targetId) async {

@@ -53,7 +53,7 @@ const kSubscriptionPlans = [
         features: [
             SubscriptionFeature('30 swipes par jour', true),
             SubscriptionFeature('Voir les profils proches', true),
-            SubscriptionFeature('1 photo de profil', true),
+            SubscriptionFeature('2 photos par profil', true),
             SubscriptionFeature('Voir qui t\'a liké', false),
             SubscriptionFeature('Filtres avancés', false),
             SubscriptionFeature('Mode invisible', false),
@@ -72,7 +72,7 @@ const kSubscriptionPlans = [
         features: [
             SubscriptionFeature('Swipe illimité', true),
             SubscriptionFeature('Voir les profils proches', true),
-            SubscriptionFeature('6 photo de profil', true),
+            SubscriptionFeature('6 photos par profil', true),
             SubscriptionFeature('Voir qui t\'a liké', true),
             SubscriptionFeature('Filtres avancés', true),
             SubscriptionFeature('Mode invisible', true),
@@ -90,7 +90,7 @@ const kSubscriptionPlans = [
         features: [
             SubscriptionFeature('Swipe illimité', true),
             SubscriptionFeature('Voir les profils proches', true),
-            SubscriptionFeature('6 photo de profil', true),
+            SubscriptionFeature('6 photos par profil', true),
             SubscriptionFeature('Voir qui t\'a liké', true),
             SubscriptionFeature('Filtres avancés', true),
             SubscriptionFeature('Mode invisible', true),

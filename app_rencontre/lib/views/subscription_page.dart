@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/subscription_plan.dart';
+import '../services/subscription_service.dart';
 import '../widgets/period_selector.dart';
 import '../widgets/plan_card.dart';
 
@@ -11,18 +12,54 @@ class SubscriptionPage extends StatefulWidget {
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
-  final _controller = PageController(viewportFraction: 0.88);
-  int _current = 1;
+  late PageController _controller;
+  int _current = 0;
   SubscriptionPeriod _period = SubscriptionPeriod.month;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSubscription();
+  }
+
+  Future<void> _loadSubscription() async {
+    final sub = await SubscriptionService.getMySubscription();
+    final planNames = ['ombre', 'nocturne', 'abyssal'];
+    final planIndex = planNames.indexOf(sub['plan'] ?? 'ombre');
+    final periodMap = {
+      'week': SubscriptionPeriod.week,
+      'month': SubscriptionPeriod.month,
+      'year': SubscriptionPeriod.year,
+    };
+    final period = periodMap[sub['period']] ?? SubscriptionPeriod.month;
+    final index = planIndex < 0 ? 0 : planIndex;
+
+    _controller = PageController(viewportFraction: 0.88, initialPage: index);
+    if (mounted) {
+      setState(() {
+        _current = index;
+        _period = period;
+        _loading = false;
+      });
+    }
+  }
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (!_loading) _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF0D0010),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     final currentPlan = kSubscriptionPlans[_current];
 
     return Scaffold(
