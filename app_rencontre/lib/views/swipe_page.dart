@@ -4,10 +4,13 @@ import '../models/alternative_profile.dart';
 import '../services/firestore_service.dart';
 import '../widgets/swipe_card.dart';
 import '../widgets/swipe_buttons.dart';
+import '../models/chat_match.dart';
 import '../widgets/match/match_overlay.dart';
+import '../widgets/elegie_bottom_sheet.dart';
 
 class SwipePage extends StatefulWidget {
-  const SwipePage({super.key});
+  final void Function(ChatMatch)? onNavigateToConversation;
+  const SwipePage({super.key, this.onNavigateToConversation});
 
   @override
   State<SwipePage> createState() => _SwipePageState();
@@ -19,6 +22,7 @@ class _SwipePageState extends State<SwipePage> {
 
   List<AlternativeProfile> _profiles = [];
   bool _loading = true;
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -45,16 +49,22 @@ class _SwipePageState extends State<SwipePage> {
   void _onSwipe(int? prev, int? next, CardSwiperDirection direction) {
     if (prev == null) return;
     final profile = _profiles[prev];
+    if (next != null) setState(() => _currentIndex = next);
     if (direction == CardSwiperDirection.right) {
-      _firestore.saveLike(profile.uid).then((isMatch) {
-        if (isMatch && mounted) _showMatchDialog(profile);
+      _firestore.saveLike(profile.uid).then((matchId) {
+        if (matchId != null && mounted) _showMatchDialog(profile, matchId);
       });
     } else if (direction == CardSwiperDirection.left) {
       _firestore.saveDisLike(profile.uid);
     }
   }
 
-  void _showMatchDialog(AlternativeProfile profile) {
+  void _showMatchDialog(AlternativeProfile profile, String matchId) {
+    final chatMatch = ChatMatch(
+      matchId: matchId,
+      username: profile.username,
+      avatarUrl: profile.avatarUrl,
+    );
     Navigator.push(
       context,
       PageRouteBuilder(
@@ -62,6 +72,7 @@ class _SwipePageState extends State<SwipePage> {
         pageBuilder: (_, __, ___) => MatchOverlay(
           matchedProfile: profile,
           myAvatarUrl: null,
+          onMessage: () => widget.onNavigateToConversation?.call(chatMatch),
         ),
       ),
     );
@@ -103,6 +114,45 @@ class _SwipePageState extends State<SwipePage> {
                           ),
                     ),
                   ),
+                  // Bouton élégie
+                  if (_profiles.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (_currentIndex < _profiles.length) {
+                            showElegieBottomSheet(
+                              context,
+                              _profiles[_currentIndex],
+                              widget.onNavigateToConversation,
+                            );
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1A0A1F),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: const Color(0xFF7B00D4), width: 0.8),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.edit_note, color: Color(0xFF7B00D4), size: 18),
+                              SizedBox(width: 6),
+                              Text(
+                                'Élégie',
+                                style: TextStyle(
+                                  color: Color(0xFF7B00D4),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   SwipeActionButtons(
                     onDislike: () => _controller.swipeLeft(),
                     onLike:    () => _controller.swipeRight(),

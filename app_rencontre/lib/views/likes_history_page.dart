@@ -84,7 +84,7 @@ class _LikeCard extends StatelessWidget {
         ),
         boxShadow: profile.isMatch
             ? [BoxShadow(
-                color: const Color(0xFF7B00D4).withOpacity(0.3),
+                color: const Color(0xFF7B00D4).withValues(alpha: 0.3),
                 blurRadius: 12,
               )]
             : [],
@@ -106,7 +106,7 @@ class _LikeCard extends StatelessWidget {
             // Gradient bas
             const Positioned.fill(
               child: DecoratedBox(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

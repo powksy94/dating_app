@@ -3,14 +3,25 @@ import 'match_avatars_row.dart';
 import 'match_particles.dart';
 import '../../models/alternative_profile.dart';
 
+// ─── Textes personnalisables ───────────────────────────────────────────────────
+const kElegieMatchTitle    = 'TON ÉLÉGIE A ÉTÉ ENTENDUE';
+const kElegieMatchSubtitle = 'Les ténèbres ont exaucé ta prière';
+// ──────────────────────────────────────────────────────────────────────────────
+
 class MatchOverlay extends StatefulWidget {
     final AlternativeProfile matchedProfile;
     final String? myAvatarUrl;
+    final VoidCallback? onMessage;
+    final bool isElegieMatch;
+    final String? elegieText;
 
     const MatchOverlay({
         super.key,
         required this.matchedProfile,
         this.myAvatarUrl,
+        this.onMessage,
+        this.isElegieMatch = false,
+        this.elegieText,
     });
 
     @override
@@ -126,7 +137,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                                 child: Column(
                                 children: [
                                     Text(
-                                    'UN LIEN OBSCUR',
+                                    widget.isElegieMatch ? kElegieMatchTitle : 'UN LIEN OBSCUR',
                                     style: TextStyle(
                                         color: const Color(0xFF7B00D4),
                                         fontSize: 13,
@@ -134,28 +145,30 @@ class _MatchOverlayState extends State<MatchOverlay>
                                         letterSpacing: 4,
                                         shadows: [
                                         Shadow(
-                                            color: const Color(0xFF7B00D4).withOpacity(0.8),
+                                            color: const Color(0xFF7B00D4).withValues(alpha: 0.8),
                                             blurRadius: 12,
                                         ),
                                         ],
                                     ),
                                     ),
+                                    if (!widget.isElegieMatch) ...[
                                     const SizedBox(height: 4),
                                     Text(
-                                    'EST NÉ',
-                                    style: TextStyle(
+                                        'EST NÉ',
+                                        style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 38,
                                         fontWeight: FontWeight.bold,
                                         letterSpacing: 6,
                                         shadows: [
-                                        Shadow(
-                                            color: const Color(0xFF7B00D4).withOpacity(0.6),
+                                            Shadow(
+                                            color: const Color(0xFF7B00D4).withValues(alpha: 0.6),
                                             blurRadius: 20,
-                                        ),
+                                            ),
                                         ],
+                                        ),
                                     ),
-                                    ),
+                                    ],
                                 ],
                                 ),
                             ),
@@ -178,7 +191,9 @@ class _MatchOverlayState extends State<MatchOverlay>
                             Opacity(
                             opacity: _textFade.value,
                             child: Text(
-                                'Toi & ${widget.matchedProfile.username} êtes liés par les ténèbres',
+                                widget.isElegieMatch
+                                    ? kElegieMatchSubtitle
+                                    : 'Toi & ${widget.matchedProfile.username} êtes liés par les ténèbres',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                 color: Color(0xFFAA9AB5),
@@ -186,6 +201,42 @@ class _MatchOverlayState extends State<MatchOverlay>
                                 ),
                             ),
                             ),
+
+                            // Texte de l'élégie
+                            if (widget.isElegieMatch && widget.elegieText != null) ...[
+                              const SizedBox(height: 16),
+                              Flexible(
+                                child: Opacity(
+                                  opacity: _textFade.value,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                                    child: SingleChildScrollView(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(14),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF1A0030),
+                                          borderRadius: BorderRadius.circular(14),
+                                          border: Border.all(
+                                            color: const Color(0xFF7B00D4),
+                                            width: 0.8,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          '"${widget.elegieText}"',
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Color(0xFFAA9AB5),
+                                            fontSize: 13,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
 
                             const Spacer(),
 
@@ -200,7 +251,10 @@ class _MatchOverlayState extends State<MatchOverlay>
                                     width: double.infinity,
                                     height: 52,
                                     child: ElevatedButton.icon(
-                                        onPressed: () => Navigator.pop(context),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          widget.onMessage?.call();
+                                        },
                                         icon: const Icon(Icons.chat_bubble_outline, size: 18),
                                         label: const Text(
                                         'ENVOYER UN MESSAGE',

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../models/alternative_profile.dart';
+import '../models/chat_match.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../widgets/profile_card.dart';
 import '../widgets/profile_menu.dart';
 import 'swipe_page.dart';
 import 'conversation_list_page.dart';
+import 'conversation_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,10 +19,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _tab = 0;
 
+  void _navigateToConversation(ChatMatch match) {
+    setState(() => _tab = 2);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ConversationPage(match: match)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      const SwipePage(),
+      SwipePage(onNavigateToConversation: _navigateToConversation),
       const _EventsPlaceholder(),
       const ConversationListPage(),
       const _MyProfileTab(),

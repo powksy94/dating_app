@@ -74,7 +74,7 @@ class _MatchTile extends StatelessWidget {
           border: Border.all(color: const Color(0xFF7B00D4), width: 2),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF7B00D4).withOpacity(0.3),
+              color: const Color(0xFF7B00D4).withValues(alpha: 0.3),
               blurRadius: 8,
             ),
           ],

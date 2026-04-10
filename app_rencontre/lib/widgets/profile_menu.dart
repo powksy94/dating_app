@@ -102,7 +102,7 @@ class _MenuItem extends StatelessWidget {
       ),
       trailing: Icon(
         Icons.chevron_right,
-        color: color.withOpacity(0.4),
+        color: color.withValues(alpha: 0.4),
         size: 18,
       ),
     );

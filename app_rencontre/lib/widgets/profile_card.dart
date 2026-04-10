@@ -24,7 +24,7 @@ class ProfileCard extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1A0A1F).withOpacity(0.8),
+                      color: const Color(0xFF1A0A1F).withValues(alpha: 0.8),
                       shape: BoxShape.circle,
                       border: Border.all(color: const Color(0xFF7B00D4)),
                     ),
@@ -51,7 +51,7 @@ class ProfileCard extends StatelessWidget {
                     profile.bio,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white.withOpacity(0.85)),
+                    style: TextStyle(color: Colors.white.withValues(alpha: 0.85)),
                   ),
                 ],
               ),
@@ -84,7 +84,7 @@ class _GothGradient extends StatelessWidget {
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
               colors: [
-                const Color(0xFF0D0009).withOpacity(0.92),
+                const Color(0xFF0D0009).withValues(alpha: 0.92),
                 Colors.transparent,
               ],
               stops: const [0.0, 0.6],
@@ -142,7 +142,7 @@ class AestheticChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.75),
+        color: color.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color, width: 0.8),
       ),

@@ -99,7 +99,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   ? const Icon(Icons.person, color: Color(0xFF7B00D4), size: 18)
                   : null,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 16),
             Text(
               widget.match.username,
               style: const TextStyle(color: Colors.white, fontSize: 16),

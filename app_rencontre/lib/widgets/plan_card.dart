@@ -26,7 +26,7 @@ class PlanCard extends StatelessWidget {
                 ),
                 boxShadow: isActive
                     ? [BoxShadow(
-                        color: plan.accentColor.withOpacity(0.3),
+                        color: plan.accentColor.withValues(alpha: 0.3),
                         blurRadius: 24,
                         spreadRadius: 2,
                       )]
@@ -70,28 +70,43 @@ class PlanCard extends StatelessWidget {
                             ),
                         ),
                         const SizedBox(height: 4),
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                Text(
-                                    plan.priceFor(period),
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold,
-                                    ),
-                                ),
-                                if (!plan.isFree)
-                                    Padding(
-                                        padding: const EdgeInsets.only(bottom: 5, left: 6),
-                                        child: Text(
-                                            periodLabel(period),
-                                            style: const TextStyle(
-                                                color: Color(0xFFAA9AB5),
-                                                fontSize: 13,
-                                            ),
+                                if (plan.originalPriceFor(period) != null)
+                                    Text(
+                                        plan.originalPriceFor(period)!,
+                                        style: const TextStyle(
+                                            color: Color(0xFF5A4A6A),
+                                            fontSize: 16,
+                                            decoration: TextDecoration.lineThrough,
+                                            decorationColor: Color(0xFF5A4A6A),
                                         ),
                                     ),
+                                Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                        Text(
+                                            plan.priceFor(period),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 32,
+                                                fontWeight: FontWeight.bold,
+                                            ),
+                                        ),
+                                        if (!plan.isFree)
+                                            Padding(
+                                                padding: const EdgeInsets.only(bottom: 5, left: 6),
+                                                child: Text(
+                                                    periodLabel(period),
+                                                    style: const TextStyle(
+                                                        color: Color(0xFFAA9AB5),
+                                                        fontSize: 13,
+                                                    ),
+                                                ),
+                                            ),
+                                    ],
+                                ),
                             ],
                         ),
                         const SizedBox(height: 20),

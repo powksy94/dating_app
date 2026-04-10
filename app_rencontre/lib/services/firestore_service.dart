@@ -51,14 +51,16 @@ class FirestoreService {
     return [];
   }
 
-  Future<bool> saveLike(String targetId) async {
+  /// Retourne le matchId si c'est un match, null sinon
+  Future<String?> saveLike(String targetId) async {
     final headers = await ApiService.authHeaders();
     final res = await http.post(
       Uri.parse('${ApiService.baseUrl}/swipe/like/$targetId'),
       headers: headers,
     );
     final data = jsonDecode(res.body);
-    return data['match'] == true;
+    if (data['match'] == true) return (data['matchId'] as String?) ?? '';
+    return null;
   }
 
   Future<void> seedDemoLikes() async {

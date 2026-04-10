@@ -53,7 +53,7 @@ class MatchAvatarRow extends StatelessWidget {
                                 boxShadow: [
                                     BoxShadow(
                                         color: const Color(0xFF7B00D4)
-                                            .withOpacity(0.4 + 0.3 * glowValue),
+                                            .withValues(alpha: 0.4 + 0.3 * glowValue),
                                         blurRadius: 16 + 8 * glowValue,
                                         spreadRadius: 2,
                                     ),
@@ -111,7 +111,7 @@ class _Avatar extends StatelessWidget {
                         border: Border.all(color: borderColor, width: 2.5),
                         boxShadow: [
                             BoxShadow(
-                                color: borderColor.withOpacity(0.4),
+                                color: borderColor.withValues(alpha: 0.4),
                                 blurRadius: 16,
                                 spreadRadius: 2,
                             ),

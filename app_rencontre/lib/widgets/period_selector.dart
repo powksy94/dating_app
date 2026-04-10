@@ -57,7 +57,7 @@ class PeriodSelector extends StatelessWidget {
                         savings,
                         style: TextStyle(
                           color: isSelected
-                              ? Colors.white.withOpacity(0.8)
+                              ? Colors.white.withValues(alpha: 0.8)
                               : const Color(0xFF7B00D4),
                           fontSize: 10,
                           fontWeight: FontWeight.w600,

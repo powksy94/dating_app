@@ -59,7 +59,7 @@ class _CircleButton extends StatelessWidget {
           border: Border.all(color: color, width: 2),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.35),
+              color: color.withValues(alpha: 0.35),
               blurRadius: 14,
               spreadRadius: 2,
             ),

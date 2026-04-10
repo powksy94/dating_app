@@ -224,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               BackdropFilter(
                                 filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
                                 child: Container(
-                                    color: Colors.black.withOpacity(0.35)),
+                                    color: Colors.black.withValues(alpha: 0.35)),
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -312,7 +312,7 @@ class _PhotoViewerState extends State<_PhotoViewer> {
       body: GestureDetector(
         onTap: () => Navigator.pop(context),
         child: Container(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withValues(alpha: 0.7),
           child: SafeArea(
             child: Center(
               child: GestureDetector(
@@ -346,7 +346,7 @@ class _PhotoViewerState extends State<_PhotoViewer> {
                                       filter: ImageFilter.blur(
                                           sigmaX: 22, sigmaY: 22),
                                       child: Container(
-                                          color: Colors.black.withOpacity(0.35)),
+                                          color: Colors.black.withValues(alpha: 0.35)),
                                     ),
                                     Center(
                                       child: Column(
@@ -466,7 +466,7 @@ class _TagWrap extends StatelessWidget {
       children: tags.map((tag) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.5),
+          color: color.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: color, width: 0.8),
         ),

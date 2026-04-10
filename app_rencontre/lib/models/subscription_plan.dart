@@ -15,8 +15,11 @@ class SubscriptionPlan {
     final String? badge;
     final String? weekPrice;
     final String? monthPrice;
+    final String? monthPriceOriginal;
     final String? yearPrice;
+    final String? yearPriceOriginal;
     final List<SubscriptionFeature> features;
+
     const SubscriptionPlan({
         required this.name,
         required this.color,
@@ -25,21 +28,45 @@ class SubscriptionPlan {
         this.badge,
         required this.weekPrice,
         required this.monthPrice,
+        this.monthPriceOriginal,
         required this.yearPrice,
+        this.yearPriceOriginal,
         required this.features,
     });
 
     String priceFor(SubscriptionPeriod period) {
-        if (weekPrice ==null) return 'Gratuit';
+        if (weekPrice == null) return 'Gratuit';
         switch (period) {
-            case SubscriptionPeriod.week: return weekPrice!;
+            case SubscriptionPeriod.week:  return weekPrice!;
             case SubscriptionPeriod.month: return monthPrice!;
-            case SubscriptionPeriod.year: return yearPrice!;
+            case SubscriptionPeriod.year:  return yearPrice!;
+        }
+    }
+
+    String? originalPriceFor(SubscriptionPeriod period) {
+        switch (period) {
+            case SubscriptionPeriod.week:  return null;
+            case SubscriptionPeriod.month: return monthPriceOriginal;
+            case SubscriptionPeriod.year:  return yearPriceOriginal;
         }
     }
 
     bool get isFree => weekPrice == null;
 }
+
+// ─── Prix centralisés ─────────────────────────────────────────────────────────
+const kNocturneWeekPrice          = '6,99 €';
+const kNocturneMonthPrice         = '27,24 €';
+const kNocturneMonthPriceOriginal = '30,26 €'; // -10%
+const kNocturneYearPrice          = '294,19 €';
+const kNocturneYearPriceOriginal  = '363,48 €'; // -19%
+
+const kAbyssalWeekPrice           = '9,99 €';
+const kAbyssalMonthPrice          = '38,93 €';
+const kAbyssalMonthPriceOriginal  = '43,26 €';  // -10%
+const kAbyssalYearPrice           = '420,44 €';
+const kAbyssalYearPriceOriginal   = '519,07 €'; // -19%
+// ──────────────────────────────────────────────────────────────────────────────
 
 const kSubscriptionPlans = [
     SubscriptionPlan(
@@ -66,9 +93,11 @@ const kSubscriptionPlans = [
         accentColor: Color(0xFF7B00D4),
         icon: Icons.nightlight,
         badge: 'POPULAIRE',
-        weekPrice: '6,99 €',
-        monthPrice: '27,24 €',
-        yearPrice: '294,19 €',
+        weekPrice: kNocturneWeekPrice,
+        monthPrice: kNocturneMonthPrice,
+        monthPriceOriginal: kNocturneMonthPriceOriginal,
+        yearPrice: kNocturneYearPrice,
+        yearPriceOriginal: kNocturneYearPriceOriginal,
         features: [
             SubscriptionFeature('Swipe illimité', true),
             SubscriptionFeature('Voir les profils proches', true),
@@ -84,9 +113,11 @@ const kSubscriptionPlans = [
         color: Color(0xFF1A0A1F),
         accentColor: Color(0xFFD400FF),
         icon: Icons.auto_awesome,
-        weekPrice: '9,99 €',
-        monthPrice: '38,93 €',
-        yearPrice: '420,44 €',
+        weekPrice: kAbyssalWeekPrice,
+        monthPrice: kAbyssalMonthPrice,
+        monthPriceOriginal: kAbyssalMonthPriceOriginal,
+        yearPrice: kAbyssalYearPrice,
+        yearPriceOriginal: kAbyssalYearPriceOriginal,
         features: [
             SubscriptionFeature('Swipe illimité', true),
             SubscriptionFeature('Voir les profils proches', true),
