@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/alternative_profile.dart';
 import '../models/chat_match.dart';
-import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../widgets/profile_card.dart';
 import '../widgets/profile_menu.dart';
@@ -81,7 +80,6 @@ class _MyProfileTab extends StatefulWidget {
 
 class _MyProfileTabState extends State<_MyProfileTab> {
   final _firestore = FirestoreService();
-  final _auth = AuthService();
   AlternativeProfile? _profile;
   bool _loading = true;
 
@@ -99,10 +97,6 @@ class _MyProfileTabState extends State<_MyProfileTab> {
     if (mounted) setState(() { _profile = profile; _loading = false; });
   }
 
-  Future<void> _logout() async {
-    await _auth.logout();
-    if (mounted) Navigator.pushReplacementNamed(context, '/login');
-  }
 
   void _openMenu(BuildContext context) {
     showModalBottomSheet(
@@ -119,7 +113,6 @@ class _MyProfileTabState extends State<_MyProfileTab> {
             ),
           ).then((_) => _loadProfile());
         },
-        onLogout: _logout,
       ),
     );
   }

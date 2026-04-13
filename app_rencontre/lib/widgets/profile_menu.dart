@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProfileMenu extends StatelessWidget {
   final VoidCallback onEdit;
-  final VoidCallback onLogout;
-  const ProfileMenu({super.key, required this.onEdit, required this.onLogout});
+  const ProfileMenu({super.key, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +63,6 @@ class ProfileMenu extends StatelessWidget {
               Navigator.pushNamed(context, '/settings');
             },
           ),
-          const Spacer(),
-          const Divider(color: Color(0xFF1A0A1F)),
-          _MenuItem(
-            icon: Icons.logout,
-            label: 'Se déconnecter',
-            color: const Color(0xFF8B0000),
-            onTap: onLogout,
-          ),
           SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
         ],
       ),
@@ -83,26 +74,24 @@ class _MenuItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-  final Color color;
   const _MenuItem({
     required this.icon,
     required this.label,
     required this.onTap,
-    this.color = const Color(0xFFE8E0EE),
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      leading: Icon(icon, color: color, size: 22),
+      leading: Icon(icon, color: const Color(0xFFE8E0EE), size: 22),
       title: Text(
         label,
-        style: TextStyle(color: color, fontSize: 15),
+        style: const TextStyle(color: Color(0xFFE8E0EE), fontSize: 15),
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.chevron_right,
-        color: color.withValues(alpha: 0.4),
+        color: Color(0x66E8E0EE),
         size: 18,
       ),
     );

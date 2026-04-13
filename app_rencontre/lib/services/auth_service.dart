@@ -33,6 +33,22 @@ class AuthService {
     throw Exception(data['message']);
   }
 
+  /// Retourne null si succès, sinon le message d'erreur
+  Future<String?> changePassword(String currentPassword, String newPassword) async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/auth/change-password'),
+      headers: headers,
+      body: jsonEncode({
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+      }),
+    );
+    if (res.statusCode == 200) return null;
+    final data = jsonDecode(res.body);
+    return (data['message'] as String?) ?? 'Erreur inconnue';
+  }
+
   Future<void> logout() async {
     await ApiService.clearToken();
   }
