@@ -169,7 +169,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             'Résiliation possible à tout moment',
             style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 16 + MediaQuery.of(context).padding.bottom),
         ],
       ),
     );

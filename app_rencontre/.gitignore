@@ -49,3 +49,9 @@ google-services.json
 **/google-services.json
 GoogleService-Info.plist
 **/GoogleService-Info.plist
+
+# Local machine config
+android/local.properties
+
+# Flutter auto-generated
+.flutter-plugins

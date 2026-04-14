@@ -83,6 +83,7 @@ class _ConversationPageState extends State<ConversationPage> {
       backgroundColor: const Color(0xFF0D0010),
       appBar: AppBar(
         backgroundColor: const Color(0xFF120018),
+        toolbarHeight: 72,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -90,7 +91,7 @@ class _ConversationPageState extends State<ConversationPage> {
         title: Row(
           children: [
             CircleAvatar(
-              radius: 18,
+              radius: 22,
               backgroundColor: const Color(0xFF2D0040),
               backgroundImage: widget.match.avatarUrl.isNotEmpty
                   ? NetworkImage(widget.match.avatarUrl)
