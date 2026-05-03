@@ -8,12 +8,14 @@ class EventService {
     double? lat,
     double? lng,
     double? maxDistance,
+    bool filterGenres = false,
   }) async {
     final token = await ApiService.getToken();
     final params = <String, String>{};
-    if (lat != null)          params['lat']         = lat.toString();
-    if (lng != null)          params['lng']         = lng.toString();
-    if (maxDistance != null)  params['maxDistance'] = maxDistance.toString();
+    if (lat != null)          params['lat']           = lat.toString();
+    if (lng != null)          params['lng']           = lng.toString();
+    if (maxDistance != null)  params['maxDistance']   = maxDistance.toString();
+    if (filterGenres)         params['filterGenres']  = 'true';
 
     final uri = Uri.parse('${ApiService.baseUrl}/events')
         .replace(queryParameters: params.isEmpty ? null : params);

@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/alternative_profile.dart';
 import '../services/subscription_service.dart';
 import '../widgets/profile_card.dart';
+import '../widgets/section_block.dart';
 
 class ProfilePage extends StatefulWidget {
   final AlternativeProfile profile;
@@ -69,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 20),
 
               // Bio
-              _Section(
+              SectionBlock(
                 title: 'Bio',
                 child: Text(profile.bio,
                     style: const TextStyle(
@@ -78,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.musicGenres.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Genres musicaux',
                   child: _TagWrap(profile.musicGenres,
                       color: const Color(0xFF4A0072)),
@@ -87,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.musicVibes.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Ambiance',
                   child: _TagWrap(profile.musicVibes,
                       color: const Color(0xFF003366)),
@@ -96,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.aesthetics.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Esthétique & culture',
                   child: Wrap(
                     spacing: 8, runSpacing: 8,
@@ -109,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.soundIntensity.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Intensité sonore',
                   child: _TagWrap(profile.soundIntensity,
                       color: const Color(0xFF6B0000)),
@@ -118,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.musicEras.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Époque / scène',
                   child: _TagWrap(profile.musicEras,
                       color: const Color(0xFF2E1B00)),
@@ -127,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.discoveryFormats.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Découverte musicale',
                   child: _TagWrap(profile.discoveryFormats,
                       color: const Color(0xFF1A2E00)),
@@ -136,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.favoriteBands.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Artistes favoris',
                   child: Text(profile.favoriteBands.join(' · '),
                       style: const TextStyle(color: Color(0xFFE8E0EE))),
@@ -145,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.upcomingEvents.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Événements à venir',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               if (profile.socialLinks.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                _Section(
+                SectionBlock(
                   title: 'Liens',
                   child: Wrap(
                     spacing: 10, runSpacing: 8,
@@ -423,36 +424,6 @@ class _PhotoViewerState extends State<_PhotoViewer> {
 
 // ─── Widgets ──────────────────────────────────────────────────────────────────
 
-class _Section extends StatelessWidget {
-  final String title;
-  final Widget child;
-  const _Section({required this.title, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title,
-            style: const TextStyle(
-                color: Color(0xFF7B00D4),
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.4)),
-        const SizedBox(height: 8),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1A0A1F),
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: child,
-        ),
-      ],
-    );
-  }
-}
 
 class _TagWrap extends StatelessWidget {
   final List<String> tags;

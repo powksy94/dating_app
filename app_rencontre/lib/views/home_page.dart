@@ -29,15 +29,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      SwipePage(onNavigateToConversation: _navigateToConversation),
-      const EventsPage(),
-      const ConversationListPage(),
-      const _MyProfileTab(),
-    ];
-
     return Scaffold(
-      body: pages[_tab],
+      body: IndexedStack(
+        index: _tab,
+        children: [
+          SwipePage(onNavigateToConversation: _navigateToConversation),
+          const EventsPage(),
+          const ConversationListPage(),
+          const _MyProfileTab(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         backgroundColor: const Color(0xFF120018),
         indicatorColor: const Color(0xFF7B00D4),

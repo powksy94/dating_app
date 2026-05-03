@@ -4,6 +4,7 @@ import '../../models/event_model.dart';
 import '../../services/event_service.dart';
 import '../../widgets/event/event_card.dart';
 import 'create_event_page.dart';
+import 'event_detail_page.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -17,7 +18,8 @@ class _EventsPageState extends State<EventsPage> {
   bool _loading = true;
   double _maxDistance = 50;
   Position? _position;
-  bool _showFilter = false;
+  bool _showFilter    = false;
+  bool _filterGenres  = false;
 
   @override
   void initState() {
@@ -43,9 +45,10 @@ class _EventsPageState extends State<EventsPage> {
   Future<void> _loadEvents() async {
     setState(() => _loading = true);
     final events = await EventService.getEvents(
-      lat:         _position?.latitude,
-      lng:         _position?.longitude,
-      maxDistance: _maxDistance,
+      lat:          _position?.latitude,
+      lng:          _position?.longitude,
+      maxDistance:  _maxDistance,
+      filterGenres: _filterGenres,
     );
     if (mounted) setState(() { _events = events; _loading = false; });
   }
@@ -117,7 +120,40 @@ class _EventsPageState extends State<EventsPage> {
             onChanged: (v) => setState(() => _maxDistance = v),
             onChangeEnd: (_) => _loadEvents(),
           ),
+          const SizedBox(height: 4),
+          const Text('Genres',
+              style: TextStyle(color: Colors.white, fontSize: 13)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              _genreToggle('Tous les genres', !_filterGenres,
+                  () { setState(() => _filterGenres = false); _loadEvents(); }),
+              const SizedBox(width: 10),
+              _genreToggle('Mes genres', _filterGenres,
+                  () { setState(() => _filterGenres = true); _loadEvents(); }),
+            ],
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _genreToggle(String label, bool active, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+        decoration: BoxDecoration(
+          color: active ? const Color(0xFF7B00D4) : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: active ? const Color(0xFF7B00D4) : const Color(0xFF3D2A4A),
+          ),
+        ),
+        child: Text(label,
+            style: TextStyle(
+                color: active ? Colors.white : const Color(0xFF5A4A6A),
+                fontSize: 12)),
       ),
     );
   }
@@ -147,7 +183,15 @@ class _EventsPageState extends State<EventsPage> {
       child: ListView.builder(
         padding: const EdgeInsets.only(top: 8, bottom: 80),
         itemCount: _events.length,
-        itemBuilder: (_, i) => EventCard(event: _events[i]),
+        itemBuilder: (_, i) => EventCard(
+          event: _events[i],
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => EventDetailPage(event: _events[i]),
+            ),
+          ),
+        ),
       ),
     );
   }
