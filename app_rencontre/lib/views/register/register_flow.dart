@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widgets/progress_bar.dart';
+import '../../widgets/step_progress_bar.dart';
 import 'steps/step_credentials.dart';
 import 'steps/step_identity.dart';
 import 'steps/step_photos.dart';
@@ -64,7 +64,7 @@ class _RegisterFlowState extends State<RegisterFlow> {
                     : const SizedBox.shrink(),
                 bottom: PreferredSize(
                     preferredSize: const Size.fromHeight(48),
-                    child: RegisterProgressBar(
+                    child: StepProgressBar(
                         currentStep: _currentStep,
                         totalSteps: _totalSteps,
                     ),

@@ -7,6 +7,7 @@ import '../widgets/profile_menu.dart';
 import 'swipe_page.dart';
 import 'conversation_list_page.dart';
 import 'conversation_page.dart';
+import 'events/events_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       SwipePage(onNavigateToConversation: _navigateToConversation),
-      const _EventsPlaceholder(),
+      const EventsPage(),
       const ConversationListPage(),
       const _MyProfileTab(),
     ];
@@ -214,28 +215,3 @@ class _MyProfileTabState extends State<_MyProfileTab> {
   }
 }
 
-// ── Placeholder Événements ────────────────────────────────────────────────────
-
-class _EventsPlaceholder extends StatelessWidget {
-  const _EventsPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.event, size: 64, color: Color(0xFF7B00D4)),
-            SizedBox(height: 12),
-            Text('Événements à venir',
-                style: TextStyle(color: Color(0xFFE8E0EE), fontSize: 20)),
-            SizedBox(height: 8),
-            Text('Bientôt disponible',
-                style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14)),
-          ],
-        ),
-      ),
-    );
-  }
-}
