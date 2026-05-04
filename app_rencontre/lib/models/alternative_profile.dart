@@ -21,6 +21,11 @@ class AlternativeProfile {
   final String bio;
   final int? age;
   final String? pronouns;
+  final String? gender;
+  final List<String> genderPreferences;
+  final double ageMin;
+  final double ageMax;
+  final double maxDistance;
 
   final List<String> musicGenres;
   final List<String> musicVibes;
@@ -41,37 +46,47 @@ class AlternativeProfile {
     required this.bio,
     this.age,
     this.pronouns,
-    this.musicGenres      = const [],
-    this.musicVibes       = const [],
-    this.aesthetics       = const [],
-    this.soundIntensity   = const [],
-    this.musicEras        = const [],
-    this.discoveryFormats = const [],
-    this.favoriteBands    = const [],
-    this.upcomingEvents   = const [],
-    this.socialLinks      = const {},
-    this.photos           = const [],
+    this.gender,
+    this.genderPreferences = const [],
+    this.ageMin            = 18,
+    this.ageMax            = 99,
+    this.maxDistance       = 50,
+    this.musicGenres       = const [],
+    this.musicVibes        = const [],
+    this.aesthetics        = const [],
+    this.soundIntensity    = const [],
+    this.musicEras         = const [],
+    this.discoveryFormats  = const [],
+    this.favoriteBands     = const [],
+    this.upcomingEvents    = const [],
+    this.socialLinks       = const {},
+    this.photos            = const [],
   });
 
   factory AlternativeProfile.fromJson(Map<String, dynamic> data) {
     return AlternativeProfile(
-      id:               data['_id']       ?? '',
-      uid:              data['owner']     ?? '',
-      username:         data['username']  ?? '',
-      avatarUrl:        data['avatarUrl'] ?? '',
-      bio:              data['bio']       ?? '',
-      age:              _ageFromBirthDate(data['birthDate']),
-      pronouns:         data['pronouns']  as String?,
-      musicGenres:      List<String>.from(data['musicsGenres']     ?? []),
-      musicVibes:       List<String>.from(data['musicsVibes']      ?? []),
-      aesthetics:       List<String>.from(data['aesthetics']       ?? []),
-      soundIntensity:   List<String>.from(data['soundIntensity']   ?? []),
-      musicEras:        List<String>.from(data['musicEras']        ?? []),
-      discoveryFormats: List<String>.from(data['discoveryFormats'] ?? []),
-      favoriteBands:    List<String>.from(data['favoriteBands']    ?? []),
-      upcomingEvents:   List<String>.from(data['upcomingEvents']   ?? []),
-      socialLinks:      Map<String, String>.from(data['socialLinks'] ?? {}),
-      photos:           List<String>.from(data['photos']           ?? []),
+      id:                data['_id']       ?? '',
+      uid:               data['owner']     ?? '',
+      username:          data['username']  ?? '',
+      avatarUrl:         data['avatarUrl'] ?? '',
+      bio:               data['bio']       ?? '',
+      age:               _ageFromBirthDate(data['birthDate']),
+      pronouns:          data['pronouns']  as String?,
+      gender:            data['gender']    as String?,
+      genderPreferences: List<String>.from(data['genderPreferences'] ?? []),
+      ageMin:            (data['ageMin']      as num?)?.toDouble() ?? 18,
+      ageMax:            (data['ageMax']      as num?)?.toDouble() ?? 99,
+      maxDistance:       (data['maxDistance'] as num?)?.toDouble() ?? 50,
+      musicGenres:       List<String>.from(data['musicsGenres']     ?? []),
+      musicVibes:        List<String>.from(data['musicsVibes']      ?? []),
+      aesthetics:        List<String>.from(data['aesthetics']       ?? []),
+      soundIntensity:    List<String>.from(data['soundIntensity']   ?? []),
+      musicEras:         List<String>.from(data['musicEras']        ?? []),
+      discoveryFormats:  List<String>.from(data['discoveryFormats'] ?? []),
+      favoriteBands:     List<String>.from(data['favoriteBands']    ?? []),
+      upcomingEvents:    List<String>.from(data['upcomingEvents']   ?? []),
+      socialLinks:       Map<String, String>.from(data['socialLinks'] ?? {}),
+      photos:            List<String>.from(data['photos']           ?? []),
     );
   }
 

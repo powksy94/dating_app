@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geolocator/geolocator.dart';
-import '../widgets/animated_step.dart';
+import '../../../widgets/register/animated_step.dart';
 
 class StepLocation extends StatefulWidget {
     final void Function(Map<String, dynamic>) onNext;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../models/event_model.dart';
-import '../../../widgets/section_block.dart';
+import '../../models/event_model.dart';
+import '../section_block.dart';
 
 class EventInfoSection extends StatelessWidget {
   final EventModel event;
@@ -43,11 +43,9 @@ class EventInfoSection extends StatelessWidget {
         Icon(icon, size: 16, color: color ?? const Color(0xFF5A4A6A)),
         const SizedBox(width: 10),
         Expanded(
-          child: Text(
-            text,
-            style: TextStyle(
-                color: color ?? const Color(0xFFAA9AB5), fontSize: 14),
-          ),
+          child: Text(text,
+              style: TextStyle(
+                  color: color ?? const Color(0xFFAA9AB5), fontSize: 14)),
         ),
       ],
     );

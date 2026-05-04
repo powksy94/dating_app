@@ -3,9 +3,9 @@ import '../../models/event_model.dart';
 import '../../services/event_service.dart';
 import '../../widgets/event/event_attendees_widget.dart';
 import '../../widgets/section_block.dart';
-import 'widgets/event_cover_header.dart';
-import 'widgets/event_info_section.dart';
-import 'widgets/register_sheet.dart';
+import '../../widgets/event/event_cover_header.dart';
+import '../../widgets/event/event_info_section.dart';
+import '../../widgets/event/register_sheet.dart';
 
 class EventDetailPage extends StatefulWidget {
   final EventModel event;

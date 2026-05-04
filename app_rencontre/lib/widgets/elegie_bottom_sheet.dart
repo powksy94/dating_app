@@ -91,9 +91,10 @@ class _ElegieSheetState extends State<_ElegieSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
+    final keyboardBottom = MediaQuery.of(context).viewInsets.bottom;
+    final systemBottom   = MediaQuery.of(context).padding.bottom;
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 24, 20, bottom + 24),
+      padding: EdgeInsets.fromLTRB(20, 24, 20, keyboardBottom + systemBottom + 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

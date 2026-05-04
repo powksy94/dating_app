@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../services/auth_service.dart';
 import '../../../../services/firestore_service.dart';
 import '../../../../services/photo_service.dart';
-import '../widgets/animated_step.dart';
+import '../../../widgets/register/animated_step.dart';
 
 class StepPreferences extends StatefulWidget {
     final Map<String, dynamic> data;

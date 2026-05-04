@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/music_tags.dart';
-import '../widgets/animated_step.dart';
+import '../../../widgets/register/animated_step.dart';
 
 class StepTags extends StatefulWidget {
     final void Function(Map<String, dynamic>) onNext;

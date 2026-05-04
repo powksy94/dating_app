@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:http/http.dart' as http;
-import '../../../../services/api_service.dart';
+import '../../services/api_service.dart';
 
 class UsernameField extends StatefulWidget {
     final TextEditingController controller;
@@ -60,7 +60,6 @@ class _UsernameFieldState extends State<UsernameField> {
                 widget.onStatusChanged('invalid');
             }
         } catch (e) {
-            debugPrint('checkUsername error: $e');
             if (!mounted) return;
             setState(() => _status = null);
             widget.onStatusChanged(null);

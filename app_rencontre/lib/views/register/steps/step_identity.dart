@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../widgets/animated_step.dart';
-import '../widgets/username_field.dart';
-import '../widgets/chip_selector.dart';
+import '../../../widgets/register/animated_step.dart';
+import '../../../widgets/register/username_field.dart';
+import '../../../widgets/register/chip_selector.dart';
 
 class StepIdentity extends StatefulWidget {
     final void Function(Map<String, dynamic>) onNext;

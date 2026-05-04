@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../models/event_model.dart';
+import '../../models/event_model.dart';
 
 class RegisterSheet extends StatelessWidget {
   final EventModel event;
@@ -14,7 +14,8 @@ class RegisterSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+      padding: EdgeInsets.fromLTRB(
+          24, 24, 24, 24 + MediaQuery.of(context).padding.bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
