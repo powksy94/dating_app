@@ -7,8 +7,9 @@ import 'event_attendees_widget.dart';
 class EventCard extends StatefulWidget {
   final EventModel event;
   final VoidCallback? onTap;
+  final VoidCallback? onFavoriteToggled;
 
-  const EventCard({super.key, required this.event, this.onTap});
+  const EventCard({super.key, required this.event, this.onTap, this.onFavoriteToggled});
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -34,6 +35,7 @@ class _EventCardState extends State<EventCard> {
   Future<void> _toggleFavorite() async {
     await FavoritesService.toggle(_event.id);
     if (mounted) setState(() => _isFavorite = !_isFavorite);
+    widget.onFavoriteToggled?.call();
   }
 
   Future<void> _toggleAttend() async {

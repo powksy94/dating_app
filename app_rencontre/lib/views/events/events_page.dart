@@ -218,6 +218,7 @@ class _EventsPageState extends State<EventsPage> {
         itemCount: filtered.length,
         itemBuilder: (_, i) => EventCard(
           event: filtered[i],
+          onFavoriteToggled: _loadFavorites,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
