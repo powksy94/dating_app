@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../models/event_model.dart';
 import '../../services/event_service.dart';
+import '../../services/favorites_service.dart';
 import '../../widgets/event/event_card.dart';
+import '../../widgets/event/event_filter_chips.dart';
 import 'create_event_page.dart';
 import 'event_detail_page.dart';
 
@@ -14,12 +16,14 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
-  List<EventModel> _events = [];
-  bool _loading = true;
-  double _maxDistance = 50;
-  Position? _position;
-  bool _showFilter    = false;
-  bool _filterGenres  = false;
+  List<EventModel> _events    = [];
+  Set<String>      _favorites = {};
+  bool        _loading     = true;
+  double      _maxDistance = 50;
+  Position?   _position;
+  bool        _showFilter  = false;
+  bool        _filterGenres = false;
+  EventFilter _filter      = EventFilter.all;
 
   @override
   void initState() {
@@ -29,7 +33,7 @@ class _EventsPageState extends State<EventsPage> {
 
   Future<void> _init() async {
     await _getLocation();
-    await _loadEvents();
+    await Future.wait([_loadEvents(), _loadFavorites()]);
   }
 
   Future<void> _getLocation() async {
@@ -42,6 +46,11 @@ class _EventsPageState extends State<EventsPage> {
     } catch (_) {}
   }
 
+  Future<void> _loadFavorites() async {
+    final favs = await FavoritesService.getAll();
+    if (mounted) setState(() => _favorites = favs);
+  }
+
   Future<void> _loadEvents() async {
     setState(() => _loading = true);
     final events = await EventService.getEvents(
@@ -51,6 +60,19 @@ class _EventsPageState extends State<EventsPage> {
       filterGenres: _filterGenres,
     );
     if (mounted) setState(() { _events = events; _loading = false; });
+  }
+
+  List<EventModel> get _filteredEvents {
+    switch (_filter) {
+      case EventFilter.attending:
+        return _events.where((e) => e.isAttending).toList();
+      case EventFilter.matches:
+        return _events.where((e) => e.mutualAttendeesCount > 0).toList();
+      case EventFilter.favorites:
+        return _events.where((e) => _favorites.contains(e.id)).toList();
+      case EventFilter.all:
+        return _events;
+    }
   }
 
   @override
@@ -87,6 +109,10 @@ class _EventsPageState extends State<EventsPage> {
       ),
       body: Column(
         children: [
+          EventFilterChips(
+            current:   _filter,
+            onChanged: (f) => setState(() => _filter = f),
+          ),
           if (_showFilter) _filterPanel(),
           Expanded(child: _body()),
         ],
@@ -107,7 +133,8 @@ class _EventsPageState extends State<EventsPage> {
               const Text('Distance max',
                   style: TextStyle(color: Colors.white, fontSize: 13)),
               Text('${_maxDistance.round()} km',
-                  style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 13)),
+                  style: const TextStyle(
+                      color: Color(0xFF7B00D4), fontSize: 13)),
             ],
           ),
           Slider(
@@ -159,36 +186,42 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   Widget _body() {
-    if (_loading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (_events.isEmpty) {
-      return const Center(
+    if (_loading) return const Center(child: CircularProgressIndicator());
+
+    final filtered = _filteredEvents;
+
+    if (filtered.isEmpty) {
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.event_busy, size: 48, color: Color(0xFF3D2A4A)),
-            SizedBox(height: 12),
+            const Icon(Icons.event_busy, size: 48, color: Color(0xFF3D2A4A)),
+            const SizedBox(height: 12),
             Text(
-              'Aucun événement dans ta zone',
-              style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
+              _filter == EventFilter.all
+                  ? 'Aucun événement dans ta zone'
+                  : 'Aucun événement dans cette catégorie',
+              style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
             ),
           ],
         ),
       );
     }
+
     return RefreshIndicator(
       color: const Color(0xFF7B00D4),
-      onRefresh: _loadEvents,
+      onRefresh: () async {
+        await Future.wait([_loadEvents(), _loadFavorites()]);
+      },
       child: ListView.builder(
         padding: const EdgeInsets.only(top: 8, bottom: 80),
-        itemCount: _events.length,
+        itemCount: filtered.length,
         itemBuilder: (_, i) => EventCard(
-          event: _events[i],
+          event: filtered[i],
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => EventDetailPage(event: _events[i]),
+              builder: (_) => EventDetailPage(event: filtered[i]),
             ),
           ),
         ),

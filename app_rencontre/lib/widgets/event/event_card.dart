@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/event_model.dart';
 import '../../services/event_service.dart';
+import '../../services/favorites_service.dart';
 import 'event_attendees_widget.dart';
 
 class EventCard extends StatefulWidget {
@@ -16,11 +17,23 @@ class EventCard extends StatefulWidget {
 class _EventCardState extends State<EventCard> {
   late EventModel _event;
   bool _loadingAttend = false;
+  bool _isFavorite    = false;
 
   @override
   void initState() {
     super.initState();
     _event = widget.event;
+    _loadFavorite();
+  }
+
+  Future<void> _loadFavorite() async {
+    final fav = await FavoritesService.isFavorite(_event.id);
+    if (mounted) setState(() => _isFavorite = fav);
+  }
+
+  Future<void> _toggleFavorite() async {
+    await FavoritesService.toggle(_event.id);
+    if (mounted) setState(() => _isFavorite = !_isFavorite);
   }
 
   Future<void> _toggleAttend() async {
@@ -122,6 +135,27 @@ class _EventCardState extends State<EventCard> {
             top: 10,
             right: 10,
             child: _priceBadge(),
+          ),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: GestureDetector(
+              onTap: _toggleFavorite,
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: const BoxDecoration(
+                  color: Colors.black54,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  _isFavorite ? Icons.favorite : Icons.favorite_border,
+                  size: 18,
+                  color: _isFavorite
+                      ? const Color(0xFFD400FF)
+                      : Colors.white,
+                ),
+              ),
+            ),
           ),
         ],
       ),
