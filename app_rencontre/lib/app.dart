@@ -39,41 +39,37 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        MaterialApp(
-          title: 'Nocturne',
-          debugShowCheckedModeBanner: false,
-          navigatorKey: widget.navigatorKey,
-          theme: _nocturneTheme(),
-          onGenerateRoute: Routes.generateRoute,
-          home: FutureBuilder<String?>(
-            future: ApiService.getToken(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
-                );
-              }
-              return snapshot.data != null
-                  ? const HomePage()
-                  : const LoginPage();
-            },
-          ),
-        ),
-        if (_obscured)
-          Positioned.fill(
-            child: Container(
-              color: const Color(0xFF0D0010),
-              child: const Center(
-                child: Text(
-                  '🌙',
-                  style: TextStyle(fontSize: 48),
+    return MaterialApp(
+      title: 'Nocturne',
+      debugShowCheckedModeBanner: false,
+      navigatorKey: widget.navigatorKey,
+      theme: _nocturneTheme(),
+      onGenerateRoute: Routes.generateRoute,
+      builder: (context, child) => Stack(
+        children: [
+          child!,
+          if (_obscured)
+            Positioned.fill(
+              child: Container(
+                color: const Color(0xFF0D0010),
+                child: const Center(
+                  child: Text('🌙', style: TextStyle(fontSize: 48)),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
+      home: FutureBuilder<String?>(
+        future: ApiService.getToken(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return snapshot.data != null ? const HomePage() : const LoginPage();
+        },
+      ),
     );
   }
 
