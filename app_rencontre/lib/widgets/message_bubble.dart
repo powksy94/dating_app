@@ -95,7 +95,7 @@ class _MessageBubbleState extends State<MessageBubble> {
 
   Widget _reactionsRow() {
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(top: 4, bottom: 2),
       child: Wrap(
         spacing: 4,
         children: widget.message.reactions.entries.map((e) {
@@ -210,9 +210,11 @@ class _MessageBubbleState extends State<MessageBubble> {
                         )),
               ),
             )
-          else
+          else if (widget.message.text.isNotEmpty)
             Text(widget.message.text,
-                style: const TextStyle(color: Colors.white, fontSize: 15)),
+                style: const TextStyle(color: Colors.white, fontSize: 15))
+          else
+            const SizedBox.shrink(),
           const SizedBox(height: 4),
           Row(
             mainAxisSize: MainAxisSize.min,

@@ -111,7 +111,9 @@ class _ConversationPageState extends State<ConversationPage> {
   Future<void> _loadMessages() async {
     try {
       final msgs = await ChatService.getMessages(widget.match.matchId);
-      if (mounted) { setState(() { _messages = msgs; _loading = false; }); _scrollToBottom(); }
+      final filtered = msgs.where((m) =>
+          m.text.isNotEmpty || m.isImage || m.isAudio).toList();
+      if (mounted) { setState(() { _messages = filtered; _loading = false; }); _scrollToBottom(); }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
