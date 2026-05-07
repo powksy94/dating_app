@@ -1,5 +1,6 @@
 class ChatMatch {
   final String matchId;
+  final String userId;
   final String username;
   final String avatarUrl;
   final String? lastMessageText;
@@ -7,6 +8,7 @@ class ChatMatch {
 
   const ChatMatch({
     required this.matchId,
+    required this.userId,
     required this.username,
     required this.avatarUrl,
     this.lastMessageText,
@@ -17,6 +19,7 @@ class ChatMatch {
     final last = json['lastMessage'];
     return ChatMatch(
       matchId:         json['matchId'] as String,
+      userId:          json['userId']  as String? ?? '',
       username:        json['username'] as String? ?? 'Inconnu',
       avatarUrl:       json['avatarUrl'] as String? ?? '',
       lastMessageText: last?['text'] as String?,

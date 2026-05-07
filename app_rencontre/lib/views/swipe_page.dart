@@ -61,7 +61,8 @@ class _SwipePageState extends State<SwipePage> {
 
   void _showMatchDialog(AlternativeProfile profile, String matchId) {
     final chatMatch = ChatMatch(
-      matchId: matchId,
+      matchId:  matchId,
+      userId:   profile.uid,
       username: profile.username,
       avatarUrl: profile.avatarUrl,
     );

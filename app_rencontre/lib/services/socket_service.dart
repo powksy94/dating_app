@@ -53,5 +53,42 @@ class SocketService {
     _socket?.on('user_stop_typing', (data) => callback(data.toString()));
   }
 
+  void emitDeleteForAll(String matchId, String messageId) {
+    _socket?.emit('delete_message_for_all', {'matchId': matchId, 'messageId': messageId});
+  }
+
+  void onMessageDeletedForAll(void Function(String messageId) callback) {
+    _socket?.on('message_deleted_for_all', (data) => callback(data.toString()));
+  }
+
+  void getOnlineStatus(String targetUserId) {
+    _socket?.emit('get_online_status', targetUserId);
+  }
+
+  void onOnlineStatus(void Function(String userId, bool online, DateTime? lastSeen) callback) {
+    _socket?.on('online_status', (data) {
+      final map      = Map<String, dynamic>.from(data as Map);
+      final userId   = map['userId'].toString();
+      final online   = map['online'] as bool? ?? false;
+      final lastSeen = map['lastSeen'] != null
+          ? DateTime.tryParse(map['lastSeen'].toString())
+          : null;
+      callback(userId, online, lastSeen);
+    });
+  }
+
+  void onUserOnline(void Function(String userId) callback) {
+    _socket?.on('user_online', (data) => callback(data.toString()));
+  }
+
+  void onUserOffline(void Function(String userId, DateTime lastSeen) callback) {
+    _socket?.on('user_offline', (data) {
+      final map      = Map<String, dynamic>.from(data as Map);
+      final userId   = map['userId'].toString();
+      final lastSeen = DateTime.tryParse(map['lastSeen'].toString()) ?? DateTime.now();
+      callback(userId, lastSeen);
+    });
+  }
+
   void off(String event) => _socket?.off(event);
 }

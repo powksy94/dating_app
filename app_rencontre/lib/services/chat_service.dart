@@ -35,4 +35,20 @@ class ChatService {
       body: jsonEncode({'text': text}),
     );
   }
+
+  static Future<void> deleteForMe(String messageId) async {
+    final headers = await ApiService.authHeaders();
+    await http.delete(
+      Uri.parse('${ApiService.baseUrl}/chat/messages/$messageId/me'),
+      headers: headers,
+    );
+  }
+
+  static Future<void> deleteForAll(String messageId) async {
+    final headers = await ApiService.authHeaders();
+    await http.delete(
+      Uri.parse('${ApiService.baseUrl}/chat/messages/$messageId/all'),
+      headers: headers,
+    );
+  }
 }

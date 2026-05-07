@@ -60,6 +60,7 @@ class _ElegieSheetState extends State<_ElegieSheet> {
         // Match déclenché par l'élégie → animation + navigation conversation
         final chatMatch = ChatMatch(
           matchId:  matchId,
+          userId:   widget.profile.uid,
           username: widget.profile.username,
           avatarUrl: widget.profile.avatarUrl,
         );
