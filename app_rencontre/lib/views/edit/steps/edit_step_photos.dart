@@ -72,7 +72,8 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
   Widget build(BuildContext context) {
     final total = _existingPhotos.length + _newPaths.length;
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(
+          20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class ChatInputBar extends StatelessWidget {
   final TextEditingController ctrl;
   final VoidCallback onSend;
-  const ChatInputBar({super.key, required this.ctrl, required this.onSend});
+  final void Function(String)? onChanged;
+  const ChatInputBar({super.key, required this.ctrl, required this.onSend, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class ChatInputBar extends StatelessWidget {
                     borderSide: BorderSide.none,
                   ),
                 ),
+                onChanged: onChanged,
                 onSubmitted: (_) => onSend(),
               ),
             ),

@@ -10,7 +10,9 @@ class DeleteAccountDialog extends StatefulWidget{
 }
 
 class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
-  final _ctrl = TextEditingController();
+  final _ctrl  = TextEditingController();
+  bool _loading = false;
+  String? _error;
 
   @override
   void dispose() {
@@ -19,6 +21,19 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   }
 
   bool get _confirmed => _ctrl.text == widget.username;
+
+  Future<void> _delete() async {
+    setState(() { _loading = true; _error = null; });
+    final err = await AuthService().deleteAccount();
+    if (!mounted) return;
+    if (err == null) {
+      final nav = Navigator.of(context);
+      Navigator.pop(context);
+      nav.pushReplacementNamed('/login');
+    } else {
+      setState(() { _loading = false; _error = err; });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,32 +75,36 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
               ),
             ),
           ),
+          if (_error != null) ...[
+            const SizedBox(height: 10),
+            Text(_error!,
+                style: const TextStyle(
+                    color: Color(0xFF8B0000), fontSize: 12)),
+          ],
         ],
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: _loading ? null : () => Navigator.pop(context),
           child: const Text('Annuler',
-            style: TextStyle(color: Color(0xFF7B00D4))),
+              style: TextStyle(color: Color(0xFF7B00D4))),
         ),
         TextButton(
-          onPressed: _confirmed
-           ? () async {
-                final nav = Navigator.of(context);
-                Navigator.pop(context);
-                await AuthService().logout();
-                nav.pushReplacementNamed('/login');
-            } 
-            : null,
-          child: Text(
-            'Supprimer définitivement',
-            style: TextStyle(
-              color: _confirmed
-                ? const Color(0xFF8B0000)
-                : const Color(0xFF3D2A4A),
-              fontWeight: FontWeight.bold,
-            ),
-          )
+          onPressed: (_confirmed && !_loading) ? _delete : null,
+          child: _loading
+              ? const SizedBox(
+                  width: 16, height: 16,
+                  child: CircularProgressIndicator(
+                      strokeWidth: 2, color: Color(0xFF8B0000)))
+              : Text(
+                  'Supprimer définitivement',
+                  style: TextStyle(
+                    color: _confirmed
+                        ? const Color(0xFF8B0000)
+                        : const Color(0xFF3D2A4A),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
         ),
       ],
     );

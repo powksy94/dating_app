@@ -214,6 +214,7 @@ class _EventsPageState extends State<EventsPage> {
         await Future.wait([_loadEvents(), _loadFavorites()]);
       },
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.only(top: 8, bottom: 80),
         itemCount: filtered.length,
         itemBuilder: (_, i) => EventCard(

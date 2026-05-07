@@ -53,6 +53,20 @@ class AuthService {
     await ApiService.clearToken();
   }
 
+  Future<String?> deleteAccount() async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.delete(
+      Uri.parse('${ApiService.baseUrl}/auth/account'),
+      headers: headers,
+    );
+    if (res.statusCode == 200) {
+      await ApiService.clearToken();
+      return null;
+    }
+    final data = jsonDecode(res.body);
+    return (data['message'] as String?) ?? 'Erreur inconnue';
+  }
+
   Future<bool> isLoggedIn() async {
     final token = await ApiService.getToken();
     return token != null;
