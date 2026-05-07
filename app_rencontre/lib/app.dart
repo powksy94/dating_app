@@ -3,9 +3,11 @@ import 'roads.dart';
 import 'views/login_page.dart';
 import 'views/home_page.dart';
 import 'services/api_service.dart';
+import 'services/notification_service.dart';
 
 class App extends StatefulWidget {
-  const App({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+  const App({super.key, required this.navigatorKey});
 
   @override
   State<App> createState() => _AppState();
@@ -18,6 +20,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    NotificationService.init(widget.navigatorKey);
   }
 
   @override
@@ -41,6 +44,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         MaterialApp(
           title: 'Nocturne',
           debugShowCheckedModeBanner: false,
+          navigatorKey: widget.navigatorKey,
           theme: _nocturneTheme(),
           onGenerateRoute: Routes.generateRoute,
           home: FutureBuilder<String?>(

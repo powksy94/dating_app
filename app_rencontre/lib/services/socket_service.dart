@@ -33,13 +33,15 @@ class SocketService {
 
   void sendMessage(String matchId, String text, {
     String? imageUrl,
+    String? audioUrl,
     Map<String, dynamic>? replyTo,
   }) =>
       _socket?.emit('send_message', {
         'matchId': matchId,
         'text':    text,
         if (imageUrl != null) 'imageUrl': imageUrl,
-        if (replyTo != null) 'replyTo':  replyTo,
+        if (audioUrl != null) 'audioUrl': audioUrl,
+        if (replyTo != null)  'replyTo':  replyTo,
       });
 
   void emitTyping(String matchId) =>
@@ -68,6 +70,25 @@ class SocketService {
     _socket?.on('messages_read', (data) {
       final map = Map<String, dynamic>.from(data as Map);
       callback(map['matchId'].toString(), map['readBy'].toString());
+    });
+  }
+
+  void reactMessage(String matchId, String messageId, String emoji) {
+    _socket?.emit('react_message', {
+      'matchId':   matchId,
+      'messageId': messageId,
+      'emoji':     emoji,
+    });
+  }
+
+  void onMessageReacted(void Function(String messageId, Map<String, List<String>> reactions) callback) {
+    _socket?.on('message_reacted', (data) {
+      final map       = Map<String, dynamic>.from(data as Map);
+      final messageId = map['messageId'].toString();
+      final reactions = (map['reactions'] as Map<String, dynamic>? ?? {}).map(
+        (k, v) => MapEntry(k, List<String>.from(v as List)),
+      );
+      callback(messageId, reactions);
     });
   }
 

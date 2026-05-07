@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/message.dart';
+import 'chat/audio_player_bubble.dart';
 
 class MessageBubble extends StatefulWidget {
   final Message  message;
@@ -68,6 +69,8 @@ class _MessageBubbleState extends State<MessageBubble> {
                   if (widget.message.replyTo != null)
                     _replyPreview(widget.message.replyTo!),
                   _bubble(),
+                  if (widget.message.reactions.isNotEmpty)
+                    _reactionsRow(),
                 ],
               ),
             ),
@@ -86,6 +89,30 @@ class _MessageBubbleState extends State<MessageBubble> {
               ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _reactionsRow() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Wrap(
+        spacing: 4,
+        children: widget.message.reactions.entries.map((e) {
+          final emoji = e.key;
+          final count = e.value.length;
+          if (count == 0) return const SizedBox.shrink();
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+            decoration: BoxDecoration(
+              color: const Color(0xFF2D0040),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF3D2A4A)),
+            ),
+            child: Text('$emoji $count',
+                style: const TextStyle(fontSize: 12)),
+          );
+        }).toList(),
       ),
     );
   }
@@ -160,6 +187,11 @@ class _MessageBubbleState extends State<MessageBubble> {
                     color: Color(0xFF5A4A6A),
                     fontSize: 14,
                     fontStyle: FontStyle.italic))
+          else if (widget.message.isAudio)
+            AudioPlayerBubble(
+              audioUrl: widget.message.audioUrl!,
+              isMe:     widget.isMe,
+            )
           else if (widget.message.isImage)
             ClipRRect(
               borderRadius: BorderRadius.circular(12),

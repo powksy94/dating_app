@@ -53,6 +53,23 @@ class ChatService {
     return null;
   }
 
+  static Future<String?> uploadChatAudio(String audioPath) async {
+    final token = await ApiService.getToken();
+    final req   = http.MultipartRequest(
+      'POST',
+      Uri.parse('${ApiService.baseUrl}/chat/upload/audio'),
+    )
+      ..headers['Authorization'] = 'Bearer $token'
+      ..files.add(await http.MultipartFile.fromPath('audio', audioPath));
+
+    final stream = await req.send();
+    final body   = await stream.stream.bytesToString();
+    if (stream.statusCode == 200) {
+      return jsonDecode(body)['url'] as String?;
+    }
+    return null;
+  }
+
   static Future<void> deleteForMe(String messageId) async {
     final headers = await ApiService.authHeaders();
     await http.delete(

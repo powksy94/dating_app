@@ -26,13 +26,16 @@ class Message {
     final String       matchId;
     final String       sender;
     final String       text;
-    final String?      imageUrl;
-    final ReplyTo?     replyTo;
-    final DateTime     createdAt;
-    final bool         deletedForAll;
-    final List<String> readBy;
+    final String?                  imageUrl;
+    final String?                  audioUrl;
+    final ReplyTo?                 replyTo;
+    final Map<String, List<String>> reactions;
+    final DateTime                 createdAt;
+    final bool                     deletedForAll;
+    final List<String>             readBy;
 
     bool get isImage => imageUrl != null && imageUrl!.isNotEmpty;
+    bool get isAudio => audioUrl != null && audioUrl!.isNotEmpty;
 
     Message({
         required this.id,
@@ -40,7 +43,9 @@ class Message {
         required this.sender,
         required this.text,
         this.imageUrl,
+        this.audioUrl,
         this.replyTo,
+        this.reactions     = const {},
         required this.createdAt,
         this.deletedForAll = false,
         this.readBy        = const [],
@@ -55,22 +60,32 @@ class Message {
             sender:        data['sender']        ?? '',
             text:          data['text']          ?? '',
             imageUrl:      data['imageUrl']      as String?,
+            audioUrl:      data['audioUrl']      as String?,
             replyTo:       data['replyTo'] != null
                 ? ReplyTo.fromJson(Map<String, dynamic>.from(data['replyTo']))
                 : null,
+            reactions:     (data['reactions'] as Map<String, dynamic>? ?? {}).map(
+                (k, v) => MapEntry(k, List<String>.from(v as List)),
+            ),
             createdAt:     DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
             deletedForAll: data['deletedForAll'] ?? false,
             readBy:        List<String>.from(data['readBy'] ?? []),
         );
     }
 
-    Message copyWith({bool? deletedForAll, List<String>? readBy}) => Message(
+    Message copyWith({
+        bool?                        deletedForAll,
+        List<String>?                readBy,
+        Map<String, List<String>>?   reactions,
+    }) => Message(
         id:            id,
         matchId:       matchId,
         sender:        sender,
         text:          text,
         imageUrl:      imageUrl,
+        audioUrl:      audioUrl,
         replyTo:       replyTo,
+        reactions:     reactions     ?? this.reactions,
         createdAt:     createdAt,
         deletedForAll: deletedForAll ?? this.deletedForAll,
         readBy:        readBy        ?? this.readBy,
