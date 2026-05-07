@@ -4,35 +4,80 @@ import 'views/login_page.dart';
 import 'views/home_page.dart';
 import 'services/api_service.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> with WidgetsBindingObserver {
+  bool _obscured = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      _obscured = state == AppLifecycleState.inactive ||
+                 state == AppLifecycleState.paused;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Nocturne',
-      debugShowCheckedModeBanner: false,
-      theme: _nocturneTheme(),
-      onGenerateRoute: Routes.generateRoute,
-      home: FutureBuilder<String?>(
-        future: ApiService.getToken(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
-          return snapshot.data != null ? const HomePage() : const LoginPage();
-        },
-      ),
+    return Stack(
+      children: [
+        MaterialApp(
+          title: 'Nocturne',
+          debugShowCheckedModeBanner: false,
+          theme: _nocturneTheme(),
+          onGenerateRoute: Routes.generateRoute,
+          home: FutureBuilder<String?>(
+            future: ApiService.getToken(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+              return snapshot.data != null
+                  ? const HomePage()
+                  : const LoginPage();
+            },
+          ),
+        ),
+        if (_obscured)
+          Positioned.fill(
+            child: Container(
+              color: const Color(0xFF0D0010),
+              child: const Center(
+                child: Text(
+                  '🌙',
+                  style: TextStyle(fontSize: 48),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 
   ThemeData _nocturneTheme() {
-    const Color bgDark    = Color(0xFF0D0009);
-    const Color surface   = Color(0xFF1A0A1F);
-    const Color primary   = Color(0xFF7B00D4);
-    const Color secondary = Color(0xFF8B0000);
+    const Color bgDark        = Color(0xFF0D0009);
+    const Color surface       = Color(0xFF1A0A1F);
+    const Color primary       = Color(0xFF7B00D4);
+    const Color secondary     = Color(0xFF8B0000);
     const Color textPrimary   = Color(0xFFE8E0EE);
     const Color textSecondary = Color(0xFFAA9AB5);
 
@@ -40,8 +85,8 @@ class App extends StatelessWidget {
       brightness: Brightness.dark,
       scaffoldBackgroundColor: bgDark,
       colorScheme: const ColorScheme.dark(
-        surface: surface,
-        primary: primary,
+        surface:   surface,
+        primary:   primary,
         secondary: secondary,
         onPrimary: Colors.white,
         onSurface: textPrimary,
@@ -52,9 +97,9 @@ class App extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
-          color: textPrimary,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+          color:       textPrimary,
+          fontSize:    20,
+          fontWeight:  FontWeight.bold,
           letterSpacing: 2,
         ),
       ),

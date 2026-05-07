@@ -31,8 +31,16 @@ class SocketService {
   void joinRoom(String matchId) =>
       _socket?.emit('join_room', matchId);
 
-  void sendMessage(String matchId, String text) =>
-      _socket?.emit('send_message', {'matchId': matchId, 'text': text});
+  void sendMessage(String matchId, String text, {
+    String? imageUrl,
+    Map<String, dynamic>? replyTo,
+  }) =>
+      _socket?.emit('send_message', {
+        'matchId': matchId,
+        'text':    text,
+        if (imageUrl != null) 'imageUrl': imageUrl,
+        if (replyTo != null) 'replyTo':  replyTo,
+      });
 
   void emitTyping(String matchId) =>
       _socket?.emit('typing', matchId);
@@ -51,6 +59,16 @@ class SocketService {
 
   void onUserStopTyping(void Function(String) callback) {
     _socket?.on('user_stop_typing', (data) => callback(data.toString()));
+  }
+
+  void markRead(String matchId) =>
+      _socket?.emit('mark_read', matchId);
+
+  void onMessagesRead(void Function(String matchId, String readBy) callback) {
+    _socket?.on('messages_read', (data) {
+      final map = Map<String, dynamic>.from(data as Map);
+      callback(map['matchId'].toString(), map['readBy'].toString());
+    });
   }
 
   void emitDeleteForAll(String matchId, String messageId) {

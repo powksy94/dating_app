@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:image_picker/image_picker.dart';
 import '../models/chat_match.dart';
 import '../models/message.dart';
 import '../services/chat_service.dart';
@@ -63,6 +65,7 @@ class _ConversationPageState extends State<ConversationPage> {
   bool      _otherOnline  = false;
   DateTime? _otherLastSeen;
   String?   _myId;
+  Message?  _replyingTo;
 
   @override
   void initState() {
@@ -71,6 +74,7 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Future<void> _init() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
     _myId = await ApiService.getUserId();
     await _loadMessages();
     await SocketService.instance.connect();
@@ -100,6 +104,20 @@ class _ConversationPageState extends State<ConversationPage> {
         _otherOnline   = online;
         _otherLastSeen = lastSeen;
       });
+    });
+
+    SocketService.instance.markRead(widget.match.matchId);
+
+    SocketService.instance.onMessagesRead((matchId, readBy) {
+      if (mounted && matchId == widget.match.matchId) {
+        setState(() {
+          _messages = _messages.map((m) =>
+            m.sender == _myId && !m.isReadBy(readBy)
+                ? m.copyWith(readBy: [...m.readBy, readBy])
+                : m
+          ).toList();
+        });
+      }
     });
 
     SocketService.instance.onMessageDeletedForAll((messageId) {
@@ -154,10 +172,67 @@ class _ConversationPageState extends State<ConversationPage> {
 
   void _send() {
     final text = _ctrl.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty && _replyingTo == null) return;
     _ctrl.clear();
     SocketService.instance.emitStopTyping(widget.match.matchId);
-    SocketService.instance.sendMessage(widget.match.matchId, text);
+    SocketService.instance.sendMessage(
+      widget.match.matchId,
+      text,
+      replyTo: _replyingTo != null ? {
+        'id':       _replyingTo!.id,
+        'text':     _replyingTo!.text,
+        'sender':   _replyingTo!.sender,
+        if (_replyingTo!.imageUrl != null) 'imageUrl': _replyingTo!.imageUrl,
+      } : null,
+    );
+    if (mounted) setState(() => _replyingTo = null);
+  }
+
+  Widget _replyBar() {
+    final msg = _replyingTo!;
+    return Container(
+      color: const Color(0xFF120018),
+      padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+      child: Row(
+        children: [
+          const Icon(Icons.reply, size: 16, color: Color(0xFF7B00D4)),
+          const SizedBox(width: 8),
+          Container(
+            width: 3, height: 32,
+            color: const Color(0xFF7B00D4),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              msg.isImage ? '📷 Photo' : msg.text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  color: Color(0xFFAA9AB5), fontSize: 12),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close,
+                size: 16, color: Color(0xFF5A4A6A)),
+            onPressed: () => setState(() => _replyingTo = null),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _pickAndSendImage() async {
+    final img = await ImagePicker().pickImage(
+        source: ImageSource.gallery, imageQuality: 80);
+    if (img == null) return;
+
+    final url = await ChatService.uploadChatImage(img.path);
+    if (url == null || !mounted) return;
+
+    SocketService.instance.sendMessage(
+        widget.match.matchId, '', imageUrl: url);
   }
 
   Future<void> _deleteForMe(Message msg) async {
@@ -199,6 +274,8 @@ class _ConversationPageState extends State<ConversationPage> {
     SocketService.instance.off('online_status');
     SocketService.instance.off('user_online');
     SocketService.instance.off('user_offline');
+    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    SocketService.instance.off('messages_read');
     SocketService.instance.off('message_deleted_for_all');
     SocketService.instance.emitStopTyping(widget.match.matchId);
     _ctrl.dispose();
@@ -277,21 +354,33 @@ class _ConversationPageState extends State<ConversationPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                     itemCount: _messages.length,
-                    itemBuilder: (context, i) => MessageBubble(
-                      message: _messages[i],
-                      isMe: _messages[i].sender == _myId,
-                      onLongPress: (msg, isMe) => _showDeleteSheet(
-                        context, msg, isMe,
-                        onDeleteForMe:  () => _deleteForMe(msg),
-                        onDeleteForAll: () => _deleteForAll(msg),
-                      ),
-                    ),
+                    itemBuilder: (context, i) {
+                      final msg  = _messages[i];
+                      final isMe = msg.sender == _myId;
+                      final isLastMine = isMe &&
+                          _messages.lastIndexWhere((m) => m.sender == _myId) == i;
+                      return MessageBubble(
+                        message:         msg,
+                        isMe:            isMe,
+                        showReadReceipt: isLastMine,
+                        otherId:         widget.match.userId,
+                        onSwipeReply: (m) =>
+                            setState(() => _replyingTo = m),
+                        onLongPress: (m, me) => _showDeleteSheet(
+                          context, m, me,
+                          onDeleteForMe:  () => _deleteForMe(m),
+                          onDeleteForAll: () => _deleteForAll(m),
+                        ),
+                      );
+                    },
                   ),
                 ),
+                if (_replyingTo != null) _replyBar(),
                 ChatInputBar(
-                  ctrl: _ctrl,
-                  onSend: _send,
-                  onChanged: (_) => _onTypingChanged(),
+                  ctrl:         _ctrl,
+                  onSend:       _send,
+                  onImagePick:  _pickAndSendImage,
+                  onChanged:    (_) => _onTypingChanged(),
                 ),
               ],
             ),

@@ -36,6 +36,23 @@ class ChatService {
     );
   }
 
+  static Future<String?> uploadChatImage(String imagePath) async {
+    final token = await ApiService.getToken();
+    final req   = http.MultipartRequest(
+      'POST',
+      Uri.parse('${ApiService.baseUrl}/chat/upload/image'),
+    )
+      ..headers['Authorization'] = 'Bearer $token'
+      ..files.add(await http.MultipartFile.fromPath('image', imagePath));
+
+    final stream = await req.send();
+    final body   = await stream.stream.bytesToString();
+    if (stream.statusCode == 200) {
+      return jsonDecode(body)['url'] as String?;
+    }
+    return null;
+  }
+
   static Future<void> deleteForMe(String messageId) async {
     final headers = await ApiService.authHeaders();
     await http.delete(
