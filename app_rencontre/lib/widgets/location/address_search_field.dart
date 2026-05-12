@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/nominatim_service.dart';
+import '../../services/nominatim_service.dart';
 
 class AddressSearchField extends StatefulWidget {
   final void Function(NominatimResult) onSelected;

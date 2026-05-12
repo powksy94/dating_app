@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/music_tags.dart';
 import '../../../models/alternative_profile.dart';
 import '../../../services/firestore_service.dart';
-import '../../../widgets/tag_section.dart';
+import '../../../widgets/common/tag_section.dart';
 
 class EditStepTags extends StatefulWidget {
   final AlternativeProfile profile;

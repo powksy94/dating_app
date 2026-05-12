@@ -4,6 +4,7 @@ import 'views/login_page.dart';
 import 'views/home_page.dart';
 import 'services/api_service.dart';
 import 'services/notification_service.dart';
+import 'services/unread_service.dart';
 
 class App extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -21,6 +22,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     NotificationService.init(widget.navigatorKey);
+    UnreadService.refresh();
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/alternative_profile.dart';
-import '../models/chat_match.dart';
-import '../services/elegie_service.dart';
-import '../widgets/match/match_overlay.dart';
+import '../../models/alternative_profile.dart';
+import '../../models/chat_match.dart';
+import '../../services/elegie_service.dart';
+import '../../widgets/match/match_overlay.dart';
 
 void showElegieBottomSheet(
   BuildContext context,

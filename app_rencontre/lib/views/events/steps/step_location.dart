@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../services/nominatim_service.dart';
-import '../../../widgets/address_search_field.dart';
+import '../../../widgets/location/address_search_field.dart';
 
 class StepLocation extends StatefulWidget {
   final void Function(Map<String, dynamic>) onNext;

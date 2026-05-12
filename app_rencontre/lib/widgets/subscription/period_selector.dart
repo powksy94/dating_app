@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/subscription_plan.dart';
+import '../../models/subscription_plan.dart';
 
 class PeriodSelector extends StatelessWidget {
   final SubscriptionPeriod selected;

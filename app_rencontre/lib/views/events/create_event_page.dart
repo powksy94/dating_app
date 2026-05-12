@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/event_service.dart';
-import '../../widgets/step_progress_bar.dart';
+import '../../widgets/common/step_progress_bar.dart';
 import 'steps/step_cover_info.dart';
 import 'steps/step_datetime.dart';
 import 'steps/step_location.dart';

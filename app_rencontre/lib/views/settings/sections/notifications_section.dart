@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/settings_titles.dart';
+import '../../../widgets/settings/settings_titles.dart';
 
 class NotificationsSection extends StatelessWidget {
   final bool notifMatches;

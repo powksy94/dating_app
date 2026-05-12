@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/subscription_plan.dart';
 import '../services/subscription_service.dart';
-import '../widgets/period_selector.dart';
-import '../widgets/plan_card.dart';
+import '../widgets/subscription/period_selector.dart';
+import '../widgets/subscription/plan_card.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});

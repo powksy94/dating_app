@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../models/alternative_profile.dart';
 import '../models/chat_match.dart';
 import '../services/firestore_service.dart';
-import '../widgets/profile_card.dart';
-import '../widgets/profile_menu.dart';
+import '../services/unread_service.dart';
+import '../widgets/profile/profile_card.dart';
+import '../widgets/profile/profile_menu.dart';
 import 'swipe_page.dart';
 import 'conversation_list_page.dart';
 import 'conversation_page.dart';
@@ -39,33 +40,44 @@ class _HomePageState extends State<HomePage> {
           const _MyProfileTab(),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: ValueListenableBuilder<int>(
+        valueListenable: UnreadService.unreadCount,
+        builder: (context, unread, _) => NavigationBar(
         backgroundColor: const Color(0xFF120018),
         indicatorColor: const Color(0xFF7B00D4),
         selectedIndex: _tab,
         onDestinationSelected: (i) => setState(() => _tab = i),
-        destinations: const [
-          NavigationDestination(
+        destinations: [
+          const NavigationDestination(
             icon: Icon(Icons.nightlight_outlined),
             selectedIcon: Icon(Icons.nightlight),
             label: 'Découvrir',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.local_activity_outlined),
             selectedIcon: Icon(Icons.local_activity),
             label: 'Événements',
           ),
           NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline),
-            selectedIcon: Icon(Icons.chat_bubble),
+            icon: Badge(
+              isLabelVisible: unread > 0,
+              label: Text(unread > 99 ? '99+' : '$unread'),
+              child: const Icon(Icons.chat_bubble_outline),
+            ),
+            selectedIcon: Badge(
+              isLabelVisible: unread > 0,
+              label: Text(unread > 99 ? '99+' : '$unread'),
+              child: const Icon(Icons.chat_bubble),
+            ),
             label: 'Messages',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
             label: 'Profil',
           ),
         ],
+      ),
       ),
     );
   }

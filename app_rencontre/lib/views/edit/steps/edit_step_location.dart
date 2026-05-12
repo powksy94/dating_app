@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../models/alternative_profile.dart';
 import '../../../services/firestore_service.dart';
 import '../../../services/nominatim_service.dart';
-import '../../../widgets/address_search_field.dart';
+import '../../../widgets/location/address_search_field.dart';
 
 class EditStepLocation extends StatefulWidget {
   final AlternativeProfile profile;

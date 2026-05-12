@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/chat_match.dart';
+import '../report/report_block_sheet.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final ChatMatch match;
@@ -36,7 +37,8 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? NetworkImage(match.avatarUrl)
                 : null,
             child: match.avatarUrl.isEmpty
-                ? const Icon(Icons.person, color: Color(0xFF7B00D4), size: 18)
+                ? const Icon(Icons.person,
+                    color: Color(0xFF7B00D4), size: 18)
                 : null,
           ),
           const SizedBox(width: 12),
@@ -75,6 +77,16 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.more_vert, color: Colors.white),
+          onPressed: () => showReportBlockSheet(
+            context,
+            userId:   match.userId,
+            username: match.username,
+          ),
+        ),
+      ],
     );
   }
 }

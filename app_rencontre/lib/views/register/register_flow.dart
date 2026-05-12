@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/step_progress_bar.dart';
+import '../../widgets/common/step_progress_bar.dart';
 import 'steps/step_credentials.dart';
 import 'steps/step_identity.dart';
 import 'steps/step_photos.dart';

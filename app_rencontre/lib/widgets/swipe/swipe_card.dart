@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/alternative_profile.dart';
-import 'profile_card.dart';
+import '../../models/alternative_profile.dart';
+import '../profile/profile_card.dart';
 
 /// Carte de swipe avec overlays like/nope selon le déplacement horizontal.
 /// [horizontalOffset] : pourcentage fourni par CardSwiper (positif = droite, négatif = gauche)

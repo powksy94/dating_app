@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/settings_titles.dart';
+import '../../../widgets/settings/settings_titles.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});

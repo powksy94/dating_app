@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/alternative_profile.dart';
+import '../../models/alternative_profile.dart';
 
 class ProfileCard extends StatelessWidget {
   final AlternativeProfile profile;

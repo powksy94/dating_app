@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/event_model.dart';
-import '../section_block.dart';
+import '../common/section_block.dart';
 
 class EventInfoSection extends StatelessWidget {
   final EventModel event;

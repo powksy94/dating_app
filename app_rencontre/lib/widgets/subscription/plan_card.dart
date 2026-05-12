@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/subscription_plan.dart';
+import '../../models/subscription_plan.dart';
 
 class PlanCard extends StatelessWidget {
     final SubscriptionPlan plan;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/message.dart';
-import 'chat/audio_player_bubble.dart';
+import '../../models/message.dart';
+import 'audio_player_bubble.dart';
 
 class MessageBubble extends StatefulWidget {
   final Message  message;

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/alternative_profile.dart';
 import '../services/subscription_service.dart';
-import '../widgets/profile_card.dart';
-import '../widgets/section_block.dart';
+import '../widgets/profile/profile_card.dart';
+import '../widgets/common/section_block.dart';
 
 class ProfilePage extends StatefulWidget {
   final AlternativeProfile profile;

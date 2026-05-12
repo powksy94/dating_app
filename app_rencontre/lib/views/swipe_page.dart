@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import '../models/alternative_profile.dart';
 import '../services/firestore_service.dart';
-import '../widgets/swipe_card.dart';
-import '../widgets/swipe_buttons.dart';
+import '../widgets/swipe/swipe_card.dart';
+import '../widgets/swipe/swipe_buttons.dart';
 import '../models/chat_match.dart';
 import '../widgets/match/match_overlay.dart';
-import '../widgets/elegie_bottom_sheet.dart';
+import '../widgets/elegie/elegie_bottom_sheet.dart';
 
 class SwipePage extends StatefulWidget {
   final void Function(ChatMatch)? onNavigateToConversation;

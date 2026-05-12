@@ -3,6 +3,7 @@ import '../models/chat_match.dart';
 import '../models/elegie.dart';
 import '../services/chat_service.dart';
 import '../services/elegie_service.dart';
+import '../services/unread_service.dart';
 import 'conversation_page.dart';
 
 class ConversationListPage extends StatefulWidget {
@@ -93,6 +94,7 @@ class _ChatsTabState extends State<_ChatsTab> {
     try {
       final matches = await ChatService.getMatches();
       if (mounted) setState(() { _matches = matches; _loading = false; });
+      await UnreadService.refresh();
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
@@ -261,12 +263,34 @@ class _MatchTile extends StatelessWidget {
               : FontStyle.normal,
         ),
       ),
-      trailing: match.lastMessageAt != null
-          ? Text(
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (match.lastMessageAt != null)
+            Text(
               _formatTime(match.lastMessageAt!),
               style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 11),
-            )
-          : null,
+            ),
+          if (match.unreadCount > 0) ...[
+            const SizedBox(height: 4),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: const Color(0xFF7B00D4),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                match.unreadCount > 99 ? '99+' : '${match.unreadCount}',
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
