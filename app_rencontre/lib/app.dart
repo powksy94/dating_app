@@ -50,10 +50,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           child!,
           if (_obscured)
             Positioned.fill(
-              child: SafeArea(
-                child: Container(
-                  color: const Color(0xFF0D0010),
-                  child: const Center(
+              child: Container(
+                color: const Color(0xFF0D0010),
+                child: const SafeArea(
+                  child: Center(
                     child: Text('🌙', style: TextStyle(fontSize: 48)),
                   ),
                 ),

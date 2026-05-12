@@ -81,22 +81,26 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
             const SizedBox(height: 16),
 
             // ── Quick emojis ────────────────────────────────────────────────
-            Padding(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ..._kQuickEmojis.map((e) => GestureDetector(
-                    onTap: () => _react(e),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2D0040),
-                        borderRadius: BorderRadius.circular(24),
+                  ..._kQuickEmojis.map((e) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: GestureDetector(
+                      onTap: () => _react(e),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2D0040),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Text(e, style: const TextStyle(fontSize: 22)),
                       ),
-                      child: Text(e, style: const TextStyle(fontSize: 22)),
                     ),
                   )),
+                  const SizedBox(width: 4),
                   GestureDetector(
                     onTap: () => setState(() => _showEmojiField = true),
                     child: Container(

@@ -36,6 +36,7 @@ class _AudioPlayerBubbleState extends State<AudioPlayerBubble> {
     _player.onPlayerComplete.listen((_) {
       if (mounted) setState(() { _playing = false; _pos = Duration.zero; });
     });
+    _player.setSourceUrl(widget.audioUrl);
   }
 
   @override

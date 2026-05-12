@@ -5,6 +5,7 @@ class ChatInputBar extends StatelessWidget {
   final VoidCallback onSend;
   final VoidCallback? onImagePick;
   final VoidCallback? onMicPress;
+  final VoidCallback? onMicCancel;
   final bool          isRecording;
   final void Function(String)? onChanged;
 
@@ -14,6 +15,7 @@ class ChatInputBar extends StatelessWidget {
     required this.onSend,
     this.onImagePick,
     this.onMicPress,
+    this.onMicCancel,
     this.isRecording = false,
     this.onChanged,
   });
@@ -61,6 +63,20 @@ class ChatInputBar extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
+            if (isRecording)
+              GestureDetector(
+                onTap: onMicCancel,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF8B0000),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.delete_outline,
+                      color: Colors.white, size: 20),
+                ),
+              ),
+            const SizedBox(width: 6),
             GestureDetector(
               onTap: onMicPress,
               child: Container(

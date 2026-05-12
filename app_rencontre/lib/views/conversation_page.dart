@@ -55,8 +55,11 @@ class _ConversationPageState extends State<ConversationPage> {
   void _setupListeners() {
     SocketService.instance.onNewMessage((data) {
       if (mounted) {
-        setState(() => _messages.add(Message.fromJson(data)));
-        _scrollToBottom();
+        final msg = Message.fromJson(data);
+        if (msg.text.isNotEmpty || msg.isImage || msg.isAudio) {
+          setState(() => _messages.add(msg));
+          _scrollToBottom();
+        }
       }
     });
     SocketService.instance.onUserTyping((_) {
@@ -169,6 +172,11 @@ class _ConversationPageState extends State<ConversationPage> {
     }
   }
 
+  Future<void> _cancelRecording() async {
+    await _recorder.stop();
+    if (mounted) setState(() => _isRecording = false);
+  }
+
   Future<void> _pickAndSendImage() async {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 80);
     if (img == null) return;
@@ -260,6 +268,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   onSend:      _send,
                   onImagePick: _pickAndSendImage,
                   onMicPress:  _toggleRecording,
+                  onMicCancel: _cancelRecording,
                   isRecording: _isRecording,
                   onChanged:   (_) => _onTypingChanged(),
                 ),

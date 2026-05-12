@@ -61,14 +61,21 @@ class NotificationService {
     GlobalKey<NavigatorState> navigatorKey,
   ) {
     final data    = message.data;
-    final matchId = data['matchId'];
     final type    = data['type'];
+    final matchId = data['matchId'];
 
-    if (type == 'message' && matchId != null) {
-      navigatorKey.currentState?.pushNamed(
-        '/conversation',
-        arguments: {'matchId': matchId},
-      );
+    switch (type) {
+      case 'message':
+        if (matchId != null) {
+          navigatorKey.currentState?.pushNamed(
+            '/conversation',
+            arguments: {'matchId': matchId},
+          );
+        }
+      case 'match':
+        navigatorKey.currentState?.pushReplacementNamed('/home');
+      case 'elegie':
+        navigatorKey.currentState?.pushReplacementNamed('/home');
     }
   }
 }
