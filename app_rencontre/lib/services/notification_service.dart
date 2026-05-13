@@ -25,6 +25,8 @@ class NotificationService {
 
     // Token FCM → backend
     final token = await _messaging.getToken();
+    // ignore: avoid_print
+    print('🔑 FCM TOKEN: $token');
     if (token != null) await _saveToken(token);
 
     // Token renouvelé

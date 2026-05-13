@@ -56,7 +56,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
                 color: const Color(0xFF0D0010),
                 child: const SafeArea(
                   child: Center(
-                    child: Text('🌙', style: TextStyle(fontSize: 48)),
+                    child: Image(
+                      image: AssetImage('assets/icons/app_icon.png'),
+                      width: 80,
+                      height: 80,
+                    ),
                   ),
                 ),
               ),

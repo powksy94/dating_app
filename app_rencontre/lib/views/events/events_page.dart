@@ -52,6 +52,7 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   Future<void> _loadEvents() async {
+    if (!mounted) return;
     setState(() => _loading = true);
     final events = await EventService.getEvents(
       lat:          _position?.latitude,
