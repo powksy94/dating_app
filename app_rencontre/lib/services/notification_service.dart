@@ -78,6 +78,14 @@ class NotificationService {
         navigatorKey.currentState?.pushReplacementNamed('/home');
       case 'elegie':
         navigatorKey.currentState?.pushReplacementNamed('/home');
+      case 'admin_auth':
+        final sessionId = data['sessionId'];
+        if (sessionId != null) {
+          navigatorKey.currentState?.pushNamed(
+            '/admin-auth',
+            arguments: sessionId,
+          );
+        }
     }
   }
 }

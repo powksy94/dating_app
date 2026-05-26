@@ -13,6 +13,7 @@ import 'views/subscription_page.dart';
 import 'views/likes_history_page.dart';
 import 'views/matches_page.dart';
 import 'views/settings/settings_page.dart';
+import 'views/admin_auth_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -60,6 +61,11 @@ class Routes {
               return ConversationPage(match: match);
             },
           ),
+        );
+      case '/admin-auth':
+        final sessionId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => AdminAuthPage(sessionId: sessionId),
         );
       default:
         return MaterialPageRoute(
