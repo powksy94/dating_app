@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'subscription_period.dart';
 import 'plan_limits.dart';
 
+export 'subscription_period.dart';
+export 'plan_limits.dart';
+
 class SubscriptionFeature {
     final String label;
     final bool included;
