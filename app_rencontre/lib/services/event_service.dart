@@ -91,9 +91,25 @@ class EventService {
       if (stream.statusCode == 201) return null;
       final body = await stream.stream.bytesToString();
       try {
-        return jsonDecode(body)['message'] ?? 'Erreur inconnue';
+        final decoded = jsonDecode(body);
+        // Renvoie le code de limite si atteinte
+        if (decoded['code'] == 'EVENT_LIMIT_REACHED') return decoded['code'];
+        return decoded['message'] ?? 'Erreur inconnue';
       } catch (_) {
         return 'Erreur inconnue';
       }
+  }
+
+  /// {limit, remaining, unlimited}
+  static Future<Map<String, dynamic>> getStatus() async {
+    try {
+      final token = await ApiService.getToken();
+      final res = await http.get(
+        Uri.parse('${ApiService.baseUrl}/events/status'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      if (res.statusCode == 200) return jsonDecode(res.body) as Map<String, dynamic>;
+    } catch (_) {}
+    return {'unlimited': true, 'limit': null, 'remaining': null};
   }
 }

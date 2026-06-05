@@ -3,6 +3,7 @@ import '../models/subscription_plan.dart';
 import '../services/subscription_service.dart';
 import '../widgets/subscription/period_selector.dart';
 import '../widgets/subscription/plan_card.dart';
+import '../widgets/subscription/subscription_action_button.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});
@@ -13,9 +14,10 @@ class SubscriptionPage extends StatefulWidget {
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
   late PageController _controller;
-  int _current = 0;
+  int _current               = 0;
   SubscriptionPeriod _period = SubscriptionPeriod.month;
-  bool _loading = true;
+  String _activePlan         = 'ombre';
+  bool _loading              = true;
 
   @override
   void initState() {
@@ -28,19 +30,20 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     final planNames = ['ombre', 'nocturne', 'abyssal'];
     final planIndex = planNames.indexOf(sub['plan'] ?? 'ombre');
     final periodMap = {
-      'week': SubscriptionPeriod.week,
+      'week':  SubscriptionPeriod.week,
       'month': SubscriptionPeriod.month,
-      'year': SubscriptionPeriod.year,
+      'year':  SubscriptionPeriod.year,
     };
     final period = periodMap[sub['period']] ?? SubscriptionPeriod.month;
-    final index = planIndex < 0 ? 0 : planIndex;
+    final index  = planIndex < 0 ? 0 : planIndex;
 
     _controller = PageController(viewportFraction: 0.88, initialPage: index);
     if (mounted) {
       setState(() {
-        _current = index;
-        _period = period;
-        _loading = false;
+        _current    = index;
+        _period     = period;
+        _activePlan = sub['plan'] ?? 'ombre';
+        _loading    = false;
       });
     }
   }
@@ -49,6 +52,22 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   void dispose() {
     if (!_loading) _controller.dispose();
     super.dispose();
+  }
+
+  void _onSubscribed(String plan, SubscriptionPeriod period) {
+    setState(() {
+      _activePlan = plan;
+      _period     = period;
+    });
+  }
+
+  void _onCancelled() {
+    setState(() {
+      _activePlan = 'ombre';
+      _current    = 0;
+    });
+    _controller.animateToPage(0,
+        duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
   }
 
   @override
@@ -86,7 +105,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             child: Text(
               'Rejoins les ténèbres sans limites',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14, letterSpacing: 0.5),
+              style: TextStyle(
+                  color: Color(0xFFAA9AB5), fontSize: 14, letterSpacing: 0.5),
             ),
           ),
           const SizedBox(height: 20),
@@ -101,19 +121,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               controller: _controller,
               itemCount: kSubscriptionPlans.length,
               onPageChanged: (i) => setState(() => _current = i),
-              itemBuilder: (context, index) {
-                final isActive = index == _current;
-                return AnimatedScale(
-                  scale: isActive ? 1.0 : 0.92,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                  child: PlanCard(
-                    plan: kSubscriptionPlans[index],
-                    isActive: isActive,
-                    period: _period,
-                  ),
-                );
-              },
+              itemBuilder: (_, index) => AnimatedScale(
+                scale: index == _current ? 1.0 : 0.92,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+                child: PlanCard(
+                  plan: kSubscriptionPlans[index],
+                  isActive: index == _current,
+                  period: _period,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -127,47 +144,21 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 width: isActive ? 24 : 8,
                 height: 8,
                 decoration: BoxDecoration(
-                  color: isActive ? currentPlan.accentColor : const Color(0xFF3D2A4A),
+                  color: isActive
+                      ? currentPlan.accentColor
+                      : const Color(0xFF3D2A4A),
                   borderRadius: BorderRadius.circular(4),
                 ),
               );
             }),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton(
-                onPressed: currentPlan.isFree
-                    ? null
-                    : () {/* TODO: lancer le paiement */},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: currentPlan.accentColor,
-                  disabledBackgroundColor: const Color(0xFF3D2A4A),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                ),
-                child: Text(
-                  currentPlan.isFree
-                      ? 'Plan actuel'
-                      : 'Choisir ${currentPlan.name}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'Résiliation possible à tout moment',
-            style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
+          SubscriptionActionButton(
+            plan:        currentPlan,
+            period:      _period,
+            activePlan:  _activePlan,
+            onSubscribed: _onSubscribed,
+            onCancelled:  _onCancelled,
           ),
           SizedBox(height: 16 + MediaQuery.of(context).padding.bottom),
         ],

@@ -40,4 +40,17 @@ class ElegieService {
     final List data = jsonDecode(res.body);
     return data.map((e) => Elegie.fromSentJson(e)).toList();
   }
+
+  /// {limit, remaining, unlimited}
+  static Future<Map<String, dynamic>> getStatus() async {
+    try {
+      final headers = await ApiService.authHeaders();
+      final res = await http.get(
+        Uri.parse('${ApiService.baseUrl}/elegie/status'),
+        headers: headers,
+      );
+      if (res.statusCode == 200) return jsonDecode(res.body) as Map<String, dynamic>;
+    } catch (_) {}
+    return {'unlimited': true, 'limit': null, 'remaining': null};
+  }
 }

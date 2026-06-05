@@ -4,6 +4,7 @@ import '../../../../services/auth_service.dart';
 import '../../../../services/firestore_service.dart';
 import '../../../../services/photo_service.dart';
 import '../../../widgets/register/animated_step.dart';
+import '../registration_success_page.dart';
 
 class StepPreferences extends StatefulWidget {
     final Map<String, dynamic> data;
@@ -75,7 +76,17 @@ class _StepPreferencesState extends State<StepPreferences> {
                 if (d['location'] != null) 'location': d['location'],
             });
 
-            if (mounted) Navigator.pushReplacementNamed(context, '/home');
+            if (mounted) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => const RegistrationSuccessPage(),
+                  transitionsBuilder: (_, anim, __, child) =>
+                      FadeTransition(opacity: anim, child: child),
+                  transitionDuration: const Duration(milliseconds: 600),
+                ),
+              );
+            }
         } catch (e) {
             setState(() {_error = e.toString(); _loading = false;});
         }
