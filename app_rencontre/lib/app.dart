@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'roads.dart';
-import 'views/login_page.dart';
-import 'views/home_page.dart';
-import 'services/api_service.dart';
-import 'services/notification_service.dart';
-import 'services/unread_service.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:nocturne/roads.dart';
+import 'package:nocturne/domains/auth/views/login_page.dart';
+import 'package:nocturne/domains/home/views/home_page.dart';
+import 'package:nocturne/shared/services/api_service.dart';
+import 'package:nocturne/shared/services/notification_service.dart';
+import 'package:nocturne/shared/services/unread_service.dart';
 
 class App extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;

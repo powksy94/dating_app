@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
-import 'views/home_page.dart';
-import 'views/login_page.dart';
-import 'views/profile_page.dart';
-import 'views/profil_edit_page.dart';
-import 'views/chat_page.dart';
-import 'views/conversation_page.dart';
-import 'models/alternative_profile.dart';
-import 'models/chat_match.dart';
-import 'services/chat_service.dart';
-import 'views/register/register_flow.dart';
-import 'views/subscription_page.dart';
-import 'views/likes_history_page.dart';
-import 'views/matches_page.dart';
-import 'views/settings/settings_page.dart';
-import 'views/admin_auth_page.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:nocturne/domains/home/views/home_page.dart';
+import 'package:nocturne/domains/auth/views/login_page.dart';
+import 'package:nocturne/domains/profile/views/profile_page.dart';
+import 'package:nocturne/domains/profile/views/profil_edit_page.dart';
+import 'package:nocturne/domains/chat/views/chat_page.dart';
+import 'package:nocturne/domains/chat/views/conversation_page.dart';
+import 'package:nocturne/domains/profile/models/alternative_profile.dart';
+import 'package:nocturne/domains/match/models/chat_match.dart';
+import 'package:nocturne/domains/chat/services/chat_service.dart';
+import 'package:nocturne/domains/auth/views/register/register_flow.dart';
+import 'package:nocturne/domains/subscription/views/subscription_page.dart';
+import 'package:nocturne/domains/discovery/views/likes_history_page.dart';
+import 'package:nocturne/domains/match/views/matches_page.dart';
+import 'package:nocturne/domains/settings/views/settings_page.dart';
+import 'package:nocturne/domains/admin/views/admin_auth_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
