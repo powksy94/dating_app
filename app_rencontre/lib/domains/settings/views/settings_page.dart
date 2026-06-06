@@ -9,6 +9,7 @@ import 'package:nocturne/domains/settings/sections/account_section.dart';
 import 'package:nocturne/domains/settings/sections/about_section.dart';
 import 'package:nocturne/domains/settings/dialogs/change_password_dialog.dart';
 import 'package:nocturne/domains/settings/dialogs/delete_account_dialog.dart';
+import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -25,6 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
   double _maxDistance  = 50;
   RangeValues _ageRange = const RangeValues(18, 45);
   String _username = '';
+  AlternativeProfile? _profile;
   bool _loading = true;
 
   @override
@@ -37,7 +39,10 @@ class _SettingsPageState extends State<SettingsPage> {
     final prefs = await SharedPreferences.getInstance();
     try {
       final profile = await FirestoreService().getMyProfile();
-      if (mounted) _username = profile?.username ?? '';
+      if (mounted) {
+      _username = profile?.username ?? '';
+      _profile = profile;
+      }
     } catch (_) {}
     if (!mounted) return;
     setState(() {
@@ -62,6 +67,15 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _saveDouble(String key, double value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble(key, value);
+  }
+
+  void _editProfile() {
+    Navigator.pushNamed(
+      context,'/edit-profile',
+      arguments: _profile ?? AlternativeProfile(
+        id: '', uid: '', username: '', avatarUrl: '', bio: ''
+        ),
+    );
   }
 
   void _showChangePasswordDialog() {
@@ -140,6 +154,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 AccountSection(
+                  onEditProfile: _editProfile,
                   onChangePassword: _showChangePasswordDialog,
                   onLogout: _logout,
                   onDeleteAccount: _confirmDeleteAccount,

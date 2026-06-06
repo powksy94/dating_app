@@ -2,12 +2,14 @@
 import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
 
 class AccountSection extends StatelessWidget {
+  final VoidCallback onEditProfile;
   final VoidCallback onChangePassword;
   final VoidCallback onDeleteAccount;
   final VoidCallback onLogout;
 
   const AccountSection({
     super.key,
+    required this.onEditProfile,
     required this.onChangePassword,
     required this.onDeleteAccount,
     required this.onLogout,
@@ -19,6 +21,11 @@ class AccountSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SectionHeader('Compte'),
+        ActionTile(
+          icon: Icons.edit_outlined,
+          label: 'Modifier mon profil',
+          onTap: onEditProfile,
+        ),
         ActionTile(
           icon: Icons.lock_outline,
           label: 'Changer le mot de passe',

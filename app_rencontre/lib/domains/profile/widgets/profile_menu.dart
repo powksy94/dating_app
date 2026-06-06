@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileMenu extends StatelessWidget {
-  final VoidCallback onEdit;
-  const ProfileMenu({super.key, required this.onEdit});
+  const ProfileMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +34,19 @@ class ProfileMenu extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _MenuItem(
-            icon: Icons.edit_outlined,
-            label: 'Modifier mon profil',
-            onTap: onEdit,
-          ),
-          _MenuItem(
             icon: Icons.favorite_border,
             label: 'Historique des likes',
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/likes-history');
+            },
+          ),
+          _MenuItem(
+            icon: Icons.remove_red_eye_outlined,
+            label: 'Visiteurs de mon profil',
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/visitors');
             },
           ),
           _MenuItem(

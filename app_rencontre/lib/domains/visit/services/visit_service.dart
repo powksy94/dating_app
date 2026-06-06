@@ -4,7 +4,8 @@ import 'package:nocturne/shared/services/api_service.dart';
 
 class VisitService {
     /// Liste des visiteurs du profil (30 derniers jours). Nécessite Nocturne/Abyssal.
-    static Future<List<Map<String, dynamic>>> getMyVisitors() async {
+    /// [forbidden] = true si le plan est insuffisant (403).
+    static Future<({List<Map<String, dynamic>> visitors, bool forbidden})> getMyVisitors() async {
         try {
             final headers = await ApiService.authHeaders();
             final res = await http.get(
@@ -12,9 +13,11 @@ class VisitService {
                 headers: headers,
             );
             if (res.statusCode == 200) {
-                return List<Map<String, dynamic>>.from(jsonDecode(res.body));
+                final list = (jsonDecode(res.body) as List).cast<Map<String, dynamic>>();
+                return (visitors: list, forbidden: false);
             }
+            if (res.statusCode == 403) return (visitors: <Map<String, dynamic>>[], forbidden: true);
         } catch (_) {}
-        return [];
+        return (visitors: <Map<String, dynamic>>[], forbidden: false);
     }
 }

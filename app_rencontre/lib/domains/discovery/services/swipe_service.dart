@@ -16,6 +16,34 @@ class SwipeService {
         return {'unlimited': true, 'limit': null, 'remaining': null};
     }
 
+    /// Like un profil via l'API. Retourne {matchId?, limitReached}.
+    static Future<Map<String, dynamic>> like(String targetId) async {
+        try {
+            final headers = await ApiService.authHeaders();
+            final res = await http.post(
+                Uri.parse('${ApiService.baseUrl}/swipe/like/$targetId'),
+                headers: headers,
+            );
+            if (res.statusCode == 429) return {'limitReached': true};
+            if (res.statusCode == 200) {
+                final data = jsonDecode(res.body) as Map<String, dynamic>;
+                return {'limitReached': false, ...data};
+            }
+        } catch (_) {}
+        return {'limitReached': false};
+    }
+
+    /// Passe un profil (dislike).
+    static Future<void> pass(String targetId) async {
+        try {
+            final headers = await ApiService.authHeaders();
+            await http.post(
+                Uri.parse('${ApiService.baseUrl}/swipe/pass/$targetId'),
+                headers: headers,
+            );
+        } catch (_) {}
+    }
+
     /// Annule le dernier like. Retourne le userId rewind ou null si erreur/plan insuffisant.
     static Future<String?> rewind() async {
         try {
@@ -31,8 +59,9 @@ class SwipeService {
         return null;
     }
 
-    /// Liste des utilisateurs qui ont liké le profil courant (Nocturne/Abyssal).
-    static Future<List<Map<String, dynamic>>> getWhoLikedMe() async {
+    /// Retourne les profils qui ont liké l'utilisateur courant (Nocturne/Abyssal).
+    /// [forbidden] = true si le plan est insuffisant (403).
+    static Future<({List<Map<String, dynamic>> profiles, bool forbidden})> getWhoLikedMe() async {
         try {
             final headers = await ApiService.authHeaders();
             final res = await http.get(
@@ -40,9 +69,11 @@ class SwipeService {
                 headers: headers,
             );
             if (res.statusCode == 200) {
-                return List<Map<String, dynamic>>.from(jsonDecode(res.body));
+                final list = (jsonDecode(res.body) as List).cast<Map<String, dynamic>>();
+                return (profiles: list, forbidden: false);
             }
+            if (res.statusCode == 403) return (profiles: <Map<String, dynamic>>[], forbidden: true);
         } catch (_) {}
-        return [];
+        return (profiles: <Map<String, dynamic>>[], forbidden: false);
     }
 }

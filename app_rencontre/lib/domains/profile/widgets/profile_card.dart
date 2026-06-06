@@ -3,8 +3,7 @@ import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 
 class ProfileCard extends StatelessWidget {
   final AlternativeProfile profile;
-  final VoidCallback? onEdit;
-  const ProfileCard({super.key, required this.profile, this.onEdit});
+  const ProfileCard({super.key, required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -12,26 +11,10 @@ class ProfileCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       child: SizedBox(
         height: 540,
-        child: Stack(
+        child:Stack(
           children: [
             _Background(profile.avatarUrl),
             _GothGradient(),
-            if (onEdit !=null)
-              Positioned(
-                top: 12, right: 12,
-                child: GestureDetector(
-                  onTap: onEdit,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1A0A1F).withValues(alpha: 0.8),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFF7B00D4)),
-                    ),
-                    child: const Icon(Icons.edit, color: Color(0xFF7B00D4), size: 20),
-                  ),
-                ),
-              ),
             Positioned(
               left: 18, right: 18, bottom: 20,
               child: Column(
@@ -43,19 +26,19 @@ class ProfileCard extends StatelessWidget {
                     Wrap(
                       spacing: 6, runSpacing: 6,
                       children: profile.aesthetics
-                          .map((a) => AestheticChip(label: a))
-                          .toList(),
+                        .map((a) => AestheticChip(label: a))
+                        .toList(),
                     ),
-                  const SizedBox(height: 10),
-                  Text(
-                    profile.bio,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white.withValues(alpha: 0.85)),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    Text(
+                      profile.bio,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white.withValues(alpha: 0.85)),
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

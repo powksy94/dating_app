@@ -14,6 +14,7 @@ import 'package:nocturne/domains/discovery/views/likes_history_page.dart';
 import 'package:nocturne/domains/match/views/matches_page.dart';
 import 'package:nocturne/domains/settings/views/settings_page.dart';
 import 'package:nocturne/domains/admin/views/admin_auth_page.dart';
+import 'package:nocturne/domains/visit/views/visitors_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -42,6 +43,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const MatchesPage());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsPage());
+      case '/visitors':
+        return MaterialPageRoute(builder: (_) => const VisitorsPage());
       case '/conversation':
         final args    = settings.arguments as Map<String, dynamic>;
         final matchId = args['matchId'] as String;

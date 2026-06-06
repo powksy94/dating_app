@@ -117,17 +117,7 @@ class _MyProfileTabState extends State<_MyProfileTab> {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (_) => ProfileMenu(
-        onEdit: () {
-          Navigator.pop(context);
-          Navigator.pushNamed(
-            context, '/edit-profile',
-            arguments: _profile ?? AlternativeProfile(
-              id: '', uid: '', username: '', avatarUrl: '', bio: '',
-            ),
-          ).then((_) => _loadProfile());
-        },
-      ),
+      builder: (_) => const ProfileMenu(),
     );
   }
 
@@ -193,13 +183,7 @@ class _MyProfileTabState extends State<_MyProfileTab> {
         children: [
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/profile', arguments: p),
-            child: ProfileCard(
-              profile: p,
-              onEdit: () => Navigator.pushNamed(
-                context, '/edit-profile',
-                arguments: p,
-              ).then((_) => _loadProfile()),
-            ),
+            child: ProfileCard(profile: p),
           ),
           const SizedBox(height: 16),
           SizedBox(

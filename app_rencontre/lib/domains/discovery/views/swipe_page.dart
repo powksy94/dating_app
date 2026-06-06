@@ -1,12 +1,13 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
-import 'package:nocturne/domains/discovery/widgets/swipe_card.dart';
-import 'package:nocturne/domains/discovery/widgets/swipe_buttons.dart';
+import 'package:nocturne/domains/discovery/widgets/swipe_body.dart';
+import 'package:nocturne/domains/discovery/services/swipe_service.dart';
+import 'package:nocturne/domains/subscription/services/boost_service.dart';
+import 'package:nocturne/domains/subscription/widgets/paywall_sheet.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/match/widgets/match_overlay.dart';
-import 'package:nocturne/domains/elegie/widgets/elegie_bottom_sheet.dart';
 
 class SwipePage extends StatefulWidget {
   final void Function(ChatMatch)? onNavigateToConversation;
@@ -21,145 +22,126 @@ class _SwipePageState extends State<SwipePage> {
   final _firestore  = FirestoreService();
 
   List<AlternativeProfile> _profiles = [];
-  bool _loading = true;
-  int _currentIndex = 0;
+  bool _loading     = true;
+  int  _currentIndex = 0;
+  bool _unlimited   = true;
+  int  _remaining   = 0;
+  int  _limit       = 30;
+  int  _boostCredits = 0;
+  bool _canRewind   = false;
 
   @override
-  void initState() {
-    super.initState();
-    _loadProfiles();
-  }
+  void initState() { super.initState(); _loadAll(); }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  void dispose() { _controller.dispose(); super.dispose(); }
+
+  Future<void> _loadAll() async =>
+      Future.wait([_loadProfiles(), _loadStatus()]);
 
   Future<void> _loadProfiles() async {
     try {
       await _firestore.seedDemoLikes();
-      final profiles = await _firestore.fetchSwipeProfiles();
-      if (mounted) setState(() { _profiles = profiles; _loading = false; });
+      final p = await _firestore.fetchSwipeProfiles();
+      if (mounted) setState(() { _profiles = p; _loading = false; });
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
   }
 
-  void _onSwipe(int? prev, int? next, CardSwiperDirection direction) {
+  Future<void> _loadStatus() async {
+    final swipe = await SwipeService.getStatus();
+    final boost = await BoostService.getStatus();
+    if (!mounted) return;
+    setState(() {
+      _unlimited    = swipe['unlimited'] as bool? ?? true;
+      _remaining    = swipe['remaining'] as int?  ?? 0;
+      _limit        = swipe['limit']     as int?  ?? 30;
+      _boostCredits = boost['available'] as int?  ?? 0;
+    });
+  }
+
+  Future<void> _onSwipe(int? prev, int? next, CardSwiperDirection dir) async {
     if (prev == null) return;
     final profile = _profiles[prev];
     if (next != null) setState(() => _currentIndex = next);
-    if (direction == CardSwiperDirection.right) {
-      _firestore.saveLike(profile.uid).then((matchId) {
-        if (matchId != null && mounted) _showMatchDialog(profile, matchId);
-      });
-    } else if (direction == CardSwiperDirection.left) {
-      _firestore.saveDisLike(profile.uid);
+
+    if (dir == CardSwiperDirection.right) {
+      if (!_unlimited && _remaining <= 0) { _showPaywall('swipe'); return; }
+      final res = await SwipeService.like(profile.uid);
+      if (res['limitReached'] == true && mounted) { _showPaywall('swipe'); return; }
+      if (!_unlimited) setState(() => _remaining = (_remaining - 1).clamp(0, _limit));
+      setState(() => _canRewind = true);
+      final matchId = res['matchId'] as String?;
+      if (matchId != null && mounted) _showMatch(profile, matchId);
+    } else {
+      SwipeService.pass(profile.uid);
     }
   }
 
-  void _showMatchDialog(AlternativeProfile profile, String matchId) {
-    final chatMatch = ChatMatch(
-      matchId:  matchId,
-      userId:   profile.uid,
-      username: profile.username,
-      avatarUrl: profile.avatarUrl,
-    );
-    Navigator.push(
+  Future<void> _onRewind() async {
+    final id = await SwipeService.rewind();
+    if (id != null && mounted) {
+      setState(() { _canRewind = false; if (!_unlimited) _remaining = (_remaining + 1).clamp(0, _limit); });
+      _loadProfiles();
+    }
+  }
+
+  Future<void> _onBoost() async {
+    final res = await BoostService.useBoost();
+    if (res != null && mounted) {
+      setState(() => _boostCredits = res['remaining'] as int? ?? 0);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Boost activé — ton profil est mis en avant 30 min !'),
+        backgroundColor: Color(0xFF4A0072),
+      ));
+    }
+  }
+
+  void _showPaywall(String type) {
+    final isSwipe = type == 'swipe';
+    PaywallSheet.show(
       context,
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (_, __, ___) => MatchOverlay(
-          matchedProfile: profile,
-          myAvatarUrl: null,
-          onMessage: () => widget.onNavigateToConversation?.call(chatMatch),
-        ),
-      ),
+      title: isSwipe ? 'Limite de swipes atteinte' : '${type[0].toUpperCase()}${type.substring(1)} indisponible',
+      description: isSwipe
+          ? 'Tu as utilisé tes $_limit swipes du jour. Passe à Nocturne pour swiper sans limite.'
+          : 'Fonctionnalité réservée aux abonnés Nocturne et Abyssal.',
+      requiredPlan: 'nocturne',
+      icon: isSwipe ? Icons.swap_horiz : Icons.replay,
     );
+  }
+
+  void _showMatch(AlternativeProfile profile, String matchId) {
+    final match = ChatMatch(matchId: matchId, userId: profile.uid, username: profile.username, avatarUrl: profile.avatarUrl);
+    Navigator.push(context, PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (_, __, ___) => MatchOverlay(
+        matchedProfile: profile, myAvatarUrl: null,
+        onMessage: () => widget.onNavigateToConversation?.call(match),
+      ),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_loading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
+    if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
     return Scaffold(
       appBar: AppBar(title: const Text('NOCTURNE')),
       body: _profiles.isEmpty
           ? const _EmptyState()
-          : SafeArea(
-              top: false,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: CardSwiper(
-                      controller: _controller,
-                      cardsCount: _profiles.length,
-                      onSwipe: _onSwipe,
-                      numberOfCardsDisplayed: _profiles.length >= 2 ? 2 : 1,
-                      scale: 0.95,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      cardBuilder: (context, index) =>
-                          SwipeCard(
-                            profile: _profiles[index],
-                            horizontalOffset: 0,
-                            onTap: () => Navigator.pushNamed(
-                              context, '/profile',
-                              arguments: _profiles[index],
-                            ),
-                          ),
-                    ),
-                  ),
-                  // Bouton élégie
-                  if (_profiles.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (_currentIndex < _profiles.length) {
-                            showElegieBottomSheet(
-                              context,
-                              _profiles[_currentIndex],
-                              widget.onNavigateToConversation,
-                            );
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF1A0A1F),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: const Color(0xFF7B00D4), width: 0.8),
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.edit_note, color: Color(0xFF7B00D4), size: 18),
-                              SizedBox(width: 6),
-                              Text(
-                                'Élégie',
-                                style: TextStyle(
-                                  color: Color(0xFF7B00D4),
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  SwipeActionButtons(
-                    onDislike: () => _controller.swipeLeft(),
-                    onLike:    () => _controller.swipeRight(),
-                  ),
-                ],
-              ),
+          : SwipeBody(
+              profiles:               _profiles,
+              controller:             _controller,
+              onSwipe:                _onSwipe,
+              onRewind:               _onRewind,
+              onBoost:                _onBoost,
+              currentIndex:           _currentIndex,
+              unlimited:              _unlimited,
+              remaining:              _remaining,
+              limit:                  _limit,
+              boostCredits:           _boostCredits,
+              canRewind:              _canRewind,
+              onNavigateToConversation: widget.onNavigateToConversation,
             ),
     );
   }
@@ -167,21 +149,12 @@ class _SwipePageState extends State<SwipePage> {
 
 class _EmptyState extends StatelessWidget {
   const _EmptyState();
-
   @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),
-          SizedBox(height: 16),
-          Text(
-            'Aucun profil dans les parages...',
-            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 16),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => const Center(
+    child: Column(mainAxisSize: MainAxisSize.min, children: [
+      Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),
+      SizedBox(height: 16),
+      Text('Aucun profil dans les parages...', style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 16)),
+    ]),
+  );
 }
