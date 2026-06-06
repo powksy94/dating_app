@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_dialogs.dart';
@@ -7,6 +7,7 @@ class SubscriptionActionButton extends StatefulWidget {
   final SubscriptionPlan plan;
   final SubscriptionPeriod period;
   final String activePlan;
+  final SubscriptionPeriod activePeriod;
   final void Function(String plan, SubscriptionPeriod period) onSubscribed;
   final VoidCallback onCancelled;
 
@@ -15,6 +16,7 @@ class SubscriptionActionButton extends StatefulWidget {
     required this.plan,
     required this.period,
     required this.activePlan,
+    required this.activePeriod,
     required this.onSubscribed,
     required this.onCancelled,
   });
@@ -26,12 +28,21 @@ class SubscriptionActionButton extends StatefulWidget {
 class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
   bool _loading = false;
 
-  bool get _isActive =>
-      widget.plan.name.toLowerCase() == widget.activePlan;
+  bool get _isCurrentPlan => widget.plan.name.toLowerCase() == widget.activePlan;
+  bool get _isPeriodSame  => widget.period == widget.activePeriod;
+  bool get _isFullyActive => _isCurrentPlan && _isPeriodSame;
+
+  String get _buttonLabel {
+    if (widget.plan.isFree)   return 'Plan gratuit';
+    if (_isFullyActive)       return '✓ Plan actuel';
+    if (_isCurrentPlan)       return 'Changer de période';
+    return 'Choisir ${widget.plan.name}';
+  }
+
+  bool get _buttonEnabled => !widget.plan.isFree && !_isFullyActive && !_loading;
 
   Future<void> _subscribe() async {
-    final ok = await SubscriptionDialogs.confirmSubscribe(
-        context, widget.plan, widget.period);
+    final ok = await SubscriptionDialogs.confirmSubscribe(context, widget.plan, widget.period);
     if (!ok || !mounted) return;
 
     setState(() => _loading = true);
@@ -42,9 +53,7 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
     if (!mounted) return;
     setState(() => _loading = false);
 
-    if (success) {
-      widget.onSubscribed(widget.plan.name.toLowerCase(), widget.period);
-    }
+    if (success) widget.onSubscribed(widget.plan.name.toLowerCase(), widget.period);
     _showSnack(
       success ? '✓ Abonnement ${widget.plan.name} activé !' : 'Erreur, réessaie.',
       success ? widget.plan.accentColor : const Color(0xFF7F1D1D),
@@ -77,8 +86,6 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
 
   @override
   Widget build(BuildContext context) {
-    final isFree = widget.plan.isFree;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Column(
@@ -87,50 +94,31 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
             width: double.infinity,
             height: 52,
             child: ElevatedButton(
-              onPressed: isFree || _isActive || _loading ? null : _subscribe,
+              onPressed: _buttonEnabled ? _subscribe : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: widget.plan.accentColor,
                 disabledBackgroundColor: const Color(0xFF3D2A4A),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
               child: _loading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 2, color: Colors.white),
-                    )
-                  : Text(
-                      isFree
-                          ? 'Plan gratuit'
-                          : _isActive
-                              ? '✓ Plan actuel'
-                              : 'Choisir ${widget.plan.name}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
+                  ? const SizedBox(width: 20, height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                  : Text(_buttonLabel,
+                      style: const TextStyle(color: Colors.white, fontSize: 16,
+                          fontWeight: FontWeight.bold, letterSpacing: 0.5)),
             ),
           ),
-          if (_isActive && !isFree) ...[
+          if (_isCurrentPlan && !widget.plan.isFree) ...[
             const SizedBox(height: 10),
             TextButton(
               onPressed: _loading ? null : _cancel,
-              child: const Text(
-                'Résilier l\'abonnement',
-                style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
-              ),
+              child: const Text('Résilier l\'abonnement',
+                  style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
             ),
           ] else ...[
             const SizedBox(height: 10),
-            const Text(
-              'Résiliation possible à tout moment',
-              style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
-            ),
+            const Text('Résiliation possible à tout moment',
+                style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
           ],
         ],
       ),

@@ -14,10 +14,11 @@ class SubscriptionPage extends StatefulWidget {
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
   late PageController _controller;
-  int _current               = 0;
-  SubscriptionPeriod _period = SubscriptionPeriod.month;
-  String _activePlan         = 'ombre';
-  bool _loading              = true;
+  int _current                    = 0;
+  SubscriptionPeriod _period      = SubscriptionPeriod.month;
+  SubscriptionPeriod _activePeriod = SubscriptionPeriod.month;
+  String _activePlan              = 'ombre';
+  bool _loading                   = true;
 
   @override
   void initState() {
@@ -40,10 +41,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     _controller = PageController(viewportFraction: 0.88, initialPage: index);
     if (mounted) {
       setState(() {
-        _current    = index;
-        _period     = period;
-        _activePlan = sub['plan'] ?? 'ombre';
-        _loading    = false;
+        _current      = index;
+        _period       = period;
+        _activePeriod = period;
+        _activePlan   = sub['plan'] ?? 'ombre';
+        _loading      = false;
       });
     }
   }
@@ -56,8 +58,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   void _onSubscribed(String plan, SubscriptionPeriod period) {
     setState(() {
-      _activePlan = plan;
-      _period     = period;
+      _activePlan   = plan;
+      _activePeriod = period;
+      _period       = period;
     });
   }
 
@@ -154,9 +157,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           ),
           const SizedBox(height: 20),
           SubscriptionActionButton(
-            plan:        currentPlan,
-            period:      _period,
-            activePlan:  _activePlan,
+            plan:         currentPlan,
+            period:       _period,
+            activePlan:   _activePlan,
+            activePeriod: _activePeriod,
             onSubscribed: _onSubscribed,
             onCancelled:  _onCancelled,
           ),
