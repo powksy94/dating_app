@@ -52,17 +52,16 @@ class PeriodSelector extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (savings != null)
-                      Text(
-                        savings,
-                        style: TextStyle(
-                          color: isSelected
-                              ? Colors.white.withValues(alpha: 0.8)
-                              : const Color(0xFF7B00D4),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    Text(
+                      savings ?? '',
+                      style: TextStyle(
+                        color: isSelected
+                            ? Colors.white.withValues(alpha: 0.8)
+                            : const Color(0xFF7B00D4),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
                       ),
+                    ),
                   ],
                 ),
               ),

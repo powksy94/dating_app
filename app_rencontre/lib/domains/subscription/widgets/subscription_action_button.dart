@@ -28,18 +28,27 @@ class SubscriptionActionButton extends StatefulWidget {
 class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
   bool _loading = false;
 
-  bool get _isCurrentPlan => widget.plan.name.toLowerCase() == widget.activePlan;
-  bool get _isPeriodSame  => widget.period == widget.activePeriod;
-  bool get _isFullyActive => _isCurrentPlan && _isPeriodSame;
+  bool get _isCurrentPlan  => widget.plan.name.toLowerCase() == widget.activePlan;
+  bool get _isPeriodSame   => widget.period == widget.activePeriod;
+  bool get _isFullyActive  => _isCurrentPlan && _isPeriodSame;
+  bool get _onPaidPlan     => widget.activePlan != 'ombre';
 
   String get _buttonLabel {
-    if (widget.plan.isFree)   return 'Plan gratuit';
-    if (_isFullyActive)       return '✓ Plan actuel';
-    if (_isCurrentPlan)       return 'Changer de période';
+    if (widget.plan.isFree)  return _onPaidPlan ? 'Passer au plan gratuit' : '✓ Plan actuel';
+    if (_isFullyActive)      return '✓ Plan actuel';
+    if (_isCurrentPlan)      return 'Changer de période';
     return 'Choisir ${widget.plan.name}';
   }
 
-  bool get _buttonEnabled => !widget.plan.isFree && !_isFullyActive && !_loading;
+  bool get _buttonEnabled {
+    if (widget.plan.isFree) return _onPaidPlan && !_loading;
+    return !_isFullyActive && !_loading;
+  }
+
+  Future<void> _onButtonPressed() {
+    if (widget.plan.isFree) return _cancel();
+    return _subscribe();
+  }
 
   Future<void> _subscribe() async {
     final ok = await SubscriptionDialogs.confirmSubscribe(context, widget.plan, widget.period);
@@ -94,7 +103,7 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
             width: double.infinity,
             height: 52,
             child: ElevatedButton(
-              onPressed: _buttonEnabled ? _subscribe : null,
+              onPressed: _buttonEnabled ? _onButtonPressed : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: widget.plan.accentColor,
                 disabledBackgroundColor: const Color(0xFF3D2A4A),
@@ -117,8 +126,11 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
             ),
           ] else ...[
             const SizedBox(height: 10),
-            const Text('Résiliation possible à tout moment',
-                style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
+            if (!widget.plan.isFree)
+              const Text('Résiliation possible à tout moment',
+                  style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12))
+            else
+              const SizedBox(height: 15),
           ],
         ],
       ),
