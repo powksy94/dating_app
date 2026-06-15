@@ -11,7 +11,8 @@ import 'package:nocturne/domains/match/widgets/match_overlay.dart';
 
 class SwipePage extends StatefulWidget {
   final void Function(ChatMatch)? onNavigateToConversation;
-  const SwipePage({super.key, this.onNavigateToConversation});
+  final ValueNotifier<int>? refreshNotifier;
+  const SwipePage({super.key, this.onNavigateToConversation, this.refreshNotifier});
 
   @override
   State<SwipePage> createState() => _SwipePageState();
@@ -31,19 +32,26 @@ class _SwipePageState extends State<SwipePage> {
   bool _canRewind   = false;
 
   @override
-  void initState() { super.initState(); _loadAll(); }
+  void initState() {
+    super.initState();
+    _loadAll();
+    widget.refreshNotifier?.addListener(_loadStatus);
+  }
 
   @override
-  void dispose() { _controller.dispose(); super.dispose(); }
+  void dispose() {
+    widget.refreshNotifier?.removeListener(_loadStatus);
+    _controller.dispose();
+    super.dispose();
+  }
 
   Future<void> _loadAll() async =>
       Future.wait([_loadProfiles(), _loadStatus()]);
 
   Future<void> _loadProfiles() async {
     try {
-      await _firestore.seedDemoLikes();
       final p = await _firestore.fetchSwipeProfiles();
-      if (mounted) setState(() { _profiles = p; _loading = false; });
+      if (mounted) setState(() { _profiles = p; _loading = false; _currentIndex = 0; });
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }

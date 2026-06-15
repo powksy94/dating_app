@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _tab = 0;
+  final _swipeRefresh = ValueNotifier<int>(0);
 
   void _navigateToConversation(ChatMatch match) {
     setState(() => _tab = 2);
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       body: IndexedStack(
         index: _tab,
         children: [
-          SwipePage(onNavigateToConversation: _navigateToConversation),
+          SwipePage(onNavigateToConversation: _navigateToConversation, refreshNotifier: _swipeRefresh),
           const EventsPage(),
           const ConversationListPage(),
           const _MyProfileTab(),
@@ -46,7 +47,10 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color(0xFF120018),
         indicatorColor: const Color(0xFF7B00D4),
         selectedIndex: _tab,
-        onDestinationSelected: (i) => setState(() => _tab = i),
+        onDestinationSelected: (i) {
+          if (i == 0 && _tab != 0) _swipeRefresh.value++;
+          setState(() => _tab = i);
+        },
         destinations: [
           const NavigationDestination(
             icon: Icon(Icons.nightlight_outlined),

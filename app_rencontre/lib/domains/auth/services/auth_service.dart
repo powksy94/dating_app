@@ -12,6 +12,7 @@ class AuthService {
     final data = jsonDecode(res.body);
     if (res.statusCode == 201) {
       await ApiService.saveToken(data['token']);
+      await ApiService.saveRefreshToken(data['refreshToken']);
       await ApiService.saveUserId(data['userId']);
       return data['userId'];
     }
@@ -27,6 +28,7 @@ class AuthService {
     final data = jsonDecode(res.body);
     if (res.statusCode == 200) {
       await ApiService.saveToken(data['token']);
+      await ApiService.saveRefreshToken(data['refreshToken']);
       await ApiService.saveUserId(data['userId']);
       return data['userId'];
     }
@@ -50,6 +52,10 @@ class AuthService {
   }
 
   Future<void> logout() async {
+    try {
+      final headers = await ApiService.authHeaders();
+      await http.post(Uri.parse('${ApiService.baseUrl}/auth/logout'), headers: headers);
+    } catch (_) {}
     await ApiService.clearToken();
   }
 
