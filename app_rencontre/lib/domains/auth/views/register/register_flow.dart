@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:screen_protector/screen_protector.dart';
 import 'package:nocturne/shared/widgets/common/step_progress_bar.dart';
 import 'package:nocturne/domains/auth/views/register/steps/step_credentials.dart';
 import 'package:nocturne/domains/auth/views/register/steps/step_identity.dart';
@@ -19,8 +20,14 @@ class _RegisterFlowState extends State<RegisterFlow> {
     int _currentStep = 1;
     final int _totalSteps = 6;
 
-    // Données accumulées sur tout le parcours 
+    // Données accumulées sur tout le parcours
     final Map<String, dynamic> _data = {};
+
+    @override
+    void initState() {
+        super.initState();
+        ScreenProtector.protectDataLeakageOn();
+    }
 
     void nextStep(Map<String, dynamic> stepData) {
         _data.addAll(stepData);
@@ -45,6 +52,7 @@ class _RegisterFlowState extends State<RegisterFlow> {
 
     @override
     void dispose() {
+        ScreenProtector.protectDataLeakageOff();
         _pageController.dispose();
         super.dispose();
     }

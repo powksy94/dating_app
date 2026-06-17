@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:screen_protector/screen_protector.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -44,7 +44,7 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Future<void> _init() async {
-    await const MethodChannel('com.nocturne/window').invokeMethod('addSecureFlag');
+    await ScreenProtector.protectDataLeakageOn();
     _myId = await ApiService.getUserId();
     await _loadMessages();
     await SocketService.instance.connect();
@@ -204,7 +204,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   void dispose() {
-    const MethodChannel('com.nocturne/window').invokeMethod('clearSecureFlag');
+    ScreenProtector.protectDataLeakageOff();
     for (final e in ['new_message', 'user_typing', 'user_stop_typing',
         'online_status', 'user_online', 'user_offline',
         'message_reacted', 'messages_read', 'message_deleted_for_all']) {

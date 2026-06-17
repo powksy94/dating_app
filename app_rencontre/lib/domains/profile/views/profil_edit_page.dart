@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:screen_protector/screen_protector.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/widgets/edit/edit_step_bar.dart';
 import 'package:nocturne/domains/profile/views/edit/edit_step_identity.dart';
@@ -23,6 +24,12 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     'Identité', 'Photos', 'Tags', 'Lieu', 'Préférences',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    ScreenProtector.protectDataLeakageOn();
+  }
+
   void _goToStep(int index) {
     setState(() => _currentStep = index);
     _pageController.animateToPage(
@@ -34,6 +41,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   @override
   void dispose() {
+    ScreenProtector.protectDataLeakageOff();
     _pageController.dispose();
     super.dispose();
   }
