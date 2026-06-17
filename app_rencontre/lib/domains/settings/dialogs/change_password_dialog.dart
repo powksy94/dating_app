@@ -1,5 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:screen_protector/screen_protector.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
@@ -17,14 +16,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   String? _error;
 
   @override
-  void initState() {
-    super.initState();
-    ScreenProtector.protectDataLeakageOn();
-  }
-
-  @override
   void dispose() {
-    ScreenProtector.protectDataLeakageOff();
     _currentCtrl.dispose();
     _newCtrl.dispose();
     _confirmCtrl.dispose();

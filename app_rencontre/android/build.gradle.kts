@@ -23,6 +23,25 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Force une cible JVM cohérente (17) pour tous les sous-projets/plugins,
+// certains plugins (ex: screen_protector) ne fixent pas la leur et héritent
+// du JDK courant (21), ce qui crée un conflit avec compileOptions (17).
+subprojects {
+    if (project.name != "app") {
+        afterEvaluate {
+            extensions.findByType(com.android.build.gradle.LibraryExtension::class.java)?.apply {
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
+                }
+            }
+            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            }
+        }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }

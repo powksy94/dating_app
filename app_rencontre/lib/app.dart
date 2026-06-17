@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:screen_protector/screen_protector.dart';
 import 'package:nocturne/roads.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
@@ -21,6 +22,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    ScreenProtector.protectDataLeakageOn();
     NotificationService.init(widget.navigatorKey);
     UnreadService.refresh();
   }

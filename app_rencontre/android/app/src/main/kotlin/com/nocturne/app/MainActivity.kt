@@ -1,4 +1,4 @@
-package com.example.app_rencontre
+package com.nocturne.app
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

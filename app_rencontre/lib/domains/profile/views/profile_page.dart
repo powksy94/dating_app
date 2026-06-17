@@ -1,6 +1,5 @@
 ﻿import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:screen_protector/screen_protector.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
@@ -21,14 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    ScreenProtector.protectDataLeakageOn();
     _loadLimit();
-  }
-
-  @override
-  void dispose() {
-    ScreenProtector.protectDataLeakageOff();
-    super.dispose();
   }
 
   Future<void> _loadLimit() async {
