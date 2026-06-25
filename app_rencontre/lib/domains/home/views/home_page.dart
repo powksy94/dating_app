@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       body: IndexedStack(
         index: _tab,
@@ -52,15 +54,15 @@ class _HomePageState extends State<HomePage> {
           setState(() => _tab = i);
         },
         destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.nightlight_outlined),
-            selectedIcon: Icon(Icons.nightlight),
-            label: 'Découvrir',
+          NavigationDestination(
+            icon: const Icon(Icons.nightlight_outlined),
+            selectedIcon: const Icon(Icons.nightlight),
+            label: l.homeNavDiscover,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.local_activity_outlined),
-            selectedIcon: Icon(Icons.local_activity),
-            label: 'Événements',
+          NavigationDestination(
+            icon: const Icon(Icons.local_activity_outlined),
+            selectedIcon: const Icon(Icons.local_activity),
+            label: l.homeNavEvents,
           ),
           NavigationDestination(
             icon: Badge(
@@ -73,12 +75,12 @@ class _HomePageState extends State<HomePage> {
               label: Text(unread > 99 ? '99+' : '$unread'),
               child: const Icon(Icons.chat_bubble),
             ),
-            label: 'Messages',
+            label: l.homeNavMessages,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profil',
+          NavigationDestination(
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            label: l.homeNavProfile,
           ),
         ],
       ),
@@ -133,7 +135,7 @@ class _MyProfileTabState extends State<_MyProfileTab> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MON PROFIL'),
+        title: Text(AppLocalizations.of(context)!.homeMyProfileTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.tune),
@@ -156,11 +158,11 @@ class _MyProfileTabState extends State<_MyProfileTab> {
           const Icon(Icons.person_add,
               size: 64, color: Color(0xFF7B00D4)),
           const SizedBox(height: 16),
-          const Text('Profil non configuré',
-              style: TextStyle(color: Color(0xFFE8E0EE), fontSize: 18)),
+          Text(AppLocalizations.of(context)!.homeNoProfileTitle,
+              style: const TextStyle(color: Color(0xFFE8E0EE), fontSize: 18)),
           const SizedBox(height: 8),
-          const Text('Crée ton profil pour apparaître dans le swipe',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14)),
+          Text(AppLocalizations.of(context)!.homeNoProfileDescription,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14)),
           const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: () => Navigator.pushNamed(
@@ -171,7 +173,7 @@ class _MyProfileTabState extends State<_MyProfileTab> {
               ),
             ).then((_) => _loadProfile()),
             icon: const Icon(Icons.edit),
-            label: const Text('Créer mon profil'),
+            label: Text(AppLocalizations.of(context)!.homeBtnCreateProfile),
           ),
         ],
       ),
@@ -196,9 +198,9 @@ class _MyProfileTabState extends State<_MyProfileTab> {
             child: ElevatedButton.icon(
               onPressed: () => Navigator.pushNamed(context, '/subscription'),
               icon: const Icon(Icons.auto_awesome, size: 18),
-              label: const Text(
-                'NOCTURNE PREMIUM',
-                style: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+              label: Text(
+                AppLocalizations.of(context)!.homePremiumBanner,
+                style: const TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4A0072),
