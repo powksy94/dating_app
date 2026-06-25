@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
+import 'package:nocturne/shared/utils/date_formatting.dart';
 import 'package:nocturne/shared/widgets/common/section_block.dart';
 
 class EventInfoSection extends StatelessWidget {
@@ -13,7 +14,7 @@ class EventInfoSection extends StatelessWidget {
       title: 'INFOS',
       child: Column(
         children: [
-          _row(Icons.calendar_today_outlined, _formattedDate()),
+          _row(Icons.calendar_today_outlined, formatEventDate(context, event.date)),
           const SizedBox(height: 10),
           _row(Icons.location_on_outlined, event.address),
           const SizedBox(height: 10),
@@ -49,16 +50,5 @@ class EventInfoSection extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _formattedDate() {
-    final d = event.date;
-    const months = [
-      '', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-      'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
-    ];
-    return '${d.day} ${months[d.month]} ${d.year} à '
-        '${d.hour.toString().padLeft(2, '0')}h'
-        '${d.minute.toString().padLeft(2, '0')}';
   }
 }

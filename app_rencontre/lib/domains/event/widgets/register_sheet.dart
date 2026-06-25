@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
+import 'package:nocturne/shared/utils/date_formatting.dart';
 
 class RegisterSheet extends StatelessWidget {
   final EventModel event;
@@ -42,7 +43,7 @@ class RegisterSheet extends StatelessWidget {
           const SizedBox(height: 16),
           _row(Icons.music_note_outlined,         event.title),
           const SizedBox(height: 8),
-          _row(Icons.calendar_today_outlined,     _formattedDate()),
+          _row(Icons.calendar_today_outlined,     formatEventDate(context, event.date)),
           const SizedBox(height: 8),
           _row(Icons.location_on_outlined,        event.city),
           const SizedBox(height: 8),
@@ -100,16 +101,5 @@ class RegisterSheet extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _formattedDate() {
-    final d = event.date;
-    const months = [
-      '', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-      'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
-    ];
-    return '${d.day} ${months[d.month]} ${d.year} à '
-        '${d.hour.toString().padLeft(2, '0')}h'
-        '${d.minute.toString().padLeft(2, '0')}';
   }
 }
