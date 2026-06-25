@@ -1,3 +1,6 @@
+import 'package:flutter/widgets.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
+
 class ReportCategory {
   final String       label;
   final List<String> subs;
@@ -12,20 +15,23 @@ class ReportCategory {
   bool get hasSubs  => subs.isNotEmpty;
 }
 
-const kReportTree = [
-  ReportCategory('Harcèlement', subs: [
-    'Ça me cible personnellement',
-    'Comportement menaçant',
-    'Messages non désirés répétés',
-  ]),
-  ReportCategory('Faux profil', subs: [
-    'Photos volées',
-    'Usurpation d\'identité',
-    'Compte fantôme',
-  ]),
-  ReportCategory('Contenu sexuel non consenti'),
-  ReportCategory('Spam ou arnaque'),
-  ReportCategory('Mineur'),
-  ReportCategory('Discours haineux ou discriminatoire'),
-  ReportCategory('Autre', hasTextField: true),
-];
+List<ReportCategory> reportTree(BuildContext context) {
+  final l = AppLocalizations.of(context)!;
+  return [
+    ReportCategory(l.reportCategoryHarassment, subs: [
+      l.reportSubHarassmentTargeted,
+      l.reportSubHarassmentThreatening,
+      l.reportSubHarassmentRepeated,
+    ]),
+    ReportCategory(l.reportCategoryFakeProfile, subs: [
+      l.reportSubFakeStolenPhotos,
+      l.reportSubFakeImpersonation,
+      l.reportSubFakeGhost,
+    ]),
+    ReportCategory(l.reportCategoryNonConsensualSexual),
+    ReportCategory(l.reportCategorySpam),
+    ReportCategory(l.reportCategoryMinor),
+    ReportCategory(l.reportCategoryHateSpeech),
+    ReportCategory(l.reportCategoryOther, hasTextField: true),
+  ];
+}

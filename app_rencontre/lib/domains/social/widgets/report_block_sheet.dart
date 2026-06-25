@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/social/services/user_action_service.dart';
 import 'package:nocturne/domains/social/widgets/report_flow.dart';
 
@@ -28,8 +29,8 @@ void showReportBlockSheet(
           ListTile(
             leading: const Icon(Icons.flag_outlined,
                 color: Color(0xFFAA9AB5)),
-            title: const Text('Signaler',
-                style: TextStyle(color: Colors.white)),
+            title: Text(AppLocalizations.of(context)!.socialBtnReport,
+                style: const TextStyle(color: Colors.white)),
             onTap: () {
               Navigator.pop(context);
               showReportFlow(context, userId: userId, username: username);
@@ -37,8 +38,8 @@ void showReportBlockSheet(
           ),
           ListTile(
             leading: const Icon(Icons.block, color: Color(0xFF8B0000)),
-            title: const Text('Bloquer',
-                style: TextStyle(color: Color(0xFF8B0000))),
+            title: Text(AppLocalizations.of(context)!.socialBtnBlock,
+                style: const TextStyle(color: Color(0xFF8B0000))),
             onTap: () {
               Navigator.pop(context);
               showBlockDialog(context, userId: userId, username: username);
@@ -61,17 +62,17 @@ void showBlockDialog(
     context: context,
     builder: (_) => AlertDialog(
       backgroundColor: const Color(0xFF1A0A1F),
-      title: const Text('Bloquer',
-          style: TextStyle(color: Colors.white)),
+      title: Text(AppLocalizations.of(context)!.socialBtnBlock,
+          style: const TextStyle(color: Colors.white)),
       content: Text(
-        'Bloquer $username ? Votre match sera supprimé.',
+        AppLocalizations.of(context)!.socialDialogBlockBody(username),
         style: const TextStyle(color: Color(0xFFAA9AB5)),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler',
-              style: TextStyle(color: Color(0xFF5A4A6A))),
+          child: Text(AppLocalizations.of(context)!.socialBtnCancel,
+              style: const TextStyle(color: Color(0xFF5A4A6A))),
         ),
         TextButton(
           onPressed: () async {
@@ -83,8 +84,8 @@ void showBlockDialog(
               Navigator.of(context).popUntil((route) => route.isFirst);
             }
           },
-          child: const Text('Bloquer',
-              style: TextStyle(
+          child: Text(AppLocalizations.of(context)!.socialBtnBlock,
+              style: const TextStyle(
                   color: Color(0xFF8B0000),
                   fontWeight: FontWeight.bold)),
         ),

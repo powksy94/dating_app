@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/social/services/user_action_service.dart';
 import 'package:nocturne/domains/social/widgets/report_reason_tree.dart';
 
@@ -80,7 +81,7 @@ class _ReportFlowState extends State<_ReportFlow> {
             const SizedBox(width: 16),
           Expanded(
             child: Text(
-              showBack ? _selected!.label : 'Signaler ${widget.username}',
+              showBack ? _selected!.label : AppLocalizations.of(context)!.socialReportHeaderTitle(widget.username),
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -103,14 +104,14 @@ class _ReportFlowState extends State<_ReportFlow> {
     mainAxisSize: MainAxisSize.min,
     children: [
       _header(),
-      const Padding(
-        padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
         child: Text(
-          'Pourquoi signales-tu ce profil ?',
-          style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
+          AppLocalizations.of(context)!.socialReportRootQuestion,
+          style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
         ),
       ),
-      ...kReportTree.map((cat) => ListTile(
+      ...reportTree(context).map((cat) => ListTile(
         title: Text(cat.label,
             style: const TextStyle(color: Colors.white, fontSize: 14)),
         trailing: cat.isLeaf
@@ -154,7 +155,7 @@ class _ReportFlowState extends State<_ReportFlow> {
           maxLength: 300,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: 'Décris le problème...',
+            hintText: AppLocalizations.of(context)!.socialReportHint,
             hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
             filled: true,
             fillColor: const Color(0xFF0D0010),
@@ -188,8 +189,8 @@ class _ReportFlowState extends State<_ReportFlow> {
             child: _sending
                 ? const CircularProgressIndicator(
                     color: Colors.white, strokeWidth: 2)
-                : const Text('Envoyer le signalement',
-                    style: TextStyle(color: Colors.white)),
+                : Text(AppLocalizations.of(context)!.socialBtnSendReport,
+                    style: const TextStyle(color: Colors.white)),
           ),
         ),
       ),
@@ -204,25 +205,25 @@ class _ReportFlowState extends State<_ReportFlow> {
       const Icon(Icons.check_circle_outline,
           color: Color(0xFF7B00D4), size: 56),
       const SizedBox(height: 16),
-      const Text('Signalement envoyé',
-          style: TextStyle(
+      Text(AppLocalizations.of(context)!.socialReportSentTitle,
+          style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold)),
       const SizedBox(height: 8),
-      const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Text(
-          'Merci. Notre équipe va examiner ce signalement.',
+          AppLocalizations.of(context)!.socialReportSentBody,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
+          style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
         ),
       ),
       const SizedBox(height: 24),
       TextButton(
         onPressed: () => Navigator.pop(context),
-        child: const Text('Fermer',
-            style: TextStyle(color: Color(0xFF7B00D4))),
+        child: Text(AppLocalizations.of(context)!.socialBtnClose,
+            style: const TextStyle(color: Color(0xFF7B00D4))),
       ),
       const SizedBox(height: 16),
     ],
