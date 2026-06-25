@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/visit/services/visit_service.dart';
 import 'package:nocturne/domains/visit/models/visitor.dart';
 import 'package:nocturne/domains/visit/widgets/visitor_card.dart';
@@ -37,9 +38,9 @@ class _VisitorsPageState extends State<VisitorsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'VISITEURS',
-          style: TextStyle(fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
+        title: Text(
+          AppLocalizations.of(context)!.visitorsTitle,
+          style: const TextStyle(fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -64,11 +65,11 @@ class _VisitorsPageState extends State<VisitorsPage> {
 class _EmptyState extends StatelessWidget {
   const _EmptyState();
   @override
-  Widget build(BuildContext context) => const Center(
+  Widget build(BuildContext context) => Center(
     child: Column(mainAxisSize: MainAxisSize.min, children: [
-      Icon(Icons.remove_red_eye_outlined, size: 64, color: Color(0xFF7B00D4)),
-      SizedBox(height: 16),
-      Text('Personne n\'a encore visité ton profil', style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 16)),
+      const Icon(Icons.remove_red_eye_outlined, size: 64, color: Color(0xFF7B00D4)),
+      const SizedBox(height: 16),
+      Text(AppLocalizations.of(context)!.visitorsEmptyState, style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 16)),
     ]),
   );
 }
@@ -84,27 +85,27 @@ class _PaywallState extends StatelessWidget {
           children: [
             const Icon(Icons.lock, size: 56, color: Color(0xFF7B00D4)),
             const SizedBox(height: 16),
-            const Text(
-              'Fonctionnalité Nocturne',
-              style: TextStyle(color: Color(0xFFE8E0EE), fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.visitorsPaywallTitle,
+              style: const TextStyle(color: Color(0xFFE8E0EE), fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Vois qui a visité ton profil ces 30 derniers jours en passant à Nocturne ou Abyssal.',
+            Text(
+              AppLocalizations.of(context)!.visitorsPaywallDescription,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () => PaywallSheet.show(
                 context,
-                title: 'Visiteurs de profil',
-                description: 'Découvre tous les profils qui ont consulté le tien.',
+                title: AppLocalizations.of(context)!.visitorsPaywallSheetTitle,
+                description: AppLocalizations.of(context)!.visitorsPaywallSheetDescription,
                 requiredPlan: 'nocturne',
                 icon: Icons.remove_red_eye,
               ),
               icon: const Icon(Icons.auto_awesome, size: 16),
-              label: const Text('Passer à Nocturne'),
+              label: Text(AppLocalizations.of(context)!.visitorsBtnUpgrade),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4A0072),
                 shape: RoundedRectangleBorder(
