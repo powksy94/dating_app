@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_auth/local_auth.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 
 class AdminAuthPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
   String? _error;
 
   Future<void> _approve() async {
+    final l = AppLocalizations.of(context)!;
     setState(() { _loading = true; _error = null; });
 
     try {
@@ -25,12 +27,12 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
       final supported = await _localAuth.isDeviceSupported();
 
       if (!canCheck && !supported) {
-        setState(() { _loading = false; _error = 'Biométrie non disponible sur cet appareil'; });
+        setState(() { _loading = false; _error = l.adminAuthErrorBiometricUnavailable; });
         return;
       }
 
       final authenticated = await _localAuth.authenticate(
-        localizedReason: 'Vérifiez votre identité pour approuver la connexion admin',
+        localizedReason: l.adminAuthLocalizedReason,
         options: const AuthenticationOptions(
           stickyAuth:    true,
           biometricOnly: false,
@@ -38,11 +40,11 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
       );
 
       if (!authenticated) {
-        setState(() { _loading = false; _error = 'Vérification biométrique échouée'; });
+        setState(() { _loading = false; _error = l.adminAuthErrorBiometricFailed; });
         return;
       }
     } catch (_) {
-      setState(() { _loading = false; _error = 'Erreur biométrique'; });
+      setState(() { _loading = false; _error = l.adminAuthErrorBiometricGeneric; });
       return;
     }
 
@@ -103,9 +105,9 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
                 ),
               ),
               const SizedBox(height: 32),
-              const Text(
-                'CONNEXION ADMIN',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.adminAuthTitle,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -113,24 +115,24 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'Une demande de connexion au panel admin a été initiée depuis un navigateur.',
+              Text(
+                AppLocalizations.of(context)!.adminAuthDescription,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFFAA9AB5),
                   fontSize: 14,
                   height: 1.5,
                 ),
               ),
               const SizedBox(height: 8),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.fingerprint, color: Color(0xFF7B00D4), size: 16),
-                  SizedBox(width: 6),
+                  const Icon(Icons.fingerprint, color: Color(0xFF7B00D4), size: 16),
+                  const SizedBox(width: 6),
                   Text(
-                    'Biométrie requise pour approuver',
-                    style: TextStyle(color: Color(0xFF7B00D4), fontSize: 12),
+                    AppLocalizations.of(context)!.adminAuthBiometricRequired,
+                    style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12),
                   ),
                 ],
               ),
@@ -159,7 +161,7 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
                   child: ElevatedButton.icon(
                     onPressed: _approve,
                     icon: const Icon(Icons.fingerprint),
-                    label: const Text('Approuver'),
+                    label: Text(AppLocalizations.of(context)!.adminAuthBtnApprove),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF7B00D4),
                       foregroundColor: Colors.white,
@@ -176,7 +178,7 @@ class _AdminAuthPageState extends State<AdminAuthPage> {
                   child: OutlinedButton.icon(
                     onPressed: () => _respond(false),
                     icon: const Icon(Icons.cancel_outlined),
-                    label: const Text('Refuser'),
+                    label: Text(AppLocalizations.of(context)!.adminAuthBtnDeny),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: const Color(0xFFEF4444),
                       side: const BorderSide(color: Color(0xFF7F1D1D)),
