@@ -89,5 +89,66 @@
     "featureBoostMonthly": "1 boost par mois",
     "featureUnlimitedElegies": "Élégies illimitées",
     "featureUnlimitedEvents": "Événements illimités",
-    "featureBoostWeekly": "1 boost par semaine"
+    "featureBoostWeekly": "1 boost par semaine",
+
+    "socialBtnReport": "Signaler",
+    "socialBtnBlock": "Bloquer",
+    "socialDialogBlockBody": "Bloquer {username} ? Votre match sera supprimé.",
+    "socialBtnCancel": "Annuler",
+
+    "reportCategoryHarassment": "Harcèlement",
+    "reportSubHarassmentTargeted": "Ça me cible personnellement",
+    "reportSubHarassmentThreatening": "Comportement menaçant",
+    "reportSubHarassmentRepeated": "Messages non désirés répétés",
+    "reportCategoryFakeProfile": "Faux profil",
+    "reportSubFakeStolenPhotos": "Photos volées",
+    "reportSubFakeImpersonation": "Usurpation d'identité",
+    "reportSubFakeGhost": "Compte fantôme",
+    "reportCategoryNonConsensualSexual": "Contenu sexuel non consenti",
+    "reportCategorySpam": "Spam ou arnaque",
+    "reportCategoryMinor": "Mineur",
+    "reportCategoryHateSpeech": "Discours haineux ou discriminatoire",
+    "reportCategoryOther": "Autre",
+
+    "socialReportHeaderTitle": "Signaler {username}",
+    "socialReportRootQuestion": "Pourquoi signales-tu ce profil ?",
+    "socialReportHint": "Décris le problème...",
+    "socialBtnSendReport": "Envoyer le signalement",
+    "socialReportSentTitle": "Signalement envoyé",
+    "socialReportSentBody": "Merci. Notre équipe va examiner ce signalement.",
+    "socialBtnClose": "Fermer",
+
+    "chatReplyPhoto": "Photo",
+    "chatMessageDeleted": "Message supprimé",
+    "chatStatusRead": "Lu",
+    "chatStatusSent": "Envoyé",
+
+    "chatListTitle": "MESSAGES",
+    "chatTabChats": "CHATS",
+    "chatTabElegiesReceived": "ÉLÉGIES REÇUES",
+    "chatTabElegiesSent": "ÉLÉGIES ENVOYÉES",
+    "chatEmptyMatchesTitle": "Aucun match pour l'instant...",
+    "chatEmptyMatchesSub": "Continue d'explorer les ténèbres",
+    "chatEmptyElegiesReceivedTitle": "Aucune élégie reçue",
+    "chatEmptyElegiesReceivedSub": "Quelqu'un pensera à toi bientôt...",
+    "chatEmptyElegiesSentTitle": "Aucune élégie envoyée",
+    "chatEmptyElegiesSentSub": "Ose briser le silence...",
+    "chatNewMatch": "Nouveau match",
+    "chatElegiePending": "En attente",
+    "chatTimeMinutesShort": "{count}m",
+    "chatTimeHoursShort": "{count}h",
+    "chatTimeDaysShort": "{count}j",
+
+    "chatTyping": "en train d'écrire...",
+
+    "chatInputHint": "Message...",
+
+    "chatEmojiHint": "Choisis un emoji...",
+    "chatBtnDeleteForMe": "Supprimer pour moi",
+    "chatBtnDeleteForAll": "Supprimer pour tout le monde",
+
+    "chatLastSeenJustNow": "vu à l'instant",
+    "chatLastSeenMinutesAgo": "vu il y a {count} min",
+    "chatLastSeenHoursAgo": "vu il y a {count} h",
+    "chatLastSeenDaysAgo": "vu il y a {count} j"
 }

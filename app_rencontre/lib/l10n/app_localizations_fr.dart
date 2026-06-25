@@ -277,4 +277,178 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureBoostWeekly => '1 boost par semaine';
+
+  @override
+  String get socialBtnReport => 'Signaler';
+
+  @override
+  String get socialBtnBlock => 'Bloquer';
+
+  @override
+  String socialDialogBlockBody(String username) {
+    return 'Bloquer $username ? Votre match sera supprimé.';
+  }
+
+  @override
+  String get socialBtnCancel => 'Annuler';
+
+  @override
+  String get reportCategoryHarassment => 'Harcèlement';
+
+  @override
+  String get reportSubHarassmentTargeted => 'Ça me cible personnellement';
+
+  @override
+  String get reportSubHarassmentThreatening => 'Comportement menaçant';
+
+  @override
+  String get reportSubHarassmentRepeated => 'Messages non désirés répétés';
+
+  @override
+  String get reportCategoryFakeProfile => 'Faux profil';
+
+  @override
+  String get reportSubFakeStolenPhotos => 'Photos volées';
+
+  @override
+  String get reportSubFakeImpersonation => 'Usurpation d\'identité';
+
+  @override
+  String get reportSubFakeGhost => 'Compte fantôme';
+
+  @override
+  String get reportCategoryNonConsensualSexual => 'Contenu sexuel non consenti';
+
+  @override
+  String get reportCategorySpam => 'Spam ou arnaque';
+
+  @override
+  String get reportCategoryMinor => 'Mineur';
+
+  @override
+  String get reportCategoryHateSpeech => 'Discours haineux ou discriminatoire';
+
+  @override
+  String get reportCategoryOther => 'Autre';
+
+  @override
+  String socialReportHeaderTitle(String username) {
+    return 'Signaler $username';
+  }
+
+  @override
+  String get socialReportRootQuestion => 'Pourquoi signales-tu ce profil ?';
+
+  @override
+  String get socialReportHint => 'Décris le problème...';
+
+  @override
+  String get socialBtnSendReport => 'Envoyer le signalement';
+
+  @override
+  String get socialReportSentTitle => 'Signalement envoyé';
+
+  @override
+  String get socialReportSentBody =>
+      'Merci. Notre équipe va examiner ce signalement.';
+
+  @override
+  String get socialBtnClose => 'Fermer';
+
+  @override
+  String get chatReplyPhoto => 'Photo';
+
+  @override
+  String get chatMessageDeleted => 'Message supprimé';
+
+  @override
+  String get chatStatusRead => 'Lu';
+
+  @override
+  String get chatStatusSent => 'Envoyé';
+
+  @override
+  String get chatListTitle => 'MESSAGES';
+
+  @override
+  String get chatTabChats => 'CHATS';
+
+  @override
+  String get chatTabElegiesReceived => 'ÉLÉGIES REÇUES';
+
+  @override
+  String get chatTabElegiesSent => 'ÉLÉGIES ENVOYÉES';
+
+  @override
+  String get chatEmptyMatchesTitle => 'Aucun match pour l\'instant...';
+
+  @override
+  String get chatEmptyMatchesSub => 'Continue d\'explorer les ténèbres';
+
+  @override
+  String get chatEmptyElegiesReceivedTitle => 'Aucune élégie reçue';
+
+  @override
+  String get chatEmptyElegiesReceivedSub =>
+      'Quelqu\'un pensera à toi bientôt...';
+
+  @override
+  String get chatEmptyElegiesSentTitle => 'Aucune élégie envoyée';
+
+  @override
+  String get chatEmptyElegiesSentSub => 'Ose briser le silence...';
+
+  @override
+  String get chatNewMatch => 'Nouveau match';
+
+  @override
+  String get chatElegiePending => 'En attente';
+
+  @override
+  String chatTimeMinutesShort(int count) {
+    return '${count}m';
+  }
+
+  @override
+  String chatTimeHoursShort(int count) {
+    return '${count}h';
+  }
+
+  @override
+  String chatTimeDaysShort(int count) {
+    return '${count}j';
+  }
+
+  @override
+  String get chatTyping => 'en train d\'écrire...';
+
+  @override
+  String get chatInputHint => 'Message...';
+
+  @override
+  String get chatEmojiHint => 'Choisis un emoji...';
+
+  @override
+  String get chatBtnDeleteForMe => 'Supprimer pour moi';
+
+  @override
+  String get chatBtnDeleteForAll => 'Supprimer pour tout le monde';
+
+  @override
+  String get chatLastSeenJustNow => 'vu à l\'instant';
+
+  @override
+  String chatLastSeenMinutesAgo(int count) {
+    return 'vu il y a $count min';
+  }
+
+  @override
+  String chatLastSeenHoursAgo(int count) {
+    return 'vu il y a $count h';
+  }
+
+  @override
+  String chatLastSeenDaysAgo(int count) {
+    return 'vu il y a $count j';
+  }
 }

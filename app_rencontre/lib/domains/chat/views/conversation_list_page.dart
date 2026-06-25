@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/elegie/models/elegie.dart';
 import 'package:nocturne/domains/chat/services/chat_service.dart';
@@ -35,9 +36,9 @@ class _ConversationListPageState extends State<ConversationListPage>
       backgroundColor: const Color(0xFF0D0010),
       appBar: AppBar(
         backgroundColor: const Color(0xFF120018),
-        title: const Text(
-          'MESSAGES',
-          style: TextStyle(color: Colors.white, letterSpacing: 2, fontSize: 16),
+        title: Text(
+          AppLocalizations.of(context)!.chatListTitle,
+          style: const TextStyle(color: Colors.white, letterSpacing: 2, fontSize: 16),
         ),
         bottom: TabBar(
           controller: _tabController,
@@ -52,10 +53,10 @@ class _ConversationListPageState extends State<ConversationListPage>
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
           ),
-          tabs: const [
-            Tab(text: 'CHATS'),
-            Tab(text: 'ÉLÉGIES REÇUES'),
-            Tab(text: 'ÉLÉGIES ENVOYÉES'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.chatTabChats),
+            Tab(text: AppLocalizations.of(context)!.chatTabElegiesReceived),
+            Tab(text: AppLocalizations.of(context)!.chatTabElegiesSent),
           ],
         ),
       ),
@@ -104,10 +105,10 @@ class _ChatsTabState extends State<_ChatsTab> {
   Widget build(BuildContext context) {
     if (_loading) return const Center(child: CircularProgressIndicator());
     if (_matches.isEmpty) {
-      return const _EmptyState(
+      return _EmptyState(
         icon: Icons.nightlight,
-        message: 'Aucun match pour l\'instant...',
-        sub: 'Continue d\'explorer les ténèbres',
+        message: AppLocalizations.of(context)!.chatEmptyMatchesTitle,
+        sub: AppLocalizations.of(context)!.chatEmptyMatchesSub,
       );
     }
     return ListView.separated(
@@ -158,10 +159,10 @@ class _ElegiesReceivedTabState extends State<_ElegiesReceivedTab> {
   Widget build(BuildContext context) {
     if (_loading) return const Center(child: CircularProgressIndicator());
     if (_elegies.isEmpty) {
-      return const _EmptyState(
+      return _EmptyState(
         icon: Icons.mail_outline,
-        message: 'Aucune élégie reçue',
-        sub: 'Quelqu\'un pensera à toi bientôt...',
+        message: AppLocalizations.of(context)!.chatEmptyElegiesReceivedTitle,
+        sub: AppLocalizations.of(context)!.chatEmptyElegiesReceivedSub,
       );
     }
     return ListView.separated(
@@ -204,10 +205,10 @@ class _ElegiesSentTabState extends State<_ElegiesSentTab> {
   Widget build(BuildContext context) {
     if (_loading) return const Center(child: CircularProgressIndicator());
     if (_elegies.isEmpty) {
-      return const _EmptyState(
+      return _EmptyState(
         icon: Icons.send_outlined,
-        message: 'Aucune élégie envoyée',
-        sub: 'Ose briser le silence...',
+        message: AppLocalizations.of(context)!.chatEmptyElegiesSentTitle,
+        sub: AppLocalizations.of(context)!.chatEmptyElegiesSentSub,
       );
     }
     return ListView.separated(
@@ -250,7 +251,7 @@ class _MatchTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        match.lastMessageText ?? 'Nouveau match',
+        match.lastMessageText ?? AppLocalizations.of(context)!.chatNewMatch,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
@@ -269,7 +270,7 @@ class _MatchTile extends StatelessWidget {
         children: [
           if (match.lastMessageAt != null)
             Text(
-              _formatTime(match.lastMessageAt!),
+              _formatTime(context, match.lastMessageAt!),
               style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 11),
             ),
           if (match.unreadCount > 0) ...[
@@ -294,11 +295,12 @@ class _MatchTile extends StatelessWidget {
     );
   }
 
-  String _formatTime(DateTime dt) {
+  String _formatTime(BuildContext context, DateTime dt) {
+    final l = AppLocalizations.of(context)!;
     final diff = DateTime.now().difference(dt);
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m';
-    if (diff.inHours < 24) return '${diff.inHours}h';
-    return '${diff.inDays}j';
+    if (diff.inMinutes < 60) return l.chatTimeMinutesShort(diff.inMinutes);
+    if (diff.inHours < 24) return l.chatTimeHoursShort(diff.inHours);
+    return l.chatTimeDaysShort(diff.inDays);
   }
 }
 
@@ -351,9 +353,9 @@ class _ElegieTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: const Color(0xFF7B00D4), width: 0.5),
         ),
-        child: const Text(
-          'En attente',
-          style: TextStyle(
+        child: Text(
+          AppLocalizations.of(context)!.chatElegiePending,
+          style: const TextStyle(
             color: Color(0xFF7B00D4),
             fontSize: 10,
             fontWeight: FontWeight.w600,

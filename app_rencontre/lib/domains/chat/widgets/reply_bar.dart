@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/chat/models/message.dart';
 
 class ReplyBar extends StatelessWidget {
@@ -24,7 +25,7 @@ class ReplyBar extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              replyingTo.isImage ? '📷 Photo' : replyingTo.text,
+              replyingTo.isImage ? '📷 ${AppLocalizations.of(context)!.chatReplyPhoto}' : replyingTo.text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 12),

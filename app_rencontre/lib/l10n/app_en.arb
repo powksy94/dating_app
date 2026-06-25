@@ -113,5 +113,90 @@
     "featureBoostMonthly": "1 boost per month",
     "featureUnlimitedElegies": "Unlimited elegies",
     "featureUnlimitedEvents": "Unlimited events",
-    "featureBoostWeekly": "1 boost per week"
+    "featureBoostWeekly": "1 boost per week",
+
+    "socialBtnReport": "Report",
+    "socialBtnBlock": "Block",
+    "socialDialogBlockBody": "Block {username}? Your match will be deleted.",
+    "@socialDialogBlockBody": {
+        "placeholders": { "username": { "type": "String" } }
+    },
+    "socialBtnCancel": "Cancel",
+
+    "reportCategoryHarassment": "Harassment",
+    "reportSubHarassmentTargeted": "It's targeting me personally",
+    "reportSubHarassmentThreatening": "Threatening behavior",
+    "reportSubHarassmentRepeated": "Repeated unwanted messages",
+    "reportCategoryFakeProfile": "Fake profile",
+    "reportSubFakeStolenPhotos": "Stolen photos",
+    "reportSubFakeImpersonation": "Impersonation",
+    "reportSubFakeGhost": "Ghost account",
+    "reportCategoryNonConsensualSexual": "Non-consensual sexual content",
+    "reportCategorySpam": "Spam or scam",
+    "reportCategoryMinor": "Minor",
+    "reportCategoryHateSpeech": "Hate speech or discrimination",
+    "reportCategoryOther": "Other",
+
+    "socialReportHeaderTitle": "Report {username}",
+    "@socialReportHeaderTitle": {
+        "placeholders": { "username": { "type": "String" } }
+    },
+    "socialReportRootQuestion": "Why are you reporting this profile?",
+    "socialReportHint": "Describe the problem...",
+    "socialBtnSendReport": "Send report",
+    "socialReportSentTitle": "Report sent",
+    "socialReportSentBody": "Thank you. Our team will review this report.",
+    "socialBtnClose": "Close",
+
+    "chatReplyPhoto": "Photo",
+    "chatMessageDeleted": "Message deleted",
+    "chatStatusRead": "Read",
+    "chatStatusSent": "Sent",
+
+    "chatListTitle": "MESSAGES",
+    "chatTabChats": "CHATS",
+    "chatTabElegiesReceived": "RECEIVED ELEGIES",
+    "chatTabElegiesSent": "SENT ELEGIES",
+    "chatEmptyMatchesTitle": "No matches yet...",
+    "chatEmptyMatchesSub": "Keep exploring the darkness",
+    "chatEmptyElegiesReceivedTitle": "No elegies received",
+    "chatEmptyElegiesReceivedSub": "Someone will think of you soon...",
+    "chatEmptyElegiesSentTitle": "No elegies sent",
+    "chatEmptyElegiesSentSub": "Dare to break the silence...",
+    "chatNewMatch": "New match",
+    "chatElegiePending": "Pending",
+    "chatTimeMinutesShort": "{count}m",
+    "@chatTimeMinutesShort": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "chatTimeHoursShort": "{count}h",
+    "@chatTimeHoursShort": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "chatTimeDaysShort": "{count}d",
+    "@chatTimeDaysShort": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+
+    "chatTyping": "typing...",
+
+    "chatInputHint": "Message...",
+
+    "chatEmojiHint": "Choose an emoji...",
+    "chatBtnDeleteForMe": "Delete for me",
+    "chatBtnDeleteForAll": "Delete for everyone",
+
+    "chatLastSeenJustNow": "seen just now",
+    "chatLastSeenMinutesAgo": "seen {count} min ago",
+    "@chatLastSeenMinutesAgo": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "chatLastSeenHoursAgo": "seen {count}h ago",
+    "@chatLastSeenHoursAgo": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "chatLastSeenDaysAgo": "seen {count}d ago",
+    "@chatLastSeenDaysAgo": {
+        "placeholders": { "count": { "type": "int" } }
+    }
 }

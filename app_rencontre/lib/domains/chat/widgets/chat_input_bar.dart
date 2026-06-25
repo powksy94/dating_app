@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class ChatInputBar extends StatelessWidget {
   final TextEditingController ctrl;
@@ -47,7 +48,7 @@ class ChatInputBar extends StatelessWidget {
                 style: const TextStyle(color: Colors.white),
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  hintText: 'Message...',
+                  hintText: AppLocalizations.of(context)!.chatInputHint,
                   hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
                   filled: true,
                   fillColor: const Color(0xFF1A0A1F),

@@ -3,7 +3,6 @@ import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/profile/views/profile_page.dart';
 import 'package:nocturne/domains/profile/views/profil_edit_page.dart';
-import 'package:nocturne/domains/chat/views/chat_page.dart';
 import 'package:nocturne/domains/chat/views/conversation_page.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
@@ -30,9 +29,6 @@ class Routes {
       case '/edit-profile':
         final profile = settings.arguments as AlternativeProfile;
         return MaterialPageRoute(builder: (_) => ProfileEditPage(profile: profile));
-      case '/chat':
-        final chatId = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => ChatPage(chatId: chatId));
       case '/register':
         return MaterialPageRoute(builder: (_) => const RegisterFlow());
       case '/subscription':

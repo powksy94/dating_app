@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/social/widgets/report_block_sheet.dart';
 
@@ -64,8 +65,8 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
               if (otherTyping)
-                const Text('en train d\'écrire...',
-                    style: TextStyle(
+                Text(AppLocalizations.of(context)!.chatTyping,
+                    style: const TextStyle(
                         color: Color(0xFF7B00D4),
                         fontSize: 12,
                         fontStyle: FontStyle.italic))

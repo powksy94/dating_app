@@ -1,4 +1,6 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/chat/models/message.dart';
 import 'package:nocturne/domains/chat/widgets/audio_player_bubble.dart';
 
@@ -129,12 +131,12 @@ class _MessageBubbleState extends State<MessageBubble> {
         ),
       ),
       child: reply.isImage
-          ? const Row(
+          ? Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.image_outlined, size: 14, color: Color(0xFF5A4A6A)),
-                SizedBox(width: 4),
-                Text('Photo', style: TextStyle(
+                const Icon(Icons.image_outlined, size: 14, color: Color(0xFF5A4A6A)),
+                const SizedBox(width: 4),
+                Text(AppLocalizations.of(context)!.chatReplyPhoto, style: const TextStyle(
                     color: Color(0xFF5A4A6A), fontSize: 12)),
               ],
             )
@@ -182,8 +184,8 @@ class _MessageBubbleState extends State<MessageBubble> {
             : CrossAxisAlignment.start,
         children: [
           if (widget.message.deletedForAll)
-            const Text('Message supprimé',
-                style: TextStyle(
+            Text(AppLocalizations.of(context)!.chatMessageDeleted,
+                style: const TextStyle(
                     color: Color(0xFF5A4A6A),
                     fontSize: 14,
                     fontStyle: FontStyle.italic))
@@ -219,7 +221,7 @@ class _MessageBubbleState extends State<MessageBubble> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(_formatTime(widget.message.createdAt),
+              Text(_formatTime(context, widget.message.createdAt),
                   style: const TextStyle(
                       color: Color(0xFFAA9AB5), fontSize: 10)),
               if (widget.isMe && widget.showReadReceipt &&
@@ -228,8 +230,8 @@ class _MessageBubbleState extends State<MessageBubble> {
                 Text(
                   widget.otherId != null &&
                           widget.message.isReadBy(widget.otherId!)
-                      ? 'Lu'
-                      : 'Envoyé',
+                      ? AppLocalizations.of(context)!.chatStatusRead
+                      : AppLocalizations.of(context)!.chatStatusSent,
                   style: TextStyle(
                     color: widget.otherId != null &&
                             widget.message.isReadBy(widget.otherId!)
@@ -246,9 +248,8 @@ class _MessageBubbleState extends State<MessageBubble> {
     );
   }
 
-  String _formatTime(DateTime dt) {
-    final h = dt.hour.toString().padLeft(2, '0');
-    final m = dt.minute.toString().padLeft(2, '0');
-    return '$h:$m';
+  String _formatTime(BuildContext context, DateTime dt) {
+    final locale = Localizations.localeOf(context).toString();
+    return DateFormat.jm(locale).format(dt);
   }
 }

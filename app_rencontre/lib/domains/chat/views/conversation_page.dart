@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
@@ -193,11 +194,12 @@ class _ConversationPageState extends State<ConversationPage> {
 
   String _lastSeenText() {
     if (_otherLastSeen == null) return '';
+    final l = AppLocalizations.of(context)!;
     final diff = DateTime.now().difference(_otherLastSeen!);
-    if (diff.inMinutes < 1)  return 'vu à l\'instant';
-    if (diff.inMinutes < 60) return 'vu il y a ${diff.inMinutes} min';
-    if (diff.inHours < 24)   return 'vu il y a ${diff.inHours} h';
-    return 'vu il y a ${diff.inDays} j';
+    if (diff.inMinutes < 1)  return l.chatLastSeenJustNow;
+    if (diff.inMinutes < 60) return l.chatLastSeenMinutesAgo(diff.inMinutes);
+    if (diff.inHours < 24)   return l.chatLastSeenHoursAgo(diff.inHours);
+    return l.chatLastSeenDaysAgo(diff.inDays);
   }
 
   @override

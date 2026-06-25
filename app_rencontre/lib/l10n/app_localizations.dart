@@ -571,6 +571,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1 boost per week'**
   String get featureBoostWeekly;
+
+  /// No description provided for @socialBtnReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get socialBtnReport;
+
+  /// No description provided for @socialBtnBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get socialBtnBlock;
+
+  /// No description provided for @socialDialogBlockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Block {username}? Your match will be deleted.'**
+  String socialDialogBlockBody(String username);
+
+  /// No description provided for @socialBtnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get socialBtnCancel;
+
+  /// No description provided for @reportCategoryHarassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment'**
+  String get reportCategoryHarassment;
+
+  /// No description provided for @reportSubHarassmentTargeted.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s targeting me personally'**
+  String get reportSubHarassmentTargeted;
+
+  /// No description provided for @reportSubHarassmentThreatening.
+  ///
+  /// In en, this message translates to:
+  /// **'Threatening behavior'**
+  String get reportSubHarassmentThreatening;
+
+  /// No description provided for @reportSubHarassmentRepeated.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeated unwanted messages'**
+  String get reportSubHarassmentRepeated;
+
+  /// No description provided for @reportCategoryFakeProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Fake profile'**
+  String get reportCategoryFakeProfile;
+
+  /// No description provided for @reportSubFakeStolenPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Stolen photos'**
+  String get reportSubFakeStolenPhotos;
+
+  /// No description provided for @reportSubFakeImpersonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Impersonation'**
+  String get reportSubFakeImpersonation;
+
+  /// No description provided for @reportSubFakeGhost.
+  ///
+  /// In en, this message translates to:
+  /// **'Ghost account'**
+  String get reportSubFakeGhost;
+
+  /// No description provided for @reportCategoryNonConsensualSexual.
+  ///
+  /// In en, this message translates to:
+  /// **'Non-consensual sexual content'**
+  String get reportCategoryNonConsensualSexual;
+
+  /// No description provided for @reportCategorySpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam or scam'**
+  String get reportCategorySpam;
+
+  /// No description provided for @reportCategoryMinor.
+  ///
+  /// In en, this message translates to:
+  /// **'Minor'**
+  String get reportCategoryMinor;
+
+  /// No description provided for @reportCategoryHateSpeech.
+  ///
+  /// In en, this message translates to:
+  /// **'Hate speech or discrimination'**
+  String get reportCategoryHateSpeech;
+
+  /// No description provided for @reportCategoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get reportCategoryOther;
+
+  /// No description provided for @socialReportHeaderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report {username}'**
+  String socialReportHeaderTitle(String username);
+
+  /// No description provided for @socialReportRootQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you reporting this profile?'**
+  String get socialReportRootQuestion;
+
+  /// No description provided for @socialReportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the problem...'**
+  String get socialReportHint;
+
+  /// No description provided for @socialBtnSendReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send report'**
+  String get socialBtnSendReport;
+
+  /// No description provided for @socialReportSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent'**
+  String get socialReportSentTitle;
+
+  /// No description provided for @socialReportSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you. Our team will review this report.'**
+  String get socialReportSentBody;
+
+  /// No description provided for @socialBtnClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get socialBtnClose;
+
+  /// No description provided for @chatReplyPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get chatReplyPhoto;
+
+  /// No description provided for @chatMessageDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Message deleted'**
+  String get chatMessageDeleted;
+
+  /// No description provided for @chatStatusRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get chatStatusRead;
+
+  /// No description provided for @chatStatusSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get chatStatusSent;
+
+  /// No description provided for @chatListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MESSAGES'**
+  String get chatListTitle;
+
+  /// No description provided for @chatTabChats.
+  ///
+  /// In en, this message translates to:
+  /// **'CHATS'**
+  String get chatTabChats;
+
+  /// No description provided for @chatTabElegiesReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'RECEIVED ELEGIES'**
+  String get chatTabElegiesReceived;
+
+  /// No description provided for @chatTabElegiesSent.
+  ///
+  /// In en, this message translates to:
+  /// **'SENT ELEGIES'**
+  String get chatTabElegiesSent;
+
+  /// No description provided for @chatEmptyMatchesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches yet...'**
+  String get chatEmptyMatchesTitle;
+
+  /// No description provided for @chatEmptyMatchesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep exploring the darkness'**
+  String get chatEmptyMatchesSub;
+
+  /// No description provided for @chatEmptyElegiesReceivedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No elegies received'**
+  String get chatEmptyElegiesReceivedTitle;
+
+  /// No description provided for @chatEmptyElegiesReceivedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone will think of you soon...'**
+  String get chatEmptyElegiesReceivedSub;
+
+  /// No description provided for @chatEmptyElegiesSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No elegies sent'**
+  String get chatEmptyElegiesSentTitle;
+
+  /// No description provided for @chatEmptyElegiesSentSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Dare to break the silence...'**
+  String get chatEmptyElegiesSentSub;
+
+  /// No description provided for @chatNewMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'New match'**
+  String get chatNewMatch;
+
+  /// No description provided for @chatElegiePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get chatElegiePending;
+
+  /// No description provided for @chatTimeMinutesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m'**
+  String chatTimeMinutesShort(int count);
+
+  /// No description provided for @chatTimeHoursShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h'**
+  String chatTimeHoursShort(int count);
+
+  /// No description provided for @chatTimeDaysShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d'**
+  String chatTimeDaysShort(int count);
+
+  /// No description provided for @chatTyping.
+  ///
+  /// In en, this message translates to:
+  /// **'typing...'**
+  String get chatTyping;
+
+  /// No description provided for @chatInputHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Message...'**
+  String get chatInputHint;
+
+  /// No description provided for @chatEmojiHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an emoji...'**
+  String get chatEmojiHint;
+
+  /// No description provided for @chatBtnDeleteForMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete for me'**
+  String get chatBtnDeleteForMe;
+
+  /// No description provided for @chatBtnDeleteForAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete for everyone'**
+  String get chatBtnDeleteForAll;
+
+  /// No description provided for @chatLastSeenJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'seen just now'**
+  String get chatLastSeenJustNow;
+
+  /// No description provided for @chatLastSeenMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'seen {count} min ago'**
+  String chatLastSeenMinutesAgo(int count);
+
+  /// No description provided for @chatLastSeenHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'seen {count}h ago'**
+  String chatLastSeenHoursAgo(int count);
+
+  /// No description provided for @chatLastSeenDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'seen {count}d ago'**
+  String chatLastSeenDaysAgo(int count);
 }
 
 class _AppLocalizationsDelegate

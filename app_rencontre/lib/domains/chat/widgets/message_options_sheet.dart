@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/chat/models/message.dart';
 
 const _kQuickEmojis = ['🖤', '❤️', '😭', '🔥', '💀', '✨', '🦇', '🌙'];
@@ -130,7 +131,7 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
                   textAlign: TextAlign.center,
                   maxLength: 2,
                   decoration: InputDecoration(
-                    hintText: 'Choisis un emoji...',
+                    hintText: AppLocalizations.of(context)!.chatEmojiHint,
                     hintStyle: const TextStyle(
                         color: Color(0xFF5A4A6A), fontSize: 14),
                     counterText: '',
@@ -163,8 +164,8 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
             ListTile(
               leading: const Icon(Icons.delete_outline,
                   color: Color(0xFFAA9AB5)),
-              title: const Text('Supprimer pour moi',
-                  style: TextStyle(color: Colors.white)),
+              title: Text(AppLocalizations.of(context)!.chatBtnDeleteForMe,
+                  style: const TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
                 widget.onDeleteForMe();
@@ -174,8 +175,8 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
               ListTile(
                 leading: const Icon(Icons.delete_forever,
                     color: Color(0xFF8B0000)),
-                title: const Text('Supprimer pour tout le monde',
-                    style: TextStyle(color: Color(0xFF8B0000))),
+                title: Text(AppLocalizations.of(context)!.chatBtnDeleteForAll,
+                    style: const TextStyle(color: Color(0xFF8B0000))),
                 onTap: () {
                   Navigator.pop(context);
                   widget.onDeleteForAll();

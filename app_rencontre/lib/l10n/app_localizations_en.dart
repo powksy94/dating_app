@@ -275,4 +275,178 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureBoostWeekly => '1 boost per week';
+
+  @override
+  String get socialBtnReport => 'Report';
+
+  @override
+  String get socialBtnBlock => 'Block';
+
+  @override
+  String socialDialogBlockBody(String username) {
+    return 'Block $username? Your match will be deleted.';
+  }
+
+  @override
+  String get socialBtnCancel => 'Cancel';
+
+  @override
+  String get reportCategoryHarassment => 'Harassment';
+
+  @override
+  String get reportSubHarassmentTargeted => 'It\'s targeting me personally';
+
+  @override
+  String get reportSubHarassmentThreatening => 'Threatening behavior';
+
+  @override
+  String get reportSubHarassmentRepeated => 'Repeated unwanted messages';
+
+  @override
+  String get reportCategoryFakeProfile => 'Fake profile';
+
+  @override
+  String get reportSubFakeStolenPhotos => 'Stolen photos';
+
+  @override
+  String get reportSubFakeImpersonation => 'Impersonation';
+
+  @override
+  String get reportSubFakeGhost => 'Ghost account';
+
+  @override
+  String get reportCategoryNonConsensualSexual =>
+      'Non-consensual sexual content';
+
+  @override
+  String get reportCategorySpam => 'Spam or scam';
+
+  @override
+  String get reportCategoryMinor => 'Minor';
+
+  @override
+  String get reportCategoryHateSpeech => 'Hate speech or discrimination';
+
+  @override
+  String get reportCategoryOther => 'Other';
+
+  @override
+  String socialReportHeaderTitle(String username) {
+    return 'Report $username';
+  }
+
+  @override
+  String get socialReportRootQuestion => 'Why are you reporting this profile?';
+
+  @override
+  String get socialReportHint => 'Describe the problem...';
+
+  @override
+  String get socialBtnSendReport => 'Send report';
+
+  @override
+  String get socialReportSentTitle => 'Report sent';
+
+  @override
+  String get socialReportSentBody =>
+      'Thank you. Our team will review this report.';
+
+  @override
+  String get socialBtnClose => 'Close';
+
+  @override
+  String get chatReplyPhoto => 'Photo';
+
+  @override
+  String get chatMessageDeleted => 'Message deleted';
+
+  @override
+  String get chatStatusRead => 'Read';
+
+  @override
+  String get chatStatusSent => 'Sent';
+
+  @override
+  String get chatListTitle => 'MESSAGES';
+
+  @override
+  String get chatTabChats => 'CHATS';
+
+  @override
+  String get chatTabElegiesReceived => 'RECEIVED ELEGIES';
+
+  @override
+  String get chatTabElegiesSent => 'SENT ELEGIES';
+
+  @override
+  String get chatEmptyMatchesTitle => 'No matches yet...';
+
+  @override
+  String get chatEmptyMatchesSub => 'Keep exploring the darkness';
+
+  @override
+  String get chatEmptyElegiesReceivedTitle => 'No elegies received';
+
+  @override
+  String get chatEmptyElegiesReceivedSub => 'Someone will think of you soon...';
+
+  @override
+  String get chatEmptyElegiesSentTitle => 'No elegies sent';
+
+  @override
+  String get chatEmptyElegiesSentSub => 'Dare to break the silence...';
+
+  @override
+  String get chatNewMatch => 'New match';
+
+  @override
+  String get chatElegiePending => 'Pending';
+
+  @override
+  String chatTimeMinutesShort(int count) {
+    return '${count}m';
+  }
+
+  @override
+  String chatTimeHoursShort(int count) {
+    return '${count}h';
+  }
+
+  @override
+  String chatTimeDaysShort(int count) {
+    return '${count}d';
+  }
+
+  @override
+  String get chatTyping => 'typing...';
+
+  @override
+  String get chatInputHint => 'Message...';
+
+  @override
+  String get chatEmojiHint => 'Choose an emoji...';
+
+  @override
+  String get chatBtnDeleteForMe => 'Delete for me';
+
+  @override
+  String get chatBtnDeleteForAll => 'Delete for everyone';
+
+  @override
+  String get chatLastSeenJustNow => 'seen just now';
+
+  @override
+  String chatLastSeenMinutesAgo(int count) {
+    return 'seen $count min ago';
+  }
+
+  @override
+  String chatLastSeenHoursAgo(int count) {
+    return 'seen ${count}h ago';
+  }
+
+  @override
+  String chatLastSeenDaysAgo(int count) {
+    return 'seen ${count}d ago';
+  }
 }
