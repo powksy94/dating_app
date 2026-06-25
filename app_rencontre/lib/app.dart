@@ -1,5 +1,7 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:screen_protector/screen_protector.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/roads.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
@@ -47,6 +49,16 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       title: 'Nocturne',
       debugShowCheckedModeBanner: false,
       navigatorKey: widget.navigatorKey,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fr'),
+      ],
       theme: _nocturneTheme(),
       onGenerateRoute: Routes.generateRoute,
       builder: (context, child) => Stack(

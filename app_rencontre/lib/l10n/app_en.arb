@@ -1,0 +1,117 @@
+{
+    "@@locale": "en",
+    "appTitle": "Nocturne",
+    "@appTitle": {
+        "description": "Application title"
+    },
+
+    "visitorsTitle": "VISITORS",
+    "visitorsEmptyState": "No one has visited your profile yet",
+    "visitorsPaywallTitle": "Nocturne Feature",
+    "visitorsPaywallDescription": "See who's visited your profile in the last 30 days by upgrading to Nocturne or Abyssal.",
+    "visitorsPaywallSheetTitle": "Profile visitors",
+    "visitorsPaywallSheetDescription": "Discover all the profiles that have viewed yours.",
+    "visitorsBtnUpgrade": "Upgrade to Nocturne",
+
+    "adminAuthErrorBiometricUnavailable": "Biometrics unavailable on this device",
+    "adminAuthLocalizedReason": "Verify your identity to approve the admin login",
+    "adminAuthErrorBiometricFailed": "Biometric verification failed",
+    "adminAuthErrorBiometricGeneric": "Biometric error",
+    "adminAuthTitle": "ADMIN LOGIN",
+    "adminAuthDescription": "A login request to the admin panel was initiated from a browser.",
+    "adminAuthBiometricRequired": "Biometrics required to approve",
+    "adminAuthBtnApprove": "Approve",
+    "adminAuthBtnDeny": "Deny",
+
+    "homeNavDiscover": "Discover",
+    "homeNavEvents": "Events",
+    "homeNavMessages": "Messages",
+    "homeNavProfile": "Profile",
+    "homeMyProfileTitle": "MY PROFILE",
+    "homeNoProfileTitle": "Profile not set up",
+    "homeNoProfileDescription": "Create your profile to appear in the swipe",
+    "homeBtnCreateProfile": "Create my profile",
+    "homePremiumBanner": "NOCTURNE PREMIUM",
+
+    "elegieSnackSent": "Elegy sent to {username}",
+    "@elegieSnackSent": {
+        "placeholders": { "username": { "type": "String" } }
+    },
+    "elegieLimitReachedTitle": "Elegy limit reached",
+    "elegieLimitReachedBody": "{count, plural, =1{You've used your elegy for today. Upgrade to Nocturne to send more.} other{You've used your {count} elegies for today. Upgrade to Nocturne to send more.}}",
+    "@elegieLimitReachedBody": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "elegieSheetTitle": "Elegy for {username}",
+    "@elegieSheetTitle": {
+        "placeholders": { "username": { "type": "String" } }
+    },
+    "elegieSheetSubtitle": "A short message before the darkness decides",
+    "elegieHintMessage": "Write your message...",
+    "elegieBtnSend": "Send the elegy",
+    "elegieBannerDescription": "Upgrade to Nocturne to send more elegies.",
+    "elegieBtnUpgrade": "Upgrade to Nocturne",
+
+    "periodWeek": "week",
+    "periodMonth": "month",
+    "periodYear": "year",
+
+    "subscriptionBtnSwitchToFree": "Switch to free plan",
+    "subscriptionBtnCurrentPlan": "✓ Current plan",
+    "subscriptionBtnChangePeriod": "Change period",
+    "subscriptionBtnChoosePlan": "Choose {planName}",
+    "@subscriptionBtnChoosePlan": {
+        "placeholders": { "planName": { "type": "String" } }
+    },
+    "subscriptionSnackSubscribed": "✓ {planName} subscription activated!",
+    "@subscriptionSnackSubscribed": {
+        "placeholders": { "planName": { "type": "String" } }
+    },
+    "subscriptionSnackError": "Error, try again.",
+    "subscriptionSnackCancelled": "Subscription cancelled.",
+    "subscriptionCancelSubscription": "Cancel subscription",
+    "subscriptionCancelAnytimeNote": "Cancel anytime",
+
+    "subscriptionDialogSubscribeTitle": "Subscribe to {planName}",
+    "@subscriptionDialogSubscribeTitle": {
+        "placeholders": { "planName": { "type": "String" } }
+    },
+    "subscriptionBtnDialogCancel": "Cancel",
+    "subscriptionBtnDialogConfirm": "Confirm",
+    "subscriptionDialogCancelBody": "You'll lose access to premium features.",
+    "subscriptionBtnKeep": "Keep",
+    "subscriptionBtnConfirmCancel": "Cancel",
+
+    "subscriptionPageTitle": "NOCTURNE PREMIUM",
+    "subscriptionPageSubtitle": "Join the limitless darkness",
+
+    "subscriptionPaywallBtnViewPlans": "View subscription plans",
+    "subscriptionPaywallBtnNotNow": "Not now",
+    "subscriptionPaywallAvailableFrom": "Available from {planName}",
+    "@subscriptionPaywallAvailableFrom": {
+        "placeholders": { "planName": { "type": "String" } }
+    },
+
+    "subscriptionPlanOmbre": "Shadow",
+    "subscriptionPlanNocturne": "Nocturne",
+    "subscriptionPlanAbyssal": "Abyssal",
+    "subscriptionBadgePopular": "POPULAR",
+    "subscriptionPriceFree": "Free",
+
+    "featureOmbreSwipes": "30 swipes per day",
+    "featureOmbreElegies": "3 elegies per month",
+    "featureOmbreEvents": "2 events per month",
+    "featureOmbrePhotos": "2 photos per profile",
+    "featureWhoLikedMe": "See who's liked you",
+    "featureWhoVisited": "Who's visited your profile",
+    "featureRewind": "Rewind (undo a swipe)",
+    "featureBoostGeneric": "Profile boost",
+    "featureUnlimitedSwipe": "Unlimited swipe",
+    "featureNocturneElegies": "15 elegies per month",
+    "featureNocturneEvents": "4 events per month",
+    "featurePhotos6": "6 photos per profile",
+    "featureBoostMonthly": "1 boost per month",
+    "featureUnlimitedElegies": "Unlimited elegies",
+    "featureUnlimitedEvents": "Unlimited events",
+    "featureBoostWeekly": "1 boost per week"
+}

@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/subscription_period.dart';
 import 'package:nocturne/domains/subscription/models/plan_limits.dart';
 
@@ -12,6 +13,7 @@ class SubscriptionFeature {
 }
 
 class SubscriptionPlan {
+    final String id;
     final String name;
     final Color color;
     final Color accentColor;
@@ -24,8 +26,10 @@ class SubscriptionPlan {
     final String? yearPriceOriginal;
     final List<SubscriptionFeature> features;
     final PlanLimits limits;
+    final String freeLabel;
 
     const SubscriptionPlan({
+        required this.id,
         required this.name,
         required this.color,
         required this.accentColor,
@@ -38,10 +42,11 @@ class SubscriptionPlan {
         this.yearPriceOriginal,
         required this.features,
         required this.limits,
+        required this.freeLabel,
     });
 
     String priceFor(SubscriptionPeriod period) {
-        if (weekPrice == null) return 'Gratuit';
+        if (weekPrice == null) return freeLabel;
         switch (period) {
             case SubscriptionPeriod.week:  return weekPrice!;
             case SubscriptionPeriod.month: return monthPrice!;
@@ -74,56 +79,65 @@ const kAbyssalYearPrice           = '420,44 €';
 const kAbyssalYearPriceOriginal   = '519,07 €';
 // ──────────────────────────────────────────────────────────────────────────────
 
-const kSubscriptionPlans = [
-    SubscriptionPlan(
-        name: 'Ombre', color: Color(0xFF2D2D2D), accentColor: Color(0xFFAA9AB5),
-        icon: Icons.nightlight_outlined, weekPrice: null, monthPrice: null, yearPrice: null,
-        limits: kOmbreLimits,
-        features: [
-            SubscriptionFeature('30 swipes par jour', true),
-            SubscriptionFeature('3 élégies par mois', true),
-            SubscriptionFeature('2 événements par mois', true),
-            SubscriptionFeature('2 photos par profil', true),
-            SubscriptionFeature('Voir qui t\'a liké', false),
-            SubscriptionFeature('Qui a visité ton profil', false),
-            SubscriptionFeature('Rewind (annuler un swipe)', false),
-            SubscriptionFeature('Boost de profil', false),
-        ],
-    ),
-    SubscriptionPlan(
-        name: 'Nocturne', color: Color(0xFF4A0072), accentColor: Color(0xFF7B00D4),
-        icon: Icons.nightlight, badge: 'POPULAIRE',
-        weekPrice: kNocturneWeekPrice, monthPrice: kNocturneMonthPrice,
-        monthPriceOriginal: kNocturneMonthPriceOriginal,
-        yearPrice: kNocturneYearPrice, yearPriceOriginal: kNocturneYearPriceOriginal,
-        limits: kNocturneLimits,
-        features: [
-            SubscriptionFeature('Swipe illimité', true),
-            SubscriptionFeature('15 élégies par mois', true),
-            SubscriptionFeature('4 événements par mois', true),
-            SubscriptionFeature('6 photos par profil', true),
-            SubscriptionFeature('Voir qui t\'a liké', true),
-            SubscriptionFeature('Qui a visité ton profil', true),
-            SubscriptionFeature('Rewind (annuler un swipe)', true),
-            SubscriptionFeature('1 boost par mois', true),
-        ],
-    ),
-    SubscriptionPlan(
-        name: 'Abyssal', color: Color(0xFF1A0A1F), accentColor: Color(0xFFD400FF),
-        icon: Icons.auto_awesome,
-        weekPrice: kAbyssalWeekPrice, monthPrice: kAbyssalMonthPrice,
-        monthPriceOriginal: kAbyssalMonthPriceOriginal,
-        yearPrice: kAbyssalYearPrice, yearPriceOriginal: kAbyssalYearPriceOriginal,
-        limits: kAbyssalLimits,
-        features: [
-            SubscriptionFeature('Swipe illimité', true),
-            SubscriptionFeature('Élégies illimitées', true),
-            SubscriptionFeature('Événements illimités', true),
-            SubscriptionFeature('6 photos par profil', true),
-            SubscriptionFeature('Voir qui t\'a liké', true),
-            SubscriptionFeature('Qui a visité ton profil', true),
-            SubscriptionFeature('Rewind (annuler un swipe)', true),
-            SubscriptionFeature('1 boost par semaine', true),
-        ],
-    ),
-];
+/// Identifiants des plans, dans l'ordre d'affichage (stable, indépendant de la langue).
+const kSubscriptionPlanIds = ['ombre', 'nocturne', 'abyssal'];
+
+List<SubscriptionPlan> subscriptionPlans(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return [
+        SubscriptionPlan(
+            id: 'ombre', name: l.subscriptionPlanOmbre, color: const Color(0xFF2D2D2D), accentColor: const Color(0xFFAA9AB5),
+            icon: Icons.nightlight_outlined, weekPrice: null, monthPrice: null, yearPrice: null,
+            limits: kOmbreLimits,
+            freeLabel: l.subscriptionPriceFree,
+            features: [
+                SubscriptionFeature(l.featureOmbreSwipes, true),
+                SubscriptionFeature(l.featureOmbreElegies, true),
+                SubscriptionFeature(l.featureOmbreEvents, true),
+                SubscriptionFeature(l.featureOmbrePhotos, true),
+                SubscriptionFeature(l.featureWhoLikedMe, false),
+                SubscriptionFeature(l.featureWhoVisited, false),
+                SubscriptionFeature(l.featureRewind, false),
+                SubscriptionFeature(l.featureBoostGeneric, false),
+            ],
+        ),
+        SubscriptionPlan(
+            id: 'nocturne', name: l.subscriptionPlanNocturne, color: const Color(0xFF4A0072), accentColor: const Color(0xFF7B00D4),
+            icon: Icons.nightlight, badge: l.subscriptionBadgePopular,
+            weekPrice: kNocturneWeekPrice, monthPrice: kNocturneMonthPrice,
+            monthPriceOriginal: kNocturneMonthPriceOriginal,
+            yearPrice: kNocturneYearPrice, yearPriceOriginal: kNocturneYearPriceOriginal,
+            limits: kNocturneLimits,
+            freeLabel: l.subscriptionPriceFree,
+            features: [
+                SubscriptionFeature(l.featureUnlimitedSwipe, true),
+                SubscriptionFeature(l.featureNocturneElegies, true),
+                SubscriptionFeature(l.featureNocturneEvents, true),
+                SubscriptionFeature(l.featurePhotos6, true),
+                SubscriptionFeature(l.featureWhoLikedMe, true),
+                SubscriptionFeature(l.featureWhoVisited, true),
+                SubscriptionFeature(l.featureRewind, true),
+                SubscriptionFeature(l.featureBoostMonthly, true),
+            ],
+        ),
+        SubscriptionPlan(
+            id: 'abyssal', name: l.subscriptionPlanAbyssal, color: const Color(0xFF1A0A1F), accentColor: const Color(0xFFD400FF),
+            icon: Icons.auto_awesome,
+            weekPrice: kAbyssalWeekPrice, monthPrice: kAbyssalMonthPrice,
+            monthPriceOriginal: kAbyssalMonthPriceOriginal,
+            yearPrice: kAbyssalYearPrice, yearPriceOriginal: kAbyssalYearPriceOriginal,
+            limits: kAbyssalLimits,
+            freeLabel: l.subscriptionPriceFree,
+            features: [
+                SubscriptionFeature(l.featureUnlimitedSwipe, true),
+                SubscriptionFeature(l.featureUnlimitedElegies, true),
+                SubscriptionFeature(l.featureUnlimitedEvents, true),
+                SubscriptionFeature(l.featurePhotos6, true),
+                SubscriptionFeature(l.featureWhoLikedMe, true),
+                SubscriptionFeature(l.featureWhoVisited, true),
+                SubscriptionFeature(l.featureRewind, true),
+                SubscriptionFeature(l.featureBoostWeekly, true),
+            ],
+        ),
+    ];
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_dialogs.dart';
@@ -28,16 +29,17 @@ class SubscriptionActionButton extends StatefulWidget {
 class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
   bool _loading = false;
 
-  bool get _isCurrentPlan  => widget.plan.name.toLowerCase() == widget.activePlan;
+  bool get _isCurrentPlan  => widget.plan.id == widget.activePlan;
   bool get _isPeriodSame   => widget.period == widget.activePeriod;
   bool get _isFullyActive  => _isCurrentPlan && _isPeriodSame;
   bool get _onPaidPlan     => widget.activePlan != 'ombre';
 
   String get _buttonLabel {
-    if (widget.plan.isFree)  return _onPaidPlan ? 'Passer au plan gratuit' : '✓ Plan actuel';
-    if (_isFullyActive)      return '✓ Plan actuel';
-    if (_isCurrentPlan)      return 'Changer de période';
-    return 'Choisir ${widget.plan.name}';
+    final l = AppLocalizations.of(context)!;
+    if (widget.plan.isFree)  return _onPaidPlan ? l.subscriptionBtnSwitchToFree : l.subscriptionBtnCurrentPlan;
+    if (_isFullyActive)      return l.subscriptionBtnCurrentPlan;
+    if (_isCurrentPlan)      return l.subscriptionBtnChangePeriod;
+    return l.subscriptionBtnChoosePlan(widget.plan.name);
   }
 
   bool get _buttonEnabled {
@@ -51,25 +53,27 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
   }
 
   Future<void> _subscribe() async {
+    final l = AppLocalizations.of(context)!;
     final ok = await SubscriptionDialogs.confirmSubscribe(context, widget.plan, widget.period);
     if (!ok || !mounted) return;
 
     setState(() => _loading = true);
     final success = await SubscriptionService.subscribe(
-      widget.plan.name.toLowerCase(),
+      widget.plan.id,
       widget.period.name,
     );
     if (!mounted) return;
     setState(() => _loading = false);
 
-    if (success) widget.onSubscribed(widget.plan.name.toLowerCase(), widget.period);
+    if (success) widget.onSubscribed(widget.plan.id, widget.period);
     _showSnack(
-      success ? '✓ Abonnement ${widget.plan.name} activé !' : 'Erreur, réessaie.',
+      success ? l.subscriptionSnackSubscribed(widget.plan.name) : l.subscriptionSnackError,
       success ? widget.plan.accentColor : const Color(0xFF7F1D1D),
     );
   }
 
   Future<void> _cancel() async {
+    final l = AppLocalizations.of(context)!;
     final ok = await SubscriptionDialogs.confirmCancel(context);
     if (!ok || !mounted) return;
 
@@ -80,7 +84,7 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
 
     if (success) widget.onCancelled();
     _showSnack(
-      success ? 'Abonnement résilié.' : 'Erreur, réessaie.',
+      success ? l.subscriptionSnackCancelled : l.subscriptionSnackError,
       success ? const Color(0xFF3D2A4A) : const Color(0xFF7F1D1D),
     );
   }
@@ -121,14 +125,14 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
             const SizedBox(height: 10),
             TextButton(
               onPressed: _loading ? null : _cancel,
-              child: const Text('Résilier l\'abonnement',
-                  style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
+              child: Text(AppLocalizations.of(context)!.subscriptionCancelSubscription,
+                  style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
             ),
           ] else ...[
             const SizedBox(height: 10),
             if (!widget.plan.isFree)
-              const Text('Résiliation possible à tout moment',
-                  style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12))
+              Text(AppLocalizations.of(context)!.subscriptionCancelAnytimeNote,
+                  style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 12))
             else
               const SizedBox(height: 15),
           ],

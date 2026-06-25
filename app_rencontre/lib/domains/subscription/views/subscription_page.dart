@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/period_selector.dart';
@@ -28,8 +29,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   Future<void> _loadSubscription() async {
     final sub = await SubscriptionService.getMySubscription();
-    final planNames = ['ombre', 'nocturne', 'abyssal'];
-    final planIndex = planNames.indexOf(sub['plan'] ?? 'ombre');
+    final planIndex = kSubscriptionPlanIds.indexOf(sub['plan'] ?? 'ombre');
     final periodMap = {
       'week':  SubscriptionPeriod.week,
       'month': SubscriptionPeriod.month,
@@ -82,16 +82,17 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       );
     }
 
-    final currentPlan = kSubscriptionPlans[_current];
+    final plans = subscriptionPlans(context);
+    final currentPlan = plans[_current];
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0010),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'NOCTURNE PREMIUM',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.subscriptionPageTitle,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -103,12 +104,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       body: Column(
         children: [
           const SizedBox(height: 12),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              'Rejoins les ténèbres sans limites',
+              AppLocalizations.of(context)!.subscriptionPageSubtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Color(0xFFAA9AB5), fontSize: 14, letterSpacing: 0.5),
             ),
           ),
@@ -125,14 +126,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           Expanded(
             child: PageView.builder(
               controller: _controller,
-              itemCount: kSubscriptionPlans.length,
+              itemCount: plans.length,
               onPageChanged: (i) => setState(() => _current = i),
               itemBuilder: (_, index) => AnimatedScale(
                 scale: index == _current ? 1.0 : 0.92,
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOut,
                 child: PlanCard(
-                  plan: kSubscriptionPlans[index],
+                  plan: plans[index],
                   isActive: index == _current,
                   period: _period,
                 ),
@@ -142,7 +143,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(kSubscriptionPlans.length, (i) {
+            children: List.generate(plans.length, (i) {
               final isActive = i == _current;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),

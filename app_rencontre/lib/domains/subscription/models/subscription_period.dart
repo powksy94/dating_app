@@ -1,10 +1,22 @@
+import 'package:flutter/widgets.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
+
 enum SubscriptionPeriod { week, month, year }
 
-String periodLabel(SubscriptionPeriod p) {
+String periodName(BuildContext context, SubscriptionPeriod p) {
+    final l = AppLocalizations.of(context)!;
     switch (p) {
-        case SubscriptionPeriod.week:  return '/ semaine';
-        case SubscriptionPeriod.month: return '/ mois';
-        case SubscriptionPeriod.year:  return '/an';
+        case SubscriptionPeriod.week:  return l.periodWeek;
+        case SubscriptionPeriod.month: return l.periodMonth;
+        case SubscriptionPeriod.year:  return l.periodYear;
+    }
+}
+
+String periodLabel(BuildContext context, SubscriptionPeriod p) {
+    switch (p) {
+        case SubscriptionPeriod.week:  return '/ ${periodName(context, p)}';
+        case SubscriptionPeriod.month: return '/ ${periodName(context, p)}';
+        case SubscriptionPeriod.year:  return '/${periodName(context, p)}';
     }
 }
 

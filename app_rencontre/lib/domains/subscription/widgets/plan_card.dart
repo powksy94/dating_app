@@ -98,7 +98,7 @@ class PlanCard extends StatelessWidget {
                                             Padding(
                                                 padding: const EdgeInsets.only(bottom: 5, left: 6),
                                                 child: Text(
-                                                    periodLabel(period),
+                                                    periodLabel(context, period),
                                                     style: const TextStyle(
                                                         color: Color(0xFFAA9AB5),
                                                         fontSize: 13,

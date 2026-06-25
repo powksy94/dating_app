@@ -1,4 +1,6 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/views/subscription_page.dart';
 
 class PaywallSheet extends StatelessWidget {
@@ -11,7 +13,7 @@ class PaywallSheet extends StatelessWidget {
         super.key,
         required this.title,
         required this.description,
-        this.requiredPlan = 'Nocturne',
+        this.requiredPlan = 'nocturne',
         this.icon = Icons.lock_outline,
     });
 
@@ -19,7 +21,7 @@ class PaywallSheet extends StatelessWidget {
         BuildContext context, {
         required String title,
         required String description,
-        String requiredPlan = 'Nocturne',
+        String requiredPlan = 'nocturne',
         IconData icon = Icons.lock_outline,
     }) {
         return showModalBottomSheet(
@@ -82,7 +84,8 @@ class PaywallSheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                        'Disponible dès $requiredPlan',
+                        AppLocalizations.of(context)!.subscriptionPaywallAvailableFrom(
+                            subscriptionPlans(context).firstWhere((p) => p.id == requiredPlan).name),
                         style: TextStyle(
                             color: accent, fontSize: 13,
                             fontWeight: FontWeight.w600),
@@ -103,9 +106,9 @@ class PaywallSheet extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(14)),
                             ),
-                            child: const Text(
-                                'Voir les abonnements',
-                                style: TextStyle(
+                            child: Text(
+                                AppLocalizations.of(context)!.subscriptionPaywallBtnViewPlans,
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 16,
                                     fontWeight: FontWeight.bold),
                             ),
@@ -114,9 +117,9 @@ class PaywallSheet extends StatelessWidget {
                     const SizedBox(height: 12),
                     TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text(
-                            'Pas maintenant',
-                            style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
+                        child: Text(
+                            AppLocalizations.of(context)!.subscriptionPaywallBtnNotNow,
+                            style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
                         ),
                     ),
                 ],

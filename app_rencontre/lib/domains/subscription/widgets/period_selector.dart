@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 
+String _capitalize(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
 class PeriodSelector extends StatelessWidget {
   final SubscriptionPeriod selected;
   final Color accentColor;
@@ -40,11 +42,7 @@ class PeriodSelector extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      p == SubscriptionPeriod.week
-                          ? 'Semaine'
-                          : p == SubscriptionPeriod.month
-                              ? 'Mois'
-                              : 'An',
+                      _capitalize(periodName(context, p)),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isSelected ? Colors.white : const Color(0xFFAA9AB5),
