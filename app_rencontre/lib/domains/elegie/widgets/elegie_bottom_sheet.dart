@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/elegie/services/elegie_service.dart';
@@ -87,7 +88,7 @@ class _ElegieSheetState extends State<_ElegieSheet> {
         ));
       } else {
         ScaffoldMessenger.of(pageCtx).showSnackBar(SnackBar(
-          content: Text('Élégie envoyée à ${widget.profile.username}'),
+          content: Text(AppLocalizations.of(pageCtx)!.elegieSnackSent(widget.profile.username)),
           backgroundColor: const Color(0xFF4A0072),
         ));
       }
@@ -98,8 +99,8 @@ class _ElegieSheetState extends State<_ElegieSheet> {
 
   void _showPaywall() => PaywallSheet.show(
     context,
-    title: 'Limite d\'élégies atteinte',
-    description: 'Tu as utilisé tes $_limit élégies du jour. Passe à Nocturne pour en envoyer plus.',
+    title: AppLocalizations.of(context)!.elegieLimitReachedTitle,
+    description: AppLocalizations.of(context)!.elegieLimitReachedBody(_limit),
     requiredPlan: 'nocturne',
     icon: Icons.edit_note,
   );

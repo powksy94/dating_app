@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/elegie/widgets/elegie_quota_pill.dart';
 import 'package:nocturne/domains/elegie/widgets/elegie_paywall_banner.dart';
@@ -45,14 +46,14 @@ class ElegieSheetBody extends StatelessWidget {
           Row(children: [
             const Icon(Icons.edit_note, color: Color(0xFF7B00D4), size: 22),
             const SizedBox(width: 8),
-            Expanded(child: Text('Élégie pour ${profile.username}',
+            Expanded(child: Text(AppLocalizations.of(context)!.elegieSheetTitle(profile.username),
               style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))),
             if (!statusLoading && !unlimited)
               ElegieQuotaPill(remaining: remaining, limit: limit),
           ]),
           const SizedBox(height: 6),
-          const Text('Un court message avant que les ténèbres décident',
-            style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
+          Text(AppLocalizations.of(context)!.elegieSheetSubtitle,
+            style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 12)),
           const SizedBox(height: 16),
           if (_limitReached)
             ElegiePaywallBanner(onPaywall: onPaywall)
@@ -82,7 +83,7 @@ class _TextField extends StatelessWidget {
             controller: ctrl, maxLength: 200, maxLines: 4, autofocus: true,
             style: const TextStyle(color: Colors.white, fontSize: 14),
             decoration: InputDecoration(
-              hintText: 'Écris ton message...', hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
+              hintText: AppLocalizations.of(context)!.elegieHintMessage, hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
               filled: true, fillColor: const Color(0xFF0D0010), counterText: '',
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: Color(0xFF3D2A4A))),
               focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: Color(0xFF7B00D4))),
@@ -116,7 +117,7 @@ class _SendButton extends StatelessWidget {
         ),
         child: sending
             ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-            : const Text('Envoyer l\'élégie', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
+            : Text(AppLocalizations.of(context)!.elegieBtnSend, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
       ),
     );
   }
