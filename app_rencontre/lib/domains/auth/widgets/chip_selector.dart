@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
+
+class ChipOption {
+    final String value;
+    final String label;
+    const ChipOption(this.value, this.label);
+}
 
 class ChipSelector extends StatelessWidget {
     final String title;
-    final List<String> options;
+    final List<ChipOption> options;
     final String? selected;
     final void Function(String) onSelected;
+    final String otherValue;
     final String? customValue;
     final void Function(String)? onCustomChanged;
     final int fadeDelayMs;
@@ -16,6 +24,7 @@ class ChipSelector extends StatelessWidget {
         required this.options,
         required this.selected,
         required this.onSelected,
+        this.otherValue = 'other',
         this.customValue,
         this.onCustomChanged,
         this.fadeDelayMs = 500,
@@ -40,19 +49,19 @@ class ChipSelector extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: options.map((option) => ChoiceChip(
-                        label: Text(option),
-                        selected: selected == option,
-                        onSelected: (_) => onSelected(option),
+                        label: Text(option.label),
+                        selected: selected == option.value,
+                        onSelected: (_) => onSelected(option.value),
                         selectedColor: const Color(0xFF7B00D4),
                     )).toList(),
                 ).animate().fadeIn(delay: Duration(milliseconds: fadeDelayMs), duration: 400.ms),
-                if (selected == 'Autre') ...[
+                if (selected == otherValue) ...[
                     const SizedBox(height: 10),
                     TextField(
                         onChanged: onCustomChanged,
                         style: const TextStyle(color: Color(0xFFE8E0EE)),
                         decoration: InputDecoration(
-                            labelText: 'Précise...',
+                            labelText: AppLocalizations.of(context)!.authLabelSpecify,
                             filled: true,
                             fillColor: const Color(0xFF1A0A1F),
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),

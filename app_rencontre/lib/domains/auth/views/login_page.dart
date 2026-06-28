@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       await _auth.login(_emailCtrl.text.trim(), _passCtrl.text.trim());
       if (mounted) Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
-      setState(() => _error = 'Email ou mot de passe incorrect.');
+      setState(() => _error = AppLocalizations.of(context)!.authLoginError);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -48,10 +49,10 @@ class _LoginPageState extends State<LoginPage> {
               const Icon(Icons.nightlight,
                   size: 64, color: Color(0xFF7B00D4)),
               const SizedBox(height: 12),
-              const Text(
-                'NOCTURNE',
+              Text(
+                AppLocalizations.of(context)!.authLoginTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 4,
@@ -62,13 +63,13 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                 controller: _emailCtrl,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.authLabelEmail),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _passCtrl,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'Mot de passe'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.authLabelPassword),
               ),
               if (_error != null) ...[
                 const SizedBox(height: 12),
@@ -84,13 +85,13 @@ class _LoginPageState extends State<LoginPage> {
                         height: 20, width: 20,
                         child: CircularProgressIndicator(strokeWidth: 2,
                             color: Colors.white))
-                    : const Text('Se connecter'),
+                    : Text(AppLocalizations.of(context)!.authBtnLogin),
               ),
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, '/register'),
-                child: const Text('Pas encore de compte ? Créer un compte',
-                    style: TextStyle(color: Color(0xFFAA9AB5))),
+                child: Text(AppLocalizations.of(context)!.authBtnGoToRegister,
+                    style: const TextStyle(color: Color(0xFFAA9AB5))),
               ),
             ],
           ),

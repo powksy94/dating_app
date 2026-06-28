@@ -451,4 +451,295 @@ class AppLocalizationsFr extends AppLocalizations {
   String chatLastSeenDaysAgo(int count) {
     return 'vu il y a $count j';
   }
+
+  @override
+  String get discoverySwipePageTitle => 'NOCTURNE';
+
+  @override
+  String get discoveryEmptyProfiles => 'Aucun profil dans les parages...';
+
+  @override
+  String get discoveryBoostActivated =>
+      'Boost activé — ton profil est mis en avant 30 min !';
+
+  @override
+  String get discoverySwipeLimitTitle => 'Limite de swipes atteinte';
+
+  @override
+  String discoverySwipeLimitBody(int count) {
+    return 'Tu as utilisé tes $count swipes du jour. Passe à Nocturne pour swiper sans limite.';
+  }
+
+  @override
+  String discoverySwipeCounter(int remaining, int limit) {
+    return '$remaining / $limit swipes aujourd\'hui';
+  }
+
+  @override
+  String get discoveryBtnElegie => 'Élégie';
+
+  @override
+  String get discoveryLikesTitle => 'LIKES';
+
+  @override
+  String get discoveryTabMyLikes => 'Mes likes';
+
+  @override
+  String get discoveryTabWhoLikedMe => 'Qui m\'a liké';
+
+  @override
+  String get discoveryEmptyMyLikes => 'Aucun like pour l\'instant';
+
+  @override
+  String get discoveryEmptyWhoLikedMe => 'Personne n\'a encore liké ton profil';
+
+  @override
+  String get discoveryPaywallTitle => 'Fonctionnalité Nocturne';
+
+  @override
+  String get discoveryPaywallDescription =>
+      'Découvre qui a liké ton profil en passant à Nocturne ou Abyssal.';
+
+  @override
+  String get discoveryPaywallSheetTitle => 'Qui m\'a liké';
+
+  @override
+  String get discoveryPaywallSheetDescription =>
+      'Découvre tous les profils qui ont liké le tien.';
+
+  @override
+  String get discoveryBtnUpgrade => 'Passer à Nocturne';
+
+  @override
+  String get discoveryOverlayLike => 'LIKE';
+
+  @override
+  String get discoveryOverlayNope => 'NOPE';
+
+  @override
+  String get discoveryBadgeMatch => 'MATCH';
+
+  @override
+  String get authLoginTitle => 'NOCTURNE';
+
+  @override
+  String get authLoginError => 'Email ou mot de passe incorrect.';
+
+  @override
+  String get authLabelEmail => 'Email';
+
+  @override
+  String get authLabelPassword => 'Mot de passe';
+
+  @override
+  String get authBtnLogin => 'Se connecter';
+
+  @override
+  String get authBtnGoToRegister => 'Pas encore de compte ? Créer un compte';
+
+  @override
+  String get authWelcomeTitle => 'BIENVENUE';
+
+  @override
+  String get authWelcomeSubtitle => 'dans les ténèbres';
+
+  @override
+  String get authLabelUsername => 'Pseudo';
+
+  @override
+  String get authErrorFillAllFields => 'Remplis tous les champs.';
+
+  @override
+  String get authErrorInvalidEmail => 'Email invalide.';
+
+  @override
+  String get authErrorPasswordTooShort =>
+      'Mot de passe : 12 caractères minimum.';
+
+  @override
+  String get authErrorPasswordMismatch =>
+      'Les mots de passe ne correspondent pas.';
+
+  @override
+  String get authStepCredentialsTitle => 'Bienvenue dans \nles ténèbres 🌙';
+
+  @override
+  String get authStepCredentialsSubtitle =>
+      'Crée ton compte pour rejoindre Nocturne.';
+
+  @override
+  String get authHelperPasswordMin => '12 caractères minimum';
+
+  @override
+  String get authLabelConfirmPassword => 'Confirmer le mot de passe';
+
+  @override
+  String get authBtnContinue => 'Continuer';
+
+  @override
+  String get authLabelBirthDate => 'Date de naissance';
+
+  @override
+  String get authErrorUsernameInvalid =>
+      'Choisis un pseudo valide et disponible.';
+
+  @override
+  String get authStepIdentityTitle => 'Qui es-tu ?';
+
+  @override
+  String get authStepIdentitySubtitle =>
+      'Ces infos ne seront pas modifiables facilement.';
+
+  @override
+  String get authLabelGender => 'Genre';
+
+  @override
+  String get authLabelPronouns => 'Pronoms';
+
+  @override
+  String get authLabelBio => 'BIO';
+
+  @override
+  String get authHintBio => 'Parle de toi, de ta musique, de ton univers...';
+
+  @override
+  String get authOther => 'Autre';
+
+  @override
+  String get authGenderMale => 'Homme';
+
+  @override
+  String get authGenderFemale => 'Femme';
+
+  @override
+  String get authGenderNonBinary => 'Non-binaire';
+
+  @override
+  String get authGenderGenderfluid => 'Genderfluid';
+
+  @override
+  String get authGenderAgender => 'Agenre';
+
+  @override
+  String get authGenderTransmasculine => 'Transmasculin';
+
+  @override
+  String get authGenderTransfeminine => 'Transféminin';
+
+  @override
+  String get authGenderAll => 'Tous';
+
+  @override
+  String get authPronounHeHim => 'Il/lui';
+
+  @override
+  String get authPronounSheHer => 'Elle/elle';
+
+  @override
+  String get authPronounTheyThem => 'Iel/iel';
+
+  @override
+  String get authPronounPluralNeutral => 'Eux/eux';
+
+  @override
+  String get authLabelSpecify => 'Précise...';
+
+  @override
+  String get authErrorSelectPreference =>
+      'Sélectionne au moins une préférence.';
+
+  @override
+  String get authStepPreferencesTitle => 'Tes préférences';
+
+  @override
+  String get authStepPreferencesSubtitle => 'Qui veux-tu rencontrer ?';
+
+  @override
+  String authAgeRangeLabel(int min, int max) {
+    return 'Tranche d\'âge : $min - $max ans';
+  }
+
+  @override
+  String authMaxDistanceLabel(int km) {
+    return 'Distance max : $km km';
+  }
+
+  @override
+  String get authLabelGenderPreferences => 'Genre(s) recherché(s)';
+
+  @override
+  String get authBtnCreateAccount => 'Créer mon compte';
+
+  @override
+  String get authErrorSelectGenreAesthetic =>
+      'Sélectionne au moins un genre et une esthétique.';
+
+  @override
+  String get authStepTagsTitle => 'Ton univers musical';
+
+  @override
+  String get authStepTagsSubtitle =>
+      'Ces tags servent à te matcher avec des profils compatibles.';
+
+  @override
+  String get authSectionMusicGenres => 'Genres musicaux';
+
+  @override
+  String get authSectionMusicVibes => 'Ambiance musicale';
+
+  @override
+  String get authSectionAesthetics => 'Esthétique';
+
+  @override
+  String get authSectionSoundIntensity => 'Intensité sonore';
+
+  @override
+  String get authSectionMusicEras => 'Époque';
+
+  @override
+  String get authSectionDiscoveryFormats => 'Découverte musicale';
+
+  @override
+  String get authSectionFavoriteBands =>
+      'Groupes / Artistes favoris (optionnel)';
+
+  @override
+  String get authHintBands => 'Ex: The Cure, Bauhaus...';
+
+  @override
+  String get authLocationPermissionDenied =>
+      'Permission refusée. Tu peux passer cette étape';
+
+  @override
+  String get authLocationError =>
+      'Impossible d\'obtenir la position. Tu peux passer cette étape.';
+
+  @override
+  String get authStepLocationTitle => 'Ta localisation';
+
+  @override
+  String get authStepLocationSubtitle =>
+      'Pour te montrer des profils proches de chez toi. Tu peux passer cette étape.';
+
+  @override
+  String get authLocationSaved => 'Localisation enregistrée ✓';
+
+  @override
+  String get authBtnAllowLocation => 'Autoriser la localisation';
+
+  @override
+  String get authBtnSkipStep => 'Passer cette étape';
+
+  @override
+  String get authErrorAddPhoto => 'Ajoute au moins une photo.';
+
+  @override
+  String get authStepPhotosTitle => 'Tes photos';
+
+  @override
+  String get authStepPhotosSubtitle =>
+      'Ajoute jusqu\'à 6 photos. La première sera ta photo principale.';
+
+  @override
+  String get authBadgeMain => 'Principale';
 }

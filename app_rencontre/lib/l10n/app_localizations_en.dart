@@ -449,4 +449,291 @@ class AppLocalizationsEn extends AppLocalizations {
   String chatLastSeenDaysAgo(int count) {
     return 'seen ${count}d ago';
   }
+
+  @override
+  String get discoverySwipePageTitle => 'NOCTURNE';
+
+  @override
+  String get discoveryEmptyProfiles => 'No profiles around for now...';
+
+  @override
+  String get discoveryBoostActivated =>
+      'Boost activated — your profile is being featured for 30 min!';
+
+  @override
+  String get discoverySwipeLimitTitle => 'Swipe limit reached';
+
+  @override
+  String discoverySwipeLimitBody(int count) {
+    return 'You\'ve used your $count swipes for today. Upgrade to Nocturne to swipe without limit.';
+  }
+
+  @override
+  String discoverySwipeCounter(int remaining, int limit) {
+    return '$remaining / $limit swipes today';
+  }
+
+  @override
+  String get discoveryBtnElegie => 'Elegy';
+
+  @override
+  String get discoveryLikesTitle => 'LIKES';
+
+  @override
+  String get discoveryTabMyLikes => 'My likes';
+
+  @override
+  String get discoveryTabWhoLikedMe => 'Who liked me';
+
+  @override
+  String get discoveryEmptyMyLikes => 'No likes for now';
+
+  @override
+  String get discoveryEmptyWhoLikedMe => 'No one has liked your profile yet';
+
+  @override
+  String get discoveryPaywallTitle => 'Nocturne Feature';
+
+  @override
+  String get discoveryPaywallDescription =>
+      'Discover who\'s liked your profile by upgrading to Nocturne or Abyssal.';
+
+  @override
+  String get discoveryPaywallSheetTitle => 'Who liked me';
+
+  @override
+  String get discoveryPaywallSheetDescription =>
+      'Discover all the profiles that have liked yours.';
+
+  @override
+  String get discoveryBtnUpgrade => 'Upgrade to Nocturne';
+
+  @override
+  String get discoveryOverlayLike => 'LIKE';
+
+  @override
+  String get discoveryOverlayNope => 'NOPE';
+
+  @override
+  String get discoveryBadgeMatch => 'MATCH';
+
+  @override
+  String get authLoginTitle => 'NOCTURNE';
+
+  @override
+  String get authLoginError => 'Incorrect email or password.';
+
+  @override
+  String get authLabelEmail => 'Email';
+
+  @override
+  String get authLabelPassword => 'Password';
+
+  @override
+  String get authBtnLogin => 'Log in';
+
+  @override
+  String get authBtnGoToRegister => 'Don\'t have an account yet? Create one';
+
+  @override
+  String get authWelcomeTitle => 'WELCOME';
+
+  @override
+  String get authWelcomeSubtitle => 'into the darkness';
+
+  @override
+  String get authLabelUsername => 'Username';
+
+  @override
+  String get authErrorFillAllFields => 'Fill in all the fields.';
+
+  @override
+  String get authErrorInvalidEmail => 'Invalid email.';
+
+  @override
+  String get authErrorPasswordTooShort => 'Password: 12 characters minimum.';
+
+  @override
+  String get authErrorPasswordMismatch => 'Passwords don\'t match.';
+
+  @override
+  String get authStepCredentialsTitle => 'Welcome into \nthe darkness 🌙';
+
+  @override
+  String get authStepCredentialsSubtitle =>
+      'Create your account to join Nocturne.';
+
+  @override
+  String get authHelperPasswordMin => '12 characters minimum';
+
+  @override
+  String get authLabelConfirmPassword => 'Confirm password';
+
+  @override
+  String get authBtnContinue => 'Continue';
+
+  @override
+  String get authLabelBirthDate => 'Date of birth';
+
+  @override
+  String get authErrorUsernameInvalid =>
+      'Choose a valid and available username.';
+
+  @override
+  String get authStepIdentityTitle => 'Who are you?';
+
+  @override
+  String get authStepIdentitySubtitle =>
+      'This info won\'t be easily editable later.';
+
+  @override
+  String get authLabelGender => 'Gender';
+
+  @override
+  String get authLabelPronouns => 'Pronouns';
+
+  @override
+  String get authLabelBio => 'BIO';
+
+  @override
+  String get authHintBio => 'Tell us about you, your music, your world...';
+
+  @override
+  String get authOther => 'Other';
+
+  @override
+  String get authGenderMale => 'Man';
+
+  @override
+  String get authGenderFemale => 'Woman';
+
+  @override
+  String get authGenderNonBinary => 'Non-binary';
+
+  @override
+  String get authGenderGenderfluid => 'Genderfluid';
+
+  @override
+  String get authGenderAgender => 'Agender';
+
+  @override
+  String get authGenderTransmasculine => 'Transmasculine';
+
+  @override
+  String get authGenderTransfeminine => 'Transfeminine';
+
+  @override
+  String get authGenderAll => 'All';
+
+  @override
+  String get authPronounHeHim => 'He/him';
+
+  @override
+  String get authPronounSheHer => 'She/her';
+
+  @override
+  String get authPronounTheyThem => 'They/them';
+
+  @override
+  String get authPronounPluralNeutral => 'Them/them';
+
+  @override
+  String get authLabelSpecify => 'Specify...';
+
+  @override
+  String get authErrorSelectPreference => 'Select at least one preference.';
+
+  @override
+  String get authStepPreferencesTitle => 'Your preferences';
+
+  @override
+  String get authStepPreferencesSubtitle => 'Who do you want to meet?';
+
+  @override
+  String authAgeRangeLabel(int min, int max) {
+    return 'Age range: $min - $max years';
+  }
+
+  @override
+  String authMaxDistanceLabel(int km) {
+    return 'Max distance: $km km';
+  }
+
+  @override
+  String get authLabelGenderPreferences => 'Gender(s) you\'re looking for';
+
+  @override
+  String get authBtnCreateAccount => 'Create my account';
+
+  @override
+  String get authErrorSelectGenreAesthetic =>
+      'Select at least one genre and one aesthetic.';
+
+  @override
+  String get authStepTagsTitle => 'Your musical world';
+
+  @override
+  String get authStepTagsSubtitle =>
+      'These tags are used to match you with compatible profiles.';
+
+  @override
+  String get authSectionMusicGenres => 'Music genres';
+
+  @override
+  String get authSectionMusicVibes => 'Music vibe';
+
+  @override
+  String get authSectionAesthetics => 'Aesthetic';
+
+  @override
+  String get authSectionSoundIntensity => 'Sound intensity';
+
+  @override
+  String get authSectionMusicEras => 'Era';
+
+  @override
+  String get authSectionDiscoveryFormats => 'Music discovery';
+
+  @override
+  String get authSectionFavoriteBands => 'Favorite bands / artists (optional)';
+
+  @override
+  String get authHintBands => 'E.g: The Cure, Bauhaus...';
+
+  @override
+  String get authLocationPermissionDenied =>
+      'Permission denied. You can skip this step';
+
+  @override
+  String get authLocationError =>
+      'Couldn\'t get your location. You can skip this step.';
+
+  @override
+  String get authStepLocationTitle => 'Your location';
+
+  @override
+  String get authStepLocationSubtitle =>
+      'To show you profiles near you. You can skip this step.';
+
+  @override
+  String get authLocationSaved => 'Location saved ✓';
+
+  @override
+  String get authBtnAllowLocation => 'Allow location';
+
+  @override
+  String get authBtnSkipStep => 'Skip this step';
+
+  @override
+  String get authErrorAddPhoto => 'Add at least one photo.';
+
+  @override
+  String get authStepPhotosTitle => 'Your photos';
+
+  @override
+  String get authStepPhotosSubtitle =>
+      'Add up to 6 photos. The first one will be your main photo.';
+
+  @override
+  String get authBadgeMain => 'Main';
 }

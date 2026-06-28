@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:http/http.dart' as http;
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 
 class UsernameField extends StatefulWidget {
@@ -83,7 +84,7 @@ class _UsernameFieldState extends State<UsernameField> {
             onChanged: _onChanged,
             style: const TextStyle(color: Color(0xFFE8E0EE)),
             decoration: InputDecoration(
-                labelText: 'Pseudo',
+                labelText: AppLocalizations.of(context)!.authLabelUsername,
                 suffixIcon: Padding(
                     padding: const EdgeInsets.all(12),
                     child: _icon(),

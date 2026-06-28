@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/star_field.dart';
 import 'package:nocturne/domains/auth/widgets/moon_glow.dart';
 
@@ -47,9 +48,9 @@ class _RegistrationSuccessPageState extends State<RegistrationSuccessPage>
               children: [
                 MoonGlow(glowCtrl: _glowCtrl),
                 const SizedBox(height: 48),
-                const Text(
-                  'BIENVENUE',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.authWelcomeTitle,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -66,9 +67,9 @@ class _RegistrationSuccessPageState extends State<RegistrationSuccessPage>
                       curve: Curves.easeOutCubic,
                     ),
                 const SizedBox(height: 10),
-                const Text(
-                  'dans les ténèbres',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.authWelcomeSubtitle,
+                  style: const TextStyle(
                     color: Color(0xFF9D2FE8),
                     fontSize: 15,
                     letterSpacing: 4,

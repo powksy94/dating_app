@@ -2,6 +2,7 @@
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 
 class StepPhotos extends StatefulWidget {
@@ -32,7 +33,7 @@ class _StepPhotosState extends State<StepPhotos> {
 
     void _next() {
         if (_photos.isEmpty) {
-            setState(() => _error = 'Ajoute au moins une photo.');
+            setState(() => _error = AppLocalizations.of(context)!.authErrorAddPhoto);
             return;
         }
         widget.onNext({'photos': _photos.map((f) => f.path).toList()});
@@ -40,6 +41,7 @@ class _StepPhotosState extends State<StepPhotos> {
 
     @override
     Widget build(BuildContext context) {
+        final l = AppLocalizations.of(context)!;
         return AnimatedStep(
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -47,18 +49,18 @@ class _StepPhotosState extends State<StepPhotos> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 32),
-                        const Text(
-                            'Tes photos',
-                            style: TextStyle(
+                        Text(
+                            l.authStepPhotosTitle,
+                            style: const TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFE8E0EE),
                             ),
                         ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                         const SizedBox(height: 8),
-                        const Text(
-                            'Ajoute jusq\'à 6 photos. La première sera ta photo principale.',
-                            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+                        Text(
+                            l.authStepPhotosSubtitle,
+                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
@@ -124,9 +126,9 @@ class _StepPhotosState extends State<StepPhotos> {
                                                             color: const Color(0xFF7B00D4),
                                                             borderRadius: BorderRadius.circular(6),
                                                         ),
-                                                        child: const Text(
-                                                            'Principale',
-                                                            style: TextStyle(color: Colors.white, fontSize: 10),
+                                                        child: Text(
+                                                            l.authBadgeMain,
+                                                            style: const TextStyle(color: Colors.white, fontSize: 10),
                                                         ),
                                                     ),
                                                 ),
@@ -145,7 +147,7 @@ class _StepPhotosState extends State<StepPhotos> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: _next,
-                                child: const Text('Continuer'),
+                                child: Text(l.authBtnContinue),
                             ),
                         ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
                         const SizedBox(height: 32),

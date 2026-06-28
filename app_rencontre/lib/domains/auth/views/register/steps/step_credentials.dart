@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 
 class StepCredentials extends StatefulWidget {
@@ -25,24 +26,25 @@ class _StepCredentialsState extends State<StepCredentials> {
     }
 
     void _next() {
+        final l = AppLocalizations.of(context)!;
         final email     = _emailCtrl.text.trim();
         final password  = _passCtrl.text;
         final confirm   = _confirmCtrl.text;
 
         if (email.isEmpty || password.isEmpty) {
-            setState(()  => _error = 'Remplis tous les champs.');
+            setState(()  => _error = l.authErrorFillAllFields);
             return;
         }
         if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(email)) {
-            setState(() => _error = 'Email invalide. ');
+            setState(() => _error = l.authErrorInvalidEmail);
             return;
         }
         if (password.length < 12) {
-            setState(() => _error = 'Mot de passe : 12 caractères minimum.');
+            setState(() => _error = l.authErrorPasswordTooShort);
             return;
         }
         if (password != confirm) {
-            setState(() => _error = 'Les mots de passe ne correspondent pas.');
+            setState(() => _error = l.authErrorPasswordMismatch);
             return;
         }
 
@@ -51,6 +53,7 @@ class _StepCredentialsState extends State<StepCredentials> {
 
     @override
     Widget build(BuildContext context) {
+        final l = AppLocalizations.of(context)!;
         final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
         return AnimatedStep(
             child: SingleChildScrollView(
@@ -59,9 +62,9 @@ class _StepCredentialsState extends State<StepCredentials> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 32),
-                        const Text(
-                            'Bienvenue dans \nles ténèbres 🌙',
-                            style: TextStyle(
+                        Text(
+                            l.authStepCredentialsTitle,
+                            style: const TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFE8E0EE),
@@ -69,27 +72,27 @@ class _StepCredentialsState extends State<StepCredentials> {
                             ),
                         ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                         const SizedBox(height: 8),
-                        const Text(
-                            'Crée ton compte pour rejoindre Nocturne.',
-                            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+                        Text(
+                            l.authStepCredentialsSubtitle,
+                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
                         const SizedBox(height: 40),
                         _Field(
                             ctrl: _emailCtrl,
-                            label: 'Email',
+                            label: l.authLabelEmail,
                             keyboardType: TextInputType.emailAddress,
                         ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
                         const SizedBox(height: 16),
                         _Field(
                             ctrl: _passCtrl,
-                            label: 'Mot de passe',
+                            label: l.authLabelPassword,
                             obscure: true,
-                            helper: '12 caractères minimum',
+                            helper: l.authHelperPasswordMin,
                         ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
                         const SizedBox(height: 16),
                         _Field(
                             ctrl: _confirmCtrl,
-                            label: 'Confirmer le mot de passe',
+                            label: l.authLabelConfirmPassword,
                             obscure: true,
                         ).animate().fadeIn(delay: 500.ms, duration: 400.ms),
                         if (_error != null) ...[
@@ -104,7 +107,7 @@ class _StepCredentialsState extends State<StepCredentials> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: _next,
-                                child: const Text('Continuer'),
+                                child: Text(l.authBtnContinue),
                             ),
                         ).animate().fadeIn(delay: 600.ms, duration: 400.ms),
                     ],

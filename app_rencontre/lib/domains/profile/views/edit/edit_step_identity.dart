@@ -18,11 +18,21 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
   bool _saving = false;
 
   static const _genders = [
-    'Homme', 'Femme', 'Non-binaire', 'Genderfluid',
-    'Agenre', 'Transmasculin', 'Transféminin', 'Autre',
+    ChipOption('male', 'Homme'),
+    ChipOption('female', 'Femme'),
+    ChipOption('non_binary', 'Non-binaire'),
+    ChipOption('genderfluid', 'Genderfluid'),
+    ChipOption('agender', 'Agenre'),
+    ChipOption('transmasculine', 'Transmasculin'),
+    ChipOption('transfeminine', 'Transféminin'),
+    ChipOption('other', 'Autre'),
   ];
   static const _pronounsList = [
-    'Il/lui', 'Elle/elle', 'Iel/iel', 'Eux/eux', 'Autre',
+    ChipOption('he_him', 'Il/lui'),
+    ChipOption('she_her', 'Elle/elle'),
+    ChipOption('they_them', 'Iel/iel'),
+    ChipOption('plural_neutral', 'Eux/eux'),
+    ChipOption('other', 'Autre'),
   ];
 
   @override

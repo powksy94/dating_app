@@ -883,6 +883,540 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'seen {count}d ago'**
   String chatLastSeenDaysAgo(int count);
+
+  /// No description provided for @discoverySwipePageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NOCTURNE'**
+  String get discoverySwipePageTitle;
+
+  /// No description provided for @discoveryEmptyProfiles.
+  ///
+  /// In en, this message translates to:
+  /// **'No profiles around for now...'**
+  String get discoveryEmptyProfiles;
+
+  /// No description provided for @discoveryBoostActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Boost activated — your profile is being featured for 30 min!'**
+  String get discoveryBoostActivated;
+
+  /// No description provided for @discoverySwipeLimitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe limit reached'**
+  String get discoverySwipeLimitTitle;
+
+  /// No description provided for @discoverySwipeLimitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used your {count} swipes for today. Upgrade to Nocturne to swipe without limit.'**
+  String discoverySwipeLimitBody(int count);
+
+  /// No description provided for @discoverySwipeCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{remaining} / {limit} swipes today'**
+  String discoverySwipeCounter(int remaining, int limit);
+
+  /// No description provided for @discoveryBtnElegie.
+  ///
+  /// In en, this message translates to:
+  /// **'Elegy'**
+  String get discoveryBtnElegie;
+
+  /// No description provided for @discoveryLikesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'LIKES'**
+  String get discoveryLikesTitle;
+
+  /// No description provided for @discoveryTabMyLikes.
+  ///
+  /// In en, this message translates to:
+  /// **'My likes'**
+  String get discoveryTabMyLikes;
+
+  /// No description provided for @discoveryTabWhoLikedMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Who liked me'**
+  String get discoveryTabWhoLikedMe;
+
+  /// No description provided for @discoveryEmptyMyLikes.
+  ///
+  /// In en, this message translates to:
+  /// **'No likes for now'**
+  String get discoveryEmptyMyLikes;
+
+  /// No description provided for @discoveryEmptyWhoLikedMe.
+  ///
+  /// In en, this message translates to:
+  /// **'No one has liked your profile yet'**
+  String get discoveryEmptyWhoLikedMe;
+
+  /// No description provided for @discoveryPaywallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nocturne Feature'**
+  String get discoveryPaywallTitle;
+
+  /// No description provided for @discoveryPaywallDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover who\'s liked your profile by upgrading to Nocturne or Abyssal.'**
+  String get discoveryPaywallDescription;
+
+  /// No description provided for @discoveryPaywallSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who liked me'**
+  String get discoveryPaywallSheetTitle;
+
+  /// No description provided for @discoveryPaywallSheetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover all the profiles that have liked yours.'**
+  String get discoveryPaywallSheetDescription;
+
+  /// No description provided for @discoveryBtnUpgrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Nocturne'**
+  String get discoveryBtnUpgrade;
+
+  /// No description provided for @discoveryOverlayLike.
+  ///
+  /// In en, this message translates to:
+  /// **'LIKE'**
+  String get discoveryOverlayLike;
+
+  /// No description provided for @discoveryOverlayNope.
+  ///
+  /// In en, this message translates to:
+  /// **'NOPE'**
+  String get discoveryOverlayNope;
+
+  /// No description provided for @discoveryBadgeMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'MATCH'**
+  String get discoveryBadgeMatch;
+
+  /// No description provided for @authLoginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NOCTURNE'**
+  String get authLoginTitle;
+
+  /// No description provided for @authLoginError.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect email or password.'**
+  String get authLoginError;
+
+  /// No description provided for @authLabelEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authLabelEmail;
+
+  /// No description provided for @authLabelPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authLabelPassword;
+
+  /// No description provided for @authBtnLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get authBtnLogin;
+
+  /// No description provided for @authBtnGoToRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account yet? Create one'**
+  String get authBtnGoToRegister;
+
+  /// No description provided for @authWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WELCOME'**
+  String get authWelcomeTitle;
+
+  /// No description provided for @authWelcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'into the darkness'**
+  String get authWelcomeSubtitle;
+
+  /// No description provided for @authLabelUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get authLabelUsername;
+
+  /// No description provided for @authErrorFillAllFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in all the fields.'**
+  String get authErrorFillAllFields;
+
+  /// No description provided for @authErrorInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email.'**
+  String get authErrorInvalidEmail;
+
+  /// No description provided for @authErrorPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password: 12 characters minimum.'**
+  String get authErrorPasswordTooShort;
+
+  /// No description provided for @authErrorPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match.'**
+  String get authErrorPasswordMismatch;
+
+  /// No description provided for @authStepCredentialsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome into \nthe darkness 🌙'**
+  String get authStepCredentialsTitle;
+
+  /// No description provided for @authStepCredentialsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account to join Nocturne.'**
+  String get authStepCredentialsSubtitle;
+
+  /// No description provided for @authHelperPasswordMin.
+  ///
+  /// In en, this message translates to:
+  /// **'12 characters minimum'**
+  String get authHelperPasswordMin;
+
+  /// No description provided for @authLabelConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get authLabelConfirmPassword;
+
+  /// No description provided for @authBtnContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get authBtnContinue;
+
+  /// No description provided for @authLabelBirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get authLabelBirthDate;
+
+  /// No description provided for @authErrorUsernameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a valid and available username.'**
+  String get authErrorUsernameInvalid;
+
+  /// No description provided for @authStepIdentityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who are you?'**
+  String get authStepIdentityTitle;
+
+  /// No description provided for @authStepIdentitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This info won\'t be easily editable later.'**
+  String get authStepIdentitySubtitle;
+
+  /// No description provided for @authLabelGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get authLabelGender;
+
+  /// No description provided for @authLabelPronouns.
+  ///
+  /// In en, this message translates to:
+  /// **'Pronouns'**
+  String get authLabelPronouns;
+
+  /// No description provided for @authLabelBio.
+  ///
+  /// In en, this message translates to:
+  /// **'BIO'**
+  String get authLabelBio;
+
+  /// No description provided for @authHintBio.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about you, your music, your world...'**
+  String get authHintBio;
+
+  /// No description provided for @authOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get authOther;
+
+  /// No description provided for @authGenderMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Man'**
+  String get authGenderMale;
+
+  /// No description provided for @authGenderFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Woman'**
+  String get authGenderFemale;
+
+  /// No description provided for @authGenderNonBinary.
+  ///
+  /// In en, this message translates to:
+  /// **'Non-binary'**
+  String get authGenderNonBinary;
+
+  /// No description provided for @authGenderGenderfluid.
+  ///
+  /// In en, this message translates to:
+  /// **'Genderfluid'**
+  String get authGenderGenderfluid;
+
+  /// No description provided for @authGenderAgender.
+  ///
+  /// In en, this message translates to:
+  /// **'Agender'**
+  String get authGenderAgender;
+
+  /// No description provided for @authGenderTransmasculine.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmasculine'**
+  String get authGenderTransmasculine;
+
+  /// No description provided for @authGenderTransfeminine.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfeminine'**
+  String get authGenderTransfeminine;
+
+  /// No description provided for @authGenderAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get authGenderAll;
+
+  /// No description provided for @authPronounHeHim.
+  ///
+  /// In en, this message translates to:
+  /// **'He/him'**
+  String get authPronounHeHim;
+
+  /// No description provided for @authPronounSheHer.
+  ///
+  /// In en, this message translates to:
+  /// **'She/her'**
+  String get authPronounSheHer;
+
+  /// No description provided for @authPronounTheyThem.
+  ///
+  /// In en, this message translates to:
+  /// **'They/them'**
+  String get authPronounTheyThem;
+
+  /// No description provided for @authPronounPluralNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Them/them'**
+  String get authPronounPluralNeutral;
+
+  /// No description provided for @authLabelSpecify.
+  ///
+  /// In en, this message translates to:
+  /// **'Specify...'**
+  String get authLabelSpecify;
+
+  /// No description provided for @authErrorSelectPreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one preference.'**
+  String get authErrorSelectPreference;
+
+  /// No description provided for @authStepPreferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your preferences'**
+  String get authStepPreferencesTitle;
+
+  /// No description provided for @authStepPreferencesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who do you want to meet?'**
+  String get authStepPreferencesSubtitle;
+
+  /// No description provided for @authAgeRangeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Age range: {min} - {max} years'**
+  String authAgeRangeLabel(int min, int max);
+
+  /// No description provided for @authMaxDistanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Max distance: {km} km'**
+  String authMaxDistanceLabel(int km);
+
+  /// No description provided for @authLabelGenderPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender(s) you\'re looking for'**
+  String get authLabelGenderPreferences;
+
+  /// No description provided for @authBtnCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my account'**
+  String get authBtnCreateAccount;
+
+  /// No description provided for @authErrorSelectGenreAesthetic.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one genre and one aesthetic.'**
+  String get authErrorSelectGenreAesthetic;
+
+  /// No description provided for @authStepTagsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your musical world'**
+  String get authStepTagsTitle;
+
+  /// No description provided for @authStepTagsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'These tags are used to match you with compatible profiles.'**
+  String get authStepTagsSubtitle;
+
+  /// No description provided for @authSectionMusicGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'Music genres'**
+  String get authSectionMusicGenres;
+
+  /// No description provided for @authSectionMusicVibes.
+  ///
+  /// In en, this message translates to:
+  /// **'Music vibe'**
+  String get authSectionMusicVibes;
+
+  /// No description provided for @authSectionAesthetics.
+  ///
+  /// In en, this message translates to:
+  /// **'Aesthetic'**
+  String get authSectionAesthetics;
+
+  /// No description provided for @authSectionSoundIntensity.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound intensity'**
+  String get authSectionSoundIntensity;
+
+  /// No description provided for @authSectionMusicEras.
+  ///
+  /// In en, this message translates to:
+  /// **'Era'**
+  String get authSectionMusicEras;
+
+  /// No description provided for @authSectionDiscoveryFormats.
+  ///
+  /// In en, this message translates to:
+  /// **'Music discovery'**
+  String get authSectionDiscoveryFormats;
+
+  /// No description provided for @authSectionFavoriteBands.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite bands / artists (optional)'**
+  String get authSectionFavoriteBands;
+
+  /// No description provided for @authHintBands.
+  ///
+  /// In en, this message translates to:
+  /// **'E.g: The Cure, Bauhaus...'**
+  String get authHintBands;
+
+  /// No description provided for @authLocationPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission denied. You can skip this step'**
+  String get authLocationPermissionDenied;
+
+  /// No description provided for @authLocationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t get your location. You can skip this step.'**
+  String get authLocationError;
+
+  /// No description provided for @authStepLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your location'**
+  String get authStepLocationTitle;
+
+  /// No description provided for @authStepLocationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To show you profiles near you. You can skip this step.'**
+  String get authStepLocationSubtitle;
+
+  /// No description provided for @authLocationSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Location saved ✓'**
+  String get authLocationSaved;
+
+  /// No description provided for @authBtnAllowLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow location'**
+  String get authBtnAllowLocation;
+
+  /// No description provided for @authBtnSkipStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this step'**
+  String get authBtnSkipStep;
+
+  /// No description provided for @authErrorAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one photo.'**
+  String get authErrorAddPhoto;
+
+  /// No description provided for @authStepPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your photos'**
+  String get authStepPhotosTitle;
+
+  /// No description provided for @authStepPhotosSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add up to 6 photos. The first one will be your main photo.'**
+  String get authStepPhotosSubtitle;
+
+  /// No description provided for @authBadgeMain.
+  ///
+  /// In en, this message translates to:
+  /// **'Main'**
+  String get authBadgeMain;
 }
 
 class _AppLocalizationsDelegate

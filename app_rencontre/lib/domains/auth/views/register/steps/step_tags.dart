@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:nocturne/core/music_tags.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 
 class StepTags extends StatefulWidget {
@@ -34,7 +35,7 @@ class _StepTagsState extends State<StepTags> {
 
     void _next() {
         if (_genres.isEmpty || _aesthetics.isEmpty) {
-            setState(() => _error = 'Sélectionne au moins un genre et une esthétique.');
+            setState(() => _error = AppLocalizations.of(context)!.authErrorSelectGenreAesthetic);
             return;
         }
         widget.onNext({
@@ -80,6 +81,7 @@ class _StepTagsState extends State<StepTags> {
 
     @override
     Widget build(BuildContext context) {
+        final l = AppLocalizations.of(context)!;
         return AnimatedStep(
             child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -87,29 +89,29 @@ class _StepTagsState extends State<StepTags> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 32),
-                        const Text(
-                            'Ton univers musical',
-                            style: TextStyle(
+                        Text(
+                            l.authStepTagsTitle,
+                            style: const TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFE8E0EE),
                             ),
                         ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                         const SizedBox(height: 8),
-                        const Text(
-                            'Ces tags servent à te matcher avec des profils compatibles.',
-                            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+                        Text(
+                            l.authStepTagsSubtitle,
+                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
-                        _section('Genres musicaux',         kMusicGenres,       _genres,        300),
-                        _section('Ambiance musicale',       kMusicVibes,        _vibes,         400),
-                        _section('Esthétique',              kAesthetics,        _aesthetics,    500),
-                        _section('Intensité sonore',        kSoundIntensity,    _intensity,     600),
-                        _section('Époque',                  kMusicEras,         _eras,          700),
-                        _section('Découverte musicale',     kDiscoveryFormats,  _discovery,     800),
+                        _section(l.authSectionMusicGenres,      kMusicGenres,       _genres,        300),
+                        _section(l.authSectionMusicVibes,       kMusicVibes,        _vibes,         400),
+                        _section(l.authSectionAesthetics,       kAesthetics,        _aesthetics,    500),
+                        _section(l.authSectionSoundIntensity,   kSoundIntensity,    _intensity,     600),
+                        _section(l.authSectionMusicEras,        kMusicEras,         _eras,          700),
+                        _section(l.authSectionDiscoveryFormats, kDiscoveryFormats,  _discovery,     800),
 
-                        _section('Groupes / Artistes favoris (optionnel)', [], _favoriteBands, 900),
+                        _section(l.authSectionFavoriteBands, [], _favoriteBands, 900),
                         Row(
                             children: [
                                 Expanded(
@@ -117,7 +119,7 @@ class _StepTagsState extends State<StepTags> {
                                         controller: _bandCtrl,
                                         style: const TextStyle(color: Color(0xFFE8E0EE)),
                                         decoration: InputDecoration(
-                                            hintText: 'Ex: The Cure, Bauhaus...',
+                                            hintText: l.authHintBands,
                                             hintStyle: const TextStyle(color: Color(0xFFAA9AB5)),
                                             filled: true,
                                             fillColor: const Color(0xFF1A0A1F),
@@ -169,7 +171,7 @@ class _StepTagsState extends State<StepTags> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: _next,
-                                child: const Text('Continuer'),
+                                child: Text(l.authBtnContinue),
                             ),
                         ).animate().fadeIn(delay: 900.ms, duration: 400.ms),
                         const SizedBox(height: 32),

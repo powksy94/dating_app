@@ -198,5 +198,123 @@
     "chatLastSeenDaysAgo": "seen {count}d ago",
     "@chatLastSeenDaysAgo": {
         "placeholders": { "count": { "type": "int" } }
-    }
+    },
+
+    "discoverySwipePageTitle": "NOCTURNE",
+    "discoveryEmptyProfiles": "No profiles around for now...",
+    "discoveryBoostActivated": "Boost activated — your profile is being featured for 30 min!",
+    "discoverySwipeLimitTitle": "Swipe limit reached",
+    "discoverySwipeLimitBody": "You've used your {count} swipes for today. Upgrade to Nocturne to swipe without limit.",
+    "@discoverySwipeLimitBody": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "discoverySwipeCounter": "{remaining} / {limit} swipes today",
+    "@discoverySwipeCounter": {
+        "placeholders": {
+            "remaining": { "type": "int" },
+            "limit": { "type": "int" }
+        }
+    },
+    "discoveryBtnElegie": "Elegy",
+
+    "discoveryLikesTitle": "LIKES",
+    "discoveryTabMyLikes": "My likes",
+    "discoveryTabWhoLikedMe": "Who liked me",
+    "discoveryEmptyMyLikes": "No likes for now",
+    "discoveryEmptyWhoLikedMe": "No one has liked your profile yet",
+    "discoveryPaywallTitle": "Nocturne Feature",
+    "discoveryPaywallDescription": "Discover who's liked your profile by upgrading to Nocturne or Abyssal.",
+    "discoveryPaywallSheetTitle": "Who liked me",
+    "discoveryPaywallSheetDescription": "Discover all the profiles that have liked yours.",
+    "discoveryBtnUpgrade": "Upgrade to Nocturne",
+
+    "discoveryOverlayLike": "LIKE",
+    "discoveryOverlayNope": "NOPE",
+    "discoveryBadgeMatch": "MATCH",
+
+    "authLoginTitle": "NOCTURNE",
+    "authLoginError": "Incorrect email or password.",
+    "authLabelEmail": "Email",
+    "authLabelPassword": "Password",
+    "authBtnLogin": "Log in",
+    "authBtnGoToRegister": "Don't have an account yet? Create one",
+
+    "authWelcomeTitle": "WELCOME",
+    "authWelcomeSubtitle": "into the darkness",
+
+    "authLabelUsername": "Username",
+
+    "authErrorFillAllFields": "Fill in all the fields.",
+    "authErrorInvalidEmail": "Invalid email.",
+    "authErrorPasswordTooShort": "Password: 12 characters minimum.",
+    "authErrorPasswordMismatch": "Passwords don't match.",
+    "authStepCredentialsTitle": "Welcome into \nthe darkness 🌙",
+    "authStepCredentialsSubtitle": "Create your account to join Nocturne.",
+    "authHelperPasswordMin": "12 characters minimum",
+    "authLabelConfirmPassword": "Confirm password",
+    "authBtnContinue": "Continue",
+
+    "authLabelBirthDate": "Date of birth",
+    "authErrorUsernameInvalid": "Choose a valid and available username.",
+    "authStepIdentityTitle": "Who are you?",
+    "authStepIdentitySubtitle": "This info won't be easily editable later.",
+    "authLabelGender": "Gender",
+    "authLabelPronouns": "Pronouns",
+    "authLabelBio": "BIO",
+    "authHintBio": "Tell us about you, your music, your world...",
+
+    "authOther": "Other",
+    "authGenderMale": "Man",
+    "authGenderFemale": "Woman",
+    "authGenderNonBinary": "Non-binary",
+    "authGenderGenderfluid": "Genderfluid",
+    "authGenderAgender": "Agender",
+    "authGenderTransmasculine": "Transmasculine",
+    "authGenderTransfeminine": "Transfeminine",
+    "authGenderAll": "All",
+    "authPronounHeHim": "He/him",
+    "authPronounSheHer": "She/her",
+    "authPronounTheyThem": "They/them",
+    "authPronounPluralNeutral": "Them/them",
+
+    "authLabelSpecify": "Specify...",
+
+    "authErrorSelectPreference": "Select at least one preference.",
+    "authStepPreferencesTitle": "Your preferences",
+    "authStepPreferencesSubtitle": "Who do you want to meet?",
+    "authAgeRangeLabel": "Age range: {min} - {max} years",
+    "@authAgeRangeLabel": {
+        "placeholders": { "min": { "type": "int" }, "max": { "type": "int" } }
+    },
+    "authMaxDistanceLabel": "Max distance: {km} km",
+    "@authMaxDistanceLabel": {
+        "placeholders": { "km": { "type": "int" } }
+    },
+    "authLabelGenderPreferences": "Gender(s) you're looking for",
+    "authBtnCreateAccount": "Create my account",
+
+    "authErrorSelectGenreAesthetic": "Select at least one genre and one aesthetic.",
+    "authStepTagsTitle": "Your musical world",
+    "authStepTagsSubtitle": "These tags are used to match you with compatible profiles.",
+    "authSectionMusicGenres": "Music genres",
+    "authSectionMusicVibes": "Music vibe",
+    "authSectionAesthetics": "Aesthetic",
+    "authSectionSoundIntensity": "Sound intensity",
+    "authSectionMusicEras": "Era",
+    "authSectionDiscoveryFormats": "Music discovery",
+    "authSectionFavoriteBands": "Favorite bands / artists (optional)",
+    "authHintBands": "E.g: The Cure, Bauhaus...",
+
+    "authLocationPermissionDenied": "Permission denied. You can skip this step",
+    "authLocationError": "Couldn't get your location. You can skip this step.",
+    "authStepLocationTitle": "Your location",
+    "authStepLocationSubtitle": "To show you profiles near you. You can skip this step.",
+    "authLocationSaved": "Location saved ✓",
+    "authBtnAllowLocation": "Allow location",
+    "authBtnSkipStep": "Skip this step",
+
+    "authErrorAddPhoto": "Add at least one photo.",
+    "authStepPhotosTitle": "Your photos",
+    "authStepPhotosSubtitle": "Add up to 6 photos. The first one will be your main photo.",
+    "authBadgeMain": "Main"
 }

@@ -1,5 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 import 'package:nocturne/domains/auth/widgets/username_field.dart';
 import 'package:nocturne/domains/auth/widgets/chip_selector.dart';
@@ -23,13 +24,23 @@ class _StepIdentityState extends State<StepIdentity> {
     String? _error;
     String? _usernameStatus;
 
-    static const _genders = [
-        'Homme', 'Femme', 'Non-binaire', 'Genderfluid',
-        'Agenre', 'Transmasculin', 'Transféminin', 'Autre',
+    List<ChipOption> _genders(AppLocalizations l) => [
+        ChipOption('male', l.authGenderMale),
+        ChipOption('female', l.authGenderFemale),
+        ChipOption('non_binary', l.authGenderNonBinary),
+        ChipOption('genderfluid', l.authGenderGenderfluid),
+        ChipOption('agender', l.authGenderAgender),
+        ChipOption('transmasculine', l.authGenderTransmasculine),
+        ChipOption('transfeminine', l.authGenderTransfeminine),
+        ChipOption('other', l.authOther),
     ];
 
-    static const _pronounsList = [
-        'Il/lui', 'Elle/elle', 'Iel/iel', 'Eux/eux', 'Autre',
+    List<ChipOption> _pronounsList(AppLocalizations l) => [
+        ChipOption('he_him', l.authPronounHeHim),
+        ChipOption('she_her', l.authPronounSheHer),
+        ChipOption('they_them', l.authPronounTheyThem),
+        ChipOption('plural_neutral', l.authPronounPluralNeutral),
+        ChipOption('other', l.authOther),
     ];
 
     @override
@@ -40,37 +51,40 @@ class _StepIdentityState extends State<StepIdentity> {
     }
 
     Future<void> _pickDate() async {
+        final l = AppLocalizations.of(context)!;
         final picked = await showDatePicker(
             context: context,
             initialDate: DateTime(2000),
             firstDate: DateTime(1920),
             lastDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
-            helpText: 'Date de naissance',
+            helpText: l.authLabelBirthDate,
         );
         if (picked != null) setState(() => _birthDate = picked);
     }
 
     void _next() {
+        final l = AppLocalizations.of(context)!;
         final username = _usernameCtrl.text.trim();
         if (username.isEmpty || _birthDate == null || _gender == null || _pronouns == null) {
-            setState(() => _error = 'Remplis tous les champs.');
+            setState(() => _error = l.authErrorFillAllFields);
             return;
         }
         if (_usernameStatus != 'available') {
-            setState(() => _error = 'Choisis un pseudo valide et disponible.');
+            setState(() => _error = l.authErrorUsernameInvalid);
             return;
         }
         widget.onNext({
             'username':  username,
             'birthDate': _birthDate!.toIso8601String(),
-            'gender':    _gender == 'Autre' ? (_genderCustom ?? 'Autre') : _gender,
-            'pronouns':  _pronouns == 'Autre' ? (_pronounsCustom ?? 'Autre') : _pronouns,
+            'gender':    _gender == 'other' ? (_genderCustom ?? 'other') : _gender,
+            'pronouns':  _pronouns == 'other' ? (_pronounsCustom ?? 'other') : _pronouns,
             'bio':       _bioCtrl.text.trim(),
         });
     }
 
     @override
     Widget build(BuildContext context) {
+        final l = AppLocalizations.of(context)!;
         return AnimatedStep(
             child: SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(28, 0, 28, MediaQuery.viewInsetsOf(context).bottom + 32),
@@ -78,14 +92,14 @@ class _StepIdentityState extends State<StepIdentity> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 32),
-                        const Text(
-                            'Qui es-tu ?',
-                            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Color(0xFFE8E0EE)),
+                        Text(
+                            l.authStepIdentityTitle,
+                            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Color(0xFFE8E0EE)),
                         ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                         const SizedBox(height: 8),
-                        const Text(
-                            'Ces infos ne seront pas modifiables facilement.',
-                            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+                        Text(
+                            l.authStepIdentitySubtitle,
+                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
@@ -110,7 +124,7 @@ class _StepIdentityState extends State<StepIdentity> {
                                         const SizedBox(width: 12),
                                         Text(
                                             _birthDate == null
-                                                ? 'Date de naissance'
+                                                ? l.authLabelBirthDate
                                                 : '${_birthDate!.day}/${_birthDate!.month}/${_birthDate!.year}',
                                             style: TextStyle(
                                                 color: _birthDate == null ? const Color(0xFFAA9AB5) : const Color(0xFFE8E0EE),
@@ -123,8 +137,8 @@ class _StepIdentityState extends State<StepIdentity> {
                         const SizedBox(height: 24),
 
                         ChipSelector(
-                            title: 'Genre',
-                            options: _genders,
+                            title: l.authLabelGender,
+                            options: _genders(l),
                             selected: _gender,
                             onSelected: (v) => setState(() => _gender = v),
                             onCustomChanged: (v) => _genderCustom = v,
@@ -133,8 +147,8 @@ class _StepIdentityState extends State<StepIdentity> {
                         const SizedBox(height: 24),
 
                         ChipSelector(
-                            title: 'Pronoms',
-                            options: _pronounsList,
+                            title: l.authLabelPronouns,
+                            options: _pronounsList(l),
                             selected: _pronouns,
                             onSelected: (v) => setState(() => _pronouns = v),
                             onCustomChanged: (v) => _pronounsCustom = v,
@@ -142,9 +156,9 @@ class _StepIdentityState extends State<StepIdentity> {
                         ),
                         const SizedBox(height: 24),
 
-                        const Text(
-                            'BIO',
-                            style: TextStyle(
+                        Text(
+                            l.authLabelBio,
+                            style: const TextStyle(
                                 color: Color(0xFF7B00D4), fontSize: 12,
                                 letterSpacing: 1.2, fontWeight: FontWeight.bold,
                             ),
@@ -163,7 +177,7 @@ class _StepIdentityState extends State<StepIdentity> {
                                             buildCounter: (_, {required currentLength, required isFocused, maxLength}) => null,
                                             style: const TextStyle(color: Color(0xFFE8E0EE)),
                                             decoration: InputDecoration(
-                                                hintText: 'Parle de toi, de ta musique, de ton univers...',
+                                                hintText: l.authHintBio,
                                                 hintStyle: const TextStyle(color: Color(0xFFAA9AB5)),
                                                 filled: true,
                                                 fillColor: const Color(0xFF1A0A1F),
@@ -189,7 +203,7 @@ class _StepIdentityState extends State<StepIdentity> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: _next,
-                                child: const Text('Continuer'),
+                                child: Text(l.authBtnContinue),
                             ),
                         ).animate().fadeIn(delay: 700.ms, duration: 400.ms),
                         const SizedBox(height: 32),

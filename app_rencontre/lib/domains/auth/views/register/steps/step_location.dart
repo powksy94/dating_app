@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 
 class StepLocation extends StatefulWidget {
@@ -17,13 +18,14 @@ class _StepLocationState extends State<StepLocation> {
     String? _error;
 
     Future<void> _requestLocation() async {
+        final l = AppLocalizations.of(context)!;
         setState(() { _loading = true; _error = null; });
 
         final permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied ||
             permission == LocationPermission.deniedForever) {
             setState(() {
-                _error = 'Permission refusée. Tu peux passer cette étape';
+                _error = l.authLocationPermissionDenied;
                 _loading = false;
             });
             return;
@@ -36,7 +38,7 @@ class _StepLocationState extends State<StepLocation> {
             setState(() { _position = pos; _loading = false; });
         } catch (_) {
             setState(() {
-                _error = 'Impossible d\'obtenir la position. Tu peux passer cette étape.';
+                _error = l.authLocationError;
                 _loading = false;
             });
         }
@@ -57,6 +59,7 @@ class _StepLocationState extends State<StepLocation> {
 
     @override
     Widget build(BuildContext context) {
+        final l = AppLocalizations.of(context)!;
         return AnimatedStep(
             child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -64,18 +67,18 @@ class _StepLocationState extends State<StepLocation> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 32),
-                        const Text(
-                            'Ta localisation',
-                            style: TextStyle(
+                        Text(
+                            l.authStepLocationTitle,
+                            style: const TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFE8E0EE),
                             ),
                         ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                         const SizedBox(height: 8),
-                        const Text(
-                            'Pour te montrer des profils proches de chez toi. Tu peux passer cette étape.',
-                            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+                        Text(
+                            l.authStepLocationSubtitle,
+                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 48),
 
@@ -90,9 +93,9 @@ class _StepLocationState extends State<StepLocation> {
                                             style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
                                         ),
                                         const SizedBox(height: 8),
-                                        const Text(
-                                            'Localisation enregistrée ✓',
-                                            style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                                        Text(
+                                            l.authLocationSaved,
+                                            style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                         ),
                                     ],
                                 ),
@@ -123,7 +126,7 @@ class _StepLocationState extends State<StepLocation> {
                                     icon: _loading
                                         ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                                         : const Icon(Icons.my_location),
-                                    label: const Text('Autoriser la localisation'),
+                                    label: Text(l.authBtnAllowLocation),
                                 ),
                             ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
                         const SizedBox(height: 12),
@@ -132,7 +135,7 @@ class _StepLocationState extends State<StepLocation> {
                             child: TextButton(
                                 onPressed: _next,
                                 child: Text(
-                                    _position != null ? 'Continuer' : 'Passer cette étape',
+                                    _position != null ? l.authBtnContinue : l.authBtnSkipStep,
                                     style: const TextStyle(color: Color(0xFFAA9AB5)),
                                 ),
                             ),

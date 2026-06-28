@@ -1,9 +1,11 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
+import 'package:nocturne/domains/auth/widgets/chip_selector.dart';
 import 'package:nocturne/domains/auth/views/register/registration_success_page.dart';
 
 class StepPreferences extends StatefulWidget {
@@ -22,9 +24,15 @@ class _StepPreferencesState extends State<StepPreferences> {
     bool _loading = false;
     String? _error;
 
-    static const _genders = [
-        'Homme', 'Femme', 'Non-binaire', 'Genderfluid',
-        'Agenre', 'Transmasculin', 'Transféminin', 'Tous',
+    List<ChipOption> _genders(AppLocalizations l) => [
+        ChipOption('male', l.authGenderMale),
+        ChipOption('female', l.authGenderFemale),
+        ChipOption('non_binary', l.authGenderNonBinary),
+        ChipOption('genderfluid', l.authGenderGenderfluid),
+        ChipOption('agender', l.authGenderAgender),
+        ChipOption('transmasculine', l.authGenderTransmasculine),
+        ChipOption('transfeminine', l.authGenderTransfeminine),
+        ChipOption('all', l.authGenderAll),
     ];
 
     void _toggleGender(String g) {
@@ -35,7 +43,7 @@ class _StepPreferencesState extends State<StepPreferences> {
 
     Future<void> _submit() async {
         if (_genderPrefs.isEmpty) {
-            setState(() => _error = 'Sélectionne au moins une préférence.');
+            setState(() => _error = AppLocalizations.of(context)!.authErrorSelectPreference);
             return;
         }
 
@@ -94,6 +102,7 @@ class _StepPreferencesState extends State<StepPreferences> {
 
     @override
     Widget build(BuildContext context) {
+        final l = AppLocalizations.of(context)!;
         return AnimatedStep(
             child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -101,24 +110,24 @@ class _StepPreferencesState extends State<StepPreferences> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 32),
-                        const Text(
-                            'Tes préférences',
-                            style: TextStyle(
+                        Text(
+                            l.authStepPreferencesTitle,
+                            style: const TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFE8E0EE),
                             ),
                         ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                         const SizedBox(height: 8),
-                        const Text(
-                            'Qui veux-tu rencontrer ?',
-                            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+                        Text(
+                            l.authStepPreferencesSubtitle,
+                            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
                         // TRANCHE D'ÂGE
                         Text(
-                            'Tranche d\'âge : ${_ageRange.start.round()} - ${_ageRange.end.round()} ans',
+                            l.authAgeRangeLabel(_ageRange.start.round(), _ageRange.end.round()),
                             style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
                                 letterSpacing: 1.2, fontWeight: FontWeight.bold),
                         ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
@@ -135,7 +144,7 @@ class _StepPreferencesState extends State<StepPreferences> {
 
                         // DISTANCE MAX
                         Text(
-                            'Distance max : ${_maxDistance.round()} km',
+                            l.authMaxDistanceLabel(_maxDistance.round()),
                             style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
                                 letterSpacing: 1.2, fontWeight: FontWeight.bold),
                         ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
@@ -151,19 +160,19 @@ class _StepPreferencesState extends State<StepPreferences> {
                         const SizedBox(height: 24),
 
                         // GENRE RECHERCHÉ
-                        const Text(
-                            'Genre(s) recherché(s)',
-                            style: TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
+                        Text(
+                            l.authLabelGenderPreferences,
+                            style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
                                 letterSpacing: 1.2, fontWeight: FontWeight.bold),
                         ).animate().fadeIn(delay: 500.ms, duration: 400.ms),
                         const SizedBox(height: 10),
                         Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: _genders.map((g) => FilterChip(
-                                label: Text(g),
-                                selected: _genderPrefs.contains(g),
-                                onSelected: (_) => _toggleGender(g),
+                            children: _genders(l).map((opt) => FilterChip(
+                                label: Text(opt.label),
+                                selected: _genderPrefs.contains(opt.value),
+                                onSelected: (_) => _toggleGender(opt.value),
                                 selectedColor: const Color(0xFF7B00D4),
                                 checkmarkColor: Colors.white,
                             )).toList(),
@@ -181,7 +190,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                                 child: _loading
                                     ? const SizedBox(width: 20, height: 20,
                                         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                                    : const Text('Créer mon compte'),
+                                    : Text(l.authBtnCreateAccount),
                             ),
                         ).animate().fadeIn(delay: 600.ms, duration: 400.ms),
                         const SizedBox(height: 32),
