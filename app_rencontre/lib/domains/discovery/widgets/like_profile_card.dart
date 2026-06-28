@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/discovery/models/liked_profile.dart';
 
 class LikeProfileCard extends StatelessWidget {
@@ -46,7 +47,7 @@ class LikeProfileCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(color: const Color(0xFF7B00D4), borderRadius: BorderRadius.circular(12)),
-                  child: const Text('MATCH', style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold, letterSpacing: 1)),
+                  child: Text(AppLocalizations.of(context)!.discoveryBadgeMatch, style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold, letterSpacing: 1)),
                 ),
               ),
             Positioned(

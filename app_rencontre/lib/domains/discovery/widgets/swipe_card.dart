@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/profile/widgets/profile_card.dart';
 
@@ -28,7 +29,7 @@ class SwipeCard extends StatelessWidget {
             _SwipeOverlay(
               icon: Icons.favorite,
               color: const Color(0xFF00C853),
-              label: 'LIKE',
+              label: AppLocalizations.of(context)!.discoveryOverlayLike,
               opacity: (horizontalOffset / 60).clamp(0.0, 1.0),
               alignment: Alignment.topLeft,
             ),
@@ -37,7 +38,7 @@ class SwipeCard extends StatelessWidget {
             _SwipeOverlay(
               icon: Icons.close,
               color: const Color(0xFF8B0000),
-              label: 'NOPE',
+              label: AppLocalizations.of(context)!.discoveryOverlayNope,
               opacity: (-horizontalOffset / 60).clamp(0.0, 1.0),
               alignment: Alignment.topRight,
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_card.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_buttons.dart';
@@ -95,12 +96,12 @@ class _ElegieButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: const Color(0xFF7B00D4), width: 0.8),
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.edit_note, color: Color(0xFF7B00D4), size: 18),
-              SizedBox(width: 6),
-              Text('Élégie', style: TextStyle(color: Color(0xFF7B00D4), fontSize: 13, fontWeight: FontWeight.w600)),
+              const Icon(Icons.edit_note, color: Color(0xFF7B00D4), size: 18),
+              const SizedBox(width: 6),
+              Text(AppLocalizations.of(context)!.discoveryBtnElegie, style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 13, fontWeight: FontWeight.w600)),
             ],
           ),
         ),

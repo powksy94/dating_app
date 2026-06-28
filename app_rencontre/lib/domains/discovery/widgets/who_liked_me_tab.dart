@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/discovery/services/swipe_service.dart';
 import 'package:nocturne/domains/discovery/models/liked_profile.dart';
 import 'package:nocturne/domains/discovery/widgets/like_profile_card.dart';
@@ -48,11 +49,11 @@ class _WhoLikedMeTabState extends State<WhoLikedMeTab> with AutomaticKeepAliveCl
     if (_forbidden) return _PaywallState();
 
     if (_profiles.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Icon(Icons.visibility_off, size: 48, color: Color(0xFF7B00D4)),
-          SizedBox(height: 12),
-          Text('Personne n\'a encore liké ton profil', style: TextStyle(color: Color(0xFFAA9AB5))),
+          const Icon(Icons.visibility_off, size: 48, color: Color(0xFF7B00D4)),
+          const SizedBox(height: 12),
+          Text(AppLocalizations.of(context)!.discoveryEmptyWhoLikedMe, style: const TextStyle(color: Color(0xFFAA9AB5))),
         ]),
       );
     }
@@ -79,27 +80,27 @@ class _PaywallState extends StatelessWidget {
           children: [
             const Icon(Icons.lock, size: 56, color: Color(0xFF7B00D4)),
             const SizedBox(height: 16),
-            const Text(
-              'Fonctionnalité Nocturne',
-              style: TextStyle(color: Color(0xFFE8E0EE), fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.discoveryPaywallTitle,
+              style: const TextStyle(color: Color(0xFFE8E0EE), fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Découvre qui a liké ton profil en passant à Nocturne ou Abyssal.',
+            Text(
+              AppLocalizations.of(context)!.discoveryPaywallDescription,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () => PaywallSheet.show(
                 context,
-                title: 'Qui m\'a liké',
-                description: 'Découvre tous les profils qui ont liké le tien.',
+                title: AppLocalizations.of(context)!.discoveryPaywallSheetTitle,
+                description: AppLocalizations.of(context)!.discoveryPaywallSheetDescription,
                 requiredPlan: 'nocturne',
                 icon: Icons.favorite,
               ),
               icon: const Icon(Icons.auto_awesome, size: 16),
-              label: const Text('Passer à Nocturne'),
+              label: Text(AppLocalizations.of(context)!.discoveryBtnUpgrade),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4A0072),
                 shape: RoundedRectangleBorder(

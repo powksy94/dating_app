@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_body.dart';
@@ -75,9 +76,9 @@ class _SwipePageState extends State<SwipePage> {
     if (next != null) setState(() => _currentIndex = next);
 
     if (dir == CardSwiperDirection.right) {
-      if (!_unlimited && _remaining <= 0) { _showPaywall('swipe'); return; }
+      if (!_unlimited && _remaining <= 0) { _showPaywall(); return; }
       final res = await SwipeService.like(profile.uid);
-      if (res['limitReached'] == true && mounted) { _showPaywall('swipe'); return; }
+      if (res['limitReached'] == true && mounted) { _showPaywall(); return; }
       if (!_unlimited) setState(() => _remaining = (_remaining - 1).clamp(0, _limit));
       setState(() => _canRewind = true);
       final matchId = res['matchId'] as String?;
@@ -99,23 +100,21 @@ class _SwipePageState extends State<SwipePage> {
     final res = await BoostService.useBoost();
     if (res != null && mounted) {
       setState(() => _boostCredits = res['remaining'] as int? ?? 0);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Boost activé — ton profil est mis en avant 30 min !'),
-        backgroundColor: Color(0xFF4A0072),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.discoveryBoostActivated),
+        backgroundColor: const Color(0xFF4A0072),
       ));
     }
   }
 
-  void _showPaywall(String type) {
-    final isSwipe = type == 'swipe';
+  void _showPaywall() {
+    final l = AppLocalizations.of(context)!;
     PaywallSheet.show(
       context,
-      title: isSwipe ? 'Limite de swipes atteinte' : '${type[0].toUpperCase()}${type.substring(1)} indisponible',
-      description: isSwipe
-          ? 'Tu as utilisé tes $_limit swipes du jour. Passe à Nocturne pour swiper sans limite.'
-          : 'Fonctionnalité réservée aux abonnés Nocturne et Abyssal.',
+      title: l.discoverySwipeLimitTitle,
+      description: l.discoverySwipeLimitBody(_limit),
       requiredPlan: 'nocturne',
-      icon: isSwipe ? Icons.swap_horiz : Icons.replay,
+      icon: Icons.swap_horiz,
     );
   }
 
@@ -134,7 +133,7 @@ class _SwipePageState extends State<SwipePage> {
   Widget build(BuildContext context) {
     if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
     return Scaffold(
-      appBar: AppBar(title: const Text('NOCTURNE')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.discoverySwipePageTitle)),
       body: _profiles.isEmpty
           ? const _EmptyState()
           : SwipeBody(
@@ -158,11 +157,11 @@ class _SwipePageState extends State<SwipePage> {
 class _EmptyState extends StatelessWidget {
   const _EmptyState();
   @override
-  Widget build(BuildContext context) => const Center(
+  Widget build(BuildContext context) => Center(
     child: Column(mainAxisSize: MainAxisSize.min, children: [
-      Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),
-      SizedBox(height: 16),
-      Text('Aucun profil dans les parages...', style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 16)),
+      const Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),
+      const SizedBox(height: 16),
+      Text(AppLocalizations.of(context)!.discoveryEmptyProfiles, style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 16)),
     ]),
   );
 }

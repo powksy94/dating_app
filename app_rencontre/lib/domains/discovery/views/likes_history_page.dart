@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/discovery/widgets/my_likes_tab.dart';
 import 'package:nocturne/domains/discovery/widgets/who_liked_me_tab.dart';
 
@@ -14,18 +15,18 @@ class LikesHistoryPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text(
-            'LIKES',
-            style: TextStyle(fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
+          title: Text(
+            AppLocalizations.of(context)!.discoveryLikesTitle,
+            style: const TextStyle(fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
-          bottom: const TabBar(
-            indicatorColor: Color(0xFF7B00D4),
-            labelColor: Color(0xFFE8E0EE),
-            unselectedLabelColor: Color(0xFF6B5B7B),
+          bottom: TabBar(
+            indicatorColor: const Color(0xFF7B00D4),
+            labelColor: const Color(0xFFE8E0EE),
+            unselectedLabelColor: const Color(0xFF6B5B7B),
             tabs: [
-              Tab(text: 'Mes likes'),
-              Tab(text: 'Qui m\'a liké'),
+              Tab(text: AppLocalizations.of(context)!.discoveryTabMyLikes),
+              Tab(text: AppLocalizations.of(context)!.discoveryTabWhoLikedMe),
             ],
           ),
         ),

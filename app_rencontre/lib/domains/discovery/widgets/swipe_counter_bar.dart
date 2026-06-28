@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class SwipeCounterBar extends StatelessWidget {
   final int remaining;
@@ -21,7 +22,7 @@ class SwipeCounterBar extends StatelessWidget {
           Icon(Icons.swap_horiz, color: color, size: 16),
           const SizedBox(width: 6),
           Text(
-            '$remaining / $limit swipes aujourd\'hui',
+            AppLocalizations.of(context)!.discoverySwipeCounter(remaining, limit),
             style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),
           ),
           const Spacer(),

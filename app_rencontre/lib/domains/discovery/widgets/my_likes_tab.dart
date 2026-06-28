@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/discovery/models/liked_profile.dart';
 import 'package:nocturne/domains/discovery/widgets/like_profile_card.dart';
@@ -35,11 +36,11 @@ class _MyLikesTabState extends State<MyLikesTab> with AutomaticKeepAliveClientMi
     super.build(context);
     if (_loading) return const Center(child: CircularProgressIndicator());
     if (_profiles.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Icon(Icons.favorite_border, size: 48, color: Color(0xFF7B00D4)),
-          SizedBox(height: 12),
-          Text('Aucun like pour l\'instant', style: TextStyle(color: Color(0xFFAA9AB5))),
+          const Icon(Icons.favorite_border, size: 48, color: Color(0xFF7B00D4)),
+          const SizedBox(height: 12),
+          Text(AppLocalizations.of(context)!.discoveryEmptyMyLikes, style: const TextStyle(color: Color(0xFFAA9AB5))),
         ]),
       );
     }
