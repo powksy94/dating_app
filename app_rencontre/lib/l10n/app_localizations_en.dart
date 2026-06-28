@@ -736,4 +736,102 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authBadgeMain => 'Main';
+
+  @override
+  String get settingsTitle => 'SETTINGS';
+
+  @override
+  String get settingsSectionAccount => 'Account';
+
+  @override
+  String get settingsBtnEditProfile => 'Edit my profile';
+
+  @override
+  String get settingsBtnChangePassword => 'Change password';
+
+  @override
+  String get settingsBtnLogout => 'Log out';
+
+  @override
+  String get settingsBtnDeleteAccount => 'Delete account';
+
+  @override
+  String get settingsSectionDiscovery => 'Discovery';
+
+  @override
+  String get settingsLabelMaxDistance => 'Max distance';
+
+  @override
+  String settingsValueKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get settingsLabelAgeRange => 'Age range';
+
+  @override
+  String settingsValueAgeRange(int min, int max) {
+    return '$min – $max years';
+  }
+
+  @override
+  String get settingsSectionNotifications => 'Notifications';
+
+  @override
+  String get settingsNotifMatches => 'New matches';
+
+  @override
+  String get settingsNotifMessages => 'New messages';
+
+  @override
+  String get settingsNotifElegies => 'Elegies received';
+
+  @override
+  String get settingsSectionPrivacy => 'Privacy';
+
+  @override
+  String get settingsPrivacyVisible => 'Profile visible in swipe';
+
+  @override
+  String get settingsSectionAbout => 'About';
+
+  @override
+  String get settingsVersionLabel => 'Version';
+
+  @override
+  String get settingsTermsOfService => 'Terms of service';
+
+  @override
+  String get settingsPrivacyPolicy => 'Privacy policy';
+
+  @override
+  String get settingsDeleteAccountWarning =>
+      'This action is irreversible.\nType your username to confirm.';
+
+  @override
+  String get settingsBtnCancel => 'Cancel';
+
+  @override
+  String get settingsBtnDeleteForever => 'Delete permanently';
+
+  @override
+  String get settingsErrorAllFieldsRequired => 'All fields are required';
+
+  @override
+  String get settingsErrorPasswordMismatch => 'Passwords don\'t match';
+
+  @override
+  String get settingsErrorPasswordMin => 'Minimum 12 characters';
+
+  @override
+  String get settingsLabelCurrentPassword => 'Current password';
+
+  @override
+  String get settingsLabelNewPassword => 'New password';
+
+  @override
+  String get settingsLabelConfirmNewPassword => 'Confirm new password';
+
+  @override
+  String get settingsBtnConfirm => 'Confirm';
 }

@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
 
 class PrivacySection extends StatelessWidget {
@@ -13,13 +14,14 @@ class PrivacySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader('Confidentialité'),
+        SectionHeader(l.settingsSectionPrivacy),
         ToggleTile(
           icon: Icons.visibility_outlined,
-          label: 'Profil visible dans le swipe',
+          label: l.settingsPrivacyVisible,
           value: profileVisible,
           onChanged: onVisibleChanged,
         ),

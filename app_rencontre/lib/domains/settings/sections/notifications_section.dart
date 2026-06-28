@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
 
 class NotificationsSection extends StatelessWidget {
@@ -21,25 +22,26 @@ class NotificationsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader('Notifications'),
+        SectionHeader(l.settingsSectionNotifications),
         ToggleTile(
           icon: Icons.favorite,
-          label: 'Nouveaux matchs',
+          label: l.settingsNotifMatches,
           value: notifMatches,
           onChanged: onMatchesChanged,
         ),
         ToggleTile(
           icon: Icons.chat_bubble_outline,
-          label: 'Nouveaux messages',
+          label: l.settingsNotifMessages,
           value: notifMessages,
           onChanged: onMessagesChanged,
         ),
         ToggleTile(
           icon: Icons.edit_note,
-          label: 'Élégies reçues',
+          label: l.settingsNotifElegies,
           value: notifElegies,
           onChanged: onElegiesChanged,
         ),

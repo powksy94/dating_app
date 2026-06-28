@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
@@ -24,20 +25,21 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 
   Future<void> _submit() async {
+    final l = AppLocalizations.of(context)!;
     final current = _currentCtrl.text.trim();
     final next    = _newCtrl.text.trim();
     final confirm = _confirmCtrl.text.trim();
 
     if (current.isEmpty || next.isEmpty || confirm.isEmpty) {
-      setState(() => _error = 'Tous les champs sont requis');
+      setState(() => _error = l.settingsErrorAllFieldsRequired);
       return;
     }
     if (next != confirm) {
-      setState(() => _error = 'Les mots de passe ne correspondent pas');
+      setState(() => _error = l.settingsErrorPasswordMismatch);
       return;
     }
     if (next.length < 12) {
-      setState(() => _error = 'Minimum 12 caractères');
+      setState(() => _error = l.settingsErrorPasswordMin);
       return;
     }
 
@@ -56,20 +58,21 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return AlertDialog(
       backgroundColor: const Color(0xFF1A0A1F),
-      title: const Text(
-        'Changer le mot de passe',
-        style: TextStyle(color: Colors.white, fontSize: 16),
+      title: Text(
+        l.settingsBtnChangePassword,
+        style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _PasswordField(controller: _currentCtrl,  label: 'Mot de passe actuel'),
+          _PasswordField(controller: _currentCtrl,  label: l.settingsLabelCurrentPassword),
           const SizedBox(height: 12),
-          _PasswordField(controller: _newCtrl,      label: 'Nouveau mot de passe'),
+          _PasswordField(controller: _newCtrl,      label: l.settingsLabelNewPassword),
           const SizedBox(height: 12),
-          _PasswordField(controller: _confirmCtrl,  label: 'Confirmer le nouveau'),
+          _PasswordField(controller: _confirmCtrl,  label: l.settingsLabelConfirmNewPassword),
           if (_error != null) ...[
             const SizedBox(height: 12),
             Text(_error!,
@@ -80,8 +83,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
       actions: [
         TextButton(
           onPressed: _loading ? null : () => Navigator.pop(context),
-          child: const Text('Annuler',
-              style: TextStyle(color: Color(0xFF5A4A6A))),
+          child: Text(l.settingsBtnCancel,
+              style: const TextStyle(color: Color(0xFF5A4A6A))),
         ),
         TextButton(
           onPressed: _loading ? null : _submit,
@@ -90,8 +93,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                   width: 16, height: 16,
                   child: CircularProgressIndicator(
                       strokeWidth: 2, color: Color(0xFF7B00D4)))
-              : const Text('Confirmer',
-                  style: TextStyle(color: Color(0xFF7B00D4))),
+              : Text(l.settingsBtnConfirm,
+                  style: const TextStyle(color: Color(0xFF7B00D4))),
         ),
       ],
     );

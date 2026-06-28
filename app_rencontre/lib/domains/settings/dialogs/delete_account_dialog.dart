@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 
 class DeleteAccountDialog extends StatefulWidget{
@@ -37,19 +38,20 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return AlertDialog(
       backgroundColor: const Color(0xFF1A0A1F),
-      title: const Text(
-        'Supprimer le compte',
-        style: TextStyle(color: Colors.white),
+      title: Text(
+        l.settingsBtnDeleteAccount,
+        style: const TextStyle(color: Colors.white),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Cette action est irréversible.\nTape ton pseudo pour confirmer.',
-            style: TextStyle(color: Color(0xFFAA9AB5)),
+          Text(
+            l.settingsDeleteAccountWarning,
+            style: const TextStyle(color: Color(0xFFAA9AB5)),
           ),
           const SizedBox(height: 16),
           TextField(
@@ -86,8 +88,8 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
       actions: [
         TextButton(
           onPressed: _loading ? null : () => Navigator.pop(context),
-          child: const Text('Annuler',
-              style: TextStyle(color: Color(0xFF7B00D4))),
+          child: Text(l.settingsBtnCancel,
+              style: const TextStyle(color: Color(0xFF7B00D4))),
         ),
         TextButton(
           onPressed: (_confirmed && !_loading) ? _delete : null,
@@ -97,7 +99,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                   child: CircularProgressIndicator(
                       strokeWidth: 2, color: Color(0xFF8B0000)))
               : Text(
-                  'Supprimer définitivement',
+                  l.settingsBtnDeleteForever,
                   style: TextStyle(
                     color: _confirmed
                         ? const Color(0xFF8B0000)

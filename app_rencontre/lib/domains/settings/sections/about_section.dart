@@ -1,5 +1,7 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
 
 class AboutSection extends StatelessWidget {
@@ -13,24 +15,31 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader('À propos'),
-        ActionTile(
-          icon: Icons.info_outline,
-          label: 'Version 1.0.0',
-          onTap: () {},
-          trailing: const SizedBox.shrink(),
+        SectionHeader(l.settingsSectionAbout),
+        FutureBuilder<PackageInfo>(
+          future: PackageInfo.fromPlatform(),
+          builder: (context, snapshot) {
+            final version = snapshot.data?.version ?? '';
+            return ActionTile(
+              icon: Icons.info_outline,
+              label: '${l.settingsVersionLabel} $version',
+              onTap: () {},
+              trailing: const SizedBox.shrink(),
+            );
+          },
         ),
         ActionTile(
           icon: Icons.description_outlined,
-          label: 'Conditions d\'utilisation',
+          label: l.settingsTermsOfService,
           onTap: _openTermsOfService,
         ),
         ActionTile(
           icon: Icons.privacy_tip_outlined,
-          label: 'Politique de confidentialité',
+          label: l.settingsPrivacyPolicy,
           onTap: _openPrivacyPolicy,
         ),
       ],

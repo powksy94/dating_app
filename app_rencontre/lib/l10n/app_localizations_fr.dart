@@ -742,4 +742,103 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get authBadgeMain => 'Principale';
+
+  @override
+  String get settingsTitle => 'PARAMÈTRES';
+
+  @override
+  String get settingsSectionAccount => 'Compte';
+
+  @override
+  String get settingsBtnEditProfile => 'Modifier mon profil';
+
+  @override
+  String get settingsBtnChangePassword => 'Changer le mot de passe';
+
+  @override
+  String get settingsBtnLogout => 'Se déconnecter';
+
+  @override
+  String get settingsBtnDeleteAccount => 'Supprimer le compte';
+
+  @override
+  String get settingsSectionDiscovery => 'Découverte';
+
+  @override
+  String get settingsLabelMaxDistance => 'Distance max';
+
+  @override
+  String settingsValueKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get settingsLabelAgeRange => 'Tranche d\'âge';
+
+  @override
+  String settingsValueAgeRange(int min, int max) {
+    return '$min – $max ans';
+  }
+
+  @override
+  String get settingsSectionNotifications => 'Notifications';
+
+  @override
+  String get settingsNotifMatches => 'Nouveaux matchs';
+
+  @override
+  String get settingsNotifMessages => 'Nouveaux messages';
+
+  @override
+  String get settingsNotifElegies => 'Élégies reçues';
+
+  @override
+  String get settingsSectionPrivacy => 'Confidentialité';
+
+  @override
+  String get settingsPrivacyVisible => 'Profil visible dans le swipe';
+
+  @override
+  String get settingsSectionAbout => 'À propos';
+
+  @override
+  String get settingsVersionLabel => 'Version';
+
+  @override
+  String get settingsTermsOfService => 'Conditions d\'utilisation';
+
+  @override
+  String get settingsPrivacyPolicy => 'Politique de confidentialité';
+
+  @override
+  String get settingsDeleteAccountWarning =>
+      'Cette action est irréversible.\nTape ton pseudo pour confirmer.';
+
+  @override
+  String get settingsBtnCancel => 'Annuler';
+
+  @override
+  String get settingsBtnDeleteForever => 'Supprimer définitivement';
+
+  @override
+  String get settingsErrorAllFieldsRequired => 'Tous les champs sont requis';
+
+  @override
+  String get settingsErrorPasswordMismatch =>
+      'Les mots de passe ne correspondent pas';
+
+  @override
+  String get settingsErrorPasswordMin => 'Minimum 12 caractères';
+
+  @override
+  String get settingsLabelCurrentPassword => 'Mot de passe actuel';
+
+  @override
+  String get settingsLabelNewPassword => 'Nouveau mot de passe';
+
+  @override
+  String get settingsLabelConfirmNewPassword => 'Confirmer le nouveau';
+
+  @override
+  String get settingsBtnConfirm => 'Confirmer';
 }

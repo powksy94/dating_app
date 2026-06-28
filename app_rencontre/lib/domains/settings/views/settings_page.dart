@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/settings/sections/notifications_section.dart';
@@ -104,9 +105,9 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'PARAMÈTRES',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.settingsTitle,
+          style: const TextStyle(
               fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

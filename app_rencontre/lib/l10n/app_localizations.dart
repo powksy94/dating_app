@@ -1417,6 +1417,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Main'**
   String get authBadgeMain;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SETTINGS'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsSectionAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get settingsSectionAccount;
+
+  /// No description provided for @settingsBtnEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit my profile'**
+  String get settingsBtnEditProfile;
+
+  /// No description provided for @settingsBtnChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get settingsBtnChangePassword;
+
+  /// No description provided for @settingsBtnLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get settingsBtnLogout;
+
+  /// No description provided for @settingsBtnDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get settingsBtnDeleteAccount;
+
+  /// No description provided for @settingsSectionDiscovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Discovery'**
+  String get settingsSectionDiscovery;
+
+  /// No description provided for @settingsLabelMaxDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Max distance'**
+  String get settingsLabelMaxDistance;
+
+  /// No description provided for @settingsValueKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String settingsValueKm(int km);
+
+  /// No description provided for @settingsLabelAgeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Age range'**
+  String get settingsLabelAgeRange;
+
+  /// No description provided for @settingsValueAgeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{min} – {max} years'**
+  String settingsValueAgeRange(int min, int max);
+
+  /// No description provided for @settingsSectionNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsSectionNotifications;
+
+  /// No description provided for @settingsNotifMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'New matches'**
+  String get settingsNotifMatches;
+
+  /// No description provided for @settingsNotifMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'New messages'**
+  String get settingsNotifMessages;
+
+  /// No description provided for @settingsNotifElegies.
+  ///
+  /// In en, this message translates to:
+  /// **'Elegies received'**
+  String get settingsNotifElegies;
+
+  /// No description provided for @settingsSectionPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get settingsSectionPrivacy;
+
+  /// No description provided for @settingsPrivacyVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile visible in swipe'**
+  String get settingsPrivacyVisible;
+
+  /// No description provided for @settingsSectionAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsSectionAbout;
+
+  /// No description provided for @settingsVersionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get settingsVersionLabel;
+
+  /// No description provided for @settingsTermsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of service'**
+  String get settingsTermsOfService;
+
+  /// No description provided for @settingsPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get settingsPrivacyPolicy;
+
+  /// No description provided for @settingsDeleteAccountWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is irreversible.\nType your username to confirm.'**
+  String get settingsDeleteAccountWarning;
+
+  /// No description provided for @settingsBtnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get settingsBtnCancel;
+
+  /// No description provided for @settingsBtnDeleteForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get settingsBtnDeleteForever;
+
+  /// No description provided for @settingsErrorAllFieldsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'All fields are required'**
+  String get settingsErrorAllFieldsRequired;
+
+  /// No description provided for @settingsErrorPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match'**
+  String get settingsErrorPasswordMismatch;
+
+  /// No description provided for @settingsErrorPasswordMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 12 characters'**
+  String get settingsErrorPasswordMin;
+
+  /// No description provided for @settingsLabelCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get settingsLabelCurrentPassword;
+
+  /// No description provided for @settingsLabelNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get settingsLabelNewPassword;
+
+  /// No description provided for @settingsLabelConfirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get settingsLabelConfirmNewPassword;
+
+  /// No description provided for @settingsBtnConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get settingsBtnConfirm;
 }
 
 class _AppLocalizationsDelegate

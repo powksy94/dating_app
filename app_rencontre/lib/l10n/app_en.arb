@@ -316,5 +316,50 @@
     "authErrorAddPhoto": "Add at least one photo.",
     "authStepPhotosTitle": "Your photos",
     "authStepPhotosSubtitle": "Add up to 6 photos. The first one will be your main photo.",
-    "authBadgeMain": "Main"
+    "authBadgeMain": "Main",
+
+    "settingsTitle": "SETTINGS",
+
+    "settingsSectionAccount": "Account",
+    "settingsBtnEditProfile": "Edit my profile",
+    "settingsBtnChangePassword": "Change password",
+    "settingsBtnLogout": "Log out",
+    "settingsBtnDeleteAccount": "Delete account",
+
+    "settingsSectionDiscovery": "Discovery",
+    "settingsLabelMaxDistance": "Max distance",
+    "settingsValueKm": "{km} km",
+    "@settingsValueKm": {
+        "placeholders": { "km": { "type": "int" } }
+    },
+    "settingsLabelAgeRange": "Age range",
+    "settingsValueAgeRange": "{min} – {max} years",
+    "@settingsValueAgeRange": {
+        "placeholders": { "min": { "type": "int" }, "max": { "type": "int" } }
+    },
+
+    "settingsSectionNotifications": "Notifications",
+    "settingsNotifMatches": "New matches",
+    "settingsNotifMessages": "New messages",
+    "settingsNotifElegies": "Elegies received",
+
+    "settingsSectionPrivacy": "Privacy",
+    "settingsPrivacyVisible": "Profile visible in swipe",
+
+    "settingsSectionAbout": "About",
+    "settingsVersionLabel": "Version",
+    "settingsTermsOfService": "Terms of service",
+    "settingsPrivacyPolicy": "Privacy policy",
+
+    "settingsDeleteAccountWarning": "This action is irreversible.\nType your username to confirm.",
+    "settingsBtnCancel": "Cancel",
+    "settingsBtnDeleteForever": "Delete permanently",
+
+    "settingsErrorAllFieldsRequired": "All fields are required",
+    "settingsErrorPasswordMismatch": "Passwords don't match",
+    "settingsErrorPasswordMin": "Minimum 12 characters",
+    "settingsLabelCurrentPassword": "Current password",
+    "settingsLabelNewPassword": "New password",
+    "settingsLabelConfirmNewPassword": "Confirm new password",
+    "settingsBtnConfirm": "Confirm"
 }

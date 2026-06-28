@@ -253,5 +253,44 @@
     "authErrorAddPhoto": "Ajoute au moins une photo.",
     "authStepPhotosTitle": "Tes photos",
     "authStepPhotosSubtitle": "Ajoute jusqu'à 6 photos. La première sera ta photo principale.",
-    "authBadgeMain": "Principale"
+    "authBadgeMain": "Principale",
+
+    "settingsTitle": "PARAMÈTRES",
+
+    "settingsSectionAccount": "Compte",
+    "settingsBtnEditProfile": "Modifier mon profil",
+    "settingsBtnChangePassword": "Changer le mot de passe",
+    "settingsBtnLogout": "Se déconnecter",
+    "settingsBtnDeleteAccount": "Supprimer le compte",
+
+    "settingsSectionDiscovery": "Découverte",
+    "settingsLabelMaxDistance": "Distance max",
+    "settingsValueKm": "{km} km",
+    "settingsLabelAgeRange": "Tranche d'âge",
+    "settingsValueAgeRange": "{min} – {max} ans",
+
+    "settingsSectionNotifications": "Notifications",
+    "settingsNotifMatches": "Nouveaux matchs",
+    "settingsNotifMessages": "Nouveaux messages",
+    "settingsNotifElegies": "Élégies reçues",
+
+    "settingsSectionPrivacy": "Confidentialité",
+    "settingsPrivacyVisible": "Profil visible dans le swipe",
+
+    "settingsSectionAbout": "À propos",
+    "settingsVersionLabel": "Version",
+    "settingsTermsOfService": "Conditions d'utilisation",
+    "settingsPrivacyPolicy": "Politique de confidentialité",
+
+    "settingsDeleteAccountWarning": "Cette action est irréversible.\nTape ton pseudo pour confirmer.",
+    "settingsBtnCancel": "Annuler",
+    "settingsBtnDeleteForever": "Supprimer définitivement",
+
+    "settingsErrorAllFieldsRequired": "Tous les champs sont requis",
+    "settingsErrorPasswordMismatch": "Les mots de passe ne correspondent pas",
+    "settingsErrorPasswordMin": "Minimum 12 caractères",
+    "settingsLabelCurrentPassword": "Mot de passe actuel",
+    "settingsLabelNewPassword": "Nouveau mot de passe",
+    "settingsLabelConfirmNewPassword": "Confirmer le nouveau",
+    "settingsBtnConfirm": "Confirmer"
 }

@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
 
 class DiscoverySection extends StatelessWidget {
@@ -17,14 +18,15 @@ class DiscoverySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader('Découverte'),
+        SectionHeader(l.settingsSectionDiscovery),
         SliderTile(
           icon: Icons.location_on_outlined,
-          label: 'Distance max',
-          valueLabel: '${maxDistance.round()} km',
+          label: l.settingsLabelMaxDistance,
+          valueLabel: l.settingsValueKm(maxDistance.round()),
           value: maxDistance,
           min: 5,
           max: 200,
@@ -32,8 +34,8 @@ class DiscoverySection extends StatelessWidget {
         ),
         RangeTile(
           icon: Icons.people_outline,
-          label: 'Tranche d\'âge',
-          valueLabel: '${ageRange.start.round()} – ${ageRange.end.round()} ans',
+          label: l.settingsLabelAgeRange,
+          valueLabel: l.settingsValueAgeRange(ageRange.start.round(), ageRange.end.round()),
           values: ageRange,
           min: 18,
           max: 80,
