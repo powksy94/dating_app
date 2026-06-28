@@ -14,13 +14,13 @@ class StepTags extends StatefulWidget {
 
 class _StepTagsState extends State<StepTags> {
     final TextEditingController _bandCtrl = TextEditingController();
-    List<String> _favoriteBands = [];
-    List<String> _genres        = [];
-    List<String> _vibes         = [];
-    List<String> _aesthetics    = [];
-    List<String> _intensity     = [];
-    List<String> _eras          = [];
-    List<String> _discovery     = [];
+    final List<String> _favoriteBands = [];
+    final List<String> _genres        = [];
+    final List<String> _vibes         = [];
+    final List<String> _aesthetics    = [];
+    final List<String> _intensity     = [];
+    final List<String> _eras          = [];
+    final List<String> _discovery     = [];
     String? _error;
 
     @override

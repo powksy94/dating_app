@@ -20,7 +20,7 @@ class StepPreferences extends StatefulWidget {
 class _StepPreferencesState extends State<StepPreferences> {
     RangeValues _ageRange = const RangeValues(18, 40);
     double _maxDistance = 50;
-    List<String> _genderPrefs = [];
+    final List<String> _genderPrefs = [];
     bool _loading = false;
     String? _error;
 
