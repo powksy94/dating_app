@@ -361,5 +361,112 @@
     "settingsLabelCurrentPassword": "Current password",
     "settingsLabelNewPassword": "New password",
     "settingsLabelConfirmNewPassword": "Confirm new password",
-    "settingsBtnConfirm": "Confirm"
+    "settingsBtnConfirm": "Confirm",
+
+    "eventDateAtTime": "{date} at {time}",
+    "@eventDateAtTime": {
+        "placeholders": { "date": { "type": "String" }, "time": { "type": "String" } }
+    },
+
+    "eventPageTitle": "EVENTS",
+    "eventLabelMaxDistance": "Max distance",
+    "eventValueKm": "{km} km",
+    "@eventValueKm": {
+        "placeholders": { "km": { "type": "int" } }
+    },
+    "eventLabelGenres": "Genres",
+    "eventFilterAllGenres": "All genres",
+    "eventFilterMyGenres": "My genres",
+    "eventEmptyZone": "No events in your area",
+    "eventEmptyCategory": "No events in this category",
+
+    "eventSubmittedForModeration": "Event submitted for moderation",
+
+    "eventUnregisterConfirmed": "Unregistration confirmed",
+    "eventRegisterConfirmed": "Registration confirmed!",
+    "eventSectionDescription": "DESCRIPTION",
+    "eventSectionParticipants": "PARTICIPANTS",
+    "eventBtnUnregisterLong": "Registered ✓ — Unregister",
+
+    "eventPriceFree": "Free",
+    "eventBadgeRegistered": "Registered ✓",
+    "eventBtnRegister": "Join",
+
+    "eventAttendeeCount": "{count, plural, =1{{count} attendee} other{{count} attendees}}",
+    "@eventAttendeeCount": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "eventMutualOne": "{name} is attending",
+    "@eventMutualOne": {
+        "placeholders": { "name": { "type": "String" } }
+    },
+    "eventMutualTwo": "{name1} and {name2} are attending",
+    "@eventMutualTwo": {
+        "placeholders": { "name1": { "type": "String" }, "name2": { "type": "String" } }
+    },
+    "eventMutualWithExtra": "{names} and {extra, plural, =1{1 other} other{{extra} others}} are attending",
+    "@eventMutualWithExtra": {
+        "placeholders": {
+            "names": { "type": "String" },
+            "extra": { "type": "int" }
+        }
+    },
+
+    "eventErrorTitleDescRequired": "Title and description required",
+    "eventStepCoverTitle": "Present your event",
+    "eventStepCoverSubtitle": "Photo, title and description",
+    "eventBtnAddCoverPhoto": "Add a cover photo",
+    "eventLabelTitleRequired": "Title *",
+    "eventLabelDescriptionRequired": "Description *",
+    "eventBtnContinue": "Continue",
+
+    "eventErrorDateRequired": "Choose a date and time",
+    "eventStepDatetimeTitle": "When is the event?",
+    "eventStepDatetimeSubtitle": "Start date and time",
+    "eventBtnPickDateTime": "Choose a date and time",
+
+    "eventErrorAddressRequired": "Select an address from the list",
+    "eventStepLocationTitle": "Where does it take place?",
+    "eventStepLocationSubtitle": "Search for the venue's address",
+
+    "eventStepGenresTitle": "Music genres",
+    "eventStepGenresSubtitle": "Select the event's genres",
+
+    "eventErrorCapacityInvalid": "Enter a valid capacity (min 1)",
+    "eventErrorCapacityMaxMin": "The max must be greater than the min",
+    "eventStepCapacityTitle": "How many spots?",
+    "eventStepCapacitySubtitle": "Maximum capacity of the event",
+    "eventToggleExactNumber": "Exact number",
+    "eventToggleRange": "Range",
+    "eventLabelExactPlaces": "Number of spots *",
+    "eventLabelMin": "Min *",
+    "eventLabelMax": "Max *",
+
+    "eventErrorPriceInvalid": "Enter a valid price",
+    "eventStepPriceTitle": "What's the price?",
+    "eventStepPriceSubtitle": "Last step before submitting",
+    "eventTogglePaid": "Paid",
+    "eventLabelPriceRequired": "Price *",
+    "eventBtnSubmit": "Submit the event",
+
+    "eventFilterAll": "All",
+    "eventFilterAttending": "Attending",
+    "eventFilterMatches": "My matches",
+    "eventFilterFavorites": "Favorites",
+
+    "eventSheetUnregisterTitle": "Unregister from the event",
+    "eventSheetRegisterTitle": "Confirm registration",
+    "eventBtnConfirmUnregister": "Confirm unregistration",
+    "eventBtnConfirmRegister": "I'm in!",
+    "eventBtnCancel": "Cancel",
+
+    "eventSectionInfo": "INFO",
+    "eventCapacityRange": "{min}–{max} spots",
+    "@eventCapacityRange": {
+        "placeholders": { "min": { "type": "int" }, "max": { "type": "int" } }
+    },
+    "eventCapacityMin": "{min, plural, =1{1 spot} other{{min} spots}}",
+    "@eventCapacityMin": {
+        "placeholders": { "min": { "type": "int" } }
+    }
 }

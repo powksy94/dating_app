@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class StepCapacity extends StatefulWidget {
   final void Function(Map<String, dynamic>) onNext;
@@ -26,11 +27,11 @@ class _StepCapacityState extends State<StepCapacity> {
     final capMax = _isRange ? int.tryParse(_maxCtrl.text.trim()) : null;
 
     if (capMin == null || capMin < 1) {
-      setState(() => _error = 'Entre une capacité valide (min 1)');
+      setState(() => _error = AppLocalizations.of(context)!.eventErrorCapacityInvalid);
       return;
     }
     if (_isRange && (capMax == null || capMax <= capMin)) {
-      setState(() => _error = 'Le max doit être supérieur au min');
+      setState(() => _error = AppLocalizations.of(context)!.eventErrorCapacityMaxMin);
       return;
     }
     widget.onNext({'capacityMin': capMin, 'capacityMax': capMax});
@@ -38,38 +39,39 @@ class _StepCapacityState extends State<StepCapacity> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Combien de places ?',
-              style: TextStyle(
+          Text(l.eventStepCapacityTitle,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          const Text('Capacité maximale de l\'événement',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+          Text(l.eventStepCapacitySubtitle,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
           const SizedBox(height: 32),
           Row(
             children: [
-              _toggle('Nombre exact', !_isRange,
+              _toggle(l.eventToggleExactNumber, !_isRange,
                   () => setState(() => _isRange = false)),
               const SizedBox(width: 10),
-              _toggle('Tranche', _isRange,
+              _toggle(l.eventToggleRange, _isRange,
                   () => setState(() => _isRange = true)),
             ],
           ),
           const SizedBox(height: 20),
           if (!_isRange)
-            _field(_minCtrl, 'Nombre de places *')
+            _field(_minCtrl, l.eventLabelExactPlaces)
           else
             Row(
               children: [
-                Expanded(child: _field(_minCtrl, 'Min *')),
+                Expanded(child: _field(_minCtrl, l.eventLabelMin)),
                 const SizedBox(width: 12),
-                Expanded(child: _field(_maxCtrl, 'Max *')),
+                Expanded(child: _field(_maxCtrl, l.eventLabelMax)),
               ],
             ),
           if (_error != null) ...[
@@ -89,8 +91,8 @@ class _StepCapacityState extends State<StepCapacity> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: const Text('Continuer',
-                  style: TextStyle(
+              child: Text(l.eventBtnContinue,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),

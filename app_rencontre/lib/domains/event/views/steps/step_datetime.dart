@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/shared/utils/date_formatting.dart';
 
 class StepDatetime extends StatefulWidget {
   final void Function(Map<String, dynamic>) onNext;
@@ -45,7 +47,7 @@ class _StepDatetimeState extends State<StepDatetime> {
 
   void _next() {
     if (_date == null) {
-      setState(() => _error = 'Choisis une date et une heure');
+      setState(() => _error = AppLocalizations.of(context)!.eventErrorDateRequired);
       return;
     }
     widget.onNext({'date': _date});
@@ -53,19 +55,20 @@ class _StepDatetimeState extends State<StepDatetime> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Quand a lieu l'événement ?",
-              style: TextStyle(
+          Text(l.eventStepDatetimeTitle,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          const Text('Date et heure de début',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+          Text(l.eventStepDatetimeSubtitle,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
           const SizedBox(height: 32),
           GestureDetector(
             onTap: _pickDate,
@@ -92,12 +95,8 @@ class _StepDatetimeState extends State<StepDatetime> {
                   const SizedBox(width: 12),
                   Text(
                     _date == null
-                        ? 'Choisir une date et heure'
-                        : '${_date!.day.toString().padLeft(2, '0')}/'
-                            '${_date!.month.toString().padLeft(2, '0')}/'
-                            '${_date!.year}  ·  '
-                            '${_date!.hour.toString().padLeft(2, '0')}h'
-                            '${_date!.minute.toString().padLeft(2, '0')}',
+                        ? l.eventBtnPickDateTime
+                        : formatEventDateCompact(context, _date!),
                     style: TextStyle(
                       color: _date == null
                           ? const Color(0xFF5A4A6A)
@@ -126,8 +125,8 @@ class _StepDatetimeState extends State<StepDatetime> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: const Text('Continuer',
-                  style: TextStyle(
+              child: Text(l.eventBtnContinue,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class StepPrice extends StatefulWidget {
   final Future<void> Function(Map<String, dynamic>) onSubmit;
@@ -24,7 +25,7 @@ class _StepPriceState extends State<StepPrice> {
     final price = _isFree ? null : double.tryParse(_priceCtrl.text.trim());
 
     if (!_isFree && price == null) {
-      setState(() => _error = 'Entre un prix valide');
+      setState(() => _error = AppLocalizations.of(context)!.eventErrorPriceInvalid);
       return;
     }
 
@@ -35,26 +36,27 @@ class _StepPriceState extends State<StepPrice> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Quel est le prix ?',
-              style: TextStyle(
+          Text(l.eventStepPriceTitle,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          const Text('Dernière étape avant de soumettre',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+          Text(l.eventStepPriceSubtitle,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
           const SizedBox(height: 32),
           Row(
             children: [
-              _toggle('Gratuit', _isFree,
+              _toggle(l.eventPriceFree, _isFree,
                   () => setState(() => _isFree = true)),
               const SizedBox(width: 12),
-              _toggle('Payant', !_isFree,
+              _toggle(l.eventTogglePaid, !_isFree,
                   () => setState(() => _isFree = false)),
             ],
           ),
@@ -66,7 +68,7 @@ class _StepPriceState extends State<StepPrice> {
                   const TextInputType.numberWithOptions(decimal: true),
               style: const TextStyle(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
-                labelText: 'Prix *',
+                labelText: l.eventLabelPriceRequired,
                 labelStyle:
                     const TextStyle(color: Color(0xFF5A4A6A), fontSize: 13),
                 suffixText: '€',
@@ -109,8 +111,8 @@ class _StepPriceState extends State<StepPrice> {
               child: _loading
                   ? const CircularProgressIndicator(
                       color: Colors.white, strokeWidth: 2)
-                  : const Text("Soumettre l'événement",
-                      style: TextStyle(
+                  : Text(l.eventBtnSubmit,
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),

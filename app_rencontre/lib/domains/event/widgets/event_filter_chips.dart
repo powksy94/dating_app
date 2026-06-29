@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 enum EventFilter { all, attending, matches, favorites }
 
@@ -14,6 +15,7 @@ class EventFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Container(
       color: const Color(0xFF120018),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -21,17 +23,17 @@ class EventFilterChips extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _chip('Tous', EventFilter.all, Icons.public),
+            _chip(l.eventFilterAll, EventFilter.all, Icons.public),
             const SizedBox(width: 8),
             _chip(
-              'Inscrits',
+              l.eventFilterAttending,
               EventFilter.attending,
               Icons.check_circle_outline,
             ),
             const SizedBox(width: 8),
-            _chip('Mes matchs', EventFilter.matches, Icons.people_outline),
+            _chip(l.eventFilterMatches, EventFilter.matches, Icons.people_outline),
             const SizedBox(width: 8),
-            _chip('Favoris', EventFilter.favorites, Icons.favorite_border),
+            _chip(l.eventFilterFavorites, EventFilter.favorites, Icons.favorite_border),
           ],
         ),
       ),

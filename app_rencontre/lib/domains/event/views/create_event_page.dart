@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/shared/widgets/common/step_progress_bar.dart';
 import 'package:nocturne/domains/event/views/steps/step_cover_info.dart';
@@ -68,9 +69,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
 
     if (err == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Événement soumis pour modération'),
-          backgroundColor: Color(0xFF7B00D4),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.eventSubmittedForModeration),
+          backgroundColor: const Color(0xFF7B00D4),
         ),
       );
       Navigator.pop(context);

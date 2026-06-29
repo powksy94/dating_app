@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/nominatim_service.dart';
 import 'package:nocturne/shared/widgets/location/address_search_field.dart';
 
@@ -16,7 +17,7 @@ class _StepLocationState extends State<StepLocation> {
 
   void _next() {
     if (_selected == null) {
-      setState(() => _error = 'Sélectionne une adresse dans la liste');
+      setState(() => _error = AppLocalizations.of(context)!.eventErrorAddressRequired);
       return;
     }
     widget.onNext({
@@ -29,19 +30,20 @@ class _StepLocationState extends State<StepLocation> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Où se déroule-t-il ?',
-              style: TextStyle(
+          Text(l.eventStepLocationTitle,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          const Text('Recherche l\'adresse du lieu',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+          Text(l.eventStepLocationSubtitle,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
           const SizedBox(height: 24),
           AddressSearchField(
             onSelected: (result) => setState(() => _selected = result),
@@ -63,8 +65,8 @@ class _StepLocationState extends State<StepLocation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: const Text('Continuer',
-                  style: TextStyle(
+              child: Text(l.eventBtnContinue,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),

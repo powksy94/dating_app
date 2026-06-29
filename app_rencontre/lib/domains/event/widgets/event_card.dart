@@ -1,4 +1,6 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/shared/utils/date_formatting.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/domains/profile/services/favorites_service.dart';
@@ -179,7 +181,9 @@ class _EventCardState extends State<EventCard> {
         ),
       ),
       child: Text(
-        _event.isFree ? 'Gratuit' : '${_event.price?.toStringAsFixed(0)} €',
+        _event.isFree
+            ? AppLocalizations.of(context)!.eventPriceFree
+            : '${_event.price?.toStringAsFixed(0)} €',
         style: TextStyle(
           color: _event.isFree
               ? const Color(0xFF2ECC71)
@@ -208,10 +212,7 @@ class _EventCardState extends State<EventCard> {
   }
 
   Widget _dateLocationRow() {
-    final d = _event.date;
-    final dateStr =
-        '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}'
-        ' · ${d.hour.toString().padLeft(2, '0')}h${d.minute.toString().padLeft(2, '0')}';
+    final dateStr = formatEventDateCompact(context, _event.date);
 
     return Row(
       children: [
@@ -262,7 +263,9 @@ class _EventCardState extends State<EventCard> {
                 child: CircularProgressIndicator(
                     strokeWidth: 2, color: Colors.white))
             : Text(
-                _event.isAttending ? 'Inscrit ✓' : "S'inscrire",
+                _event.isAttending
+                    ? AppLocalizations.of(context)!.eventBadgeRegistered
+                    : AppLocalizations.of(context)!.eventBtnRegister,
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
       ),

@@ -834,4 +834,233 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsBtnConfirm => 'Confirm';
+
+  @override
+  String eventDateAtTime(String date, String time) {
+    return '$date at $time';
+  }
+
+  @override
+  String get eventPageTitle => 'EVENTS';
+
+  @override
+  String get eventLabelMaxDistance => 'Max distance';
+
+  @override
+  String eventValueKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get eventLabelGenres => 'Genres';
+
+  @override
+  String get eventFilterAllGenres => 'All genres';
+
+  @override
+  String get eventFilterMyGenres => 'My genres';
+
+  @override
+  String get eventEmptyZone => 'No events in your area';
+
+  @override
+  String get eventEmptyCategory => 'No events in this category';
+
+  @override
+  String get eventSubmittedForModeration => 'Event submitted for moderation';
+
+  @override
+  String get eventUnregisterConfirmed => 'Unregistration confirmed';
+
+  @override
+  String get eventRegisterConfirmed => 'Registration confirmed!';
+
+  @override
+  String get eventSectionDescription => 'DESCRIPTION';
+
+  @override
+  String get eventSectionParticipants => 'PARTICIPANTS';
+
+  @override
+  String get eventBtnUnregisterLong => 'Registered ✓ — Unregister';
+
+  @override
+  String get eventPriceFree => 'Free';
+
+  @override
+  String get eventBadgeRegistered => 'Registered ✓';
+
+  @override
+  String get eventBtnRegister => 'Join';
+
+  @override
+  String eventAttendeeCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attendees',
+      one: '$count attendee',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventMutualOne(String name) {
+    return '$name is attending';
+  }
+
+  @override
+  String eventMutualTwo(String name1, String name2) {
+    return '$name1 and $name2 are attending';
+  }
+
+  @override
+  String eventMutualWithExtra(String names, int extra) {
+    String _temp0 = intl.Intl.pluralLogic(
+      extra,
+      locale: localeName,
+      other: '$extra others',
+      one: '1 other',
+    );
+    return '$names and $_temp0 are attending';
+  }
+
+  @override
+  String get eventErrorTitleDescRequired => 'Title and description required';
+
+  @override
+  String get eventStepCoverTitle => 'Present your event';
+
+  @override
+  String get eventStepCoverSubtitle => 'Photo, title and description';
+
+  @override
+  String get eventBtnAddCoverPhoto => 'Add a cover photo';
+
+  @override
+  String get eventLabelTitleRequired => 'Title *';
+
+  @override
+  String get eventLabelDescriptionRequired => 'Description *';
+
+  @override
+  String get eventBtnContinue => 'Continue';
+
+  @override
+  String get eventErrorDateRequired => 'Choose a date and time';
+
+  @override
+  String get eventStepDatetimeTitle => 'When is the event?';
+
+  @override
+  String get eventStepDatetimeSubtitle => 'Start date and time';
+
+  @override
+  String get eventBtnPickDateTime => 'Choose a date and time';
+
+  @override
+  String get eventErrorAddressRequired => 'Select an address from the list';
+
+  @override
+  String get eventStepLocationTitle => 'Where does it take place?';
+
+  @override
+  String get eventStepLocationSubtitle => 'Search for the venue\'s address';
+
+  @override
+  String get eventStepGenresTitle => 'Music genres';
+
+  @override
+  String get eventStepGenresSubtitle => 'Select the event\'s genres';
+
+  @override
+  String get eventErrorCapacityInvalid => 'Enter a valid capacity (min 1)';
+
+  @override
+  String get eventErrorCapacityMaxMin => 'The max must be greater than the min';
+
+  @override
+  String get eventStepCapacityTitle => 'How many spots?';
+
+  @override
+  String get eventStepCapacitySubtitle => 'Maximum capacity of the event';
+
+  @override
+  String get eventToggleExactNumber => 'Exact number';
+
+  @override
+  String get eventToggleRange => 'Range';
+
+  @override
+  String get eventLabelExactPlaces => 'Number of spots *';
+
+  @override
+  String get eventLabelMin => 'Min *';
+
+  @override
+  String get eventLabelMax => 'Max *';
+
+  @override
+  String get eventErrorPriceInvalid => 'Enter a valid price';
+
+  @override
+  String get eventStepPriceTitle => 'What\'s the price?';
+
+  @override
+  String get eventStepPriceSubtitle => 'Last step before submitting';
+
+  @override
+  String get eventTogglePaid => 'Paid';
+
+  @override
+  String get eventLabelPriceRequired => 'Price *';
+
+  @override
+  String get eventBtnSubmit => 'Submit the event';
+
+  @override
+  String get eventFilterAll => 'All';
+
+  @override
+  String get eventFilterAttending => 'Attending';
+
+  @override
+  String get eventFilterMatches => 'My matches';
+
+  @override
+  String get eventFilterFavorites => 'Favorites';
+
+  @override
+  String get eventSheetUnregisterTitle => 'Unregister from the event';
+
+  @override
+  String get eventSheetRegisterTitle => 'Confirm registration';
+
+  @override
+  String get eventBtnConfirmUnregister => 'Confirm unregistration';
+
+  @override
+  String get eventBtnConfirmRegister => 'I\'m in!';
+
+  @override
+  String get eventBtnCancel => 'Cancel';
+
+  @override
+  String get eventSectionInfo => 'INFO';
+
+  @override
+  String eventCapacityRange(int min, int max) {
+    return '$min–$max spots';
+  }
+
+  @override
+  String eventCapacityMin(int min) {
+    String _temp0 = intl.Intl.pluralLogic(
+      min,
+      locale: localeName,
+      other: '$min spots',
+      one: '1 spot',
+    );
+    return '$_temp0';
+  }
 }

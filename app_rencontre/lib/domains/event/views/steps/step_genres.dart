@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/core/music_tags.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class StepGenres extends StatefulWidget {
   final void Function(Map<String, dynamic>) onNext;
@@ -18,19 +19,20 @@ class _StepGenresState extends State<StepGenres> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Genres musicaux',
-              style: TextStyle(
+          Text(l.eventStepGenresTitle,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          const Text('Sélectionne les genres de l\'événement',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+          Text(l.eventStepGenresSubtitle,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
           const SizedBox(height: 24),
           Wrap(
             spacing: 8,
@@ -76,8 +78,8 @@ class _StepGenresState extends State<StepGenres> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: const Text('Continuer',
-                  style: TextStyle(
+              child: Text(l.eventBtnContinue,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),

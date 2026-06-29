@@ -1603,6 +1603,396 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get settingsBtnConfirm;
+
+  /// No description provided for @eventDateAtTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} at {time}'**
+  String eventDateAtTime(String date, String time);
+
+  /// No description provided for @eventPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVENTS'**
+  String get eventPageTitle;
+
+  /// No description provided for @eventLabelMaxDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Max distance'**
+  String get eventLabelMaxDistance;
+
+  /// No description provided for @eventValueKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String eventValueKm(int km);
+
+  /// No description provided for @eventLabelGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get eventLabelGenres;
+
+  /// No description provided for @eventFilterAllGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'All genres'**
+  String get eventFilterAllGenres;
+
+  /// No description provided for @eventFilterMyGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'My genres'**
+  String get eventFilterMyGenres;
+
+  /// No description provided for @eventEmptyZone.
+  ///
+  /// In en, this message translates to:
+  /// **'No events in your area'**
+  String get eventEmptyZone;
+
+  /// No description provided for @eventEmptyCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'No events in this category'**
+  String get eventEmptyCategory;
+
+  /// No description provided for @eventSubmittedForModeration.
+  ///
+  /// In en, this message translates to:
+  /// **'Event submitted for moderation'**
+  String get eventSubmittedForModeration;
+
+  /// No description provided for @eventUnregisterConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unregistration confirmed'**
+  String get eventUnregisterConfirmed;
+
+  /// No description provided for @eventRegisterConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration confirmed!'**
+  String get eventRegisterConfirmed;
+
+  /// No description provided for @eventSectionDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'DESCRIPTION'**
+  String get eventSectionDescription;
+
+  /// No description provided for @eventSectionParticipants.
+  ///
+  /// In en, this message translates to:
+  /// **'PARTICIPANTS'**
+  String get eventSectionParticipants;
+
+  /// No description provided for @eventBtnUnregisterLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered ✓ — Unregister'**
+  String get eventBtnUnregisterLong;
+
+  /// No description provided for @eventPriceFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get eventPriceFree;
+
+  /// No description provided for @eventBadgeRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered ✓'**
+  String get eventBadgeRegistered;
+
+  /// No description provided for @eventBtnRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get eventBtnRegister;
+
+  /// No description provided for @eventAttendeeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{count} attendee} other{{count} attendees}}'**
+  String eventAttendeeCount(int count);
+
+  /// No description provided for @eventMutualOne.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is attending'**
+  String eventMutualOne(String name);
+
+  /// No description provided for @eventMutualTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'{name1} and {name2} are attending'**
+  String eventMutualTwo(String name1, String name2);
+
+  /// No description provided for @eventMutualWithExtra.
+  ///
+  /// In en, this message translates to:
+  /// **'{names} and {extra, plural, =1{1 other} other{{extra} others}} are attending'**
+  String eventMutualWithExtra(String names, int extra);
+
+  /// No description provided for @eventErrorTitleDescRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Title and description required'**
+  String get eventErrorTitleDescRequired;
+
+  /// No description provided for @eventStepCoverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Present your event'**
+  String get eventStepCoverTitle;
+
+  /// No description provided for @eventStepCoverSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo, title and description'**
+  String get eventStepCoverSubtitle;
+
+  /// No description provided for @eventBtnAddCoverPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a cover photo'**
+  String get eventBtnAddCoverPhoto;
+
+  /// No description provided for @eventLabelTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Title *'**
+  String get eventLabelTitleRequired;
+
+  /// No description provided for @eventLabelDescriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Description *'**
+  String get eventLabelDescriptionRequired;
+
+  /// No description provided for @eventBtnContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get eventBtnContinue;
+
+  /// No description provided for @eventErrorDateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date and time'**
+  String get eventErrorDateRequired;
+
+  /// No description provided for @eventStepDatetimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'When is the event?'**
+  String get eventStepDatetimeTitle;
+
+  /// No description provided for @eventStepDatetimeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start date and time'**
+  String get eventStepDatetimeSubtitle;
+
+  /// No description provided for @eventBtnPickDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date and time'**
+  String get eventBtnPickDateTime;
+
+  /// No description provided for @eventErrorAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an address from the list'**
+  String get eventErrorAddressRequired;
+
+  /// No description provided for @eventStepLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where does it take place?'**
+  String get eventStepLocationTitle;
+
+  /// No description provided for @eventStepLocationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for the venue\'s address'**
+  String get eventStepLocationSubtitle;
+
+  /// No description provided for @eventStepGenresTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Music genres'**
+  String get eventStepGenresTitle;
+
+  /// No description provided for @eventStepGenresSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the event\'s genres'**
+  String get eventStepGenresSubtitle;
+
+  /// No description provided for @eventErrorCapacityInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid capacity (min 1)'**
+  String get eventErrorCapacityInvalid;
+
+  /// No description provided for @eventErrorCapacityMaxMin.
+  ///
+  /// In en, this message translates to:
+  /// **'The max must be greater than the min'**
+  String get eventErrorCapacityMaxMin;
+
+  /// No description provided for @eventStepCapacityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How many spots?'**
+  String get eventStepCapacityTitle;
+
+  /// No description provided for @eventStepCapacitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum capacity of the event'**
+  String get eventStepCapacitySubtitle;
+
+  /// No description provided for @eventToggleExactNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact number'**
+  String get eventToggleExactNumber;
+
+  /// No description provided for @eventToggleRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get eventToggleRange;
+
+  /// No description provided for @eventLabelExactPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of spots *'**
+  String get eventLabelExactPlaces;
+
+  /// No description provided for @eventLabelMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Min *'**
+  String get eventLabelMin;
+
+  /// No description provided for @eventLabelMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Max *'**
+  String get eventLabelMax;
+
+  /// No description provided for @eventErrorPriceInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid price'**
+  String get eventErrorPriceInvalid;
+
+  /// No description provided for @eventStepPriceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the price?'**
+  String get eventStepPriceTitle;
+
+  /// No description provided for @eventStepPriceSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Last step before submitting'**
+  String get eventStepPriceSubtitle;
+
+  /// No description provided for @eventTogglePaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get eventTogglePaid;
+
+  /// No description provided for @eventLabelPriceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Price *'**
+  String get eventLabelPriceRequired;
+
+  /// No description provided for @eventBtnSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit the event'**
+  String get eventBtnSubmit;
+
+  /// No description provided for @eventFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get eventFilterAll;
+
+  /// No description provided for @eventFilterAttending.
+  ///
+  /// In en, this message translates to:
+  /// **'Attending'**
+  String get eventFilterAttending;
+
+  /// No description provided for @eventFilterMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'My matches'**
+  String get eventFilterMatches;
+
+  /// No description provided for @eventFilterFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get eventFilterFavorites;
+
+  /// No description provided for @eventSheetUnregisterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unregister from the event'**
+  String get eventSheetUnregisterTitle;
+
+  /// No description provided for @eventSheetRegisterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm registration'**
+  String get eventSheetRegisterTitle;
+
+  /// No description provided for @eventBtnConfirmUnregister.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm unregistration'**
+  String get eventBtnConfirmUnregister;
+
+  /// No description provided for @eventBtnConfirmRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m in!'**
+  String get eventBtnConfirmRegister;
+
+  /// No description provided for @eventBtnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get eventBtnCancel;
+
+  /// No description provided for @eventSectionInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'INFO'**
+  String get eventSectionInfo;
+
+  /// No description provided for @eventCapacityRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{min}–{max} spots'**
+  String eventCapacityRange(int min, int max);
+
+  /// No description provided for @eventCapacityMin.
+  ///
+  /// In en, this message translates to:
+  /// **'{min, plural, =1{1 spot} other{{min} spots}}'**
+  String eventCapacityMin(int min);
 }
 
 class _AppLocalizationsDelegate

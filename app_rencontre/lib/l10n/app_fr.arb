@@ -292,5 +292,85 @@
     "settingsLabelCurrentPassword": "Mot de passe actuel",
     "settingsLabelNewPassword": "Nouveau mot de passe",
     "settingsLabelConfirmNewPassword": "Confirmer le nouveau",
-    "settingsBtnConfirm": "Confirmer"
+    "settingsBtnConfirm": "Confirmer",
+
+    "eventDateAtTime": "{date} à {time}",
+
+    "eventPageTitle": "ÉVÉNEMENTS",
+    "eventLabelMaxDistance": "Distance max",
+    "eventValueKm": "{km} km",
+    "eventLabelGenres": "Genres",
+    "eventFilterAllGenres": "Tous les genres",
+    "eventFilterMyGenres": "Mes genres",
+    "eventEmptyZone": "Aucun événement dans ta zone",
+    "eventEmptyCategory": "Aucun événement dans cette catégorie",
+
+    "eventSubmittedForModeration": "Événement soumis pour modération",
+
+    "eventUnregisterConfirmed": "Désinscription confirmée",
+    "eventRegisterConfirmed": "Inscription confirmée !",
+    "eventSectionDescription": "DESCRIPTION",
+    "eventSectionParticipants": "PARTICIPANTS",
+    "eventBtnUnregisterLong": "Inscrit ✓ — Se désinscrire",
+
+    "eventPriceFree": "Gratuit",
+    "eventBadgeRegistered": "Inscrit ✓",
+    "eventBtnRegister": "S'inscrire",
+
+    "eventAttendeeCount": "{count, plural, =1{{count} participant} other{{count} participants}}",
+    "eventMutualOne": "{name} participe",
+    "eventMutualTwo": "{name1} et {name2} participent",
+    "eventMutualWithExtra": "{names} et {extra, plural, =1{1 autre} other{{extra} autres}} participent",
+
+    "eventErrorTitleDescRequired": "Titre et description requis",
+    "eventStepCoverTitle": "Présente ton événement",
+    "eventStepCoverSubtitle": "Photo, titre et description",
+    "eventBtnAddCoverPhoto": "Ajouter une photo de couverture",
+    "eventLabelTitleRequired": "Titre *",
+    "eventLabelDescriptionRequired": "Description *",
+    "eventBtnContinue": "Continuer",
+
+    "eventErrorDateRequired": "Choisis une date et une heure",
+    "eventStepDatetimeTitle": "Quand a lieu l'événement ?",
+    "eventStepDatetimeSubtitle": "Date et heure de début",
+    "eventBtnPickDateTime": "Choisir une date et heure",
+
+    "eventErrorAddressRequired": "Sélectionne une adresse dans la liste",
+    "eventStepLocationTitle": "Où se déroule-t-il ?",
+    "eventStepLocationSubtitle": "Recherche l'adresse du lieu",
+
+    "eventStepGenresTitle": "Genres musicaux",
+    "eventStepGenresSubtitle": "Sélectionne les genres de l'événement",
+
+    "eventErrorCapacityInvalid": "Entre une capacité valide (min 1)",
+    "eventErrorCapacityMaxMin": "Le max doit être supérieur au min",
+    "eventStepCapacityTitle": "Combien de places ?",
+    "eventStepCapacitySubtitle": "Capacité maximale de l'événement",
+    "eventToggleExactNumber": "Nombre exact",
+    "eventToggleRange": "Tranche",
+    "eventLabelExactPlaces": "Nombre de places *",
+    "eventLabelMin": "Min *",
+    "eventLabelMax": "Max *",
+
+    "eventErrorPriceInvalid": "Entre un prix valide",
+    "eventStepPriceTitle": "Quel est le prix ?",
+    "eventStepPriceSubtitle": "Dernière étape avant de soumettre",
+    "eventTogglePaid": "Payant",
+    "eventLabelPriceRequired": "Prix *",
+    "eventBtnSubmit": "Soumettre l'événement",
+
+    "eventFilterAll": "Tous",
+    "eventFilterAttending": "Inscrits",
+    "eventFilterMatches": "Mes matchs",
+    "eventFilterFavorites": "Favoris",
+
+    "eventSheetUnregisterTitle": "Se désinscrire de l'événement",
+    "eventSheetRegisterTitle": "Confirmer l'inscription",
+    "eventBtnConfirmUnregister": "Confirmer la désinscription",
+    "eventBtnConfirmRegister": "Je participe !",
+    "eventBtnCancel": "Annuler",
+
+    "eventSectionInfo": "INFOS",
+    "eventCapacityRange": "{min}–{max} places",
+    "eventCapacityMin": "{min, plural, =1{1 place} other{{min} places}}"
 }

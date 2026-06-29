@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class StepCoverInfo extends StatefulWidget {
   final void Function(Map<String, dynamic>) onNext;
@@ -33,7 +34,7 @@ class _StepCoverInfoState extends State<StepCoverInfo> {
     final title = _titleCtrl.text.trim();
     final desc  = _descCtrl.text.trim();
     if (title.isEmpty || desc.isEmpty) {
-      setState(() => _error = 'Titre et description requis');
+      setState(() => _error = AppLocalizations.of(context)!.eventErrorTitleDescRequired);
       return;
     }
     widget.onNext({
@@ -45,19 +46,20 @@ class _StepCoverInfoState extends State<StepCoverInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Présente ton événement',
-              style: TextStyle(
+          Text(l.eventStepCoverTitle,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          const Text('Photo, titre et description',
-              style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+          Text(l.eventStepCoverSubtitle,
+              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
           const SizedBox(height: 24),
           GestureDetector(
             onTap: _pickCover,
@@ -74,14 +76,14 @@ class _StepCoverInfoState extends State<StepCoverInfo> {
                     : null,
               ),
               child: _coverPath == null
-                  ? const Column(
+                  ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.add_photo_alternate_outlined,
+                        const Icon(Icons.add_photo_alternate_outlined,
                             size: 36, color: Color(0xFF5A4A6A)),
-                        SizedBox(height: 8),
-                        Text('Ajouter une photo de couverture',
-                            style: TextStyle(
+                        const SizedBox(height: 8),
+                        Text(l.eventBtnAddCoverPhoto,
+                            style: const TextStyle(
                                 color: Color(0xFF5A4A6A), fontSize: 13)),
                       ],
                     )
@@ -89,9 +91,9 @@ class _StepCoverInfoState extends State<StepCoverInfo> {
             ),
           ),
           const SizedBox(height: 20),
-          _field(_titleCtrl, 'Titre *'),
+          _field(_titleCtrl, l.eventLabelTitleRequired),
           const SizedBox(height: 12),
-          _field(_descCtrl, 'Description *', maxLines: 4),
+          _field(_descCtrl, l.eventLabelDescriptionRequired, maxLines: 4),
           if (_error != null) ...[
             const SizedBox(height: 12),
             Text(_error!,
@@ -109,8 +111,8 @@ class _StepCoverInfoState extends State<StepCoverInfo> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: const Text('Continuer',
-                  style: TextStyle(
+              child: Text(l.eventBtnContinue,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),

@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/domains/profile/services/favorites_service.dart';
@@ -83,9 +84,9 @@ class _EventsPageState extends State<EventsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'ÉVÉNEMENTS',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.eventPageTitle,
+          style: const TextStyle(
               fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -122,6 +123,7 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   Widget _filterPanel() {
+    final l = AppLocalizations.of(context)!;
     return Container(
       color: const Color(0xFF1A0A1F),
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
@@ -131,9 +133,9 @@ class _EventsPageState extends State<EventsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Distance max',
-                  style: TextStyle(color: Colors.white, fontSize: 13)),
-              Text('${_maxDistance.round()} km',
+              Text(l.eventLabelMaxDistance,
+                  style: const TextStyle(color: Colors.white, fontSize: 13)),
+              Text(l.eventValueKm(_maxDistance.round()),
                   style: const TextStyle(
                       color: Color(0xFF7B00D4), fontSize: 13)),
             ],
@@ -149,15 +151,15 @@ class _EventsPageState extends State<EventsPage> {
             onChangeEnd: (_) => _loadEvents(),
           ),
           const SizedBox(height: 4),
-          const Text('Genres',
-              style: TextStyle(color: Colors.white, fontSize: 13)),
+          Text(l.eventLabelGenres,
+              style: const TextStyle(color: Colors.white, fontSize: 13)),
           const SizedBox(height: 8),
           Row(
             children: [
-              _genreToggle('Tous les genres', !_filterGenres,
+              _genreToggle(l.eventFilterAllGenres, !_filterGenres,
                   () { setState(() => _filterGenres = false); _loadEvents(); }),
               const SizedBox(width: 10),
-              _genreToggle('Mes genres', _filterGenres,
+              _genreToggle(l.eventFilterMyGenres, _filterGenres,
                   () { setState(() => _filterGenres = true); _loadEvents(); }),
             ],
           ),
@@ -200,8 +202,8 @@ class _EventsPageState extends State<EventsPage> {
             const SizedBox(height: 12),
             Text(
               _filter == EventFilter.all
-                  ? 'Aucun événement dans ta zone'
-                  : 'Aucun événement dans cette catégorie',
+                  ? AppLocalizations.of(context)!.eventEmptyZone
+                  : AppLocalizations.of(context)!.eventEmptyCategory,
               style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
             ),
           ],

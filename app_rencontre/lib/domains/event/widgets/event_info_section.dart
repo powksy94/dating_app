@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 import 'package:nocturne/shared/widgets/common/section_block.dart';
@@ -10,8 +11,9 @@ class EventInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SectionBlock(
-      title: 'INFOS',
+      title: l.eventSectionInfo,
       child: Column(
         children: [
           _row(Icons.calendar_today_outlined, formatEventDate(context, event.date)),
@@ -20,7 +22,7 @@ class EventInfoSection extends StatelessWidget {
           const SizedBox(height: 10),
           _row(
             Icons.confirmation_number_outlined,
-            event.isFree ? 'Gratuit' : '${event.price?.toStringAsFixed(0)} €',
+            event.isFree ? l.eventPriceFree : '${event.price?.toStringAsFixed(0)} €',
             color: event.isFree
                 ? const Color(0xFF2ECC71)
                 : const Color(0xFFD400FF),
@@ -29,8 +31,8 @@ class EventInfoSection extends StatelessWidget {
           _row(
             Icons.people_outline,
             event.capacityMax != null
-                ? '${event.capacityMin}–${event.capacityMax} places'
-                : '${event.capacityMin} places',
+                ? l.eventCapacityRange(event.capacityMin, event.capacityMax!)
+                : l.eventCapacityMin(event.capacityMin),
           ),
         ],
       ),

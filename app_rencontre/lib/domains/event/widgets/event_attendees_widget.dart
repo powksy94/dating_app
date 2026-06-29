@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 
 class EventAttendeesWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class EventAttendeesWidget extends StatelessWidget {
           const SizedBox(width: 8),
           Flexible(
             child: Text(
-              _mutualText(),
+              _mutualText(context),
               style: const TextStyle(
                 color: Color(0xFFAA9AB5),
                 fontSize: 12,
@@ -40,7 +41,7 @@ class EventAttendeesWidget extends StatelessWidget {
             size: 16, color: Color(0xFF5A4A6A)),
         const SizedBox(width: 6),
         Text(
-          '$attendeeCount participant${attendeeCount > 1 ? 's' : ''}',
+          AppLocalizations.of(context)!.eventAttendeeCount(attendeeCount),
           style: const TextStyle(
               color: Color(0xFF5A4A6A), fontSize: 12),
         ),
@@ -76,11 +77,16 @@ class EventAttendeesWidget extends StatelessWidget {
     );
   }
 
-  String _mutualText() {
+  String _mutualText(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final names = mutualAttendees.take(2).map((a) => a.username).toList();
     final extra = mutualAttendeesCount - names.length;
 
-    if (extra <= 0) return '${names.join(' et ')} participe${names.length > 1 ? 'nt' : ''}';
-    return '${names.join(', ')} et $extra autre${extra > 1 ? 's' : ''} participent';
+    if (extra <= 0) {
+      return names.length > 1
+          ? l.eventMutualTwo(names[0], names[1])
+          : l.eventMutualOne(names[0]);
+    }
+    return l.eventMutualWithExtra(names.join(', '), extra);
   }
 }

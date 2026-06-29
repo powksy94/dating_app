@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 
@@ -33,8 +34,8 @@ class RegisterSheet extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             event.isAttending
-                ? "Se désinscrire de l'événement"
-                : "Confirmer l'inscription",
+                ? AppLocalizations.of(context)!.eventSheetUnregisterTitle
+                : AppLocalizations.of(context)!.eventSheetRegisterTitle,
             style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -49,7 +50,9 @@ class RegisterSheet extends StatelessWidget {
           const SizedBox(height: 8),
           _row(
             Icons.confirmation_number_outlined,
-            event.isFree ? 'Gratuit' : '${event.price?.toStringAsFixed(0)} €',
+            event.isFree
+                ? AppLocalizations.of(context)!.eventPriceFree
+                : '${event.price?.toStringAsFixed(0)} €',
           ),
           const SizedBox(height: 28),
           SizedBox(
@@ -66,8 +69,8 @@ class RegisterSheet extends StatelessWidget {
               ),
               child: Text(
                 event.isAttending
-                    ? 'Confirmer la désinscription'
-                    : 'Je participe !',
+                    ? AppLocalizations.of(context)!.eventBtnConfirmUnregister
+                    : AppLocalizations.of(context)!.eventBtnConfirmRegister,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
@@ -80,8 +83,8 @@ class RegisterSheet extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler',
-                  style: TextStyle(color: Color(0xFF5A4A6A))),
+              child: Text(AppLocalizations.of(context)!.eventBtnCancel,
+                  style: const TextStyle(color: Color(0xFF5A4A6A))),
             ),
           ),
         ],

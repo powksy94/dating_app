@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/domains/event/widgets/event_attendees_widget.dart';
@@ -58,8 +59,8 @@ class _EventDetailPageState extends State<EventDetailPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(wasAttending
-              ? 'Désinscription confirmée'
-              : 'Inscription confirmée !'),
+              ? AppLocalizations.of(context)!.eventUnregisterConfirmed
+              : AppLocalizations.of(context)!.eventRegisterConfirmed),
           backgroundColor: const Color(0xFF7B00D4),
         ),
       );
@@ -93,7 +94,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   EventInfoSection(event: _event),
                   const SizedBox(height: 16),
                   SectionBlock(
-                    title: 'DESCRIPTION',
+                    title: AppLocalizations.of(context)!.eventSectionDescription,
                     child: Text(
                       _event.description,
                       style: const TextStyle(
@@ -102,7 +103,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   ),
                   const SizedBox(height: 16),
                   SectionBlock(
-                    title: 'PARTICIPANTS',
+                    title: AppLocalizations.of(context)!.eventSectionParticipants,
                     child: EventAttendeesWidget(
                       mutualAttendees:      _event.mutualAttendees,
                       mutualAttendeesCount: _event.mutualAttendeesCount,
@@ -163,7 +164,9 @@ class _EventDetailPageState extends State<EventDetailPage> {
             ),
           ),
           child: Text(
-            _event.isAttending ? 'Inscrit ✓ — Se désinscrire' : "S'inscrire",
+            _event.isAttending
+                ? AppLocalizations.of(context)!.eventBtnUnregisterLong
+                : AppLocalizations.of(context)!.eventBtnRegister,
             style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,
