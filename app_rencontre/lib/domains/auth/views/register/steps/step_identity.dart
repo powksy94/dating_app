@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/core/gender_options.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 import 'package:nocturne/domains/auth/widgets/username_field.dart';
@@ -23,25 +24,6 @@ class _StepIdentityState extends State<StepIdentity> {
     String? _pronounsCustom;
     String? _error;
     String? _usernameStatus;
-
-    List<ChipOption> _genders(AppLocalizations l) => [
-        ChipOption('male', l.authGenderMale),
-        ChipOption('female', l.authGenderFemale),
-        ChipOption('non_binary', l.authGenderNonBinary),
-        ChipOption('genderfluid', l.authGenderGenderfluid),
-        ChipOption('agender', l.authGenderAgender),
-        ChipOption('transmasculine', l.authGenderTransmasculine),
-        ChipOption('transfeminine', l.authGenderTransfeminine),
-        ChipOption('other', l.authOther),
-    ];
-
-    List<ChipOption> _pronounsList(AppLocalizations l) => [
-        ChipOption('he_him', l.authPronounHeHim),
-        ChipOption('she_her', l.authPronounSheHer),
-        ChipOption('they_them', l.authPronounTheyThem),
-        ChipOption('plural_neutral', l.authPronounPluralNeutral),
-        ChipOption('other', l.authOther),
-    ];
 
     @override
     void dispose() {
@@ -138,7 +120,7 @@ class _StepIdentityState extends State<StepIdentity> {
 
                         ChipSelector(
                             title: l.authLabelGender,
-                            options: _genders(l),
+                            options: genderOptions(l),
                             selected: _gender,
                             onSelected: (v) => setState(() => _gender = v),
                             onCustomChanged: (v) => _genderCustom = v,
@@ -148,7 +130,7 @@ class _StepIdentityState extends State<StepIdentity> {
 
                         ChipSelector(
                             title: l.authLabelPronouns,
-                            options: _pronounsList(l),
+                            options: pronounOptions(l),
                             selected: _pronouns,
                             onSelected: (v) => setState(() => _pronouns = v),
                             onCustomChanged: (v) => _pronounsCustom = v,

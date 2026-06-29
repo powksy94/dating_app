@@ -468,5 +468,79 @@
     "eventCapacityMin": "{min, plural, =1{1 spot} other{{min} spots}}",
     "@eventCapacityMin": {
         "placeholders": { "min": { "type": "int" } }
-    }
+    },
+
+    "profileSectionBio": "Bio",
+    "profileSectionMusicGenres": "Music genres",
+    "profileSectionVibe": "Vibe",
+    "profileSectionAesthetics": "Aesthetic & culture",
+    "profileSectionSoundIntensity": "Sound intensity",
+    "profileSectionEra": "Era / scene",
+    "profileSectionDiscovery": "Music discovery",
+    "profileSectionFavoriteBands": "Favorite artists",
+    "profileSectionUpcomingEvents": "Upcoming events",
+    "profileSectionLinks": "Links",
+    "profileSectionPhotos": "PHOTOS",
+    "profileBadgePremium": "PREMIUM",
+    "profileBtnUnlockPremium": "Unlock with Premium",
+
+    "profileEditTitle": "EDIT MY PROFILE",
+    "profileEditTabIdentity": "Identity",
+    "profileEditTabPhotos": "Photos",
+    "profileEditTabTags": "Tags",
+    "profileEditTabLocation": "Location",
+    "profileEditTabPreferences": "Preferences",
+
+    "profileMenuTitle": "MY SPACE",
+    "profileMenuLikesHistory": "Likes history",
+    "profileMenuVisitors": "Profile visitors",
+    "profileMenuMatches": "My matches",
+    "profileMenuSettings": "Settings",
+
+    "profileSnackIdentityUpdated": "Identity updated!",
+    "profileLabelUsername": "USERNAME",
+    "profileUsernameImmutableNote": "Username can't be edited here.",
+    "profileLabelBio": "BIO",
+    "profileHintBio": "Tell us about you, your music...",
+    "profileLabelGender": "Gender",
+    "profileLabelPronouns": "Pronouns",
+    "profileBtnSave": "Save",
+
+    "profileSnackMaxPhotos": "Maximum 6 photos",
+    "profileSnackPhotosUpdated": "Photos updated!",
+    "profilePhotoCount": "{total} / 6 photos",
+    "@profilePhotoCount": {
+        "placeholders": { "total": { "type": "int" } }
+    },
+    "profileBadgeNew": "New",
+    "profileBtnAddPhoto": "Add",
+
+    "profileSnackTagsUpdated": "Music tags updated!",
+    "profileSubtitleMusicGenres": "Your main sound identity",
+    "profileSectionMusicVibe": "Musical vibe",
+    "profileSubtitleMusicVibe": "What you feel while listening",
+    "profileSubtitleAesthetics": "Your scene, your lifestyle",
+    "profileSubtitleSoundIntensity": "The energy of your music",
+    "profileSubtitleEra": "Your generational nostalgia",
+    "profileSubtitleDiscovery": "Your listening habits",
+    "profileSectionFavoriteBandsCaps": "FAVORITE ARTISTS",
+    "profileHintBands": "Bauhaus, The Cure, Depeche Mode...",
+
+    "profileErrorSelectAddress": "Select an address",
+    "profileSnackLocationUpdated": "Location updated!",
+    "profileSectionLocation": "LOCATION",
+    "profileLocationDescription": "Used to find profiles and events near you.",
+
+    "profileSnackPreferencesUpdated": "Preferences updated!",
+    "profileLabelAgeRange": "AGE RANGE",
+    "profileAgeYears": "{age} years",
+    "@profileAgeYears": {
+        "placeholders": { "age": { "type": "int" } }
+    },
+    "profileLabelMaxDistance": "MAX DISTANCE",
+    "profileValueKm": "{km} km",
+    "@profileValueKm": {
+        "placeholders": { "km": { "type": "int" } }
+    },
+    "profileLabelGenderSought": "GENDER SOUGHT"
 }

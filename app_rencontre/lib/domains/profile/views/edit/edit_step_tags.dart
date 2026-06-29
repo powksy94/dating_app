@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/core/music_tags.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/shared/widgets/common/tag_section.dart';
@@ -62,9 +63,9 @@ class _EditStepTagsState extends State<EditStepTags> {
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Tags musicaux mis à jour !'),
-            backgroundColor: Color(0xFF7B00D4),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.profileSnackTagsUpdated),
+            backgroundColor: const Color(0xFF7B00D4),
           ),
         );
       }
@@ -75,6 +76,7 @@ class _EditStepTagsState extends State<EditStepTags> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
           20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
@@ -82,55 +84,55 @@ class _EditStepTagsState extends State<EditStepTags> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TagSection(
-            title: 'Genres musicaux',
-            subtitle: 'Ton identité sonore principale',
+            title: l.profileSectionMusicGenres,
+            subtitle: l.profileSubtitleMusicGenres,
             tags: kMusicGenres,
             selected: _genres,
             onToggle: (v, t) => _toggle(_genres, v, t),
           ),
           const SizedBox(height: 20),
           TagSection(
-            title: 'Ambiance musicale',
-            subtitle: 'Ce que tu ressens en écoutant',
+            title: l.profileSectionMusicVibe,
+            subtitle: l.profileSubtitleMusicVibe,
             tags: kMusicVibes,
             selected: _vibes,
             onToggle: (v, t) => _toggle(_vibes, v, t),
           ),
           const SizedBox(height: 20),
           TagSection(
-            title: 'Esthétique & culture',
-            subtitle: 'Ta scène, ton style de vie',
+            title: l.profileSectionAesthetics,
+            subtitle: l.profileSubtitleAesthetics,
             tags: kAesthetics,
             selected: _aesthetics,
             onToggle: (v, t) => _toggle(_aesthetics, v, t),
           ),
           const SizedBox(height: 20),
           TagSection(
-            title: 'Intensité sonore',
-            subtitle: "L'énergie de ta musique",
+            title: l.profileSectionSoundIntensity,
+            subtitle: l.profileSubtitleSoundIntensity,
             tags: kSoundIntensity,
             selected: _intensity,
             onToggle: (v, t) => _toggle(_intensity, v, t),
           ),
           const SizedBox(height: 20),
           TagSection(
-            title: 'Époque / scène',
-            subtitle: 'Ta nostalgie générationnelle',
+            title: l.profileSectionEra,
+            subtitle: l.profileSubtitleEra,
             tags: kMusicEras,
             selected: _eras,
             onToggle: (v, t) => _toggle(_eras, v, t),
           ),
           const SizedBox(height: 20),
           TagSection(
-            title: 'Découverte musicale',
-            subtitle: "Tes habitudes d'écoute",
+            title: l.profileSectionDiscovery,
+            subtitle: l.profileSubtitleDiscovery,
             tags: kDiscoveryFormats,
             selected: _discovery,
             onToggle: (v, t) => _toggle(_discovery, v, t),
           ),
           const SizedBox(height: 20),
-          const Text('ARTISTES FAVORIS',
-              style: TextStyle(
+          Text(l.profileSectionFavoriteBandsCaps,
+              style: const TextStyle(
                   color: Color(0xFF7B00D4),
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -140,7 +142,7 @@ class _EditStepTagsState extends State<EditStepTags> {
             controller: _bandsCtrl,
             style: const TextStyle(color: Colors.white, fontSize: 14),
             decoration: InputDecoration(
-              hintText: 'Bauhaus, The Cure, Depeche Mode...',
+              hintText: l.profileHintBands,
               hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
               filled: true,
               fillColor: const Color(0xFF1A0A1F),
@@ -169,8 +171,8 @@ class _EditStepTagsState extends State<EditStepTags> {
               child: _saving
                   ? const CircularProgressIndicator(
                       color: Colors.white, strokeWidth: 2)
-                  : const Text('Sauvegarder',
-                      style: TextStyle(
+                  : Text(l.profileBtnSave,
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),

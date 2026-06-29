@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/widgets/edit/edit_step_bar.dart';
 import 'package:nocturne/domains/profile/views/edit/edit_step_identity.dart';
@@ -19,8 +20,12 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   final _pageController = PageController();
   int _currentStep = 0;
 
-  static const _labels = [
-    'Identité', 'Photos', 'Tags', 'Lieu', 'Préférences',
+  List<String> _labels(AppLocalizations l) => [
+    l.profileEditTabIdentity,
+    l.profileEditTabPhotos,
+    l.profileEditTabTags,
+    l.profileEditTabLocation,
+    l.profileEditTabPreferences,
   ];
 
   void _goToStep(int index) {
@@ -40,14 +45,15 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xFF0D0010),
       appBar: AppBar(
         backgroundColor: const Color(0xFF0D0010),
         elevation: 0,
-        title: const Text(
-          'ÉDITER MON PROFIL',
-          style: TextStyle(
+        title: Text(
+          l.profileEditTitle,
+          style: const TextStyle(
               fontSize: 13,
               letterSpacing: 2,
               fontWeight: FontWeight.bold),
@@ -64,7 +70,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             ),
             child: EditStepBar(
               currentStep: _currentStep,
-              labels: _labels,
+              labels: _labels(l),
               onStepTap: _goToStep,
             ),
           ),

@@ -1,4 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:nocturne/core/gender_options.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 
@@ -16,11 +18,6 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
   late List<String> _genderPrefs;
   bool _saving = false;
 
-  static const _genders = [
-    'Homme', 'Femme', 'Non-binaire', 'Genderfluid',
-    'Agenre', 'Transmasculin', 'Transféminin', 'Tous',
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -29,10 +26,10 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
     _genderPrefs = List.from(widget.profile.genderPreferences);
   }
 
-  void _toggleGender(String g) => setState(() =>
-      _genderPrefs.contains(g)
-          ? _genderPrefs.remove(g)
-          : _genderPrefs.add(g));
+  void _toggleGender(String value) => setState(() =>
+      _genderPrefs.contains(value)
+          ? _genderPrefs.remove(value)
+          : _genderPrefs.add(value));
 
   Future<void> _save() async {
     setState(() => _saving = true);
@@ -45,9 +42,9 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Préférences mises à jour !'),
-            backgroundColor: Color(0xFF7B00D4),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.profileSnackPreferencesUpdated),
+            backgroundColor: const Color(0xFF7B00D4),
           ),
         );
       }
@@ -58,21 +55,22 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
           20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _label('TRANCHE D\'ÂGE'),
+          _label(l.profileLabelAgeRange),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${_ageRange.start.round()} ans',
+              Text(l.profileAgeYears(_ageRange.start.round()),
                   style: const TextStyle(
                       color: Color(0xFFAA9AB5), fontSize: 13)),
-              Text('${_ageRange.end.round()} ans',
+              Text(l.profileAgeYears(_ageRange.end.round()),
                   style: const TextStyle(
                       color: Color(0xFFAA9AB5), fontSize: 13)),
             ],
@@ -90,8 +88,8 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _label('DISTANCE MAX'),
-              Text('${_maxDistance.round()} km',
+              _label(l.profileLabelMaxDistance),
+              Text(l.profileValueKm(_maxDistance.round()),
                   style: const TextStyle(
                       color: Color(0xFF7B00D4), fontSize: 13)),
             ],
@@ -107,15 +105,15 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
             onChanged: (v) => setState(() => _maxDistance = v),
           ),
           const SizedBox(height: 24),
-          _label('GENRE RECHERCHÉ'),
+          _label(l.profileLabelGenderSought),
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: _genders.map((g) {
-              final selected = _genderPrefs.contains(g);
+            children: genderOptions(l, includeAll: true).map((opt) {
+              final selected = _genderPrefs.contains(opt.value);
               return GestureDetector(
-                onTap: () => _toggleGender(g),
+                onTap: () => _toggleGender(opt.value),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 14, vertical: 8),
@@ -130,7 +128,7 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
                           : const Color(0xFF3D2A4A),
                     ),
                   ),
-                  child: Text(g,
+                  child: Text(opt.label,
                       style: TextStyle(
                           color: selected
                               ? Colors.white
@@ -154,8 +152,8 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
               child: _saving
                   ? const CircularProgressIndicator(
                       color: Colors.white, strokeWidth: 2)
-                  : const Text('Sauvegarder',
-                      style: TextStyle(
+                  : Text(l.profileBtnSave,
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),

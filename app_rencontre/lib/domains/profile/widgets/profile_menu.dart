@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class ProfileMenu extends StatelessWidget {
   const ProfileMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Container(
       height: MediaQuery.of(context).size.height * 2 / 3,
       decoration: const BoxDecoration(
@@ -23,9 +25,9 @@ class ProfileMenu extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'MON ESPACE',
-            style: TextStyle(
+          Text(
+            l.profileMenuTitle,
+            style: const TextStyle(
               color: Color(0xFF7B00D4),
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -35,7 +37,7 @@ class ProfileMenu extends StatelessWidget {
           const SizedBox(height: 16),
           _MenuItem(
             icon: Icons.favorite_border,
-            label: 'Historique des likes',
+            label: l.profileMenuLikesHistory,
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/likes-history');
@@ -43,7 +45,7 @@ class ProfileMenu extends StatelessWidget {
           ),
           _MenuItem(
             icon: Icons.remove_red_eye_outlined,
-            label: 'Visiteurs de mon profil',
+            label: l.profileMenuVisitors,
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/visitors');
@@ -51,7 +53,7 @@ class ProfileMenu extends StatelessWidget {
           ),
           _MenuItem(
             icon: Icons.people_outline,
-            label: 'Mes matchs',
+            label: l.profileMenuMatches,
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/matches');
@@ -59,7 +61,7 @@ class ProfileMenu extends StatelessWidget {
           ),
           _MenuItem(
             icon: Icons.settings_outlined,
-            label: 'Paramètres',
+            label: l.profileMenuSettings,
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/settings');

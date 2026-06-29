@@ -1,6 +1,7 @@
 ﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
@@ -27,7 +28,7 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
   Future<void> _pickPhoto() async {
     if (_existingPhotos.length + _newPaths.length >= 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Maximum 6 photos')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.profileSnackMaxPhotos)),
       );
       return;
     }
@@ -57,9 +58,9 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
           _newPaths.clear();
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Photos mises à jour !'),
-            backgroundColor: Color(0xFF7B00D4),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.profileSnackPhotosUpdated),
+            backgroundColor: const Color(0xFF7B00D4),
           ),
         );
       }
@@ -70,6 +71,7 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final total = _existingPhotos.length + _newPaths.length;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
@@ -77,14 +79,14 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('PHOTOS',
-              style: TextStyle(
+          Text(l.profileSectionPhotos,
+              style: const TextStyle(
                   color: Color(0xFF7B00D4),
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2)),
           const SizedBox(height: 4),
-          Text('$total / 6 photos',
+          Text(l.profilePhotoCount(total),
               style: const TextStyle(
                   color: Color(0xFF5A4A6A), fontSize: 12)),
           const SizedBox(height: 16),
@@ -124,8 +126,8 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
               child: _saving
                   ? const CircularProgressIndicator(
                       color: Colors.white, strokeWidth: 2)
-                  : const Text('Sauvegarder',
-                      style: TextStyle(
+                  : Text(l.profileBtnSave,
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),
@@ -187,8 +189,8 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
               color: const Color(0xFF7B00D4),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Text('Nouveau',
-                style: TextStyle(
+            child: Text(AppLocalizations.of(context)!.profileBadgeNew,
+                style: const TextStyle(
                     color: Colors.white, fontSize: 9)),
           ),
         ),
@@ -205,14 +207,14 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
         border: Border.all(
             color: const Color(0xFF3D2A4A), style: BorderStyle.solid),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_photo_alternate_outlined,
+          const Icon(Icons.add_photo_alternate_outlined,
               size: 28, color: Color(0xFF5A4A6A)),
-          SizedBox(height: 4),
-          Text('Ajouter',
-              style: TextStyle(
+          const SizedBox(height: 4),
+          Text(AppLocalizations.of(context)!.profileBtnAddPhoto,
+              style: const TextStyle(
                   color: Color(0xFF5A4A6A), fontSize: 11)),
         ],
       ),

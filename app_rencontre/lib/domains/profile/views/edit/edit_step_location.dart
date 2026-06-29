@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/shared/services/nominatim_service.dart';
@@ -19,7 +20,7 @@ class _EditStepLocationState extends State<EditStepLocation> {
   Future<void> _save() async {
     if (_selected == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sélectionne une adresse')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.profileErrorSelectAddress)),
       );
       return;
     }
@@ -33,9 +34,9 @@ class _EditStepLocationState extends State<EditStepLocation> {
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Localisation mise à jour !'),
-            backgroundColor: Color(0xFF7B00D4),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.profileSnackLocationUpdated),
+            backgroundColor: const Color(0xFF7B00D4),
           ),
         );
       }
@@ -46,22 +47,23 @@ class _EditStepLocationState extends State<EditStepLocation> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
           20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('LOCALISATION',
-              style: TextStyle(
+          Text(l.profileSectionLocation,
+              style: const TextStyle(
                   color: Color(0xFF7B00D4),
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2)),
           const SizedBox(height: 4),
-          const Text(
-            'Utilisée pour trouver des profils et événements proches de toi.',
-            style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
+          Text(
+            l.profileLocationDescription,
+            style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
           ),
           const SizedBox(height: 20),
           AddressSearchField(
@@ -81,8 +83,8 @@ class _EditStepLocationState extends State<EditStepLocation> {
               child: _saving
                   ? const CircularProgressIndicator(
                       color: Colors.white, strokeWidth: 2)
-                  : const Text('Sauvegarder',
-                      style: TextStyle(
+                  : Text(l.profileBtnSave,
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),

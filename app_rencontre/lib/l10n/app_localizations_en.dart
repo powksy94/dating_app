@@ -1063,4 +1063,182 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get profileSectionBio => 'Bio';
+
+  @override
+  String get profileSectionMusicGenres => 'Music genres';
+
+  @override
+  String get profileSectionVibe => 'Vibe';
+
+  @override
+  String get profileSectionAesthetics => 'Aesthetic & culture';
+
+  @override
+  String get profileSectionSoundIntensity => 'Sound intensity';
+
+  @override
+  String get profileSectionEra => 'Era / scene';
+
+  @override
+  String get profileSectionDiscovery => 'Music discovery';
+
+  @override
+  String get profileSectionFavoriteBands => 'Favorite artists';
+
+  @override
+  String get profileSectionUpcomingEvents => 'Upcoming events';
+
+  @override
+  String get profileSectionLinks => 'Links';
+
+  @override
+  String get profileSectionPhotos => 'PHOTOS';
+
+  @override
+  String get profileBadgePremium => 'PREMIUM';
+
+  @override
+  String get profileBtnUnlockPremium => 'Unlock with Premium';
+
+  @override
+  String get profileEditTitle => 'EDIT MY PROFILE';
+
+  @override
+  String get profileEditTabIdentity => 'Identity';
+
+  @override
+  String get profileEditTabPhotos => 'Photos';
+
+  @override
+  String get profileEditTabTags => 'Tags';
+
+  @override
+  String get profileEditTabLocation => 'Location';
+
+  @override
+  String get profileEditTabPreferences => 'Preferences';
+
+  @override
+  String get profileMenuTitle => 'MY SPACE';
+
+  @override
+  String get profileMenuLikesHistory => 'Likes history';
+
+  @override
+  String get profileMenuVisitors => 'Profile visitors';
+
+  @override
+  String get profileMenuMatches => 'My matches';
+
+  @override
+  String get profileMenuSettings => 'Settings';
+
+  @override
+  String get profileSnackIdentityUpdated => 'Identity updated!';
+
+  @override
+  String get profileLabelUsername => 'USERNAME';
+
+  @override
+  String get profileUsernameImmutableNote => 'Username can\'t be edited here.';
+
+  @override
+  String get profileLabelBio => 'BIO';
+
+  @override
+  String get profileHintBio => 'Tell us about you, your music...';
+
+  @override
+  String get profileLabelGender => 'Gender';
+
+  @override
+  String get profileLabelPronouns => 'Pronouns';
+
+  @override
+  String get profileBtnSave => 'Save';
+
+  @override
+  String get profileSnackMaxPhotos => 'Maximum 6 photos';
+
+  @override
+  String get profileSnackPhotosUpdated => 'Photos updated!';
+
+  @override
+  String profilePhotoCount(int total) {
+    return '$total / 6 photos';
+  }
+
+  @override
+  String get profileBadgeNew => 'New';
+
+  @override
+  String get profileBtnAddPhoto => 'Add';
+
+  @override
+  String get profileSnackTagsUpdated => 'Music tags updated!';
+
+  @override
+  String get profileSubtitleMusicGenres => 'Your main sound identity';
+
+  @override
+  String get profileSectionMusicVibe => 'Musical vibe';
+
+  @override
+  String get profileSubtitleMusicVibe => 'What you feel while listening';
+
+  @override
+  String get profileSubtitleAesthetics => 'Your scene, your lifestyle';
+
+  @override
+  String get profileSubtitleSoundIntensity => 'The energy of your music';
+
+  @override
+  String get profileSubtitleEra => 'Your generational nostalgia';
+
+  @override
+  String get profileSubtitleDiscovery => 'Your listening habits';
+
+  @override
+  String get profileSectionFavoriteBandsCaps => 'FAVORITE ARTISTS';
+
+  @override
+  String get profileHintBands => 'Bauhaus, The Cure, Depeche Mode...';
+
+  @override
+  String get profileErrorSelectAddress => 'Select an address';
+
+  @override
+  String get profileSnackLocationUpdated => 'Location updated!';
+
+  @override
+  String get profileSectionLocation => 'LOCATION';
+
+  @override
+  String get profileLocationDescription =>
+      'Used to find profiles and events near you.';
+
+  @override
+  String get profileSnackPreferencesUpdated => 'Preferences updated!';
+
+  @override
+  String get profileLabelAgeRange => 'AGE RANGE';
+
+  @override
+  String profileAgeYears(int age) {
+    return '$age years';
+  }
+
+  @override
+  String get profileLabelMaxDistance => 'MAX DISTANCE';
+
+  @override
+  String profileValueKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get profileLabelGenderSought => 'GENDER SOUGHT';
 }

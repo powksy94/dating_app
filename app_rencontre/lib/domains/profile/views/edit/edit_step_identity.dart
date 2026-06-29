@@ -1,5 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:nocturne/core/gender_options.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
+import 'package:nocturne/domains/profile/widgets/profile_bio_field.dart';
+import 'package:nocturne/domains/profile/widgets/profile_locked_username.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/auth/widgets/chip_selector.dart';
 
@@ -16,24 +20,6 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
   String? _gender;
   String? _pronouns;
   bool _saving = false;
-
-  static const _genders = [
-    ChipOption('male', 'Homme'),
-    ChipOption('female', 'Femme'),
-    ChipOption('non_binary', 'Non-binaire'),
-    ChipOption('genderfluid', 'Genderfluid'),
-    ChipOption('agender', 'Agenre'),
-    ChipOption('transmasculine', 'Transmasculin'),
-    ChipOption('transfeminine', 'Transféminin'),
-    ChipOption('other', 'Autre'),
-  ];
-  static const _pronounsList = [
-    ChipOption('he_him', 'Il/lui'),
-    ChipOption('she_her', 'Elle/elle'),
-    ChipOption('they_them', 'Iel/iel'),
-    ChipOption('plural_neutral', 'Eux/eux'),
-    ChipOption('other', 'Autre'),
-  ];
 
   @override
   void initState() {
@@ -59,9 +45,9 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Identité mise à jour !'),
-            backgroundColor: Color(0xFF7B00D4),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.profileSnackIdentityUpdated),
+            backgroundColor: const Color(0xFF7B00D4),
           ),
         );
       }
@@ -72,81 +58,24 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
           20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _label('PSEUDO'),
+          _label(l.profileLabelUsername),
           const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1A0A1F),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF2D0040)),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.lock_outline,
-                    size: 14, color: Color(0xFF5A4A6A)),
-                const SizedBox(width: 8),
-                Text(widget.profile.username,
-                    style: const TextStyle(
-                        color: Color(0xFF5A4A6A), fontSize: 14)),
-              ],
-            ),
-          ),
-          const SizedBox(height: 4),
-          const Text('Le pseudo ne peut pas être modifié ici.',
-              style: TextStyle(color: Color(0xFF3D2A4A), fontSize: 11)),
+          ProfileLockedUsername(username: widget.profile.username),
           const SizedBox(height: 20),
-          _label('BIO'),
+          _label(l.profileLabelBio),
           const SizedBox(height: 6),
-          ValueListenableBuilder(
-            valueListenable: _bioCtrl,
-            builder: (_, val, __) => Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextField(
-                  controller: _bioCtrl,
-                  maxLines: 4,
-                  maxLength: 700,
-                  buildCounter: (_, {required currentLength,
-                      required isFocused, maxLength}) => null,
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
-                  decoration: InputDecoration(
-                    hintText: 'Parle de toi, de ta musique...',
-                    hintStyle:
-                        const TextStyle(color: Color(0xFF5A4A6A)),
-                    filled: true,
-                    fillColor: const Color(0xFF1A0A1F),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                            color: Color(0xFF3D2A4A))),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                            color: Color(0xFF3D2A4A))),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                            color: Color(0xFF7B00D4))),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text('${val.text.length}/700',
-                    style: const TextStyle(
-                        color: Color(0xFF5A4A6A), fontSize: 11)),
-              ],
-            ),
-          ),
+          ProfileBioField(controller: _bioCtrl),
           const SizedBox(height: 20),
           ChipSelector(
-            title: 'Genre',
-            options: _genders,
+            title: l.profileLabelGender,
+            options: genderOptions(l),
             selected: _gender,
             onSelected: (v) => setState(() => _gender = v),
             onCustomChanged: (_) {},
@@ -154,8 +83,8 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
           ),
           const SizedBox(height: 20),
           ChipSelector(
-            title: 'Pronoms',
-            options: _pronounsList,
+            title: l.profileLabelPronouns,
+            options: pronounOptions(l),
             selected: _pronouns,
             onSelected: (v) => setState(() => _pronouns = v),
             onCustomChanged: (_) {},
@@ -188,8 +117,8 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
       child: _saving
           ? const CircularProgressIndicator(
               color: Colors.white, strokeWidth: 2)
-          : const Text('Sauvegarder',
-              style: TextStyle(
+          : Text(AppLocalizations.of(context)!.profileBtnSave,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.bold)),

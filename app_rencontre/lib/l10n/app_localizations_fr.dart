@@ -1072,4 +1072,183 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get profileSectionBio => 'Bio';
+
+  @override
+  String get profileSectionMusicGenres => 'Genres musicaux';
+
+  @override
+  String get profileSectionVibe => 'Ambiance';
+
+  @override
+  String get profileSectionAesthetics => 'Esthétique & culture';
+
+  @override
+  String get profileSectionSoundIntensity => 'Intensité sonore';
+
+  @override
+  String get profileSectionEra => 'Époque / scène';
+
+  @override
+  String get profileSectionDiscovery => 'Découverte musicale';
+
+  @override
+  String get profileSectionFavoriteBands => 'Artistes favoris';
+
+  @override
+  String get profileSectionUpcomingEvents => 'Événements à venir';
+
+  @override
+  String get profileSectionLinks => 'Liens';
+
+  @override
+  String get profileSectionPhotos => 'PHOTOS';
+
+  @override
+  String get profileBadgePremium => 'PREMIUM';
+
+  @override
+  String get profileBtnUnlockPremium => 'Débloquer avec Premium';
+
+  @override
+  String get profileEditTitle => 'ÉDITER MON PROFIL';
+
+  @override
+  String get profileEditTabIdentity => 'Identité';
+
+  @override
+  String get profileEditTabPhotos => 'Photos';
+
+  @override
+  String get profileEditTabTags => 'Tags';
+
+  @override
+  String get profileEditTabLocation => 'Lieu';
+
+  @override
+  String get profileEditTabPreferences => 'Préférences';
+
+  @override
+  String get profileMenuTitle => 'MON ESPACE';
+
+  @override
+  String get profileMenuLikesHistory => 'Historique des likes';
+
+  @override
+  String get profileMenuVisitors => 'Visiteurs de mon profil';
+
+  @override
+  String get profileMenuMatches => 'Mes matchs';
+
+  @override
+  String get profileMenuSettings => 'Paramètres';
+
+  @override
+  String get profileSnackIdentityUpdated => 'Identité mise à jour !';
+
+  @override
+  String get profileLabelUsername => 'PSEUDO';
+
+  @override
+  String get profileUsernameImmutableNote =>
+      'Le pseudo ne peut pas être modifié ici.';
+
+  @override
+  String get profileLabelBio => 'BIO';
+
+  @override
+  String get profileHintBio => 'Parle de toi, de ta musique...';
+
+  @override
+  String get profileLabelGender => 'Genre';
+
+  @override
+  String get profileLabelPronouns => 'Pronoms';
+
+  @override
+  String get profileBtnSave => 'Sauvegarder';
+
+  @override
+  String get profileSnackMaxPhotos => 'Maximum 6 photos';
+
+  @override
+  String get profileSnackPhotosUpdated => 'Photos mises à jour !';
+
+  @override
+  String profilePhotoCount(int total) {
+    return '$total / 6 photos';
+  }
+
+  @override
+  String get profileBadgeNew => 'Nouveau';
+
+  @override
+  String get profileBtnAddPhoto => 'Ajouter';
+
+  @override
+  String get profileSnackTagsUpdated => 'Tags musicaux mis à jour !';
+
+  @override
+  String get profileSubtitleMusicGenres => 'Ton identité sonore principale';
+
+  @override
+  String get profileSectionMusicVibe => 'Ambiance musicale';
+
+  @override
+  String get profileSubtitleMusicVibe => 'Ce que tu ressens en écoutant';
+
+  @override
+  String get profileSubtitleAesthetics => 'Ta scène, ton style de vie';
+
+  @override
+  String get profileSubtitleSoundIntensity => 'L\'énergie de ta musique';
+
+  @override
+  String get profileSubtitleEra => 'Ta nostalgie générationnelle';
+
+  @override
+  String get profileSubtitleDiscovery => 'Tes habitudes d\'écoute';
+
+  @override
+  String get profileSectionFavoriteBandsCaps => 'ARTISTES FAVORIS';
+
+  @override
+  String get profileHintBands => 'Bauhaus, The Cure, Depeche Mode...';
+
+  @override
+  String get profileErrorSelectAddress => 'Sélectionne une adresse';
+
+  @override
+  String get profileSnackLocationUpdated => 'Localisation mise à jour !';
+
+  @override
+  String get profileSectionLocation => 'LOCALISATION';
+
+  @override
+  String get profileLocationDescription =>
+      'Utilisée pour trouver des profils et événements proches de toi.';
+
+  @override
+  String get profileSnackPreferencesUpdated => 'Préférences mises à jour !';
+
+  @override
+  String get profileLabelAgeRange => 'TRANCHE D\'ÂGE';
+
+  @override
+  String profileAgeYears(int age) {
+    return '$age ans';
+  }
+
+  @override
+  String get profileLabelMaxDistance => 'DISTANCE MAX';
+
+  @override
+  String profileValueKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get profileLabelGenderSought => 'GENRE RECHERCHÉ';
 }

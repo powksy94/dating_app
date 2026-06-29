@@ -1993,6 +1993,348 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{min, plural, =1{1 spot} other{{min} spots}}'**
   String eventCapacityMin(int min);
+
+  /// No description provided for @profileSectionBio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get profileSectionBio;
+
+  /// No description provided for @profileSectionMusicGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'Music genres'**
+  String get profileSectionMusicGenres;
+
+  /// No description provided for @profileSectionVibe.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibe'**
+  String get profileSectionVibe;
+
+  /// No description provided for @profileSectionAesthetics.
+  ///
+  /// In en, this message translates to:
+  /// **'Aesthetic & culture'**
+  String get profileSectionAesthetics;
+
+  /// No description provided for @profileSectionSoundIntensity.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound intensity'**
+  String get profileSectionSoundIntensity;
+
+  /// No description provided for @profileSectionEra.
+  ///
+  /// In en, this message translates to:
+  /// **'Era / scene'**
+  String get profileSectionEra;
+
+  /// No description provided for @profileSectionDiscovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Music discovery'**
+  String get profileSectionDiscovery;
+
+  /// No description provided for @profileSectionFavoriteBands.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite artists'**
+  String get profileSectionFavoriteBands;
+
+  /// No description provided for @profileSectionUpcomingEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming events'**
+  String get profileSectionUpcomingEvents;
+
+  /// No description provided for @profileSectionLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get profileSectionLinks;
+
+  /// No description provided for @profileSectionPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'PHOTOS'**
+  String get profileSectionPhotos;
+
+  /// No description provided for @profileBadgePremium.
+  ///
+  /// In en, this message translates to:
+  /// **'PREMIUM'**
+  String get profileBadgePremium;
+
+  /// No description provided for @profileBtnUnlockPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with Premium'**
+  String get profileBtnUnlockPremium;
+
+  /// No description provided for @profileEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EDIT MY PROFILE'**
+  String get profileEditTitle;
+
+  /// No description provided for @profileEditTabIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get profileEditTabIdentity;
+
+  /// No description provided for @profileEditTabPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get profileEditTabPhotos;
+
+  /// No description provided for @profileEditTabTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get profileEditTabTags;
+
+  /// No description provided for @profileEditTabLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get profileEditTabLocation;
+
+  /// No description provided for @profileEditTabPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get profileEditTabPreferences;
+
+  /// No description provided for @profileMenuTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MY SPACE'**
+  String get profileMenuTitle;
+
+  /// No description provided for @profileMenuLikesHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Likes history'**
+  String get profileMenuLikesHistory;
+
+  /// No description provided for @profileMenuVisitors.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile visitors'**
+  String get profileMenuVisitors;
+
+  /// No description provided for @profileMenuMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'My matches'**
+  String get profileMenuMatches;
+
+  /// No description provided for @profileMenuSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get profileMenuSettings;
+
+  /// No description provided for @profileSnackIdentityUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity updated!'**
+  String get profileSnackIdentityUpdated;
+
+  /// No description provided for @profileLabelUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'USERNAME'**
+  String get profileLabelUsername;
+
+  /// No description provided for @profileUsernameImmutableNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Username can\'t be edited here.'**
+  String get profileUsernameImmutableNote;
+
+  /// No description provided for @profileLabelBio.
+  ///
+  /// In en, this message translates to:
+  /// **'BIO'**
+  String get profileLabelBio;
+
+  /// No description provided for @profileHintBio.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about you, your music...'**
+  String get profileHintBio;
+
+  /// No description provided for @profileLabelGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get profileLabelGender;
+
+  /// No description provided for @profileLabelPronouns.
+  ///
+  /// In en, this message translates to:
+  /// **'Pronouns'**
+  String get profileLabelPronouns;
+
+  /// No description provided for @profileBtnSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get profileBtnSave;
+
+  /// No description provided for @profileSnackMaxPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum 6 photos'**
+  String get profileSnackMaxPhotos;
+
+  /// No description provided for @profileSnackPhotosUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos updated!'**
+  String get profileSnackPhotosUpdated;
+
+  /// No description provided for @profilePhotoCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{total} / 6 photos'**
+  String profilePhotoCount(int total);
+
+  /// No description provided for @profileBadgeNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get profileBadgeNew;
+
+  /// No description provided for @profileBtnAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get profileBtnAddPhoto;
+
+  /// No description provided for @profileSnackTagsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Music tags updated!'**
+  String get profileSnackTagsUpdated;
+
+  /// No description provided for @profileSubtitleMusicGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'Your main sound identity'**
+  String get profileSubtitleMusicGenres;
+
+  /// No description provided for @profileSectionMusicVibe.
+  ///
+  /// In en, this message translates to:
+  /// **'Musical vibe'**
+  String get profileSectionMusicVibe;
+
+  /// No description provided for @profileSubtitleMusicVibe.
+  ///
+  /// In en, this message translates to:
+  /// **'What you feel while listening'**
+  String get profileSubtitleMusicVibe;
+
+  /// No description provided for @profileSubtitleAesthetics.
+  ///
+  /// In en, this message translates to:
+  /// **'Your scene, your lifestyle'**
+  String get profileSubtitleAesthetics;
+
+  /// No description provided for @profileSubtitleSoundIntensity.
+  ///
+  /// In en, this message translates to:
+  /// **'The energy of your music'**
+  String get profileSubtitleSoundIntensity;
+
+  /// No description provided for @profileSubtitleEra.
+  ///
+  /// In en, this message translates to:
+  /// **'Your generational nostalgia'**
+  String get profileSubtitleEra;
+
+  /// No description provided for @profileSubtitleDiscovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Your listening habits'**
+  String get profileSubtitleDiscovery;
+
+  /// No description provided for @profileSectionFavoriteBandsCaps.
+  ///
+  /// In en, this message translates to:
+  /// **'FAVORITE ARTISTS'**
+  String get profileSectionFavoriteBandsCaps;
+
+  /// No description provided for @profileHintBands.
+  ///
+  /// In en, this message translates to:
+  /// **'Bauhaus, The Cure, Depeche Mode...'**
+  String get profileHintBands;
+
+  /// No description provided for @profileErrorSelectAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an address'**
+  String get profileErrorSelectAddress;
+
+  /// No description provided for @profileSnackLocationUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Location updated!'**
+  String get profileSnackLocationUpdated;
+
+  /// No description provided for @profileSectionLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'LOCATION'**
+  String get profileSectionLocation;
+
+  /// No description provided for @profileLocationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Used to find profiles and events near you.'**
+  String get profileLocationDescription;
+
+  /// No description provided for @profileSnackPreferencesUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences updated!'**
+  String get profileSnackPreferencesUpdated;
+
+  /// No description provided for @profileLabelAgeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'AGE RANGE'**
+  String get profileLabelAgeRange;
+
+  /// No description provided for @profileAgeYears.
+  ///
+  /// In en, this message translates to:
+  /// **'{age} years'**
+  String profileAgeYears(int age);
+
+  /// No description provided for @profileLabelMaxDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'MAX DISTANCE'**
+  String get profileLabelMaxDistance;
+
+  /// No description provided for @profileValueKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String profileValueKm(int km);
+
+  /// No description provided for @profileLabelGenderSought.
+  ///
+  /// In en, this message translates to:
+  /// **'GENDER SOUGHT'**
+  String get profileLabelGenderSought;
 }
 
 class _AppLocalizationsDelegate

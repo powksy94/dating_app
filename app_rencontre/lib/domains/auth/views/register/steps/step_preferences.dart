@@ -1,11 +1,11 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:nocturne/core/gender_options.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
-import 'package:nocturne/domains/auth/widgets/chip_selector.dart';
 import 'package:nocturne/domains/auth/views/register/registration_success_page.dart';
 
 class StepPreferences extends StatefulWidget {
@@ -23,17 +23,6 @@ class _StepPreferencesState extends State<StepPreferences> {
     final List<String> _genderPrefs = [];
     bool _loading = false;
     String? _error;
-
-    List<ChipOption> _genders(AppLocalizations l) => [
-        ChipOption('male', l.authGenderMale),
-        ChipOption('female', l.authGenderFemale),
-        ChipOption('non_binary', l.authGenderNonBinary),
-        ChipOption('genderfluid', l.authGenderGenderfluid),
-        ChipOption('agender', l.authGenderAgender),
-        ChipOption('transmasculine', l.authGenderTransmasculine),
-        ChipOption('transfeminine', l.authGenderTransfeminine),
-        ChipOption('all', l.authGenderAll),
-    ];
 
     void _toggleGender(String g) {
         setState(() => _genderPrefs.contains(g)
@@ -169,7 +158,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                         Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: _genders(l).map((opt) => FilterChip(
+                            children: genderOptions(l, includeAll: true).map((opt) => FilterChip(
                                 label: Text(opt.label),
                                 selected: _genderPrefs.contains(opt.value),
                                 onSelected: (_) => _toggleGender(opt.value),
