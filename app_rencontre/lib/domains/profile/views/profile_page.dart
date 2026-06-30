@@ -28,8 +28,15 @@ class _ProfilePageState extends State<ProfilePage> {
     if (mounted) setState(() => _photoLimit = SubscriptionService.photoLimit(plan));
   }
 
-  void _openPhotoViewer(int startIndex) {
+  List<String> get _allPhotos {
+    final url = widget.profile.avatarUrl;
     final photos = widget.profile.photos;
+    if (photos.isNotEmpty && photos.first == url) return photos;
+    return [if (url.isNotEmpty) url, ...photos];
+  }
+
+  void _openPhotoViewer(int startIndex) {
+    final photos = _allPhotos;
     if (photos.isEmpty) return;
     Navigator.push(
       context,
@@ -51,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final profile = widget.profile;
-    final allPhotos = profile.photos;
+    final allPhotos = _allPhotos;
 
     return Scaffold(
       appBar: AppBar(title: Text(profile.username)),
@@ -71,13 +78,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
               ProfileDetailsSection(profile: profile),
 
-              // Autres photos
+              // Autres photos (à partir de la 2e)
               if (allPhotos.length > 1) ...[
                 const SizedBox(height: 24),
                 ProfilePhotoGrid(
-                  photos: allPhotos,
-                  photoLimit: _photoLimit,
-                  onPhotoTap: _openPhotoViewer,
+                  photos: allPhotos.sublist(1),
+                  photoLimit: (_photoLimit - 1).clamp(0, allPhotos.length - 1),
+                  onPhotoTap: (i) => _openPhotoViewer(i + 1),
                   onLockedTap: () => Navigator.pushNamed(context, '/subscription'),
                 ),
               ],
