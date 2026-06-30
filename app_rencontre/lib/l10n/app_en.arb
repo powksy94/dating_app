@@ -205,6 +205,8 @@
     "discoveryBoostActivated": "Boost activated — your profile is being featured for 30 min!",
     "discoveryRewindTitle": "Rewind unavailable",
     "discoveryRewindBody": "Rewind is available from the Nocturne plan.",
+    "discoveryBoostTitle": "Boost unavailable",
+    "discoveryBoostBody": "Boost is available from the Nocturne plan (1/month) or Abyssal (1/week).",
     "discoverySwipeLimitTitle": "Swipe limit reached",
     "discoverySwipeLimitBody": "You've used your {count} swipes for today. Upgrade to Nocturne to swipe without limit.",
     "@discoverySwipeLimitBody": {
@@ -384,6 +386,11 @@
 
     "eventSubmittedForModeration": "Event submitted for moderation",
 
+    "eventLimitTitle": "Event limit reached",
+    "eventLimitBody": "You've used your {count} event registrations for this month. Upgrade to Nocturne for 4/month or Abyssal for unlimited.",
+    "@eventLimitBody": {
+        "placeholders": { "count": { "type": "int" } }
+    },
     "eventUnregisterConfirmed": "Unregistration confirmed",
     "eventRegisterConfirmed": "Registration confirmed!",
     "eventSectionDescription": "DESCRIPTION",

@@ -463,6 +463,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Boost activé — ton profil est mis en avant 30 min !';
 
   @override
+  String get discoveryRewindTitle => 'Rewind non disponible';
+
+  @override
+  String get discoveryRewindBody =>
+      'Le rewind est disponible à partir du plan Nocturne.';
+
+  @override
+  String get discoveryBoostTitle => 'Boost non disponible';
+
+  @override
+  String get discoveryBoostBody =>
+      'Le boost est disponible à partir du plan Nocturne (1/mois) ou Abyssal (1/semaine).';
+
+  @override
   String get discoverySwipeLimitTitle => 'Limite de swipes atteinte';
 
   @override
@@ -875,6 +889,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventSubmittedForModeration => 'Événement soumis pour modération';
+
+  @override
+  String get eventLimitTitle => 'Limite d\'événements atteinte';
+
+  @override
+  String eventLimitBody(int count) =>
+      'Tu as utilisé tes $count inscriptions aux événements ce mois-ci. Passe à Nocturne pour 4/mois ou Abyssal pour illimité.';
 
   @override
   String get eventUnregisterConfirmed => 'Désinscription confirmée';

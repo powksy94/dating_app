@@ -902,6 +902,30 @@ abstract class AppLocalizations {
   /// **'Boost activated — your profile is being featured for 30 min!'**
   String get discoveryBoostActivated;
 
+  /// No description provided for @discoveryRewindTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewind unavailable'**
+  String get discoveryRewindTitle;
+
+  /// No description provided for @discoveryRewindBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewind is available from the Nocturne plan.'**
+  String get discoveryRewindBody;
+
+  /// No description provided for @discoveryBoostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Boost unavailable'**
+  String get discoveryBoostTitle;
+
+  /// No description provided for @discoveryBoostBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Boost is available from the Nocturne plan (1/month) or Abyssal (1/week).'**
+  String get discoveryBoostBody;
+
   /// No description provided for @discoverySwipeLimitTitle.
   ///
   /// In en, this message translates to:
@@ -1663,6 +1687,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event submitted for moderation'**
   String get eventSubmittedForModeration;
+
+  /// No description provided for @eventLimitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Event limit reached'**
+  String get eventLimitTitle;
+
+  /// No description provided for @eventLimitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used your {count} event registrations for this month.'**
+  String eventLimitBody(int count);
 
   /// No description provided for @eventUnregisterConfirmed.
   ///

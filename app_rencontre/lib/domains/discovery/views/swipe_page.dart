@@ -4,11 +4,11 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_body.dart';
+import 'package:nocturne/domains/discovery/widgets/swipe_empty_state.dart';
+import 'package:nocturne/domains/discovery/widgets/swipe_overlays.dart';
 import 'package:nocturne/domains/discovery/services/swipe_service.dart';
 import 'package:nocturne/domains/subscription/services/boost_service.dart';
-import 'package:nocturne/domains/subscription/widgets/paywall_sheet.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
-import 'package:nocturne/domains/match/widgets/match_overlay.dart';
 
 class SwipePage extends StatefulWidget {
   final void Function(ChatMatch)? onNavigateToConversation;
@@ -21,19 +21,19 @@ class SwipePage extends StatefulWidget {
 
 class _SwipePageState extends State<SwipePage> {
   CardSwiperController _controller = CardSwiperController();
-  final _firestore  = FirestoreService();
+  final _firestore = FirestoreService();
 
   List<AlternativeProfile> _profiles = [];
-  bool _loading     = true;
+  bool _loading    = true;
   int  _currentIndex = 0;
-  bool _unlimited   = true;
-  int  _remaining   = 0;
-  int  _limit       = 30;
+  bool _unlimited  = true;
+  int  _remaining  = 0;
+  int  _limit      = 30;
   int  _boostCredits = 0;
-  bool _canRewind   = false;
-  CardSwiperDirection?   _lastSwipeDirection;
-  AlternativeProfile?    _lastSwipedProfile;
-  int  _swiperKey   = 0;
+  bool _canRewind  = false;
+  CardSwiperDirection?  _lastSwipeDirection;
+  AlternativeProfile?   _lastSwipedProfile;
+  int  _swiperKey  = 0;
 
   @override
   void initState() {
@@ -77,18 +77,17 @@ class _SwipePageState extends State<SwipePage> {
     if (prev == null) return;
     final profile = _profiles[prev];
     if (next != null) setState(() => _currentIndex = next);
-
     _lastSwipeDirection = dir;
     _lastSwipedProfile  = profile;
 
     if (dir == CardSwiperDirection.right) {
-      if (!_unlimited && _remaining <= 0) { _showPaywall(); return; }
+      if (!_unlimited && _remaining <= 0) { SwipeOverlays.showSwipePaywall(context, _limit); return; }
       final res = await SwipeService.like(profile.uid);
-      if (res['limitReached'] == true && mounted) { _showPaywall(); return; }
+      if (res['limitReached'] == true && mounted) { SwipeOverlays.showSwipePaywall(context, _limit); return; }
       if (!_unlimited) setState(() => _remaining = (_remaining - 1).clamp(0, _limit));
       setState(() => _canRewind = true);
       final matchId = res['matchId'] as String?;
-      if (matchId != null && mounted) _showMatch(profile, matchId);
+      if (matchId != null && mounted) SwipeOverlays.showMatch(context, profile, matchId, widget.onNavigateToConversation);
     } else {
       SwipeService.pass(profile.uid);
       setState(() => _canRewind = true);
@@ -99,17 +98,7 @@ class _SwipePageState extends State<SwipePage> {
     if (_lastSwipeDirection == CardSwiperDirection.right) {
       final result = await SwipeService.rewind();
       if (!mounted) return;
-      if (result.forbidden) {
-        final l = AppLocalizations.of(context)!;
-        PaywallSheet.show(
-          context,
-          title: l.discoveryRewindTitle,
-          description: l.discoveryRewindBody,
-          requiredPlan: 'nocturne',
-          icon: Icons.replay,
-        );
-        return;
-      }
+      if (result.forbidden) { SwipeOverlays.showRewindPaywall(context); return; }
       if (result.userId == null) return;
       if (!_unlimited) setState(() => _remaining = (_remaining + 1).clamp(0, _limit));
     }
@@ -127,6 +116,7 @@ class _SwipePageState extends State<SwipePage> {
   }
 
   Future<void> _onBoost() async {
+    if (_boostCredits <= 0) { SwipeOverlays.showBoostPaywall(context); return; }
     final res = await BoostService.useBoost();
     if (res != null && mounted) {
       setState(() => _boostCredits = res['remaining'] as int? ?? 0);
@@ -137,62 +127,28 @@ class _SwipePageState extends State<SwipePage> {
     }
   }
 
-  void _showPaywall() {
-    final l = AppLocalizations.of(context)!;
-    PaywallSheet.show(
-      context,
-      title: l.discoverySwipeLimitTitle,
-      description: l.discoverySwipeLimitBody(_limit),
-      requiredPlan: 'nocturne',
-      icon: Icons.swap_horiz,
-    );
-  }
-
-  void _showMatch(AlternativeProfile profile, String matchId) {
-    final match = ChatMatch(matchId: matchId, userId: profile.uid, username: profile.username, avatarUrl: profile.avatarUrl);
-    Navigator.push(context, PageRouteBuilder(
-      opaque: false,
-      pageBuilder: (_, __, ___) => MatchOverlay(
-        matchedProfile: profile, myAvatarUrl: null,
-        onMessage: () => widget.onNavigateToConversation?.call(match),
-      ),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.discoverySwipePageTitle)),
       body: _profiles.isEmpty
-          ? const _EmptyState()
+          ? const SwipeEmptyState()
           : SwipeBody(
-              key:                    ValueKey(_swiperKey),
-              profiles:               _profiles,
-              controller:             _controller,
-              onSwipe:                _onSwipe,
-              onRewind:               _onRewind,
-              onBoost:                _onBoost,
-              currentIndex:           _currentIndex,
-              unlimited:              _unlimited,
-              remaining:              _remaining,
-              limit:                  _limit,
-              boostCredits:           _boostCredits,
-              canRewind:              _canRewind,
+              key:                      ValueKey(_swiperKey),
+              profiles:                 _profiles,
+              controller:               _controller,
+              onSwipe:                  _onSwipe,
+              onRewind:                 _onRewind,
+              onBoost:                  _onBoost,
+              currentIndex:             _currentIndex,
+              unlimited:                _unlimited,
+              remaining:                _remaining,
+              limit:                    _limit,
+              boostCredits:             _boostCredits,
+              canRewind:                _canRewind,
               onNavigateToConversation: widget.onNavigateToConversation,
             ),
     );
   }
-}
-
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-  @override
-  Widget build(BuildContext context) => Center(
-    child: Column(mainAxisSize: MainAxisSize.min, children: [
-      const Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),
-      const SizedBox(height: 16),
-      Text(AppLocalizations.of(context)!.discoveryEmptyProfiles, style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 16)),
-    ]),
-  );
 }

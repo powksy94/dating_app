@@ -7,6 +7,7 @@ import 'package:nocturne/shared/widgets/common/section_block.dart';
 import 'package:nocturne/domains/event/widgets/event_cover_header.dart';
 import 'package:nocturne/domains/event/widgets/event_info_section.dart';
 import 'package:nocturne/domains/event/widgets/register_sheet.dart';
+import 'package:nocturne/domains/subscription/widgets/paywall_sheet.dart';
 
 class EventDetailPage extends StatefulWidget {
   final EventModel event;
@@ -25,7 +26,25 @@ class _EventDetailPageState extends State<EventDetailPage> {
     _event = widget.event;
   }
 
-  void _showRegisterSheet() {
+  Future<void> _showRegisterSheet() async {
+    if (!_event.isAttending) {
+      final status = await EventService.getStatus();
+      if (!mounted) return;
+      final unlimited = status['unlimited'] as bool? ?? true;
+      final remaining = status['remaining'] as int? ?? 0;
+      final limit     = status['limit']     as int? ?? 2;
+      if (!unlimited && remaining <= 0) {
+        final l = AppLocalizations.of(context)!;
+        PaywallSheet.show(context,
+          title: l.eventLimitTitle,
+          description: l.eventLimitBody(limit),
+          requiredPlan: 'nocturne',
+          icon: Icons.event,
+        );
+        return;
+      }
+    }
+    if (!mounted) return;
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF1A0A1F),

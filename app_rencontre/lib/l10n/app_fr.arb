@@ -156,6 +156,8 @@
     "discoveryEmptyProfiles": "Aucun profil dans les parages...",
     "discoveryBoostActivated": "Boost activé — ton profil est mis en avant 30 min !",
     "discoveryRewindTitle": "Rewind non disponible",
+    "discoveryBoostTitle": "Boost non disponible",
+    "discoveryBoostBody": "Le boost est disponible à partir du plan Nocturne (1/mois) ou Abyssal (1/semaine).",
     "discoveryRewindBody": "Le rewind est disponible à partir du plan Nocturne.",
     "discoverySwipeLimitTitle": "Limite de swipes atteinte",
     "discoverySwipeLimitBody": "Tu as utilisé tes {count} swipes du jour. Passe à Nocturne pour swiper sans limite.",
@@ -309,6 +311,11 @@
 
     "eventSubmittedForModeration": "Événement soumis pour modération",
 
+    "eventLimitTitle": "Limite d'événements atteinte",
+    "eventLimitBody": "Tu as utilisé tes {count} inscriptions aux événements ce mois-ci. Passe à Nocturne pour 4/mois ou Abyssal pour illimité.",
+    "@eventLimitBody": {
+        "placeholders": { "count": { "type": "int" } }
+    },
     "eventUnregisterConfirmed": "Désinscription confirmée",
     "eventRegisterConfirmed": "Inscription confirmée !",
     "eventSectionDescription": "DESCRIPTION",
