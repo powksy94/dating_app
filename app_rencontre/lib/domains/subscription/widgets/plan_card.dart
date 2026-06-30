@@ -32,7 +32,7 @@ class PlanCard extends StatelessWidget {
                       )]
                     : [],
             ),
-            child: Padding(
+            child: SingleChildScrollView(
                 padding: const EdgeInsets.all(28),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,14 +112,8 @@ class PlanCard extends StatelessWidget {
                         const SizedBox(height: 20),
                         const Divider(color: Color(0xFF3D2A4A)),
                         const SizedBox(height: 12),
-                        Expanded(
-                            child: ListView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: plan.features
-                                .map((f) => _FeatureRow(feature: f, accentColor: plan.accentColor))
-                                .toList(),
-                            ),
-                        ),
+                        ...plan.features
+                            .map((f) => _FeatureRow(feature: f, accentColor: plan.accentColor)),
                     ],
                 ),
             ),
@@ -141,7 +135,7 @@ class _FeatureRow extends StatelessWidget {
                     Icon(
                         feature.included ? Icons.check_circle : Icons.cancel_outlined,
                         size: 18,
-                        color: feature.included ? accentColor : const Color(0xFF3D2A4A),
+                        color: feature.included ? accentColor : const Color(0xFF7A6A8A),
                     ),
                     const SizedBox(width: 10),
                     Text(
@@ -149,7 +143,7 @@ class _FeatureRow extends StatelessWidget {
                         style: TextStyle(
                             color: feature.included
                                 ? const Color(0xFFE8E0EE)
-                                : const Color(0xFF5A4A6A),
+                                : const Color(0xFF9A8AAA),
                             fontSize: 14,
                         ),
                     ),
