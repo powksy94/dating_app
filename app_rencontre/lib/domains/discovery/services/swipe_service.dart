@@ -44,8 +44,8 @@ class SwipeService {
         } catch (_) {}
     }
 
-    /// Annule le dernier like. Retourne le userId rewind ou null si erreur/plan insuffisant.
-    static Future<String?> rewind() async {
+    /// Annule le dernier like. [forbidden] = true si le plan est insuffisant (403).
+    static Future<({String? userId, bool forbidden})> rewind() async {
         try {
             final headers = await ApiService.authHeaders();
             final res = await http.delete(
@@ -53,10 +53,12 @@ class SwipeService {
                 headers: headers,
             );
             if (res.statusCode == 200) {
-                return jsonDecode(res.body)['rewindedUserId'] as String?;
+                final id = jsonDecode(res.body)['rewindedUserId'] as String?;
+                return (userId: id, forbidden: false);
             }
+            if (res.statusCode == 403) return (userId: null, forbidden: true);
         } catch (_) {}
-        return null;
+        return (userId: null, forbidden: false);
     }
 
     /// Retourne les profils qui ont liké l'utilisateur courant (Nocturne/Abyssal).

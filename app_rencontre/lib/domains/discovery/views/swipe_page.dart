@@ -89,9 +89,24 @@ class _SwipePageState extends State<SwipePage> {
   }
 
   Future<void> _onRewind() async {
-    final id = await SwipeService.rewind();
-    if (id != null && mounted) {
-      setState(() { _canRewind = false; if (!_unlimited) _remaining = (_remaining + 1).clamp(0, _limit); });
+    final result = await SwipeService.rewind();
+    if (!mounted) return;
+    if (result.forbidden) {
+      final l = AppLocalizations.of(context)!;
+      PaywallSheet.show(
+        context,
+        title: l.discoveryRewindTitle,
+        description: l.discoveryRewindBody,
+        requiredPlan: 'nocturne',
+        icon: Icons.replay,
+      );
+      return;
+    }
+    if (result.userId != null) {
+      setState(() {
+        _canRewind = false;
+        if (!_unlimited) _remaining = (_remaining + 1).clamp(0, _limit);
+      });
       _loadProfiles();
     }
   }

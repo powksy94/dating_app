@@ -155,6 +155,8 @@
     "discoverySwipePageTitle": "NOCTURNE",
     "discoveryEmptyProfiles": "Aucun profil dans les parages...",
     "discoveryBoostActivated": "Boost activé — ton profil est mis en avant 30 min !",
+    "discoveryRewindTitle": "Rewind non disponible",
+    "discoveryRewindBody": "Le rewind est disponible à partir du plan Nocturne.",
     "discoverySwipeLimitTitle": "Limite de swipes atteinte",
     "discoverySwipeLimitBody": "Tu as utilisé tes {count} swipes du jour. Passe à Nocturne pour swiper sans limite.",
     "discoverySwipeCounter": "{remaining} / {limit} swipes aujourd'hui",
