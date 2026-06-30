@@ -8,7 +8,8 @@ import 'package:nocturne/shared/widgets/common/section_block.dart';
 
 class ProfileDetailsSection extends StatelessWidget {
   final AlternativeProfile profile;
-  const ProfileDetailsSection({super.key, required this.profile});
+  final bool showBio;
+  const ProfileDetailsSection({super.key, required this.profile, this.showBio = true});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,13 @@ class ProfileDetailsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionBlock(
-          title: l.profileSectionBio,
-          child: Text(profile.bio,
-              style: const TextStyle(
-                  color: Color(0xFFAA9AB5), fontSize: 16)),
-        ),
+        if (showBio)
+          SectionBlock(
+            title: l.profileSectionBio,
+            child: Text(profile.bio,
+                style: const TextStyle(
+                    color: Color(0xFFAA9AB5), fontSize: 16)),
+          ),
 
         if (profile.musicGenres.isNotEmpty) ...[
           const SizedBox(height: 16),
