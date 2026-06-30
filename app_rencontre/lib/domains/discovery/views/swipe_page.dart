@@ -20,7 +20,7 @@ class SwipePage extends StatefulWidget {
 }
 
 class _SwipePageState extends State<SwipePage> {
-  final _controller = CardSwiperController();
+  CardSwiperController _controller = CardSwiperController();
   final _firestore  = FirestoreService();
 
   List<AlternativeProfile> _profiles = [];
@@ -115,6 +115,7 @@ class _SwipePageState extends State<SwipePage> {
     }
     final rewound = _lastSwipedProfile;
     if (rewound == null) return;
+    _controller = CardSwiperController();
     setState(() {
       _profiles = [rewound, ..._profiles.sublist(_currentIndex)];
       _currentIndex = 0;
