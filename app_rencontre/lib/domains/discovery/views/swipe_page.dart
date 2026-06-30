@@ -31,6 +31,9 @@ class _SwipePageState extends State<SwipePage> {
   int  _limit       = 30;
   int  _boostCredits = 0;
   bool _canRewind   = false;
+  CardSwiperDirection?   _lastSwipeDirection;
+  AlternativeProfile?    _lastSwipedProfile;
+  int  _swiperKey   = 0;
 
   @override
   void initState() {
@@ -75,6 +78,9 @@ class _SwipePageState extends State<SwipePage> {
     final profile = _profiles[prev];
     if (next != null) setState(() => _currentIndex = next);
 
+    _lastSwipeDirection = dir;
+    _lastSwipedProfile  = profile;
+
     if (dir == CardSwiperDirection.right) {
       if (!_unlimited && _remaining <= 0) { _showPaywall(); return; }
       final res = await SwipeService.like(profile.uid);
@@ -85,30 +91,38 @@ class _SwipePageState extends State<SwipePage> {
       if (matchId != null && mounted) _showMatch(profile, matchId);
     } else {
       SwipeService.pass(profile.uid);
+      setState(() => _canRewind = true);
     }
   }
 
   Future<void> _onRewind() async {
-    final result = await SwipeService.rewind();
-    if (!mounted) return;
-    if (result.forbidden) {
-      final l = AppLocalizations.of(context)!;
-      PaywallSheet.show(
-        context,
-        title: l.discoveryRewindTitle,
-        description: l.discoveryRewindBody,
-        requiredPlan: 'nocturne',
-        icon: Icons.replay,
-      );
-      return;
+    if (_lastSwipeDirection == CardSwiperDirection.right) {
+      final result = await SwipeService.rewind();
+      if (!mounted) return;
+      if (result.forbidden) {
+        final l = AppLocalizations.of(context)!;
+        PaywallSheet.show(
+          context,
+          title: l.discoveryRewindTitle,
+          description: l.discoveryRewindBody,
+          requiredPlan: 'nocturne',
+          icon: Icons.replay,
+        );
+        return;
+      }
+      if (result.userId == null) return;
+      if (!_unlimited) setState(() => _remaining = (_remaining + 1).clamp(0, _limit));
     }
-    if (result.userId != null) {
-      setState(() {
-        _canRewind = false;
-        if (!_unlimited) _remaining = (_remaining + 1).clamp(0, _limit);
-      });
-      _loadProfiles();
-    }
+    final rewound = _lastSwipedProfile;
+    if (rewound == null) return;
+    setState(() {
+      _profiles = [rewound, ..._profiles.sublist(_currentIndex)];
+      _currentIndex = 0;
+      _canRewind = false;
+      _lastSwipeDirection = null;
+      _lastSwipedProfile  = null;
+      _swiperKey++;
+    });
   }
 
   Future<void> _onBoost() async {
@@ -152,6 +166,7 @@ class _SwipePageState extends State<SwipePage> {
       body: _profiles.isEmpty
           ? const _EmptyState()
           : SwipeBody(
+              key:                    ValueKey(_swiperKey),
               profiles:               _profiles,
               controller:             _controller,
               onSwipe:                _onSwipe,
