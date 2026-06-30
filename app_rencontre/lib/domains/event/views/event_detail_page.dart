@@ -7,6 +7,7 @@ import 'package:nocturne/shared/widgets/common/section_block.dart';
 import 'package:nocturne/domains/event/widgets/event_cover_header.dart';
 import 'package:nocturne/domains/event/widgets/event_info_section.dart';
 import 'package:nocturne/domains/event/widgets/register_sheet.dart';
+import 'package:nocturne/domains/event/widgets/event_payment_sheet.dart';
 import 'package:nocturne/domains/subscription/widgets/paywall_sheet.dart';
 
 class EventDetailPage extends StatefulWidget {
@@ -51,10 +52,9 @@ class _EventDetailPageState extends State<EventDetailPage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => RegisterSheet(
-        event: _event,
-        onConfirm: _handleRegister,
-      ),
+      builder: (_) => !_event.isAttending && !_event.isFree
+          ? EventPaymentSheet(event: _event, onConfirm: _handleRegister)
+          : RegisterSheet(event: _event, onConfirm: _handleRegister),
     );
   }
 

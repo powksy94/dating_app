@@ -377,6 +377,12 @@
     "eventSheetRegisterTitle": "Confirmer l'inscription",
     "eventBtnConfirmUnregister": "Confirmer la désinscription",
     "eventBtnConfirmRegister": "Je participe !",
+    "eventPaymentSheetTitle": "Confirmer ton billet",
+    "eventPaymentBtn": "Payer {amount} €",
+    "@eventPaymentBtn": {
+        "placeholders": { "amount": { "type": "String" } }
+    },
+    "eventPaymentTestNotice": "Mode test — aucun paiement réel",
     "eventBtnCancel": "Annuler",
 
     "eventSectionInfo": "INFOS",

@@ -467,6 +467,12 @@
     "eventSheetRegisterTitle": "Confirm registration",
     "eventBtnConfirmUnregister": "Confirm unregistration",
     "eventBtnConfirmRegister": "I'm in!",
+    "eventPaymentSheetTitle": "Confirm your ticket",
+    "eventPaymentBtn": "Pay {amount} €",
+    "@eventPaymentBtn": {
+        "placeholders": { "amount": { "type": "String" } }
+    },
+    "eventPaymentTestNotice": "Test mode — no real payment",
     "eventBtnCancel": "Cancel",
 
     "eventSectionInfo": "INFO",

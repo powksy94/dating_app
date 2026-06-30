@@ -894,8 +894,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventLimitTitle => 'Limite d\'événements atteinte';
 
   @override
-  String eventLimitBody(int count) =>
-      'Tu as utilisé tes $count inscriptions aux événements ce mois-ci. Passe à Nocturne pour 4/mois ou Abyssal pour illimité.';
+  String eventLimitBody(int count) {
+    return 'Tu as utilisé tes $count inscriptions aux événements ce mois-ci. Passe à Nocturne pour 4/mois ou Abyssal pour illimité.';
+  }
 
   @override
   String get eventUnregisterConfirmed => 'Désinscription confirmée';
@@ -1071,6 +1072,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventBtnConfirmRegister => 'Je participe !';
+
+  @override
+  String get eventPaymentSheetTitle => 'Confirmer ton billet';
+
+  @override
+  String eventPaymentBtn(String amount) {
+    return 'Payer $amount €';
+  }
+
+  @override
+  String get eventPaymentTestNotice => 'Mode test — aucun paiement réel';
 
   @override
   String get eventBtnCancel => 'Annuler';

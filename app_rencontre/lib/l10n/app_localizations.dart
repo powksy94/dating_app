@@ -1697,7 +1697,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventLimitBody.
   ///
   /// In en, this message translates to:
-  /// **'You\'ve used your {count} event registrations for this month.'**
+  /// **'You\'ve used your {count} event registrations for this month. Upgrade to Nocturne for 4/month or Abyssal for unlimited.'**
   String eventLimitBody(int count);
 
   /// No description provided for @eventUnregisterConfirmed.
@@ -2005,6 +2005,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I\'m in!'**
   String get eventBtnConfirmRegister;
+
+  /// No description provided for @eventPaymentSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your ticket'**
+  String get eventPaymentSheetTitle;
+
+  /// No description provided for @eventPaymentBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} €'**
+  String eventPaymentBtn(String amount);
+
+  /// No description provided for @eventPaymentTestNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Test mode — no real payment'**
+  String get eventPaymentTestNotice;
 
   /// No description provided for @eventBtnCancel.
   ///

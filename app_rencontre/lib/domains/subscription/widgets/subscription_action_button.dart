@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_dialogs.dart';
+import 'package:nocturne/shared/services/revenue_cat_service.dart';
 
 class SubscriptionActionButton extends StatefulWidget {
   final SubscriptionPlan plan;
@@ -53,18 +55,32 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
   }
 
   Future<void> _subscribe() async {
-    final l = AppLocalizations.of(context)!;
-    final ok = await SubscriptionDialogs.confirmSubscribe(context, widget.plan, widget.period);
-    if (!ok || !mounted) return;
-
     setState(() => _loading = true);
-    final success = await SubscriptionService.subscribe(
-      widget.plan.id,
-      widget.period.name,
-    );
+
+    CustomerInfo? info;
+    try {
+      info = await RevenueCatService.purchase(widget.plan.id, widget.period.name);
+    } on PurchasesError catch (_) {
+      if (mounted) {
+        _showSnack(AppLocalizations.of(context)!.subscriptionSnackError, const Color(0xFF7F1D1D));
+      }
+      setState(() => _loading = false);
+      return;
+    }
+
+    if (!mounted) return;
+    if (info == null) {
+      // Annulé par l'utilisateur — pas de message
+      setState(() => _loading = false);
+      return;
+    }
+
+    // Achat validé par le store → sync backend
+    final success = await SubscriptionService.subscribe(widget.plan.id, widget.period.name);
     if (!mounted) return;
     setState(() => _loading = false);
 
+    final l = AppLocalizations.of(context)!;
     if (success) widget.onSubscribed(widget.plan.id, widget.period);
     _showSnack(
       success ? l.subscriptionSnackSubscribed(widget.plan.name) : l.subscriptionSnackError,
