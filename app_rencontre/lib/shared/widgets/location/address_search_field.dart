@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:nocturne/shared/services/nominatim_service.dart';
 
 class AddressSearchField extends StatefulWidget {
@@ -15,17 +16,31 @@ class _AddressSearchFieldState extends State<AddressSearchField> {
   List<NominatimResult> _suggestions  = [];
   bool                  _searching    = false;
   NominatimResult?      _selected;
+  Timer?                _debounce;
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _ctrl.dispose();
     super.dispose();
+  }
+
+  void _onChanged(String query) {
+    setState(() => _selected = null);
+    _debounce?.cancel();
+    if (query.trim().length < 3) {
+      setState(() => _suggestions = []);
+      return;
+    }
+    _debounce = Timer(const Duration(milliseconds: 500), () => _search(query));
   }
 
   Future<void> _search(String query) async {
     setState(() => _searching = true);
     final results = await NominatimService.search(query);
-    if (mounted) setState(() { _suggestions = results; _searching = false; });
+    // Ignore une réponse arrivée en retard si le texte a changé depuis.
+    if (!mounted || query != _ctrl.text) return;
+    setState(() { _suggestions = results; _searching = false; });
   }
 
   void _select(NominatimResult result) {
@@ -73,10 +88,7 @@ class _AddressSearchFieldState extends State<AddressSearchField> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(color: Color(0xFF7B00D4))),
           ),
-          onChanged: (q) {
-            setState(() => _selected = null);
-            _search(q);
-          },
+          onChanged: _onChanged,
         ),
         if (_suggestions.isNotEmpty)
           Container(

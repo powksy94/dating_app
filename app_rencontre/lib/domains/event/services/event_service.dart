@@ -10,7 +10,7 @@ class EventService {
     double? maxDistance,
     bool filterGenres = false,
   }) async {
-    final token = await ApiService.getToken();
+    final headers = await ApiService.authHeaders();
     final params = <String, String>{};
     if (lat != null)          params['lat']           = lat.toString();
     if (lng != null)          params['lng']           = lng.toString();
@@ -20,27 +20,26 @@ class EventService {
     final uri = Uri.parse('${ApiService.baseUrl}/events')
         .replace(queryParameters: params.isEmpty ? null : params);
 
-    final res = await http.get(uri,
-        headers: {'Authorization': 'Bearer $token'});
+    final res = await http.get(uri, headers: headers);
     if (res.statusCode != 200) return [];
     final list = jsonDecode(res.body) as List<dynamic>;
     return list.map((e) => EventModel.fromJson(e)).toList();
   }
 
   static Future<bool> attendEvent(String eventId) async {
-    final token = await ApiService.getToken();
+    final headers = await ApiService.authHeaders();
     final res = await http.post(
       Uri.parse('${ApiService.baseUrl}/events/$eventId/attend'),
-      headers: {'Authorization': 'Bearer $token'},
+      headers: headers,
     );
     return res.statusCode == 200;
   }
 
   static Future<bool> unattendEvent(String eventId) async {
-    final token = await ApiService.getToken();
+    final headers = await ApiService.authHeaders();
     final res = await http.delete(
       Uri.parse('${ApiService.baseUrl}/events/$eventId/attend'),
-      headers: {'Authorization': 'Bearer $token'},
+      headers: headers,
     );
     return res.statusCode == 200;
   }
@@ -60,12 +59,12 @@ class EventService {
     double? price,
     String? coverImagePath,
   }) async {
-    final token = await ApiService.getToken();
+    final authHeaders = await ApiService.authHeaders();
     final req = http.MultipartRequest(
       'POST',
       Uri.parse('${ApiService.baseUrl}/events'),
     )
-      ..headers['Authorization'] = 'Bearer $token'
+      ..headers['Authorization'] = authHeaders['Authorization'] ?? ''
       ..fields['title']       = title
       ..fields['description'] = description
       ..fields['date']        = date.toIso8601String()
@@ -103,10 +102,10 @@ class EventService {
   /// {limit, remaining, unlimited}
   static Future<Map<String, dynamic>> getStatus() async {
     try {
-      final token = await ApiService.getToken();
+      final headers = await ApiService.authHeaders();
       final res = await http.get(
         Uri.parse('${ApiService.baseUrl}/events/status'),
-        headers: {'Authorization': 'Bearer $token'},
+        headers: headers,
       );
       if (res.statusCode == 200) return jsonDecode(res.body) as Map<String, dynamic>;
     } catch (_) {}

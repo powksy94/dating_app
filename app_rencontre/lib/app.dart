@@ -38,10 +38,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      _obscured = state == AppLifecycleState.inactive ||
-                 state == AppLifecycleState.paused;
-    });
+    // `inactive` se déclenche aussi lors d'une simple perte de focus transitoire
+    // (ex: Payment Sheet Stripe, sélecteur de photo, popup biométrique) alors que
+    // l'app reste visible — l'assombrir dans ce cas casse l'interaction avec ces
+    // écrans. `paused` (app réellement en arrière-plan) suffit ; les captures
+    // d'écran/aperçu du multitâche sont déjà bloquées par FLAG_SECURE via
+    // ScreenProtector.protectDataLeakageOn().
+    setState(() => _obscured = state == AppLifecycleState.paused);
   }
 
   @override

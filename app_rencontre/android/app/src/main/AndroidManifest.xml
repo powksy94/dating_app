@@ -28,6 +28,12 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- Impeller (Vulkan) a des soucis de dispatch tactile documentés sur certains
+                 appareils quand une vue native est affichée par-dessus Flutter (ex: Payment
+                 Sheet Stripe). Skia est plus stable dans ce cas. -->
+            <meta-data
+              android:name="io.flutter.embedding.android.EnableImpeller"
+              android:value="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
