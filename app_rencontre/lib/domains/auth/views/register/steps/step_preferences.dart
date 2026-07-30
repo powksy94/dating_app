@@ -4,6 +4,7 @@ import 'package:nocturne/core/gender_options.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
+import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 import 'package:nocturne/domains/auth/views/register/registration_success_page.dart';
@@ -41,11 +42,12 @@ class _StepPreferencesState extends State<StepPreferences> {
         try {
             final d = widget.data;
 
-            await AuthService().register(
+            final userId = await AuthService().register(
                 d['email'],
                 d['password'],
                 d['username'],
             );
+            await RevenueCatService.identify(userId);
 
             final photos = d['photos'] as List<String>? ?? [];
             List<String> photosUrls = [];

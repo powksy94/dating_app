@@ -39,6 +39,14 @@ class RevenueCatService {
     }
   }
 
+  static Future<Offerings?> getOfferings() async {
+    try {
+      return await Purchases.getOfferings();
+    } catch (_) {
+      return null;
+    }
+  }
+
   static Future<CustomerInfo?> restore() async {
     try {
       return await Purchases.restorePurchases();

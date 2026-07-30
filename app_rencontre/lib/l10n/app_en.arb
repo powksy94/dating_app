@@ -56,6 +56,10 @@
     "periodMonth": "month",
     "periodYear": "year",
 
+    "subscriptionRestoreCta": "Restore purchases",
+    "subscriptionRestoreSuccess": "Purchases restored!",
+    "subscriptionRestoreEmpty": "No purchases to restore.",
+
     "subscriptionBtnSwitchToFree": "Switch to free plan",
     "subscriptionBtnCurrentPlan": "✓ Current plan",
     "subscriptionBtnChangePeriod": "Change period",
@@ -472,7 +476,7 @@
     "@eventPaymentBtn": {
         "placeholders": { "amount": { "type": "String" } }
     },
-    "eventPaymentTestNotice": "Test mode — no real payment",
+    "eventPaymentError": "Payment failed, try again.",
     "eventBtnCancel": "Cancel",
 
     "eventSectionInfo": "INFO",

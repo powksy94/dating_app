@@ -7,6 +7,7 @@ import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
+import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/shared/services/unread_service.dart';
 
 class App extends StatefulWidget {
@@ -89,7 +90,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          return snapshot.data != null ? const HomePage() : const LoginPage();
+          if (snapshot.data != null) {
+            ApiService.getUserId().then((userId) {
+              if (userId != null) RevenueCatService.identify(userId);
+            });
+            return const HomePage();
+          }
+          return const LoginPage();
         },
       ),
     );

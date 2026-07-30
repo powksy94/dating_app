@@ -53,6 +53,9 @@
     "subscriptionSnackCancelled": "Abonnement résilié.",
     "subscriptionCancelSubscription": "Résilier l'abonnement",
     "subscriptionCancelAnytimeNote": "Résiliation possible à tout moment",
+    "subscriptionRestoreCta": "Restaurer mes achats",
+    "subscriptionRestoreSuccess": "Achats restaurés !",
+    "subscriptionRestoreEmpty": "Aucun achat à restaurer.",
 
     "subscriptionDialogSubscribeTitle": "Souscrire à {planName}",
     "subscriptionBtnDialogCancel": "Annuler",
@@ -382,7 +385,7 @@
     "@eventPaymentBtn": {
         "placeholders": { "amount": { "type": "String" } }
     },
-    "eventPaymentTestNotice": "Mode test — aucun paiement réel",
+    "eventPaymentError": "Paiement échoué, réessaie.",
     "eventBtnCancel": "Annuler",
 
     "eventSectionInfo": "INFOS",

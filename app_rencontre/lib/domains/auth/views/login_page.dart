@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
+import 'package:nocturne/shared/services/revenue_cat_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,7 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     setState(() { _loading = true; _error = null; });
     try {
-      await _auth.login(_emailCtrl.text.trim(), _passCtrl.text.trim());
+      final userId = await _auth.login(_emailCtrl.text.trim(), _passCtrl.text.trim());
+      await RevenueCatService.identify(userId);
       if (mounted) Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
       setState(() => _error = AppLocalizations.of(context)!.authLoginError);

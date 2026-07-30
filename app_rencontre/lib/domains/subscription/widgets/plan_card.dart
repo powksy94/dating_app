@@ -1,16 +1,20 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:nocturne/domains/subscription/models/plan_pricing.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 
 class PlanCard extends StatelessWidget {
     final SubscriptionPlan plan;
     final bool isActive;
     final SubscriptionPeriod period;
+    final Offering? offering;
 
     const PlanCard({
         super.key,
         required this.plan,
         required this.isActive,
         required this.period,
+        this.offering,
     });
 
     @override
@@ -87,7 +91,7 @@ class PlanCard extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                         Text(
-                                            plan.priceFor(period),
+                                            livePriceFor(offering, period, plan),
                                             style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 32,

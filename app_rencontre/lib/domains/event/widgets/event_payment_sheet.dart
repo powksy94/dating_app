@@ -1,21 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
+import 'package:nocturne/domains/event/services/event_payment_service.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 
-class EventPaymentSheet extends StatelessWidget {
+class EventPaymentSheet extends StatefulWidget {
   final EventModel event;
-  final Future<void> Function() onConfirm;
+  final VoidCallback onPaid;
 
   const EventPaymentSheet({
     super.key,
     required this.event,
-    required this.onConfirm,
+    required this.onPaid,
   });
+
+  @override
+  State<EventPaymentSheet> createState() => _EventPaymentSheetState();
+}
+
+class _EventPaymentSheetState extends State<EventPaymentSheet> {
+  bool _loading = false;
+
+  Future<void> _pay() async {
+    setState(() => _loading = true);
+    final success = await EventPaymentService.pay(widget.event.id);
+    if (!mounted) return;
+
+    if (success) {
+      widget.onPaid();
+      Navigator.pop(context);
+      return;
+    }
+
+    setState(() => _loading = false);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.eventPaymentError),
+      backgroundColor: const Color(0xFF7F1D1D),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     final l      = AppLocalizations.of(context)!;
+    final event  = widget.event;
     final amount = event.price?.toStringAsFixed(0) ?? '?';
 
     return Padding(
@@ -85,44 +112,32 @@ class EventPaymentSheet extends StatelessWidget {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              onPressed: onConfirm,
+              onPressed: _loading ? null : _pay,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF7B00D4),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: Text(
-                l.eventPaymentBtn(amount),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
-              ),
+              child: _loading
+                  ? const SizedBox(
+                      width: 20, height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                  : Text(
+                      l.eventPaymentBtn(amount),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
             ),
           ),
-          const SizedBox(height: 8),
-
-          // Notice mode test
-          Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFF2A1A3A),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                l.eventPaymentTestNotice,
-                style: const TextStyle(color: Color(0xFF7A6A8A), fontSize: 11),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
 
           // Annuler
           SizedBox(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: _loading ? null : () => Navigator.pop(context),
               child: Text(l.eventBtnCancel,
                   style: const TextStyle(color: Color(0xFF5A4A6A))),
             ),

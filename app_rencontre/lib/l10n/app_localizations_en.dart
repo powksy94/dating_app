@@ -145,6 +145,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodYear => 'year';
 
   @override
+  String get subscriptionRestoreCta => 'Restore purchases';
+
+  @override
+  String get subscriptionRestoreSuccess => 'Purchases restored!';
+
+  @override
+  String get subscriptionRestoreEmpty => 'No purchases to restore.';
+
+  @override
   String get subscriptionBtnSwitchToFree => 'Switch to free plan';
 
   @override
@@ -1073,7 +1082,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get eventPaymentTestNotice => 'Test mode — no real payment';
+  String get eventPaymentError => 'Payment failed, try again.';
 
   @override
   String get eventBtnCancel => 'Cancel';

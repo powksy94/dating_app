@@ -1,10 +1,13 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/period_selector.dart';
 import 'package:nocturne/domains/subscription/widgets/plan_card.dart';
+import 'package:nocturne/domains/subscription/widgets/restore_purchases_button.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_action_button.dart';
+import 'package:nocturne/shared/services/revenue_cat_service.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});
@@ -20,11 +23,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   SubscriptionPeriod _activePeriod = SubscriptionPeriod.month;
   String _activePlan              = 'ombre';
   bool _loading                   = true;
+  Offerings? _offerings;
 
   @override
   void initState() {
     super.initState();
     _loadSubscription();
+    RevenueCatService.getOfferings().then((o) {
+      if (mounted) setState(() => _offerings = o);
+    });
   }
 
   Future<void> _loadSubscription() async {
@@ -136,6 +143,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   plan: plans[index],
                   isActive: index == _current,
                   period: _period,
+                  offering: _offerings?.getOffering(plans[index].id),
                 ),
               ),
             ),
@@ -168,6 +176,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             onSubscribed: _onSubscribed,
             onCancelled:  _onCancelled,
           ),
+          RestorePurchasesButton(onRestored: _onSubscribed),
           SizedBox(height: 16 + MediaQuery.of(context).padding.bottom),
         ],
       ),

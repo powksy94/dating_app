@@ -146,6 +146,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get periodYear => 'an';
 
   @override
+  String get subscriptionRestoreCta => 'Restaurer mes achats';
+
+  @override
+  String get subscriptionRestoreSuccess => 'Achats restaurés !';
+
+  @override
+  String get subscriptionRestoreEmpty => 'Aucun achat à restaurer.';
+
+  @override
   String get subscriptionBtnSwitchToFree => 'Passer au plan gratuit';
 
   @override
@@ -1082,7 +1091,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get eventPaymentTestNotice => 'Mode test — aucun paiement réel';
+  String get eventPaymentError => 'Paiement échoué, réessaie.';
 
   @override
   String get eventBtnCancel => 'Annuler';

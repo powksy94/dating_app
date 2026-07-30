@@ -326,6 +326,24 @@ abstract class AppLocalizations {
   /// **'year'**
   String get periodYear;
 
+  /// No description provided for @subscriptionRestoreCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore purchases'**
+  String get subscriptionRestoreCta;
+
+  /// No description provided for @subscriptionRestoreSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases restored!'**
+  String get subscriptionRestoreSuccess;
+
+  /// No description provided for @subscriptionRestoreEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No purchases to restore.'**
+  String get subscriptionRestoreEmpty;
+
   /// No description provided for @subscriptionBtnSwitchToFree.
   ///
   /// In en, this message translates to:
@@ -2018,11 +2036,11 @@ abstract class AppLocalizations {
   /// **'Pay {amount} €'**
   String eventPaymentBtn(String amount);
 
-  /// No description provided for @eventPaymentTestNotice.
+  /// No description provided for @eventPaymentError.
   ///
   /// In en, this message translates to:
-  /// **'Test mode — no real payment'**
-  String get eventPaymentTestNotice;
+  /// **'Payment failed, try again.'**
+  String get eventPaymentError;
 
   /// No description provided for @eventBtnCancel.
   ///

@@ -53,7 +53,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (_) => !_event.isAttending && !_event.isFree
-          ? EventPaymentSheet(event: _event, onConfirm: _handleRegister)
+          ? EventPaymentSheet(event: _event, onPaid: _onPaidRegistered)
           : RegisterSheet(event: _event, onConfirm: _handleRegister),
     );
   }
@@ -84,6 +84,21 @@ class _EventDetailPageState extends State<EventDetailPage> {
         ),
       );
     }
+  }
+
+  void _onPaidRegistered() {
+    setState(() {
+      _event = _event.copyWith(
+        isAttending:   true,
+        attendeeCount: _event.attendeeCount + 1,
+      );
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.eventRegisterConfirmed),
+        backgroundColor: const Color(0xFF7B00D4),
+      ),
+    );
   }
 
   @override
