@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/shared/services/nominatim_service.dart';
+import 'package:nocturne/shared/services/address_result.dart';
 import 'package:nocturne/shared/widgets/location/address_search_field.dart';
 
 class StepLocation extends StatefulWidget {
@@ -12,7 +12,7 @@ class StepLocation extends StatefulWidget {
 }
 
 class _StepLocationState extends State<StepLocation> {
-  NominatimResult? _selected;
+  AddressResult? _selected;
   String?          _error;
 
   void _next() {

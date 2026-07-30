@@ -1,37 +1,26 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:nocturne/shared/services/address_result.dart';
 
-class NominatimResult {
-  final String displayName;
-  final String city;
-  final double lat;
-  final double lng;
-
-  const NominatimResult({
-    required this.displayName,
-    required this.city,
-    required this.lat,
-    required this.lng,
-  });
-
-  factory NominatimResult.fromJson(Map<String, dynamic> j) {
-    final address = j['address'] as Map<String, dynamic>? ?? {};
-    final city = address['city'] ??
-        address['town'] ??
-        address['village'] ??
-        address['municipality'] ??
-        '';
-    return NominatimResult(
-      displayName: j['display_name'] ?? '',
-      city:        city.toString(),
-      lat:         double.parse(j['lat'].toString()),
-      lng:         double.parse(j['lon'].toString()),
-    );
-  }
+AddressResult _fromNominatimJson(Map<String, dynamic> j) {
+  final address = j['address'] as Map<String, dynamic>? ?? {};
+  final city = address['city'] ??
+      address['town'] ??
+      address['village'] ??
+      address['municipality'] ??
+      '';
+  return AddressResult(
+    displayName: j['display_name'] ?? '',
+    city:        city.toString(),
+    lat:         double.parse(j['lat'].toString()),
+    lng:         double.parse(j['lon'].toString()),
+  );
 }
 
+/// Géocodage mondial via OpenStreetMap. Couverture globale mais moins précis
+/// que les API nationales dédiées (ex: l'API Adresse française).
 class NominatimService {
-  static Future<List<NominatimResult>> search(String query) async {
+  static Future<List<AddressResult>> search(String query) async {
     if (query.length < 3) return [];
     try {
       final res = await http.get(
@@ -47,7 +36,7 @@ class NominatimService {
       );
       if (res.statusCode != 200) return [];
       final list = jsonDecode(res.body) as List<dynamic>;
-      return list.map((e) => NominatimResult.fromJson(e)).toList();
+      return list.map((e) => _fromNominatimJson(e)).toList();
     } catch (_) {
       return [];
     }

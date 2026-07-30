@@ -2,7 +2,7 @@
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
-import 'package:nocturne/shared/services/nominatim_service.dart';
+import 'package:nocturne/shared/services/address_result.dart';
 import 'package:nocturne/shared/widgets/location/address_search_field.dart';
 
 class EditStepLocation extends StatefulWidget {
@@ -14,7 +14,7 @@ class EditStepLocation extends StatefulWidget {
 }
 
 class _EditStepLocationState extends State<EditStepLocation> {
-  NominatimResult? _selected;
+  AddressResult? _selected;
   bool _saving = false;
 
   Future<void> _save() async {

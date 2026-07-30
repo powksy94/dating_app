@@ -1,9 +1,10 @@
 ﻿import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:nocturne/shared/services/nominatim_service.dart';
+import 'package:nocturne/shared/services/address_result.dart';
+import 'package:nocturne/shared/services/address_search_service.dart';
 
 class AddressSearchField extends StatefulWidget {
-  final void Function(NominatimResult) onSelected;
+  final void Function(AddressResult) onSelected;
 
   const AddressSearchField({super.key, required this.onSelected});
 
@@ -13,10 +14,10 @@ class AddressSearchField extends StatefulWidget {
 
 class _AddressSearchFieldState extends State<AddressSearchField> {
   final _ctrl = TextEditingController();
-  List<NominatimResult> _suggestions  = [];
-  bool                  _searching    = false;
-  NominatimResult?      _selected;
-  Timer?                _debounce;
+  List<AddressResult> _suggestions  = [];
+  bool                _searching    = false;
+  AddressResult?      _selected;
+  Timer?              _debounce;
 
   @override
   void dispose() {
@@ -37,13 +38,13 @@ class _AddressSearchFieldState extends State<AddressSearchField> {
 
   Future<void> _search(String query) async {
     setState(() => _searching = true);
-    final results = await NominatimService.search(query);
+    final results = await AddressSearchService.search(query);
     // Ignore une réponse arrivée en retard si le texte a changé depuis.
     if (!mounted || query != _ctrl.text) return;
     setState(() { _suggestions = results; _searching = false; });
   }
 
-  void _select(NominatimResult result) {
+  void _select(AddressResult result) {
     setState(() {
       _selected     = result;
       _ctrl.text    = result.displayName;
