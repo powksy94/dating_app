@@ -138,13 +138,15 @@ class _FeatureRow extends StatelessWidget {
                         color: feature.included ? accentColor : const Color(0xFF7A6A8A),
                     ),
                     const SizedBox(width: 10),
-                    Text(
-                        feature.label,
-                        style: TextStyle(
-                            color: feature.included
-                                ? const Color(0xFFE8E0EE)
-                                : const Color(0xFF9A8AAA),
-                            fontSize: 14,
+                    Expanded(
+                        child: Text(
+                            feature.label,
+                            style: TextStyle(
+                                color: feature.included
+                                    ? const Color(0xFFE8E0EE)
+                                    : const Color(0xFF9A8AAA),
+                                fontSize: 14,
+                            ),
                         ),
                     ),
                 ],

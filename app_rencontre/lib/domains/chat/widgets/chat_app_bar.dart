@@ -43,38 +43,46 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 : null,
           ),
           const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Text(match.username,
-                      style: const TextStyle(
-                          color: Colors.white, fontSize: 16)),
-                  if (otherOnline) ...[
-                    const SizedBox(width: 6),
-                    Container(
-                      width: 8, height: 8,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF2ECC71),
-                        shape: BoxShape.circle,
-                      ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(match.username,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16)),
                     ),
+                    if (otherOnline) ...[
+                      const SizedBox(width: 6),
+                      Container(
+                        width: 8, height: 8,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF2ECC71),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
-              ),
-              if (otherTyping)
-                Text(AppLocalizations.of(context)!.chatTyping,
-                    style: const TextStyle(
-                        color: Color(0xFF7B00D4),
-                        fontSize: 12,
-                        fontStyle: FontStyle.italic))
-              else if (!otherOnline && lastSeenText != null)
-                Text(lastSeenText!,
-                    style: const TextStyle(
-                        color: Color(0xFF5A4A6A), fontSize: 11)),
-            ],
+                ),
+                if (otherTyping)
+                  Text(AppLocalizations.of(context)!.chatTyping,
+                      style: const TextStyle(
+                          color: Color(0xFF7B00D4),
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic))
+                else if (!otherOnline && lastSeenText != null)
+                  Text(lastSeenText!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          color: Color(0xFF5A4A6A), fontSize: 11)),
+              ],
+            ),
           ),
         ],
       ),

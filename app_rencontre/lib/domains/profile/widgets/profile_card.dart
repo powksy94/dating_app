@@ -87,13 +87,17 @@ class _UsernameRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        Text(
-          profile.username,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+        Flexible(
+          child: Text(
+            profile.username,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+            ),
           ),
         ),
         if (profile.age != null) ...[

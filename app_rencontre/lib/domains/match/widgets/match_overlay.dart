@@ -125,6 +125,11 @@ class _MatchOverlayState extends State<MatchOverlay>
 
                     // Contenu
                     SafeArea(
+                        child: LayoutBuilder(
+                        builder: (context, constraints) => SingleChildScrollView(
+                        child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                        child: IntrinsicHeight(
                         child: Column(
                         children: [
                             const Spacer(),
@@ -288,6 +293,10 @@ class _MatchOverlayState extends State<MatchOverlay>
                             ),
                             const SizedBox(height: 24),
                         ],
+                        ),
+                        ),
+                        ),
+                        ),
                         ),
                     ),
                     ],

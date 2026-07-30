@@ -22,9 +22,13 @@ class ProfileLockedUsername extends StatelessWidget {
               const Icon(Icons.lock_outline,
                   size: 14, color: Color(0xFF5A4A6A)),
               const SizedBox(width: 8),
-              Text(username,
-                  style: const TextStyle(
-                      color: Color(0xFF5A4A6A), fontSize: 14)),
+              Flexible(
+                child: Text(username,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        color: Color(0xFF5A4A6A), fontSize: 14)),
+              ),
             ],
           ),
         ),

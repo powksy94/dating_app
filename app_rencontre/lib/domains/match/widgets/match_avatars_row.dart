@@ -131,12 +131,18 @@ class _Avatar extends StatelessWidget {
                     ),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                    label,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                SizedBox(
+                    width: size,
+                    child: Text(
+                        label,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                        ),
                     ),
                 ),
             ],
