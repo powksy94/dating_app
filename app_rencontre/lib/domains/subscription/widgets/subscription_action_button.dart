@@ -60,7 +60,10 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
     CustomerInfo? info;
     try {
       info = await RevenueCatService.purchase(widget.plan.id, widget.period.name);
-    } on PurchasesError catch (_) {
+    } catch (_) {
+      // RevenueCatService.purchase ne renvoie null que pour une annulation ;
+      // toute exception qui remonte ici est une vraie erreur (PurchasesError
+      // ou PlatformException selon comment le SDK natif la remonte).
       if (mounted) {
         _showSnack(AppLocalizations.of(context)!.subscriptionSnackError, const Color(0xFF7F1D1D));
       }

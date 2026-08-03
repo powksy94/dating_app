@@ -17,9 +17,10 @@ class RestoreService {
 
     static String? _activePlanFrom(CustomerInfo? info) {
         if (info == null) return null;
+        final activeIds = info.entitlements.active.keys.map((k) => k.toLowerCase());
         return kSubscriptionPlanIds
             .where((id) => id != 'ombre')
-            .where((id) => info.entitlements.active.containsKey(id))
+            .where((id) => activeIds.any((active) => active.contains(id)))
             .firstOrNull;
     }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class RevenueCatService {
@@ -33,6 +34,12 @@ class RevenueCatService {
       if (package == null) return null;
 
       return await Purchases.purchasePackage(package);
+    } on PlatformException catch (e) {
+      // Le SDK ne remonte pas toujours une PurchasesError proprement typée —
+      // une annulation peut arriver sous forme de PlatformException brute.
+      final code = PurchasesErrorHelper.getErrorCode(e);
+      if (code == PurchasesErrorCode.purchaseCancelledError) return null;
+      rethrow;
     } on PurchasesError catch (e) {
       if (e.code == PurchasesErrorCode.purchaseCancelledError) return null;
       rethrow;
@@ -55,11 +62,28 @@ class RevenueCatService {
     }
   }
 
-  static Package? _packageFor(Offering offering, String periodName) =>
-      switch (periodName) {
-        'week'  => offering.weekly,
-        'month' => offering.monthly,
-        'year'  => offering.annual,
-        _       => offering.monthly,
-      };
+  /// Cherche d'abord via les getters standards RevenueCat (identifiants
+  /// réservés $rc_xxx), puis par mot-clé contenu dans l'identifiant du
+  /// package (ex: "Monthly Nocturne", "Yearly Abyssal") si le dashboard
+  /// n'utilise pas les types standards — sinon `offering.weekly`/`.monthly`/
+  /// `.annual` renvoient `null` même si le package existe bel et bien.
+  static Package? _packageFor(Offering offering, String periodName) {
+    final standard = switch (periodName) {
+      'week'  => offering.weekly,
+      'month' => offering.monthly,
+      'year'  => offering.annual,
+      _       => offering.monthly,
+    };
+    if (standard != null) return standard;
+
+    final keyword = switch (periodName) {
+      'week'  => 'week',
+      'month' => 'month',
+      'year'  => 'year',
+      _       => 'month',
+    };
+    return offering.availablePackages
+        .where((p) => p.identifier.toLowerCase().contains(keyword))
+        .firstOrNull;
+  }
 }
