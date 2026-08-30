@@ -200,6 +200,48 @@ abstract class AppLocalizations {
   /// **'Deny'**
   String get adminAuthBtnDeny;
 
+  /// No description provided for @eventReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVENTS TO REVIEW'**
+  String get eventReviewTitle;
+
+  /// No description provided for @eventReviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No events pending review'**
+  String get eventReviewEmpty;
+
+  /// No description provided for @eventReviewFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get eventReviewFree;
+
+  /// No description provided for @eventReviewBtnApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get eventReviewBtnApprove;
+
+  /// No description provided for @eventReviewBtnReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get eventReviewBtnReject;
+
+  /// No description provided for @eventReviewApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Event approved'**
+  String get eventReviewApproved;
+
+  /// No description provided for @eventReviewRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Event rejected'**
+  String get eventReviewRejected;
+
   /// No description provided for @homeNavDiscover.
   ///
   /// In en, this message translates to:

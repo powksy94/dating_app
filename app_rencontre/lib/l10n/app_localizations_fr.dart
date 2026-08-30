@@ -66,6 +66,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminAuthBtnDeny => 'Refuser';
 
   @override
+  String get eventReviewTitle => 'ÉVÈNEMENTS À VALIDER';
+
+  @override
+  String get eventReviewEmpty => 'Aucun évènement en attente';
+
+  @override
+  String get eventReviewFree => 'Gratuit';
+
+  @override
+  String get eventReviewBtnApprove => 'Approuver';
+
+  @override
+  String get eventReviewBtnReject => 'Rejeter';
+
+  @override
+  String get eventReviewApproved => 'Évènement approuvé';
+
+  @override
+  String get eventReviewRejected => 'Évènement rejeté';
+
+  @override
   String get homeNavDiscover => 'Découvrir';
 
   @override

@@ -20,6 +20,14 @@
     "adminAuthBtnApprove": "Approuver",
     "adminAuthBtnDeny": "Refuser",
 
+    "eventReviewTitle": "ÉVÈNEMENTS À VALIDER",
+    "eventReviewEmpty": "Aucun évènement en attente",
+    "eventReviewFree": "Gratuit",
+    "eventReviewBtnApprove": "Approuver",
+    "eventReviewBtnReject": "Rejeter",
+    "eventReviewApproved": "Évènement approuvé",
+    "eventReviewRejected": "Évènement rejeté",
+
     "homeNavDiscover": "Découvrir",
     "homeNavEvents": "Événements",
     "homeNavMessages": "Messages",

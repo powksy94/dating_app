@@ -23,6 +23,14 @@
     "adminAuthBtnApprove": "Approve",
     "adminAuthBtnDeny": "Deny",
 
+    "eventReviewTitle": "EVENTS TO REVIEW",
+    "eventReviewEmpty": "No events pending review",
+    "eventReviewFree": "Free",
+    "eventReviewBtnApprove": "Approve",
+    "eventReviewBtnReject": "Reject",
+    "eventReviewApproved": "Event approved",
+    "eventReviewRejected": "Event rejected",
+
     "homeNavDiscover": "Discover",
     "homeNavEvents": "Events",
     "homeNavMessages": "Messages",

@@ -86,6 +86,8 @@ class NotificationService {
             arguments: sessionId,
           );
         }
+      case 'event_review':
+        navigatorKey.currentState?.pushNamed('/event-review');
     }
   }
 }

@@ -13,6 +13,7 @@ import 'package:nocturne/domains/discovery/views/likes_history_page.dart';
 import 'package:nocturne/domains/match/views/matches_page.dart';
 import 'package:nocturne/domains/settings/views/settings_page.dart';
 import 'package:nocturne/domains/admin/views/admin_auth_page.dart';
+import 'package:nocturne/domains/admin/views/event_review_page.dart';
 import 'package:nocturne/domains/visit/views/visitors_page.dart';
 
 class Routes {
@@ -66,6 +67,8 @@ class Routes {
         return MaterialPageRoute(
           builder: (_) => AdminAuthPage(sessionId: sessionId),
         );
+      case '/event-review':
+        return MaterialPageRoute(builder: (_) => const EventReviewPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
