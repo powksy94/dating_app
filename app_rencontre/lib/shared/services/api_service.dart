@@ -62,7 +62,18 @@ class ApiService {
 
     // ── Refresh ───────────────────────────────────────────────────────────────────
 
-    static Future<bool> refreshAccessToken() async {
+    // Le refresh token est à usage unique côté backend (roté à chaque appel) :
+    // si deux appels concurrents rafraîchissent en même temps, le second arrive
+    // avec un token déjà invalidé par le premier et efface la session par erreur.
+    // On mutualise donc les appels concurrents sur un seul rafraîchissement en vol.
+    static Future<bool>? _refreshInFlight;
+
+    static Future<bool> refreshAccessToken() {
+        return _refreshInFlight ??=
+            _doRefresh().whenComplete(() => _refreshInFlight = null);
+    }
+
+    static Future<bool> _doRefresh() async {
         final refreshToken = await getRefreshToken();
         if (refreshToken == null) return false;
         try {

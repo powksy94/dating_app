@@ -110,20 +110,31 @@ class _CreateEventPageState extends State<CreateEventPage> {
           ),
         ),
       ),
-      body: _submitting
-          ? const Center(child: CircularProgressIndicator())
-          : PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                StepCoverInfo(onNext: _nextStep),
-                StepDatetime(onNext: _nextStep),
-                StepLocation(onNext: _nextStep),
-                StepGenres(onNext: _nextStep),
-                StepCapacity(onNext: _nextStep),
-                StepPrice(onSubmit: _submit),
-              ],
+      body: Stack(
+        children: [
+          PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              StepCoverInfo(onNext: _nextStep),
+              StepDatetime(onNext: _nextStep),
+              StepLocation(onNext: _nextStep),
+              StepGenres(onNext: _nextStep),
+              StepCapacity(onNext: _nextStep),
+              StepPrice(onSubmit: _submit),
+            ],
+          ),
+          if (_submitting)
+            Positioned.fill(
+              child: AbsorbPointer(
+                child: Container(
+                  color: const Color(0xFF0D0010).withValues(alpha: 0.85),
+                  child: const Center(child: CircularProgressIndicator()),
+                ),
+              ),
             ),
+        ],
+      ),
     );
   }
 }
