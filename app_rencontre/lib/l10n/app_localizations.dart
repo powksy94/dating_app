@@ -914,6 +914,42 @@ abstract class AppLocalizations {
   /// **'No profiles around for now...'**
   String get discoveryEmptyProfiles;
 
+  /// No description provided for @discoveryEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You have been through all the available profiles for now.'**
+  String get discoveryEmptySubtitle;
+
+  /// No description provided for @discoveryEmptyResetLikes.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset your likes'**
+  String get discoveryEmptyResetLikes;
+
+  /// No description provided for @discoveryEmptyEditFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your search filters'**
+  String get discoveryEmptyEditFilters;
+
+  /// No description provided for @discoveryEmptyWaitMoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for a new moon'**
+  String get discoveryEmptyWaitMoon;
+
+  /// No description provided for @discoveryEmptyResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your likes have been reset, profiles are back in the feed.'**
+  String get discoveryEmptyResetSuccess;
+
+  /// No description provided for @discoveryEmptyWaitMoonMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'New profiles arrive with the new moon. Check back soon.'**
+  String get discoveryEmptyWaitMoonMessage;
+
   /// No description provided for @discoveryBoostActivated.
   ///
   /// In en, this message translates to:

@@ -206,6 +206,12 @@
 
     "discoverySwipePageTitle": "NOCTURNE",
     "discoveryEmptyProfiles": "No profiles around for now...",
+    "discoveryEmptySubtitle": "You have been through all the available profiles for now.",
+    "discoveryEmptyResetLikes": "Reset your likes",
+    "discoveryEmptyEditFilters": "Change your search filters",
+    "discoveryEmptyWaitMoon": "Wait for a new moon",
+    "discoveryEmptyResetSuccess": "Your likes have been reset, profiles are back in the feed.",
+    "discoveryEmptyWaitMoonMessage": "New profiles arrive with the new moon. Check back soon.",
     "discoveryBoostActivated": "Boost activated — your profile is being featured for 30 min!",
     "discoveryRewindTitle": "Rewind unavailable",
     "discoveryRewindBody": "Rewind is available from the Nocturne plan.",

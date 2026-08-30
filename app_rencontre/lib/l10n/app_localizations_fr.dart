@@ -468,6 +468,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoveryEmptyProfiles => 'Aucun profil dans les parages...';
 
   @override
+  String get discoveryEmptySubtitle =>
+      'Tu as fait le tour des profils disponibles pour le moment.';
+
+  @override
+  String get discoveryEmptyResetLikes => 'Réinitialiser tes likes';
+
+  @override
+  String get discoveryEmptyEditFilters => 'Modifier tes filtres de recherche';
+
+  @override
+  String get discoveryEmptyWaitMoon => 'Attendre une nouvelle lune';
+
+  @override
+  String get discoveryEmptyResetSuccess =>
+      'Tes likes ont été réinitialisés, les profils reviennent dans le feed.';
+
+  @override
+  String get discoveryEmptyWaitMoonMessage =>
+      'De nouveaux profils arrivent avec la nouvelle lune. Reviens bientôt.';
+
+  @override
   String get discoveryBoostActivated =>
       'Boost activé — ton profil est mis en avant 30 min !';
 

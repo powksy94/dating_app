@@ -157,6 +157,12 @@
 
     "discoverySwipePageTitle": "NOCTURNE",
     "discoveryEmptyProfiles": "Aucun profil dans les parages...",
+    "discoveryEmptySubtitle": "Tu as fait le tour des profils disponibles pour le moment.",
+    "discoveryEmptyResetLikes": "Réinitialiser tes likes",
+    "discoveryEmptyEditFilters": "Modifier tes filtres de recherche",
+    "discoveryEmptyWaitMoon": "Attendre une nouvelle lune",
+    "discoveryEmptyResetSuccess": "Tes likes ont été réinitialisés, les profils reviennent dans le feed.",
+    "discoveryEmptyWaitMoonMessage": "De nouveaux profils arrivent avec la nouvelle lune. Reviens bientôt.",
     "discoveryBoostActivated": "Boost activé — ton profil est mis en avant 30 min !",
     "discoveryRewindTitle": "Rewind non disponible",
     "discoveryBoostTitle": "Boost non disponible",

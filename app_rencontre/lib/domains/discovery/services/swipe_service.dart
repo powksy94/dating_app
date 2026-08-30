@@ -38,7 +38,7 @@ class SwipeService {
         try {
             final headers = await ApiService.authHeaders();
             await http.post(
-                Uri.parse('${ApiService.baseUrl}/swipe/pass/$targetId'),
+                Uri.parse('${ApiService.baseUrl}/swipe/dislike/$targetId'),
                 headers: headers,
             );
         } catch (_) {}
@@ -59,6 +59,21 @@ class SwipeService {
             if (res.statusCode == 403) return (userId: null, forbidden: true);
         } catch (_) {}
         return (userId: null, forbidden: false);
+    }
+
+    /// Réinitialise l'historique de likes (garde ceux déjà matchés), pour que
+    /// les profils passés puissent réapparaître dans le feed de découverte.
+    static Future<bool> resetLikes() async {
+        try {
+            final headers = await ApiService.authHeaders();
+            final res = await http.delete(
+                Uri.parse('${ApiService.baseUrl}/swipe/likes'),
+                headers: headers,
+            );
+            return res.statusCode == 200;
+        } catch (_) {
+            return false;
+        }
     }
 
     /// Retourne les profils qui ont liké l'utilisateur courant (Nocturne/Abyssal).

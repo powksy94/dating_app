@@ -3,6 +3,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
+import 'package:nocturne/domains/discovery/services/swipe_empty_state_actions.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_body.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_empty_state.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_overlays.dart';
@@ -130,10 +131,16 @@ class _SwipePageState extends State<SwipePage> {
   @override
   Widget build(BuildContext context) {
     if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    final emptyStateActions = SwipeEmptyStateActions(
+        context: context, onProfilesChanged: _loadProfiles);
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.discoverySwipePageTitle)),
       body: _profiles.isEmpty
-          ? const SwipeEmptyState()
+          ? SwipeEmptyState(
+              onResetLikes: emptyStateActions.resetLikes,
+              onEditFilters: emptyStateActions.editFilters,
+              onWaitForMoon: emptyStateActions.waitForMoon,
+            )
           : SwipeBody(
               key:                      ValueKey(_swiperKey),
               profiles:                 _profiles,
