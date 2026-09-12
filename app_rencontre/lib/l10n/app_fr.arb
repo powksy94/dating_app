@@ -319,6 +319,8 @@
     "settingsTermsOfService": "Conditions d'utilisation",
     "settingsPrivacyPolicy": "Politique de confidentialité",
     "settingsRateApp": "Noter l'application",
+    "settingsSectionAdmin": "Administration",
+    "settingsAdminReports": "Signalements",
 
     "settingsDeleteAccountWarning": "Cette action est irréversible.\nTape ton pseudo pour confirmer.",
     "settingsBtnCancel": "Annuler",

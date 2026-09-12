@@ -1760,6 +1760,18 @@ abstract class AppLocalizations {
   /// **'Rate the app'**
   String get settingsRateApp;
 
+  /// No description provided for @settingsSectionAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Administration'**
+  String get settingsSectionAdmin;
+
+  /// No description provided for @settingsAdminReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get settingsAdminReports;
+
   /// No description provided for @settingsDeleteAccountWarning.
   ///
   /// In en, this message translates to:

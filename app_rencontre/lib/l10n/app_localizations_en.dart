@@ -919,6 +919,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsRateApp => 'Rate the app';
 
   @override
+  String get settingsSectionAdmin => 'Administration';
+
+  @override
+  String get settingsAdminReports => 'Reports';
+
+  @override
   String get settingsDeleteAccountWarning =>
       'This action is irreversible.\nType your username to confirm.';
 

@@ -389,6 +389,8 @@
     "settingsTermsOfService": "Terms of service",
     "settingsPrivacyPolicy": "Privacy policy",
     "settingsRateApp": "Rate the app",
+    "settingsSectionAdmin": "Administration",
+    "settingsAdminReports": "Reports",
 
     "settingsDeleteAccountWarning": "This action is irreversible.\nType your username to confirm.",
     "settingsBtnCancel": "Cancel",

@@ -925,6 +925,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsRateApp => 'Noter l\'application';
 
   @override
+  String get settingsSectionAdmin => 'Administration';
+
+  @override
+  String get settingsAdminReports => 'Signalements';
+
+  @override
   String get settingsDeleteAccountWarning =>
       'Cette action est irréversible.\nTape ton pseudo pour confirmer.';
 
