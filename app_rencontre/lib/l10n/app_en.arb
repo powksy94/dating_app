@@ -42,6 +42,8 @@
     "reportReviewDismissed": "Report dismissed",
     "reportReviewBanned": "User banned",
     "reportReviewUnbanned": "User unbanned",
+    "reportDetailTitle": "Report detail",
+    "reportDetailDateLabel": "Reported on",
 
     "homeNavDiscover": "Discover",
     "homeNavEvents": "Events",

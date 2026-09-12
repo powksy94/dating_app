@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/admin_report_review_service.dart';
-import 'package:nocturne/domains/admin/services/report_review_actions.dart';
+import 'package:nocturne/domains/admin/views/report_detail_page.dart';
 import 'package:nocturne/domains/admin/widgets/report_review_card.dart';
 
 class ReportReviewPage extends StatefulWidget {
@@ -26,17 +26,26 @@ class _ReportReviewPageState extends State<ReportReviewPage> {
     if (mounted) setState(() { _reports = reports; _loading = false; });
   }
 
+  Future<void> _openDetail(Map<String, dynamic> report) async {
+    final result = await Navigator.push<Map<String, dynamic>>(
+      context,
+      MaterialPageRoute(builder: (_) => ReportDetailPage(report: report)),
+    );
+    if (result == null || !mounted) return;
+
+    setState(() {
+      if (result['action'] == 'dismissed') {
+        _reports.removeWhere((r) => r['id'] == report['id']);
+      } else if (result['action'] == 'banChanged') {
+        final target = _reports.firstWhere((r) => r['id'] == report['id']);
+        (target['reported'] as Map<String, dynamic>)['banned'] = result['banned'];
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final actions = ReportReviewActions(
-      context: context,
-      onDismissed: (reportId) => setState(() => _reports.removeWhere((r) => r['id'] == reportId)),
-      onBanChanged: (reportId, banned) => setState(() {
-        final report = _reports.firstWhere((r) => r['id'] == reportId);
-        (report['reported'] as Map<String, dynamic>)['banned'] = banned;
-      }),
-    );
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0010),
@@ -59,20 +68,10 @@ class _ReportReviewPageState extends State<ReportReviewPage> {
                     padding: const EdgeInsets.all(16),
                     itemCount: _reports.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (_, i) {
-                      final report   = _reports[i];
-                      final reported = report['reported'] as Map<String, dynamic>;
-                      final banned   = reported['banned'] as bool? ?? false;
-                      return ReportReviewCard(
-                        report: report,
-                        onDismiss: () => actions.dismiss(report['id'] as String),
-                        onToggleBan: () => actions.setBanned(
-                          report['id'] as String,
-                          reported['id'] as String,
-                          !banned,
-                        ),
-                      );
-                    },
+                    itemBuilder: (_, i) => ReportReviewCard(
+                      report: _reports[i],
+                      onTap: () => _openDetail(_reports[i]),
+                    ),
                   ),
                 ),
     );

@@ -120,6 +120,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportReviewUnbanned => 'Utilisateur débanni';
 
   @override
+  String get reportDetailTitle => 'Détail du signalement';
+
+  @override
+  String get reportDetailDateLabel => 'Signalé le';
+
+  @override
   String get homeNavDiscover => 'Découvrir';
 
   @override

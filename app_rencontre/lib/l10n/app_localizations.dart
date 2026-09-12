@@ -308,6 +308,18 @@ abstract class AppLocalizations {
   /// **'User unbanned'**
   String get reportReviewUnbanned;
 
+  /// No description provided for @reportDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report detail'**
+  String get reportDetailTitle;
+
+  /// No description provided for @reportDetailDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported on'**
+  String get reportDetailDateLabel;
+
   /// No description provided for @homeNavDiscover.
   ///
   /// In en, this message translates to:

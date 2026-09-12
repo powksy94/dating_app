@@ -39,6 +39,8 @@
     "reportReviewDismissed": "Signalement classé sans suite",
     "reportReviewBanned": "Utilisateur banni",
     "reportReviewUnbanned": "Utilisateur débanni",
+    "reportDetailTitle": "Détail du signalement",
+    "reportDetailDateLabel": "Signalé le",
 
     "homeNavDiscover": "Découvrir",
     "homeNavEvents": "Événements",
