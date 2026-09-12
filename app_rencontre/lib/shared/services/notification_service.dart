@@ -88,6 +88,8 @@ class NotificationService {
         }
       case 'event_review':
         navigatorKey.currentState?.pushNamed('/event-review');
+      case 'report_review':
+        navigatorKey.currentState?.pushNamed('/report-review');
     }
   }
 }

@@ -86,6 +86,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventReviewRejected => 'Event rejected';
 
   @override
+  String get reportReviewTitle => 'REPORTS TO REVIEW';
+
+  @override
+  String get reportReviewEmpty => 'No pending reports';
+
+  @override
+  String get reportReviewReporterLabel => 'Reported by';
+
+  @override
+  String get reportReviewReasonLabel => 'Reason';
+
+  @override
+  String get reportReviewBannedBadge => 'Banned';
+
+  @override
+  String get reportReviewBtnDismiss => 'Dismiss';
+
+  @override
+  String get reportReviewBtnBan => 'Ban';
+
+  @override
+  String get reportReviewBtnUnban => 'Unban';
+
+  @override
+  String get reportReviewDismissed => 'Report dismissed';
+
+  @override
+  String get reportReviewBanned => 'User banned';
+
+  @override
+  String get reportReviewUnbanned => 'User unbanned';
+
+  @override
   String get homeNavDiscover => 'Discover';
 
   @override

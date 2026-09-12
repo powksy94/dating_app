@@ -87,6 +87,39 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventReviewRejected => 'Évènement rejeté';
 
   @override
+  String get reportReviewTitle => 'SIGNALEMENTS À TRAITER';
+
+  @override
+  String get reportReviewEmpty => 'Aucun signalement en attente';
+
+  @override
+  String get reportReviewReporterLabel => 'Signalé par';
+
+  @override
+  String get reportReviewReasonLabel => 'Motif';
+
+  @override
+  String get reportReviewBannedBadge => 'Banni';
+
+  @override
+  String get reportReviewBtnDismiss => 'Classer sans suite';
+
+  @override
+  String get reportReviewBtnBan => 'Bannir';
+
+  @override
+  String get reportReviewBtnUnban => 'Débannir';
+
+  @override
+  String get reportReviewDismissed => 'Signalement classé sans suite';
+
+  @override
+  String get reportReviewBanned => 'Utilisateur banni';
+
+  @override
+  String get reportReviewUnbanned => 'Utilisateur débanni';
+
+  @override
   String get homeNavDiscover => 'Découvrir';
 
   @override

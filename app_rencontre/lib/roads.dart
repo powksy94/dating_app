@@ -14,6 +14,7 @@ import 'package:nocturne/domains/match/views/matches_page.dart';
 import 'package:nocturne/domains/settings/views/settings_page.dart';
 import 'package:nocturne/domains/admin/views/admin_auth_page.dart';
 import 'package:nocturne/domains/admin/views/event_review_page.dart';
+import 'package:nocturne/domains/admin/views/report_review_page.dart';
 import 'package:nocturne/domains/visit/views/visitors_page.dart';
 
 class Routes {
@@ -69,6 +70,8 @@ class Routes {
         );
       case '/event-review':
         return MaterialPageRoute(builder: (_) => const EventReviewPage());
+      case '/report-review':
+        return MaterialPageRoute(builder: (_) => const ReportReviewPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

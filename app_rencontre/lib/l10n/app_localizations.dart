@@ -242,6 +242,72 @@ abstract class AppLocalizations {
   /// **'Event rejected'**
   String get eventReviewRejected;
 
+  /// No description provided for @reportReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'REPORTS TO REVIEW'**
+  String get reportReviewTitle;
+
+  /// No description provided for @reportReviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending reports'**
+  String get reportReviewEmpty;
+
+  /// No description provided for @reportReviewReporterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported by'**
+  String get reportReviewReporterLabel;
+
+  /// No description provided for @reportReviewReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reportReviewReasonLabel;
+
+  /// No description provided for @reportReviewBannedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Banned'**
+  String get reportReviewBannedBadge;
+
+  /// No description provided for @reportReviewBtnDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get reportReviewBtnDismiss;
+
+  /// No description provided for @reportReviewBtnBan.
+  ///
+  /// In en, this message translates to:
+  /// **'Ban'**
+  String get reportReviewBtnBan;
+
+  /// No description provided for @reportReviewBtnUnban.
+  ///
+  /// In en, this message translates to:
+  /// **'Unban'**
+  String get reportReviewBtnUnban;
+
+  /// No description provided for @reportReviewDismissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Report dismissed'**
+  String get reportReviewDismissed;
+
+  /// No description provided for @reportReviewBanned.
+  ///
+  /// In en, this message translates to:
+  /// **'User banned'**
+  String get reportReviewBanned;
+
+  /// No description provided for @reportReviewUnbanned.
+  ///
+  /// In en, this message translates to:
+  /// **'User unbanned'**
+  String get reportReviewUnbanned;
+
   /// No description provided for @homeNavDiscover.
   ///
   /// In en, this message translates to:

@@ -28,6 +28,18 @@
     "eventReviewApproved": "Évènement approuvé",
     "eventReviewRejected": "Évènement rejeté",
 
+    "reportReviewTitle": "SIGNALEMENTS À TRAITER",
+    "reportReviewEmpty": "Aucun signalement en attente",
+    "reportReviewReporterLabel": "Signalé par",
+    "reportReviewReasonLabel": "Motif",
+    "reportReviewBannedBadge": "Banni",
+    "reportReviewBtnDismiss": "Classer sans suite",
+    "reportReviewBtnBan": "Bannir",
+    "reportReviewBtnUnban": "Débannir",
+    "reportReviewDismissed": "Signalement classé sans suite",
+    "reportReviewBanned": "Utilisateur banni",
+    "reportReviewUnbanned": "Utilisateur débanni",
+
     "homeNavDiscover": "Découvrir",
     "homeNavEvents": "Événements",
     "homeNavMessages": "Messages",

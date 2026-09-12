@@ -31,6 +31,18 @@
     "eventReviewApproved": "Event approved",
     "eventReviewRejected": "Event rejected",
 
+    "reportReviewTitle": "REPORTS TO REVIEW",
+    "reportReviewEmpty": "No pending reports",
+    "reportReviewReporterLabel": "Reported by",
+    "reportReviewReasonLabel": "Reason",
+    "reportReviewBannedBadge": "Banned",
+    "reportReviewBtnDismiss": "Dismiss",
+    "reportReviewBtnBan": "Ban",
+    "reportReviewBtnUnban": "Unban",
+    "reportReviewDismissed": "Report dismissed",
+    "reportReviewBanned": "User banned",
+    "reportReviewUnbanned": "User unbanned",
+
     "homeNavDiscover": "Discover",
     "homeNavEvents": "Events",
     "homeNavMessages": "Messages",
