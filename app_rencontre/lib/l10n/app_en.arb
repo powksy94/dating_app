@@ -36,6 +36,10 @@
     "homeNavMessages": "Messages",
     "homeNavProfile": "Profile",
     "homeMyProfileTitle": "MY PROFILE",
+    "homeExitConfirmTitle": "Leave Nocturne?",
+    "homeExitConfirmMessage": "You can come back anytime, your conversations will stay intact.",
+    "homeExitConfirmCancel": "Cancel",
+    "homeExitConfirmQuit": "Quit",
     "homeNoProfileTitle": "Profile not set up",
     "homeNoProfileDescription": "Create your profile to appear in the swipe",
     "homeBtnCreateProfile": "Create my profile",
@@ -372,6 +376,7 @@
     "settingsVersionLabel": "Version",
     "settingsTermsOfService": "Terms of service",
     "settingsPrivacyPolicy": "Privacy policy",
+    "settingsRateApp": "Rate the app",
 
     "settingsDeleteAccountWarning": "This action is irreversible.\nType your username to confirm.",
     "settingsBtnCancel": "Cancel",

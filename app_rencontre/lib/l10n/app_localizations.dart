@@ -272,6 +272,30 @@ abstract class AppLocalizations {
   /// **'MY PROFILE'**
   String get homeMyProfileTitle;
 
+  /// No description provided for @homeExitConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave Nocturne?'**
+  String get homeExitConfirmTitle;
+
+  /// No description provided for @homeExitConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You can come back anytime, your conversations will stay intact.'**
+  String get homeExitConfirmMessage;
+
+  /// No description provided for @homeExitConfirmCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get homeExitConfirmCancel;
+
+  /// No description provided for @homeExitConfirmQuit.
+  ///
+  /// In en, this message translates to:
+  /// **'Quit'**
+  String get homeExitConfirmQuit;
+
   /// No description provided for @homeNoProfileTitle.
   ///
   /// In en, this message translates to:
@@ -1663,6 +1687,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Privacy policy'**
   String get settingsPrivacyPolicy;
+
+  /// No description provided for @settingsRateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate the app'**
+  String get settingsRateApp;
 
   /// No description provided for @settingsDeleteAccountWarning.
   ///

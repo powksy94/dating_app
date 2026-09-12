@@ -102,6 +102,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeMyProfileTitle => 'MON PROFIL';
 
   @override
+  String get homeExitConfirmTitle => 'Quitter Nocturne ?';
+
+  @override
+  String get homeExitConfirmMessage =>
+      'Tu peux revenir à tout moment, tes conversations resteront intactes.';
+
+  @override
+  String get homeExitConfirmCancel => 'Annuler';
+
+  @override
+  String get homeExitConfirmQuit => 'Quitter';
+
+  @override
   String get homeNoProfileTitle => 'Profil non configuré';
 
   @override
@@ -874,6 +887,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsPrivacyPolicy => 'Politique de confidentialité';
+
+  @override
+  String get settingsRateApp => 'Noter l\'application';
 
   @override
   String get settingsDeleteAccountWarning =>

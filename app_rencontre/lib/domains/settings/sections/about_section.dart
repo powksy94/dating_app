@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
@@ -15,6 +16,15 @@ class AboutSection extends StatelessWidget {
   Future<void> _openPrivacyPolicy(BuildContext context) {
     final lang = Localizations.localeOf(context).languageCode;
     return launchUrl(Uri.parse('https://powksy.com/nocturne/privacy-policy?lang=$lang'));
+  }
+
+  Future<void> _rateApp() async {
+    final inAppReview = InAppReview.instance;
+    if (await inAppReview.isAvailable()) {
+      await inAppReview.requestReview();
+    } else {
+      await inAppReview.openStoreListing();
+    }
   }
 
   @override
@@ -45,6 +55,11 @@ class AboutSection extends StatelessWidget {
           icon: Icons.privacy_tip_outlined,
           label: l.settingsPrivacyPolicy,
           onTap: () => _openPrivacyPolicy(context),
+        ),
+        ActionTile(
+          icon: Icons.star_outline,
+          label: l.settingsRateApp,
+          onTap: _rateApp,
         ),
       ],
     );

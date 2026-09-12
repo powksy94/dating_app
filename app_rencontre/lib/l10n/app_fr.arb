@@ -33,6 +33,10 @@
     "homeNavMessages": "Messages",
     "homeNavProfile": "Profil",
     "homeMyProfileTitle": "MON PROFIL",
+    "homeExitConfirmTitle": "Quitter Nocturne ?",
+    "homeExitConfirmMessage": "Tu peux revenir à tout moment, tes conversations resteront intactes.",
+    "homeExitConfirmCancel": "Annuler",
+    "homeExitConfirmQuit": "Quitter",
     "homeNoProfileTitle": "Profil non configuré",
     "homeNoProfileDescription": "Crée ton profil pour apparaître dans le swipe",
     "homeBtnCreateProfile": "Créer mon profil",
@@ -302,6 +306,7 @@
     "settingsVersionLabel": "Version",
     "settingsTermsOfService": "Conditions d'utilisation",
     "settingsPrivacyPolicy": "Politique de confidentialité",
+    "settingsRateApp": "Noter l'application",
 
     "settingsDeleteAccountWarning": "Cette action est irréversible.\nTape ton pseudo pour confirmer.",
     "settingsBtnCancel": "Annuler",
