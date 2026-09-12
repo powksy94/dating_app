@@ -33,7 +33,8 @@ class RevenueCatService {
       final package = _packageFor(offering, periodName);
       if (package == null) return null;
 
-      return await Purchases.purchasePackage(package);
+      final result = await Purchases.purchase(PurchaseParams.package(package));
+      return result.customerInfo;
     } on PlatformException catch (e) {
       // Le SDK ne remonte pas toujours une PurchasesError proprement typée —
       // une annulation peut arriver sous forme de PlatformException brute.
