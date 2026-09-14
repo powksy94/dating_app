@@ -29,17 +29,11 @@ class ChatInputBar extends StatelessWidget {
         color: const Color(0xFF120018),
         child: Row(
           children: [
-            GestureDetector(
+            _CircleIconButton(
               onTap: onImagePick,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF1A0A1F),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.image_outlined,
-                    color: Color(0xFF5A4A6A), size: 20),
-              ),
+              color: const Color(0xFF1A0A1F),
+              icon: Icons.image_outlined,
+              iconColor: const Color(0xFF5A4A6A),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -65,51 +59,63 @@ class ChatInputBar extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             if (isRecording)
-              GestureDetector(
+              _CircleIconButton(
                 onTap: onMicCancel,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF8B0000),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.delete_outline,
-                      color: Colors.white, size: 20),
-                ),
+                color: const Color(0xFF8B0000),
+                icon: Icons.delete_outline,
+                iconColor: Colors.white,
               ),
             const SizedBox(width: 6),
-            GestureDetector(
+            _CircleIconButton(
               onTap: onMicPress,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: isRecording
-                      ? const Color(0xFF8B0000)
-                      : const Color(0xFF1A0A1F),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  isRecording ? Icons.stop : Icons.mic_outlined,
-                  color: isRecording
-                      ? Colors.white
-                      : const Color(0xFF5A4A6A),
-                  size: 20,
-                ),
-              ),
+              color: isRecording ? const Color(0xFF8B0000) : const Color(0xFF1A0A1F),
+              icon: isRecording ? Icons.stop : Icons.mic_outlined,
+              iconColor: isRecording ? Colors.white : const Color(0xFF5A4A6A),
             ),
             const SizedBox(width: 8),
-            GestureDetector(
+            _CircleIconButton(
               onTap: onSend,
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF7B00D4),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.send, color: Colors.white, size: 18),
-              ),
+              color: const Color(0xFF7B00D4),
+              icon: Icons.send,
+              iconColor: Colors.white,
+              padding: 12,
+              iconSize: 18,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CircleIconButton extends StatelessWidget {
+  final VoidCallback? onTap;
+  final Color color;
+  final IconData icon;
+  final Color iconColor;
+  final double padding;
+  final double iconSize;
+
+  const _CircleIconButton({
+    required this.onTap,
+    required this.color,
+    required this.icon,
+    required this.iconColor,
+    this.padding = 10,
+    this.iconSize = 20,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color,
+      shape: const CircleBorder(),
+      child: InkWell(
+        onTap: onTap,
+        customBorder: const CircleBorder(),
+        child: Padding(
+          padding: EdgeInsets.all(padding),
+          child: Icon(icon, color: iconColor, size: iconSize),
         ),
       ),
     );

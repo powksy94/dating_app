@@ -124,25 +124,29 @@ class _StepPriceState extends State<StepPrice> {
   }
 
   Widget _toggle(String label, bool active, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: active ? const Color(0xFF7B00D4) : const Color(0xFF1A0A1F),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: active
-                ? const Color(0xFF7B00D4)
-                : const Color(0xFF3D2A4A),
+    return Material(
+      color: active ? const Color(0xFF7B00D4) : const Color(0xFF1A0A1F),
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: active
+                  ? const Color(0xFF7B00D4)
+                  : const Color(0xFF3D2A4A),
+            ),
           ),
+          child: Text(label,
+              style: TextStyle(
+                  color: active ? Colors.white : const Color(0xFF5A4A6A),
+                  fontSize: 13,
+                  fontWeight:
+                      active ? FontWeight.bold : FontWeight.normal)),
         ),
-        child: Text(label,
-            style: TextStyle(
-                color: active ? Colors.white : const Color(0xFF5A4A6A),
-                fontSize: 13,
-                fontWeight:
-                    active ? FontWeight.bold : FontWeight.normal)),
       ),
     );
   }
