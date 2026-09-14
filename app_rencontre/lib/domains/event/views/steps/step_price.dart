@@ -37,7 +37,7 @@ class _StepPriceState extends State<StepPrice> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +97,7 @@ class _StepPriceState extends State<StepPrice> {
                 style: const TextStyle(
                     color: Color(0xFFD400FF), fontSize: 12)),
           ],
-          const Spacer(),
+          const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,
             height: 50,
