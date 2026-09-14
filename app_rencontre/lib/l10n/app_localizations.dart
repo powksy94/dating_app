@@ -1094,6 +1094,24 @@ abstract class AppLocalizations {
   /// **'New profiles arrive with the new moon. Check back soon.'**
   String get discoveryEmptyWaitMoonMessage;
 
+  /// No description provided for @discoveryLoadErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load profiles'**
+  String get discoveryLoadErrorTitle;
+
+  /// No description provided for @discoveryLoadErrorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get discoveryLoadErrorSubtitle;
+
+  /// No description provided for @discoveryBtnRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get discoveryBtnRetry;
+
   /// No description provided for @discoveryBoostActivated.
   ///
   /// In en, this message translates to:

@@ -560,6 +560,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'New profiles arrive with the new moon. Check back soon.';
 
   @override
+  String get discoveryLoadErrorTitle => 'Couldn\'t load profiles';
+
+  @override
+  String get discoveryLoadErrorSubtitle =>
+      'Check your connection and try again.';
+
+  @override
+  String get discoveryBtnRetry => 'Retry';
+
+  @override
   String get discoveryBoostActivated =>
       'Boost activated — your profile is being featured for 30 min!';
 

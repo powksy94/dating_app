@@ -6,6 +6,7 @@ import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/discovery/services/swipe_empty_state_actions.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_body.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_empty_state.dart';
+import 'package:nocturne/domains/discovery/widgets/swipe_load_error.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_overlays.dart';
 import 'package:nocturne/domains/discovery/services/swipe_service.dart';
 import 'package:nocturne/domains/subscription/services/boost_service.dart';
@@ -26,6 +27,7 @@ class _SwipePageState extends State<SwipePage> {
 
   List<AlternativeProfile> _profiles = [];
   bool _loading    = true;
+  bool _loadError  = false;
   int  _currentIndex = 0;
   bool _unlimited  = true;
   int  _remaining  = 0;
@@ -56,9 +58,11 @@ class _SwipePageState extends State<SwipePage> {
   Future<void> _loadProfiles() async {
     try {
       final p = await _firestore.fetchSwipeProfiles();
-      if (mounted) setState(() { _profiles = p; _loading = false; _currentIndex = 0; });
+      if (mounted) {
+        setState(() { _profiles = p; _loading = false; _loadError = false; _currentIndex = 0; });
+      }
     } catch (_) {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) setState(() { _loading = false; _loadError = true; });
     }
   }
 
@@ -135,7 +139,9 @@ class _SwipePageState extends State<SwipePage> {
         context: context, onProfilesChanged: _loadProfiles);
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.discoverySwipePageTitle)),
-      body: _profiles.isEmpty
+      body: _loadError
+          ? SwipeLoadError(onRetry: _loadProfiles)
+          : _profiles.isEmpty
           ? SwipeEmptyState(
               onResetLikes: emptyStateActions.resetLikes,
               onEditFilters: emptyStateActions.editFilters,
