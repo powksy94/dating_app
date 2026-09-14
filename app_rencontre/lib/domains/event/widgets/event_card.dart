@@ -97,6 +97,8 @@ class _EventCardState extends State<EventCard> {
                   const SizedBox(height: 8),
                   Text(
                     _event.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
