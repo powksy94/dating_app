@@ -58,12 +58,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
     );
   }
 
-  Future<void> _handleRegister() async {
+  Future<bool> _handleRegister() async {
     final success = _event.isAttending
         ? await EventService.unattendEvent(_event.id)
         : await EventService.attendEvent(_event.id);
 
-    if (!mounted) return;
+    if (!mounted) return success;
     if (success) {
       final wasAttending = _event.isAttending;
       setState(() {
@@ -84,6 +84,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
         ),
       );
     }
+    return success;
   }
 
   void _onPaidRegistered() {

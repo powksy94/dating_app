@@ -1,6 +1,7 @@
 {
     "@@locale": "en",
     "appTitle": "Nocturne",
+    "commonGenericError": "Something went wrong, try again.",
     "@appTitle": {
         "description": "Application title"
     },

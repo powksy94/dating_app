@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Nocturne'**
   String get appTitle;
 
+  /// No description provided for @commonGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong, try again.'**
+  String get commonGenericError;
+
   /// No description provided for @visitorsTitle.
   ///
   /// In en, this message translates to:

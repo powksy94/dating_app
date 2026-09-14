@@ -55,6 +55,11 @@ class _EventCardState extends State<EventCard> {
               : _event.attendeeCount + 1,
         );
       });
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.commonGenericError),
+        backgroundColor: const Color(0xFF7F1D1D),
+      ));
     }
     if (mounted) setState(() => _loadingAttend = false);
   }

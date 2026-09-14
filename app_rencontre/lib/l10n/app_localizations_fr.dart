@@ -12,6 +12,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'Nocturne';
 
   @override
+  String get commonGenericError => 'Une erreur est survenue, réessaie.';
+
+  @override
   String get visitorsTitle => 'VISITEURS';
 
   @override

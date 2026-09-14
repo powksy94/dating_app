@@ -153,17 +153,26 @@ class _ConversationPageState extends State<ConversationPage> {
         : SocketService.instance.emitStopTyping(widget.match.matchId);
   }
 
+  void _showGenericError() {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.commonGenericError),
+      backgroundColor: const Color(0xFF7F1D1D),
+    ));
+  }
+
   Future<void> _toggleRecording() async {
     if (_isRecording) {
       final path = await _recorder.stop();
       setState(() => _isRecording = false);
       if (path == null || !mounted) return;
       final url = await ChatService.uploadChatAudio(path);
-      if (url == null || !mounted) return;
+      if (!mounted) return;
+      if (url == null) { _showGenericError(); return; }
       SocketService.instance.sendMessage(widget.match.matchId, '', audioUrl: url);
     } else {
       final hasPermission = await _recorder.hasPermission();
-      if (!hasPermission) return;
+      if (!hasPermission) { _showGenericError(); return; }
       final dir  = await getTemporaryDirectory();
       final path = '${dir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
       await _recorder.start(const RecordConfig(), path: path);
@@ -180,7 +189,8 @@ class _ConversationPageState extends State<ConversationPage> {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 80);
     if (img == null) return;
     final url = await ChatService.uploadChatImage(img.path);
-    if (url == null || !mounted) return;
+    if (!mounted) return;
+    if (url == null) { _showGenericError(); return; }
     SocketService.instance.sendMessage(widget.match.matchId, '', imageUrl: url);
   }
 

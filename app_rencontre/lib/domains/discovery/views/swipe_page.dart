@@ -123,11 +123,17 @@ class _SwipePageState extends State<SwipePage> {
   Future<void> _onBoost() async {
     if (_boostCredits <= 0) { SwipeOverlays.showBoostPaywall(context); return; }
     final res = await BoostService.useBoost();
-    if (res != null && mounted) {
+    if (!mounted) return;
+    if (res != null) {
       setState(() => _boostCredits = res['remaining'] as int? ?? 0);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.discoveryBoostActivated),
         backgroundColor: const Color(0xFF4A0072),
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.commonGenericError),
+        backgroundColor: const Color(0xFF7F1D1D),
       ));
     }
   }

@@ -1,11 +1,11 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 
-class RegisterSheet extends StatelessWidget {
+class RegisterSheet extends StatefulWidget {
   final EventModel event;
-  final Future<void> Function() onConfirm;
+  final Future<bool> Function() onConfirm;
 
   const RegisterSheet({
     super.key,
@@ -14,7 +14,29 @@ class RegisterSheet extends StatelessWidget {
   });
 
   @override
+  State<RegisterSheet> createState() => _RegisterSheetState();
+}
+
+class _RegisterSheetState extends State<RegisterSheet> {
+  bool _loading = false;
+
+  Future<void> _confirm() async {
+    setState(() => _loading = true);
+    final success = await widget.onConfirm();
+    if (!mounted) return;
+    if (!success) {
+      setState(() => _loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)!.commonGenericError),
+        backgroundColor: const Color(0xFF7F1D1D),
+      ));
+    }
+    // En cas de succès, onConfirm ferme déjà la feuille lui-même.
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final event = widget.event;
     return Padding(
       padding: EdgeInsets.fromLTRB(
           24, 24, 24, 24 + MediaQuery.of(context).padding.bottom),
@@ -59,7 +81,7 @@ class RegisterSheet extends StatelessWidget {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              onPressed: onConfirm,
+              onPressed: _loading ? null : _confirm,
               style: ElevatedButton.styleFrom(
                 backgroundColor: event.isAttending
                     ? const Color(0xFF8B0000)
@@ -67,22 +89,26 @@ class RegisterSheet extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
               ),
-              child: Text(
-                event.isAttending
-                    ? AppLocalizations.of(context)!.eventBtnConfirmUnregister
-                    : AppLocalizations.of(context)!.eventBtnConfirmRegister,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
-              ),
+              child: _loading
+                  ? const SizedBox(
+                      width: 20, height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                  : Text(
+                      event.isAttending
+                          ? AppLocalizations.of(context)!.eventBtnConfirmUnregister
+                          : AppLocalizations.of(context)!.eventBtnConfirmRegister,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
             ),
           ),
           const SizedBox(height: 8),
           SizedBox(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: _loading ? null : () => Navigator.pop(context),
               child: Text(AppLocalizations.of(context)!.eventBtnCancel,
                   style: const TextStyle(color: Color(0xFF5A4A6A))),
             ),

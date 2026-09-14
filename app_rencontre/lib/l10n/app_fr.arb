@@ -1,6 +1,7 @@
 {
     "@@locale": "fr",
     "appTitle": "Nocturne",
+    "commonGenericError": "Une erreur est survenue, réessaie.",
 
     "visitorsTitle": "VISITEURS",
     "visitorsEmptyState": "Personne n'a encore visité ton profil",
