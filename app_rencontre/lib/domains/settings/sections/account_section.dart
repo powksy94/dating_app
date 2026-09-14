@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
+import 'package:nocturne/domains/settings/widgets/section_header.dart';
+import 'package:nocturne/domains/settings/widgets/action_tile.dart';
 
 class AccountSection extends StatelessWidget {
   final VoidCallback onEditProfile;

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/admin_status_service.dart';
-import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
+import 'package:nocturne/domains/settings/widgets/section_header.dart';
+import 'package:nocturne/domains/settings/widgets/action_tile.dart';
 
 /// Only visible to the mobile account linked to an Admin — gives quick
 /// access to report moderation without waiting for the push notification.

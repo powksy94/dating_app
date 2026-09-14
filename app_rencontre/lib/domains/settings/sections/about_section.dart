@@ -3,7 +3,8 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/settings/widgets/settings_titles.dart';
+import 'package:nocturne/domains/settings/widgets/section_header.dart';
+import 'package:nocturne/domains/settings/widgets/action_tile.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -41,7 +42,7 @@ class AboutSection extends StatelessWidget {
             return ActionTile(
               icon: Icons.info_outline,
               label: '${l.settingsVersionLabel} $version',
-              onTap: () {},
+              onTap: null,
               trailing: const SizedBox.shrink(),
             );
           },
