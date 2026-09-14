@@ -118,7 +118,7 @@ class _ReportFlowState extends State<_ReportFlow> {
             ? null
             : const Icon(Icons.chevron_right,
                 color: Color(0xFF5A4A6A), size: 18),
-        onTap: () => cat.isLeaf
+        onTap: _sending ? null : () => cat.isLeaf
             ? _submit(cat.label)
             : setState(() => _selected = cat),
       )),
@@ -135,7 +135,7 @@ class _ReportFlowState extends State<_ReportFlow> {
       ..._selected!.subs.map((sub) => ListTile(
         title: Text(sub,
             style: const TextStyle(color: Colors.white, fontSize: 14)),
-        onTap: () => _submit('${_selected!.label} — $sub'),
+        onTap: _sending ? null : () => _submit('${_selected!.label} — $sub'),
       )),
       const SizedBox(height: 8),
     ],
