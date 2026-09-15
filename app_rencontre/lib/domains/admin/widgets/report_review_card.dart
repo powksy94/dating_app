@@ -11,11 +11,12 @@ class ReportReviewCard extends StatelessWidget {
     required this.onTap,
   });
 
-  String _timeAgo(DateTime dt) {
+  String _timeAgo(BuildContext context, DateTime dt) {
+    final l = AppLocalizations.of(context)!;
     final diff = DateTime.now().difference(dt);
-    if (diff.inMinutes < 60) return 'il y a ${diff.inMinutes}min';
-    if (diff.inHours < 24)   return 'il y a ${diff.inHours}h';
-    return 'il y a ${diff.inDays}j';
+    if (diff.inMinutes < 60) return l.chatTimeMinutesShort(diff.inMinutes);
+    if (diff.inHours < 24)   return l.chatTimeHoursShort(diff.inHours);
+    return l.chatTimeDaysShort(diff.inDays);
   }
 
   @override
@@ -79,7 +80,7 @@ class ReportReviewCard extends StatelessWidget {
                         ],
                         if (createdAt != null) ...[
                           const SizedBox(width: 6),
-                          Text(_timeAgo(createdAt),
+                          Text(_timeAgo(context, createdAt),
                               style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 11)),
                         ],
                       ],

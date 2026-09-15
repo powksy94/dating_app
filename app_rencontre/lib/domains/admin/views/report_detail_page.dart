@@ -13,12 +13,19 @@ class ReportDetailPage extends StatefulWidget {
 
 class _ReportDetailPageState extends State<ReportDetailPage> {
   late bool _banned;
+  bool _pending = false;
 
   @override
   void initState() {
     super.initState();
     final reported = widget.report['reported'] as Map<String, dynamic>;
     _banned = reported['banned'] as bool? ?? false;
+  }
+
+  Future<void> _run(Future<void> Function() action) async {
+    setState(() => _pending = true);
+    await action();
+    if (mounted) setState(() => _pending = false);
   }
 
   @override
@@ -100,7 +107,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
           Row(children: [
             Expanded(
               child: OutlinedButton(
-                onPressed: () => actions.dismiss(reportId),
+                onPressed: _pending ? null : () => _run(() => actions.dismiss(reportId)),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: const Color(0xFFAA9AB5),
                   side: const BorderSide(color: Color(0xFF3D2A4A)),
@@ -113,16 +120,20 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
             const SizedBox(width: 10),
             Expanded(
               child: ElevatedButton(
-                onPressed: () => actions.setBanned(
+                onPressed: _pending ? null : () => _run(() => actions.setBanned(
                   reportId, reported['id'] as String, !_banned,
-                ),
+                )),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _banned ? const Color(0xFF4A0072) : const Color(0xFF7F1D1D),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: Text(_banned ? l.reportReviewBtnUnban : l.reportReviewBtnBan),
+                child: _pending
+                    ? const SizedBox(
+                        width: 16, height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                    : Text(_banned ? l.reportReviewBtnUnban : l.reportReviewBtnBan),
               ),
             ),
           ]),

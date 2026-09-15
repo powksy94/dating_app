@@ -1,19 +1,25 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
     static const String _prodBaseUrl = 'https://datingappbackend-production-a9e3.up.railway.app/api';
+    static const String _debugUrlOverride = String.fromEnvironment('API_BASE_URL');
 
     // A release build always points to prod, with no possible exception.
-    // In debug (flutter run), defaults to the Android emulator's address
-    // for the host (10.0.2.2); to test on a real phone on the same
-    // network, pass the dev machine's local IP:
+    // In debug (flutter run), defaults to the local backend: the iOS
+    // Simulator can reach the host machine via `localhost` directly, but the
+    // Android emulator needs its special host-loopback alias (10.0.2.2)
+    // instead. To test on a real phone on the same network, pass the dev
+    // machine's local IP:
     //   flutter run --dart-define=API_BASE_URL=http://<local-ip>:3000/api
-    static const String baseUrl = kReleaseMode
-        ? _prodBaseUrl
-        : String.fromEnvironment('API_BASE_URL', defaultValue: 'http://10.0.2.2:3000/api');
+    static String get baseUrl {
+        if (kReleaseMode) return _prodBaseUrl;
+        if (_debugUrlOverride.isNotEmpty) return _debugUrlOverride;
+        return Platform.isIOS ? 'http://localhost:3000/api' : 'http://10.0.2.2:3000/api';
+    }
 
     // ── Token access ─────────────────────────────────────────────────────────────
 

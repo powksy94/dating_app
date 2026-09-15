@@ -48,7 +48,7 @@ class FirestoreService {
       final List list = jsonDecode(res.body);
       return list.map((e) => AlternativeProfile.fromJson(e)).toList();
     }
-    return [];
+    throw Exception('fetchSwipeProfiles failed: HTTP ${res.statusCode}');
   }
 
   /// Returns the matchId if it's a match, null otherwise

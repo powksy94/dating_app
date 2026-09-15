@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 
-class EventReviewCard extends StatelessWidget {
+class EventReviewCard extends StatefulWidget {
   final Map<String, dynamic> event;
-  final VoidCallback onApprove;
-  final VoidCallback onReject;
+  final Future<void> Function() onApprove;
+  final Future<void> Function() onReject;
 
   const EventReviewCard({
     super.key,
@@ -14,14 +14,28 @@ class EventReviewCard extends StatelessWidget {
   });
 
   @override
+  State<EventReviewCard> createState() => _EventReviewCardState();
+}
+
+class _EventReviewCardState extends State<EventReviewCard> {
+  bool _loading = false;
+
+  Future<void> _handle(Future<void> Function() action) async {
+    setState(() => _loading = true);
+    await action();
+    if (mounted) setState(() => _loading = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
+    final event       = widget.event;
     final title       = event['title'] as String? ?? '';
     final description = event['description'] as String? ?? '';
     final city        = event['city'] as String? ?? '';
     final isFree      = event['isFree'] as bool? ?? true;
-    final price       = event['price'];
-    final priceLabel  = isFree ? l.eventReviewFree : '$price €';
+    final price       = event['price'] as num?;
+    final priceLabel  = isFree ? l.eventReviewFree : (price != null ? '${price.toStringAsFixed(0)} €' : '?');
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -58,7 +72,7 @@ class EventReviewCard extends StatelessWidget {
           Row(children: [
             Expanded(
               child: OutlinedButton(
-                onPressed: onReject,
+                onPressed: _loading ? null : () => _handle(widget.onReject),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: const Color(0xFFEF4444),
                   side: const BorderSide(color: Color(0xFF7F1D1D)),
@@ -70,13 +84,17 @@ class EventReviewCard extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: ElevatedButton(
-                onPressed: onApprove,
+                onPressed: _loading ? null : () => _handle(widget.onApprove),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF7B00D4),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: Text(l.eventReviewBtnApprove),
+                child: _loading
+                    ? const SizedBox(
+                        width: 16, height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                    : Text(l.eventReviewBtnApprove),
               ),
             ),
           ]),

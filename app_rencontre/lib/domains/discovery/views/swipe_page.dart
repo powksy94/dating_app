@@ -34,7 +34,6 @@ class _SwipePageState extends State<SwipePage> {
   int  _limit      = 30;
   int  _boostCredits = 0;
   bool _canRewind  = false;
-  CardSwiperDirection?  _lastSwipeDirection;
   AlternativeProfile?   _lastSwipedProfile;
   int  _swiperKey  = 0;
 
@@ -82,7 +81,6 @@ class _SwipePageState extends State<SwipePage> {
     if (prev == null) return;
     final profile = _profiles[prev];
     if (next != null) setState(() => _currentIndex = next);
-    _lastSwipeDirection = dir;
     _lastSwipedProfile  = profile;
 
     if (dir == CardSwiperDirection.right) {
@@ -100,13 +98,14 @@ class _SwipePageState extends State<SwipePage> {
   }
 
   Future<void> _onRewind() async {
-    if (_lastSwipeDirection == CardSwiperDirection.right) {
-      final result = await SwipeService.rewind();
-      if (!mounted) return;
-      if (result.forbidden) { SwipeOverlays.showRewindPaywall(context); return; }
-      if (result.userId == null) return;
-      if (!_unlimited) setState(() => _remaining = (_remaining + 1).clamp(0, _limit));
-    }
+    // The backend undoes the last swipe regardless of direction (like or
+    // pass), since both count against the daily swipe quota the same way.
+    final result = await SwipeService.rewind();
+    if (!mounted) return;
+    if (result.forbidden) { SwipeOverlays.showRewindPaywall(context); return; }
+    if (result.userId == null) return;
+    if (!_unlimited) setState(() => _remaining = (_remaining + 1).clamp(0, _limit));
+
     final rewound = _lastSwipedProfile;
     if (rewound == null) return;
     _controller = CardSwiperController();
@@ -114,7 +113,6 @@ class _SwipePageState extends State<SwipePage> {
       _profiles = [rewound, ..._profiles.sublist(_currentIndex)];
       _currentIndex = 0;
       _canRewind = false;
-      _lastSwipeDirection = null;
       _lastSwipedProfile  = null;
       _swiperKey++;
     });

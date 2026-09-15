@@ -37,8 +37,10 @@ class _ReportReviewPageState extends State<ReportReviewPage> {
       if (result['action'] == 'dismissed') {
         _reports.removeWhere((r) => r['id'] == report['id']);
       } else if (result['action'] == 'banChanged') {
-        final target = _reports.firstWhere((r) => r['id'] == report['id']);
-        (target['reported'] as Map<String, dynamic>)['banned'] = result['banned'];
+        final index = _reports.indexWhere((r) => r['id'] == report['id']);
+        if (index != -1) {
+          (_reports[index]['reported'] as Map<String, dynamic>)['banned'] = result['banned'];
+        }
       }
     });
   }
