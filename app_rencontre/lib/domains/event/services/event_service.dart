@@ -91,7 +91,7 @@ class EventService {
       final body = await stream.stream.bytesToString();
       try {
         final decoded = jsonDecode(body);
-        // Renvoie le code de limite si atteinte
+        // Returns the limit code if reached
         if (decoded['code'] == 'EVENT_LIMIT_REACHED') return decoded['code'];
         return decoded['message'] ?? 'Erreur inconnue';
       } catch (_) {

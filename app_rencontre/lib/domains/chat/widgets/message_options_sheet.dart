@@ -119,7 +119,7 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
               ),
             ),
 
-            // ── Champ emoji natif ───────────────────────────────────────────
+            // ── Native emoji field ──────────────────────────────────────────
             if (_showEmojiField) ...[
               const SizedBox(height: 12),
               Padding(
@@ -160,7 +160,7 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
 
             const Divider(color: Color(0xFF2D0040), height: 24),
 
-            // ── Options suppression ─────────────────────────────────────────
+            // ── Delete options ──────────────────────────────────────────────
             ListTile(
               leading: const Icon(Icons.delete_outline,
                   color: Color(0xFFAA9AB5)),

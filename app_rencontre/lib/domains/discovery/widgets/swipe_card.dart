@@ -3,8 +3,8 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/profile/widgets/profile_card.dart';
 
-/// Carte de swipe avec overlays like/nope selon le déplacement horizontal.
-/// [horizontalOffset] : pourcentage fourni par CardSwiper (positif = droite, négatif = gauche)
+/// Swipe card with like/nope overlays based on horizontal displacement.
+/// [horizontalOffset]: percentage provided by CardSwiper (positive = right, negative = left)
 class SwipeCard extends StatelessWidget {
   final AlternativeProfile profile;
   final double horizontalOffset;

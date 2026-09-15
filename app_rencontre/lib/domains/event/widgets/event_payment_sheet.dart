@@ -63,7 +63,7 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
           ),
           const SizedBox(height: 20),
 
-          // Titre + icône paiement
+          // Title + payment icon
           Row(children: [
             const Icon(Icons.credit_card, color: Color(0xFF7B00D4), size: 20),
             const SizedBox(width: 10),
@@ -75,7 +75,7 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
           ]),
           const SizedBox(height: 16),
 
-          // Infos événement
+          // Event info
           _row(Icons.music_note_outlined,     event.title),
           const SizedBox(height: 8),
           _row(Icons.calendar_today_outlined, formatEventDate(context, event.date)),
@@ -83,7 +83,7 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
           _row(Icons.location_on_outlined,    event.city),
           const SizedBox(height: 16),
 
-          // Prix mis en avant
+          // Highlighted price
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
@@ -107,7 +107,7 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
           ),
           const SizedBox(height: 20),
 
-          // Bouton payer
+          // Pay button
           SizedBox(
             width: double.infinity,
             height: 50,
@@ -133,7 +133,7 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
           ),
           const SizedBox(height: 16),
 
-          // Annuler
+          // Cancel
           SizedBox(
             width: double.infinity,
             child: TextButton(

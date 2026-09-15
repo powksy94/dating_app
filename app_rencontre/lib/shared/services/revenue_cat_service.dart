@@ -2,8 +2,8 @@ import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class RevenueCatService {
-  // ─── Clé RevenueCat Android ───────────────────────────────────────────────
-  // https://app.revenuecat.com → Project Settings → API Keys
+  // ─── RevenueCat Android key ───────────────────────────────────────────────
+  // https://app.revenuecat.com -> Project Settings -> API Keys
   static const _androidApiKey = 'test_wFoEiRuXtBbsNTGhyWgugNPVEEO';
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -13,19 +13,19 @@ class RevenueCatService {
     await Purchases.configure(PurchasesConfiguration(_androidApiKey));
   }
 
-  /// Identifie l'utilisateur après connexion pour synchroniser l'état RC.
+  /// Identifies the user after login to sync RC state.
   static Future<void> identify(String userId) async {
     try {
       await Purchases.logIn(userId);
     } catch (_) {}
   }
 
-  /// Lance l'achat natif pour [planId] (nocturne / abyssal) + [periodName] (week / month / year).
-  /// Retourne le `CustomerInfo` mis à jour, ou `null` si l'utilisateur annule.
+  /// Launches the native purchase for [planId] (nocturne / abyssal) + [periodName] (week / month / year).
+  /// Returns the updated `CustomerInfo`, or `null` if the user cancels.
   static Future<CustomerInfo?> purchase(String planId, String periodName) async {
     try {
       final offerings = await Purchases.getOfferings();
-      // Offering ID = planId (ex: "nocturne" ou "abyssal")
+      // Offering ID = planId (e.g. "nocturne" or "abyssal")
       final offering = offerings.getOffering(planId)
                     ?? offerings.current;
       if (offering == null) return null;
@@ -36,8 +36,8 @@ class RevenueCatService {
       final result = await Purchases.purchase(PurchaseParams.package(package));
       return result.customerInfo;
     } on PlatformException catch (e) {
-      // Le SDK ne remonte pas toujours une PurchasesError proprement typée —
-      // une annulation peut arriver sous forme de PlatformException brute.
+      // The SDK doesn't always surface a properly typed PurchasesError,
+      // a cancellation can arrive as a raw PlatformException.
       final code = PurchasesErrorHelper.getErrorCode(e);
       if (code == PurchasesErrorCode.purchaseCancelledError) return null;
       rethrow;
@@ -63,11 +63,11 @@ class RevenueCatService {
     }
   }
 
-  /// Cherche d'abord via les getters standards RevenueCat (identifiants
-  /// réservés $rc_xxx), puis par mot-clé contenu dans l'identifiant du
-  /// package (ex: "Monthly Nocturne", "Yearly Abyssal") si le dashboard
-  /// n'utilise pas les types standards — sinon `offering.weekly`/`.monthly`/
-  /// `.annual` renvoient `null` même si le package existe bel et bien.
+  /// Looks first through RevenueCat's standard getters (reserved $rc_xxx
+  /// identifiers), then by keyword contained in the package identifier
+  /// (e.g. "Monthly Nocturne", "Yearly Abyssal") if the dashboard doesn't
+  /// use the standard types, otherwise `offering.weekly`/`.monthly`/
+  /// `.annual` return `null` even though the package does exist.
   static Package? _packageFor(Offering offering, String periodName) {
     final standard = switch (periodName) {
       'week'  => offering.weekly,

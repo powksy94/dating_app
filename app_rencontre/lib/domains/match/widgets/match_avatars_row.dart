@@ -23,7 +23,7 @@ class MatchAvatarRow extends StatelessWidget {
             child: Stack(
                 alignment: Alignment.center,
                 children: [
-                    // Avatar gauche (moi)
+                    // Left avatar (me)
                     Transform.translate(
                         offset: Offset(-90 + (90 * slideValue) - 60, 0),
                         child: Opacity(
@@ -37,7 +37,7 @@ class MatchAvatarRow extends StatelessWidget {
                         ),
                     ),
 
-                    // Icône centrale lune avec glow
+                    // Central moon icon with glow
                     Opacity(
                         opacity: slideValue,
                         child: Container(
@@ -67,7 +67,7 @@ class MatchAvatarRow extends StatelessWidget {
                         ),
                     ),
 
-                    // Avatar droite (match)
+                    // Right avatar (match)
                     Transform.translate(
                         offset: Offset(90 - (90 * slideValue) + 60, 0),
                         child: Opacity(

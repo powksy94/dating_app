@@ -6,11 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApiService {
     static const String _prodBaseUrl = 'https://datingappbackend-production-a9e3.up.railway.app/api';
 
-    // Un build de release pointe toujours sur la prod, sans exception possible.
-    // En debug (flutter run), utilise par défaut l'adresse de l'émulateur Android
-    // vers l'hôte (10.0.2.2) ; pour tester sur un vrai téléphone sur le même
-    // réseau, passe l'IP locale de la machine de dev :
-    //   flutter run --dart-define=API_BASE_URL=http://<ip-locale>:3000/api
+    // A release build always points to prod, with no possible exception.
+    // In debug (flutter run), defaults to the Android emulator's address
+    // for the host (10.0.2.2); to test on a real phone on the same
+    // network, pass the dev machine's local IP:
+    //   flutter run --dart-define=API_BASE_URL=http://<local-ip>:3000/api
     static const String baseUrl = kReleaseMode
         ? _prodBaseUrl
         : String.fromEnvironment('API_BASE_URL', defaultValue: 'http://10.0.2.2:3000/api');
@@ -72,10 +72,10 @@ class ApiService {
 
     // ── Refresh ───────────────────────────────────────────────────────────────────
 
-    // Le refresh token est à usage unique côté backend (roté à chaque appel) :
-    // si deux appels concurrents rafraîchissent en même temps, le second arrive
-    // avec un token déjà invalidé par le premier et efface la session par erreur.
-    // On mutualise donc les appels concurrents sur un seul rafraîchissement en vol.
+    // The refresh token is single-use on the backend side (rotated on each call):
+    // if two concurrent calls refresh at the same time, the second one arrives
+    // with a token already invalidated by the first and wipes the session by mistake.
+    // So we merge concurrent calls into a single in-flight refresh.
     static Future<bool>? _refreshInFlight;
 
     static Future<bool> refreshAccessToken() {
@@ -102,7 +102,7 @@ class ApiService {
         return false;
     }
 
-    // ── Headers (avec auto-refresh transparent) ───────────────────────────────────
+    // ── Headers (with transparent auto-refresh) ───────────────────────────────────
 
     static Future<Map<String, String>> authHeaders() async {
         var token = await getToken();

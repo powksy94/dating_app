@@ -4,7 +4,7 @@ import 'package:nocturne/domains/elegie/models/elegie.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 
 class ElegieService {
-  /// Retourne le matchId si l'élégie a déclenché un match, null sinon
+  /// Returns the matchId if the elegie triggered a match, null otherwise
   static Future<String?> sendElegie(String targetId, String text) async {
     final headers = await ApiService.authHeaders();
     final res = await http.post(

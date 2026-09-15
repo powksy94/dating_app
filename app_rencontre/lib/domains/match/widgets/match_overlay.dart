@@ -3,7 +3,7 @@ import 'package:nocturne/domains/match/widgets/match_avatars_row.dart';
 import 'package:nocturne/domains/match/widgets/match_particles.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 
-// ─── Textes personnalisables ───────────────────────────────────────────────────
+// ─── Customizable texts ───────────────────────────────────────────────────────
 const kElegieMatchTitle    = 'TON ÉLÉGIE A ÉTÉ ENTENDUE';
 const kElegieMatchSubtitle = 'Les ténèbres ont exaucé ta prière';
 // ──────────────────────────────────────────────────────────────────────────────
@@ -99,7 +99,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                 builder: (context, _) {
                 return Stack(
                     children: [
-                    // Fond gradient
+                    // Gradient background
                     Opacity(
                         opacity: _bgFade.value,
                         child: Container(
@@ -117,13 +117,13 @@ class _MatchOverlayState extends State<MatchOverlay>
                         ),
                     ),
 
-                    // Particules
+                    // Particles
                     Opacity(
                         opacity: _particlesFade.value,
                         child: const MatchParticles(),
                     ),
 
-                    // Contenu
+                    // Content
                     SafeArea(
                         child: LayoutBuilder(
                         builder: (context, constraints) => SingleChildScrollView(
@@ -134,7 +134,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                         children: [
                             const Spacer(),
 
-                            // Titre
+                            // Title
                             Opacity(
                             opacity: _textFade.value,
                             child: Transform.translate(
@@ -192,7 +192,7 @@ class _MatchOverlayState extends State<MatchOverlay>
 
                             const SizedBox(height: 16),
 
-                            // Sous-titre
+                            // Subtitle
                             Opacity(
                             opacity: _textFade.value,
                             child: Text(
@@ -207,7 +207,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                             ),
                             ),
 
-                            // Texte de l'élégie
+                            // Elegy text
                             if (widget.isElegieMatch && widget.elegieText != null) ...[
                               const SizedBox(height: 16),
                               Flexible(
@@ -245,7 +245,7 @@ class _MatchOverlayState extends State<MatchOverlay>
 
                             const Spacer(),
 
-                            // Boutons
+                            // Buttons
                             Opacity(
                             opacity: _buttonsFade.value,
                             child: Padding(

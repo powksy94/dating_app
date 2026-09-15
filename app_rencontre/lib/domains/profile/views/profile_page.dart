@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Photo 1 — principale
+              // Photo 1, main photo
               GestureDetector(
                 onTap: () => _openPhotoViewer(0),
                 child: ProfileCard(profile: profile),
@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
 
-              // Photo 2 — entre bio et détails
+              // Photo 2, between bio and details
               if (allPhotos.length > 1) ...[
                 const SizedBox(height: 20),
                 ProfileInlinePhoto(
@@ -101,10 +101,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
               const SizedBox(height: 20),
 
-              // Détails (genres, vibes, aesthetics…) sans bio
+              // Details (genres, vibes, aesthetics...) without bio
               ProfileDetailsSection(profile: profile, showBio: false),
 
-              // Photos 3 à 6 — verticalement après les détails
+              // Photos 3 to 6, vertically after the details
               for (int i = 2; i < allPhotos.length; i++) ...[
                 const SizedBox(height: 20),
                 ProfileInlinePhoto(

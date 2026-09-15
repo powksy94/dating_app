@@ -19,7 +19,7 @@ class _RegisterFlowState extends State<RegisterFlow> {
     int _currentStep = 1;
     final int _totalSteps = 6;
 
-    // Données accumulées sur tout le parcours
+    // Data accumulated over the whole flow
     final Map<String, dynamic> _data = {};
 
 

@@ -1,7 +1,7 @@
 class PlanLimits {
-    final int? swipesPerDay;       // null = illimité
-    final int? elegiesPerMonth;    // null = illimité
-    final int? eventsPerMonth;     // null = illimité
+    final int? swipesPerDay;       // null = unlimited
+    final int? elegiesPerMonth;    // null = unlimited
+    final int? eventsPerMonth;     // null = unlimited
     final int? boostPerMonth;
     final int? boostPerWeek;
     final bool whoLikedMe;

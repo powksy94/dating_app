@@ -16,7 +16,7 @@ class BoostService {
         return {'available': 0, 'period': null};
     }
 
-    /// Utilise un boost. Retourne {ok, remaining, boostedUntil} ou null si erreur/limite.
+    /// Uses a boost. Returns {ok, remaining, boostedUntil} or null on error/limit reached.
     static Future<Map<String, dynamic>?> useBoost() async {
         try {
             final headers = await ApiService.authHeaders();

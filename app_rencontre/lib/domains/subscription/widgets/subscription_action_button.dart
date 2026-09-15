@@ -61,9 +61,9 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
     try {
       info = await RevenueCatService.purchase(widget.plan.id, widget.period.name);
     } catch (_) {
-      // RevenueCatService.purchase ne renvoie null que pour une annulation ;
-      // toute exception qui remonte ici est une vraie erreur (PurchasesError
-      // ou PlatformException selon comment le SDK natif la remonte).
+      // RevenueCatService.purchase only returns null for a cancellation;
+      // any exception that surfaces here is a real error (PurchasesError
+      // or PlatformException depending on how the native SDK reports it).
       if (mounted) {
         _showSnack(AppLocalizations.of(context)!.subscriptionSnackError, const Color(0xFF7F1D1D));
       }
@@ -73,12 +73,12 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
 
     if (!mounted) return;
     if (info == null) {
-      // Annulé par l'utilisateur — pas de message
+      // Cancelled by the user, no message
       setState(() => _loading = false);
       return;
     }
 
-    // Achat validé par le store → sync backend
+    // Purchase validated by the store, sync backend
     final success = await SubscriptionService.subscribe(widget.plan.id, widget.period.name);
     if (!mounted) return;
     setState(() => _loading = false);

@@ -16,7 +16,7 @@ class SwipeService {
         return {'unlimited': true, 'limit': null, 'remaining': null};
     }
 
-    /// Like un profil via l'API. Retourne {matchId?, limitReached}.
+    /// Likes a profile via the API. Returns {matchId?, limitReached}.
     static Future<Map<String, dynamic>> like(String targetId) async {
         try {
             final headers = await ApiService.authHeaders();
@@ -33,7 +33,7 @@ class SwipeService {
         return {'limitReached': false};
     }
 
-    /// Passe un profil (dislike).
+    /// Passes on a profile (dislike).
     static Future<void> pass(String targetId) async {
         try {
             final headers = await ApiService.authHeaders();
@@ -44,7 +44,7 @@ class SwipeService {
         } catch (_) {}
     }
 
-    /// Annule le dernier like. [forbidden] = true si le plan est insuffisant (403).
+    /// Cancels the last like. [forbidden] = true if the plan is insufficient (403).
     static Future<({String? userId, bool forbidden})> rewind() async {
         try {
             final headers = await ApiService.authHeaders();
@@ -61,8 +61,8 @@ class SwipeService {
         return (userId: null, forbidden: false);
     }
 
-    /// Réinitialise l'historique de likes (garde ceux déjà matchés), pour que
-    /// les profils passés puissent réapparaître dans le feed de découverte.
+    /// Resets the like history (keeps those already matched), so that
+    /// passed profiles can reappear in the discovery feed.
     static Future<bool> resetLikes() async {
         try {
             final headers = await ApiService.authHeaders();
@@ -76,8 +76,8 @@ class SwipeService {
         }
     }
 
-    /// Retourne les profils qui ont liké l'utilisateur courant (Nocturne/Abyssal).
-    /// [forbidden] = true si le plan est insuffisant (403).
+    /// Returns the profiles that liked the current user (Nocturne/Abyssal).
+    /// [forbidden] = true if the plan is insufficient (403).
     static Future<({List<Map<String, dynamic>> profiles, bool forbidden})> getWhoLikedMe() async {
         try {
             final headers = await ApiService.authHeaders();

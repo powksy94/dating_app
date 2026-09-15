@@ -6,7 +6,7 @@ import 'package:nocturne/shared/services/api_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // Reçu en background — Android affiche la notification automatiquement
+  // Received in the background, Android shows the notification automatically
 }
 
 class NotificationService {
@@ -20,29 +20,29 @@ class NotificationService {
       sound:    true,
     );
 
-    // Handler background
+    // Background handler
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    // Token FCM → backend
+    // FCM token -> backend
     final token = await _messaging.getToken();
     // ignore: avoid_print
     print('🔑 FCM TOKEN: $token');
     if (token != null) await _saveToken(token);
 
-    // Token renouvelé
+    // Token renewed
     _messaging.onTokenRefresh.listen(_saveToken);
 
-    // Notification reçue en foreground
+    // Notification received in foreground
     FirebaseMessaging.onMessage.listen((message) {
-      // Le socket gère déjà les messages en temps réel → pas d'action
+      // The socket already handles real-time messages, no action needed
     });
 
-    // Tap sur notification (app en background)
+    // Tap on notification (app in background)
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       _handleNotificationTap(message, navigatorKey);
     });
 
-    // Tap sur notification (app fermée)
+    // Tap on notification (app closed)
     final initial = await _messaging.getInitialMessage();
     if (initial != null) {
       _handleNotificationTap(initial, navigatorKey);

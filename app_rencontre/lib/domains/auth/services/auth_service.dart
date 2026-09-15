@@ -35,7 +35,7 @@ class AuthService {
     throw Exception(data['message']);
   }
 
-  /// Retourne null si succès, sinon le message d'erreur
+  /// Returns null on success, otherwise the error message
   Future<String?> changePassword(String currentPassword, String newPassword) async {
     final headers = await ApiService.authHeaders();
     final res = await http.post(

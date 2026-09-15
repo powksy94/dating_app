@@ -51,7 +51,7 @@ class FirestoreService {
     return [];
   }
 
-  /// Retourne le matchId si c'est un match, null sinon
+  /// Returns the matchId if it's a match, null otherwise
   Future<String?> saveLike(String targetId) async {
     final headers = await ApiService.authHeaders();
     final res = await http.post(

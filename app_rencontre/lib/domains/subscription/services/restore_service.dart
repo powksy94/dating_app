@@ -3,9 +3,9 @@ import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
 
-/// Restaure les achats RevenueCat et synchronise le plan retrouvé avec le backend.
+/// Restores RevenueCat purchases and syncs the recovered plan with the backend.
 class RestoreService {
-    /// Retourne l'id du plan restauré ('nocturne'/'abyssal'), ou `null` si rien à restaurer.
+    /// Returns the id of the restored plan ('nocturne'/'abyssal'), or `null` if there is nothing to restore.
     static Future<String?> restore() async {
         final info = await RevenueCatService.restore();
         final plan = _activePlanFrom(info);

@@ -1,15 +1,15 @@
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 
-/// Prix affiché pour [period] : celui du store RevenueCat si disponible,
-/// sinon la valeur codée en dur de [plan] (repli hors-ligne / avant chargement).
+/// Price displayed for [period]: the RevenueCat store price if available,
+/// otherwise the hardcoded value from [plan] (offline fallback / before loading).
 String livePriceFor(Offering? offering, SubscriptionPeriod period, SubscriptionPlan plan) {
   final package = _packageFor(offering, period);
   return package?.storeProduct.priceString ?? plan.priceFor(period);
 }
 
-// Cherche d'abord via les getters standards RevenueCat, puis par identifiant
-// de package personnalisé — voir la même logique dans RevenueCatService.
+// Looks up via the standard RevenueCat getters first, then by custom
+// package identifier. See the same logic in RevenueCatService.
 Package? _packageFor(Offering? offering, SubscriptionPeriod period) {
   if (offering == null) return null;
   final standard = switch (period) {

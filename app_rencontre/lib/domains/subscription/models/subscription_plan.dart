@@ -65,7 +65,7 @@ class SubscriptionPlan {
     bool get isFree => weekPrice == null;
 }
 
-// ─── Prix ─────────────────────────────────────────────────────────────────────
+// ─── Prices ─────────────────────────────────────────────────────────────────────
 const kNocturneWeekPrice          = '6,99 €';
 const kNocturneMonthPrice         = '27,24 €';
 const kNocturneMonthPriceOriginal = '30,26 €';
@@ -79,7 +79,7 @@ const kAbyssalYearPrice           = '420,44 €';
 const kAbyssalYearPriceOriginal   = '519,07 €';
 // ──────────────────────────────────────────────────────────────────────────────
 
-/// Identifiants des plans, dans l'ordre d'affichage (stable, indépendant de la langue).
+/// Plan identifiers, in display order (stable, language-independent).
 const kSubscriptionPlanIds = ['ombre', 'nocturne', 'abyssal'];
 
 List<SubscriptionPlan> subscriptionPlans(BuildContext context) {

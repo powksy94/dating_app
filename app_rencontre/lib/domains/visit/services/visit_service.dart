@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:nocturne/shared/services/api_service.dart';
 
 class VisitService {
-    /// Liste des visiteurs du profil (30 derniers jours). Nécessite Nocturne/Abyssal.
-    /// [forbidden] = true si le plan est insuffisant (403).
+    /// List of profile visitors (last 30 days). Requires Nocturne/Abyssal.
+    /// [forbidden] = true if the plan is insufficient (403).
     static Future<({List<Map<String, dynamic>> visitors, bool forbidden})> getMyVisitors() async {
         try {
             final headers = await ApiService.authHeaders();

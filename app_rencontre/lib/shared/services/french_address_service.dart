@@ -13,9 +13,9 @@ AddressResult _fromFeature(Map<String, dynamic> feature) {
   );
 }
 
-/// Géocodage via l'API Adresse du gouvernement français (api-adresse.data.gouv.fr) :
-/// gratuite, sans clé, et beaucoup plus précise que Nominatim sur les adresses
-/// françaises. Ne renvoie rien pour une adresse hors de France.
+/// Geocoding via the French government's Adresse API (api-adresse.data.gouv.fr):
+/// free, no API key required, and much more precise than Nominatim for
+/// French addresses. Returns nothing for an address outside of France.
 class FrenchAddressService {
   static Future<List<AddressResult>> search(String query) async {
     if (query.length < 3) return [];

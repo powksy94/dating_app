@@ -116,7 +116,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                         ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
                         const SizedBox(height: 32),
 
-                        // TRANCHE D'ÂGE
+                        // AGE RANGE
                         Text(
                             l.authAgeRangeLabel(_ageRange.start.round(), _ageRange.end.round()),
                             style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
@@ -133,7 +133,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                         ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
                         const SizedBox(height: 24),
 
-                        // DISTANCE MAX
+                        // MAX DISTANCE
                         Text(
                             l.authMaxDistanceLabel(_maxDistance.round()),
                             style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,
@@ -150,7 +150,7 @@ class _StepPreferencesState extends State<StepPreferences> {
                         ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
                         const SizedBox(height: 24),
 
-                        // GENRE RECHERCHÉ
+                        // GENDER SOUGHT
                         Text(
                             l.authLabelGenderPreferences,
                             style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12,

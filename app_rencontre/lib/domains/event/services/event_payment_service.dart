@@ -3,8 +3,8 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:nocturne/shared/services/api_service.dart';
 
-/// Paye un évènement payant via la Payment Sheet Stripe, puis confirme
-/// l'inscription côté backend une fois le paiement réussi.
+/// Pays for a paid event via the Stripe Payment Sheet, then confirms
+/// the registration on the backend side once the payment succeeds.
 class EventPaymentService {
   static Future<bool> pay(String eventId) async {
     final clientSecret = await _createPaymentIntent(eventId);

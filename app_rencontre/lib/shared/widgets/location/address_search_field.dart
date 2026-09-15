@@ -39,7 +39,7 @@ class _AddressSearchFieldState extends State<AddressSearchField> {
   Future<void> _search(String query) async {
     setState(() => _searching = true);
     final results = await AddressSearchService.search(query);
-    // Ignore une réponse arrivée en retard si le texte a changé depuis.
+    // Ignore a response that arrived late if the text has changed since.
     if (!mounted || query != _ctrl.text) return;
     setState(() { _suggestions = results; _searching = false; });
   }

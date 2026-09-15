@@ -31,7 +31,7 @@ class _RegisterSheetState extends State<RegisterSheet> {
         backgroundColor: const Color(0xFF7F1D1D),
       ));
     }
-    // En cas de succès, onConfirm ferme déjà la feuille lui-même.
+    // On success, onConfirm already closes the sheet itself.
   }
 
   @override

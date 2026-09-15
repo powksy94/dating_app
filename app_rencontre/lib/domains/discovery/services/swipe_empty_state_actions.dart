@@ -4,7 +4,7 @@ import 'package:nocturne/domains/discovery/services/swipe_service.dart';
 import 'package:nocturne/domains/profile/views/profil_edit_page.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 
-/// Actions proposées depuis l'écran vide de découverte (plus de profils).
+/// Actions offered from the discovery empty state screen (no more profiles).
 class SwipeEmptyStateActions {
   final BuildContext context;
   final VoidCallback onProfilesChanged;

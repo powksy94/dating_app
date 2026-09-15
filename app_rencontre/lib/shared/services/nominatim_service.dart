@@ -17,8 +17,8 @@ AddressResult _fromNominatimJson(Map<String, dynamic> j) {
   );
 }
 
-/// Géocodage mondial via OpenStreetMap. Couverture globale mais moins précis
-/// que les API nationales dédiées (ex: l'API Adresse française).
+/// Worldwide geocoding via OpenStreetMap. Global coverage but less precise
+/// than dedicated national APIs (e.g. the French Adresse API).
 class NominatimService {
   static Future<List<AddressResult>> search(String query) async {
     if (query.length < 3) return [];

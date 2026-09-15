@@ -49,7 +49,7 @@ class _ProfilePhotoViewerState extends State<ProfilePhotoViewer> {
           child: SafeArea(
             child: Center(
               child: GestureDetector(
-                // absorbe le tap sur la carte pour ne pas fermer
+                // absorb the tap on the card so it does not close
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -110,7 +110,7 @@ class _ProfilePhotoViewerState extends State<ProfilePhotoViewer> {
                             },
                           ),
 
-                          // Points en bas
+                          // Dots at the bottom
                           Positioned(
                             bottom: 16,
                             left: 0,
