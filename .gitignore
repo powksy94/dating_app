@@ -1,5 +1,10 @@
 app_rencontre_backend/
 
+# Docs techniques de features en cours de réflexion, et PDFs partagés
+# ponctuellement en conversation — restent locaux, jamais commités.
+dev_features/
+/*.pdf
+
 # Android — fichiers locaux et signing
 **/android/local.properties
 **/android/key.properties
