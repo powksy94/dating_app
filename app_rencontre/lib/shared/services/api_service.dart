@@ -1,9 +1,19 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-    static const String baseUrl = 'https://datingappbackend-production-a9e3.up.railway.app/api';
+    static const String _prodBaseUrl = 'https://datingappbackend-production-a9e3.up.railway.app/api';
+
+    // Un build de release pointe toujours sur la prod, sans exception possible.
+    // En debug (flutter run), utilise par défaut l'adresse de l'émulateur Android
+    // vers l'hôte (10.0.2.2) ; pour tester sur un vrai téléphone sur le même
+    // réseau, passe l'IP locale de la machine de dev :
+    //   flutter run --dart-define=API_BASE_URL=http://<ip-locale>:3000/api
+    static const String baseUrl = kReleaseMode
+        ? _prodBaseUrl
+        : String.fromEnvironment('API_BASE_URL', defaultValue: 'http://10.0.2.2:3000/api');
 
     // ── Token access ─────────────────────────────────────────────────────────────
 
