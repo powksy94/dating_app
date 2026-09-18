@@ -1,23 +1,17 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:nocturne/shared/services/api_service.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 class AppVersionService {
-  /// Returns false on any failure: a broken check must never lock users out.
-  static Future<bool> isUpdateRequired() async {
+  // Play only reports updates for builds installed from the Play Store, so this
+  // lets you preview the dialog in debug: --dart-define=FORCE_UPDATE_DIALOG=true
+  static const _forceUpdateDialog = bool.fromEnvironment('FORCE_UPDATE_DIALOG');
+
+  /// Asks Google Play whether a newer version is published for this install.
+  /// Returns false on any failure: a broken check must never block users.
+  static Future<bool> isUpdateAvailable() async {
+    if (_forceUpdateDialog) return true;
     try {
-      final info = await PackageInfo.fromPlatform();
-      final installedBuild = int.tryParse(info.buildNumber);
-      if (installedBuild == null) return false;
-
-      final res = await http
-          .get(Uri.parse('${ApiService.baseUrl}/app/version'))
-          .timeout(const Duration(seconds: 5));
-      if (res.statusCode != 200) return false;
-
-      final minBuild = (jsonDecode(res.body)['minBuild'] as num?)?.toInt() ?? 0;
-      return installedBuild < minBuild;
+      final info = await InAppUpdate.checkForUpdate();
+      return info.updateAvailability == UpdateAvailability.updateAvailable;
     } catch (_) {
       return false;
     }

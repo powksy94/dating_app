@@ -7,7 +7,7 @@ import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/app_version_service.dart';
-import 'package:nocturne/shared/views/update_required_page.dart';
+import 'package:nocturne/shared/widgets/common/update_available_dialog.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/shared/services/unread_service.dart';
@@ -22,7 +22,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> with WidgetsBindingObserver {
   bool _obscured = false;
-  bool _updateScreenShown = false;
+  bool _updateDialogShown = false;
 
   @override
   void initState() {
@@ -31,18 +31,16 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     ScreenProtector.protectDataLeakageOn();
     NotificationService.init(widget.navigatorKey);
     UnreadService.refresh();
-    _checkForRequiredUpdate();
+    _checkForUpdate();
   }
 
-  Future<void> _checkForRequiredUpdate() async {
-    if (_updateScreenShown) return;
-    if (!await AppVersionService.isUpdateRequired()) return;
-    if (_updateScreenShown) return;
-    _updateScreenShown = true;
-    widget.navigatorKey.currentState?.pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const UpdateRequiredPage()),
-      (_) => false,
-    );
+  Future<void> _checkForUpdate() async {
+    if (_updateDialogShown) return;
+    if (!await AppVersionService.isUpdateAvailable()) return;
+    final navigatorContext = widget.navigatorKey.currentContext;
+    if (navigatorContext == null || !navigatorContext.mounted || _updateDialogShown) return;
+    _updateDialogShown = true;
+    showUpdateAvailableDialog(navigatorContext);
   }
 
   @override
@@ -60,7 +58,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     // and the multitasking preview are already blocked by FLAG_SECURE via
     // ScreenProtector.protectDataLeakageOn().
     setState(() => _obscured = state == AppLifecycleState.paused);
-    if (state == AppLifecycleState.resumed) _checkForRequiredUpdate();
+    if (state == AppLifecycleState.resumed) _checkForUpdate();
   }
 
   @override
