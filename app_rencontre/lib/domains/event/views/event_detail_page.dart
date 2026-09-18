@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/event/event_feature_flags.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
+import 'package:nocturne/shared/widgets/common/coming_soon_dialog.dart';
 import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/domains/event/widgets/event_attendees_widget.dart';
 import 'package:nocturne/shared/widgets/common/section_block.dart';
@@ -28,6 +30,11 @@ class _EventDetailPageState extends State<EventDetailPage> {
   }
 
   Future<void> _showRegisterSheet() async {
+    if (!kPaidEventsEnabled && !_event.isFree && !_event.isAttending) {
+      showComingSoonDialog(context,
+          message: AppLocalizations.of(context)!.eventPaidComingSoonBody);
+      return;
+    }
     if (!_event.isAttending) {
       final status = await EventService.getStatus();
       if (!mounted) return;

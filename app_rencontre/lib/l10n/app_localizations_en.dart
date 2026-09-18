@@ -15,6 +15,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonGenericError => 'Something went wrong, try again.';
 
   @override
+  String get commonComingSoon => 'Coming soon';
+
+  @override
+  String get commonBtnOk => 'OK';
+
+  @override
+  String get eventPaidComingSoonBody =>
+      'Paid events are coming soon. For now, you can create and join free events.';
+
+  @override
   String get visitorsTitle => 'VISITORS';
 
   @override

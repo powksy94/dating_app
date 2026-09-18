@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/event/event_feature_flags.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
+import 'package:nocturne/shared/widgets/common/coming_soon_dialog.dart';
 import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/domains/profile/services/favorites_service.dart';
 import 'package:nocturne/domains/event/widgets/event_attendees_widget.dart';
@@ -44,6 +46,11 @@ class _EventCardState extends State<EventCard> {
   }
 
   Future<void> _toggleAttend() async {
+    if (!kPaidEventsEnabled && !_event.isFree && !_event.isAttending) {
+      showComingSoonDialog(context,
+          message: AppLocalizations.of(context)!.eventPaidComingSoonBody);
+      return;
+    }
     setState(() => _loadingAttend = true);
     final success = _event.isAttending
         ? await EventService.unattendEvent(_event.id)

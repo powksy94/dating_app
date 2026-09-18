@@ -110,6 +110,24 @@ abstract class AppLocalizations {
   /// **'Something went wrong, try again.'**
   String get commonGenericError;
 
+  /// No description provided for @commonComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get commonComingSoon;
+
+  /// No description provided for @commonBtnOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get commonBtnOk;
+
+  /// No description provided for @eventPaidComingSoonBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid events are coming soon. For now, you can create and join free events.'**
+  String get eventPaidComingSoonBody;
+
   /// No description provided for @visitorsTitle.
   ///
   /// In en, this message translates to:

@@ -2,6 +2,9 @@
     "@@locale": "en",
     "appTitle": "Nocturne",
     "commonGenericError": "Something went wrong, try again.",
+    "commonComingSoon": "Coming soon",
+    "commonBtnOk": "OK",
+    "eventPaidComingSoonBody": "Paid events are coming soon. For now, you can create and join free events.",
     "@appTitle": {
         "description": "Application title"
     },

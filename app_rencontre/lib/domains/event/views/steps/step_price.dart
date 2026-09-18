@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/event/event_feature_flags.dart';
+import 'package:nocturne/shared/widgets/common/coming_soon_dialog.dart';
 
 class StepPrice extends StatefulWidget {
   final Future<void> Function(Map<String, dynamic>) onSubmit;
@@ -56,8 +58,13 @@ class _StepPriceState extends State<StepPrice> {
               _toggle(l.eventPriceFree, _isFree,
                   () => setState(() => _isFree = true)),
               const SizedBox(width: 12),
-              _toggle(l.eventTogglePaid, !_isFree,
-                  () => setState(() => _isFree = false)),
+              _toggle(l.eventTogglePaid, !_isFree, () {
+                if (!kPaidEventsEnabled) {
+                  showComingSoonDialog(context, message: l.eventPaidComingSoonBody);
+                  return;
+                }
+                setState(() => _isFree = false);
+              }),
             ],
           ),
           if (!_isFree) ...[

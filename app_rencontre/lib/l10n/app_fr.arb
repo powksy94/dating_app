@@ -2,6 +2,9 @@
     "@@locale": "fr",
     "appTitle": "Nocturne",
     "commonGenericError": "Une erreur est survenue, réessaie.",
+    "commonComingSoon": "Bientôt disponible",
+    "commonBtnOk": "OK",
+    "eventPaidComingSoonBody": "Les événements payants arrivent bientôt. Pour l'instant, tu peux créer et rejoindre des événements gratuits.",
 
     "visitorsTitle": "VISITEURS",
     "visitorsEmptyState": "Personne n'a encore visité ton profil",
