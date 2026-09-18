@@ -21,9 +21,7 @@ class SubscriptionPlan {
     final String? badge;
     final String? weekPrice;
     final String? monthPrice;
-    final String? monthPriceOriginal;
     final String? yearPrice;
-    final String? yearPriceOriginal;
     final List<SubscriptionFeature> features;
     final PlanLimits limits;
     final String freeLabel;
@@ -37,9 +35,7 @@ class SubscriptionPlan {
         this.badge,
         required this.weekPrice,
         required this.monthPrice,
-        this.monthPriceOriginal,
         required this.yearPrice,
-        this.yearPriceOriginal,
         required this.features,
         required this.limits,
         required this.freeLabel,
@@ -54,29 +50,19 @@ class SubscriptionPlan {
         }
     }
 
-    String? originalPriceFor(SubscriptionPeriod period) {
-        switch (period) {
-            case SubscriptionPeriod.week:  return null;
-            case SubscriptionPeriod.month: return monthPriceOriginal;
-            case SubscriptionPeriod.year:  return yearPriceOriginal;
-        }
-    }
-
     bool get isFree => weekPrice == null;
 }
 
-// ─── Prices ─────────────────────────────────────────────────────────────────────
+// ─── Fallback prices ────────────────────────────────────────────────────────────
+// Only shown before the store offering loads or when offline. The real,
+// localized prices come from RevenueCat (see livePriceFor).
 const kNocturneWeekPrice          = '6,99 €';
 const kNocturneMonthPrice         = '27,24 €';
-const kNocturneMonthPriceOriginal = '30,26 €';
 const kNocturneYearPrice          = '294,19 €';
-const kNocturneYearPriceOriginal  = '363,48 €';
 
 const kAbyssalWeekPrice           = '9,99 €';
 const kAbyssalMonthPrice          = '38,93 €';
-const kAbyssalMonthPriceOriginal  = '43,26 €';
 const kAbyssalYearPrice           = '420,44 €';
-const kAbyssalYearPriceOriginal   = '519,07 €';
 // ──────────────────────────────────────────────────────────────────────────────
 
 /// Plan identifiers, in display order (stable, language-independent).
@@ -105,8 +91,7 @@ List<SubscriptionPlan> subscriptionPlans(BuildContext context) {
             id: 'nocturne', name: l.subscriptionPlanNocturne, color: const Color(0xFF4A0072), accentColor: const Color(0xFF7B00D4),
             icon: Icons.nightlight, badge: l.subscriptionBadgePopular,
             weekPrice: kNocturneWeekPrice, monthPrice: kNocturneMonthPrice,
-            monthPriceOriginal: kNocturneMonthPriceOriginal,
-            yearPrice: kNocturneYearPrice, yearPriceOriginal: kNocturneYearPriceOriginal,
+            yearPrice: kNocturneYearPrice,
             limits: kNocturneLimits,
             freeLabel: l.subscriptionPriceFree,
             features: [
@@ -124,8 +109,7 @@ List<SubscriptionPlan> subscriptionPlans(BuildContext context) {
             id: 'abyssal', name: l.subscriptionPlanAbyssal, color: const Color(0xFF1A0A1F), accentColor: const Color(0xFFD400FF),
             icon: Icons.auto_awesome,
             weekPrice: kAbyssalWeekPrice, monthPrice: kAbyssalMonthPrice,
-            monthPriceOriginal: kAbyssalMonthPriceOriginal,
-            yearPrice: kAbyssalYearPrice, yearPriceOriginal: kAbyssalYearPriceOriginal,
+            yearPrice: kAbyssalYearPrice,
             limits: kAbyssalLimits,
             freeLabel: l.subscriptionPriceFree,
             features: [

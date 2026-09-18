@@ -19,11 +19,3 @@ String periodLabel(BuildContext context, SubscriptionPeriod p) {
         case SubscriptionPeriod.year:  return '/${periodName(context, p)}';
     }
 }
-
-String? periodSavings(SubscriptionPeriod p) {
-    switch (p) {
-        case SubscriptionPeriod.week:  return null;
-        case SubscriptionPeriod.month: return '-10 %';
-        case SubscriptionPeriod.year:  return '-19 %';
-    }
-}

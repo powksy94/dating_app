@@ -27,40 +27,24 @@ class PeriodSelector extends StatelessWidget {
       child: Row(
         children: SubscriptionPeriod.values.map((p) {
           final isSelected = selected == p;
-          final savings = periodSavings(p);
           return Expanded(
             child: GestureDetector(
               onTap: () => onChanged(p),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
                   color: isSelected ? accentColor : Colors.transparent,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      _capitalize(periodName(context, p)),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : const Color(0xFFAA9AB5),
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      savings ?? '',
-                      style: TextStyle(
-                        color: isSelected
-                            ? Colors.white.withValues(alpha: 0.8)
-                            : const Color(0xFF7B00D4),
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  _capitalize(periodName(context, p)),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : const Color(0xFFAA9AB5),
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

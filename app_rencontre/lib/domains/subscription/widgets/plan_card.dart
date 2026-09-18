@@ -77,16 +77,6 @@ class PlanCard extends StatelessWidget {
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                if (plan.originalPriceFor(period) != null)
-                                    Text(
-                                        plan.originalPriceFor(period)!,
-                                        style: const TextStyle(
-                                            color: Color(0xFF5A4A6A),
-                                            fontSize: 16,
-                                            decoration: TextDecoration.lineThrough,
-                                            decorationColor: Color(0xFF5A4A6A),
-                                        ),
-                                    ),
                                 Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
