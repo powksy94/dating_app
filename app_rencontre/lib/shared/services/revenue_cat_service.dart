@@ -4,7 +4,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 class RevenueCatService {
   // ─── RevenueCat Android key ───────────────────────────────────────────────
   // https://app.revenuecat.com -> Project Settings -> API Keys
-  static const _androidApiKey = 'test_wFoEiRuXtBbsNTGhyWgugNPVEEO';
+  static const _androidApiKey = 'goog_BLKdMGiGTqXqcpHbJbyIlXmnAMQ';
 
   // ──────────────────────────────────────────────────────────────────────────
 
