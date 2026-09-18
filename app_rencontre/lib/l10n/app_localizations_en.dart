@@ -21,6 +21,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonBtnOk => 'OK';
 
   @override
+  String get updateRequiredTitle => 'Update required';
+
+  @override
+  String get updateRequiredBody =>
+      'A new version of Nocturne is available. Update the app to continue.';
+
+  @override
+  String get updateRequiredBtn => 'Update';
+
+  @override
   String get eventPaidComingSoonBody =>
       'Paid events are coming soon. For now, you can create and join free events.';
 

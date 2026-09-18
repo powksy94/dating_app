@@ -122,6 +122,24 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get commonBtnOk;
 
+  /// No description provided for @updateRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get updateRequiredTitle;
+
+  /// No description provided for @updateRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of Nocturne is available. Update the app to continue.'**
+  String get updateRequiredBody;
+
+  /// No description provided for @updateRequiredBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateRequiredBtn;
+
   /// No description provided for @eventPaidComingSoonBody.
   ///
   /// In en, this message translates to:

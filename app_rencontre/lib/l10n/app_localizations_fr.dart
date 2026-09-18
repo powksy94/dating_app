@@ -21,6 +21,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonBtnOk => 'OK';
 
   @override
+  String get updateRequiredTitle => 'Mise à jour requise';
+
+  @override
+  String get updateRequiredBody =>
+      'Une nouvelle version de Nocturne est disponible. Mets l\'application à jour pour continuer.';
+
+  @override
+  String get updateRequiredBtn => 'Mettre à jour';
+
+  @override
   String get eventPaidComingSoonBody =>
       'Les événements payants arrivent bientôt. Pour l\'instant, tu peux créer et rejoindre des événements gratuits.';
 

@@ -4,6 +4,9 @@
     "commonGenericError": "Something went wrong, try again.",
     "commonComingSoon": "Coming soon",
     "commonBtnOk": "OK",
+    "updateRequiredTitle": "Update required",
+    "updateRequiredBody": "A new version of Nocturne is available. Update the app to continue.",
+    "updateRequiredBtn": "Update",
     "eventPaidComingSoonBody": "Paid events are coming soon. For now, you can create and join free events.",
     "@appTitle": {
         "description": "Application title"

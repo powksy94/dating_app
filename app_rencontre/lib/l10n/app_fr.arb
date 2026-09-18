@@ -4,6 +4,9 @@
     "commonGenericError": "Une erreur est survenue, réessaie.",
     "commonComingSoon": "Bientôt disponible",
     "commonBtnOk": "OK",
+    "updateRequiredTitle": "Mise à jour requise",
+    "updateRequiredBody": "Une nouvelle version de Nocturne est disponible. Mets l'application à jour pour continuer.",
+    "updateRequiredBtn": "Mettre à jour",
     "eventPaidComingSoonBody": "Les événements payants arrivent bientôt. Pour l'instant, tu peux créer et rejoindre des événements gratuits.",
 
     "visitorsTitle": "VISITEURS",
