@@ -1410,6 +1410,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBandAlreadyAdded => 'This band is already in your list.';
 
   @override
+  String get profileBandNotAllowed => 'This band name isn\'t allowed.';
+
+  @override
   String get profileErrorSelectAddress => 'Select an address';
 
   @override

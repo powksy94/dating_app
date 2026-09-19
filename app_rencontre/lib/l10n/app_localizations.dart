@@ -2654,6 +2654,12 @@ abstract class AppLocalizations {
   /// **'This band is already in your list.'**
   String get profileBandAlreadyAdded;
 
+  /// No description provided for @profileBandNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'This band name isn\'t allowed.'**
+  String get profileBandNotAllowed;
+
   /// No description provided for @profileErrorSelectAddress.
   ///
   /// In en, this message translates to:

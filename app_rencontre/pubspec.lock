@@ -1117,6 +1117,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.7"
+  safe_text:
+    dependency: "direct main"
+    description:
+      name: safe_text
+      sha256: "92ec95579cd4c889419c61391bfbecdc30b7285bb97496e96bdf3a1ae248eb4c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   screen_protector:
     dependency: "direct main"
     description:

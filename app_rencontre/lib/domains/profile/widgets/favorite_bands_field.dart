@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/core/band_moderation.dart';
 import 'package:nocturne/core/band_name.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/widgets/band_chip.dart';
+import 'package:nocturne/domains/profile/widgets/band_text_field.dart';
 import 'package:nocturne/domains/profile/widgets/bands_delete_toggle.dart';
 
 /// Favorite bands entry: type a name, press add (or the keyboard action) and it
 /// becomes a pastille. A name is free text, so it may contain a comma. A band
-/// that is already in the list is refused whatever its case or spacing. The
-/// trash button switches to delete mode, where each pastille can be removed.
+/// that is already in the list is refused whatever its case or spacing, and so
+/// is a name with an insult or a link. The trash button switches to delete
+/// mode, where each pastille can be removed.
 class FavoriteBandsField extends StatefulWidget {
   final List<String> bands;
   final ValueChanged<List<String>> onChanged;
@@ -27,8 +30,16 @@ class FavoriteBandsField extends StatefulWidget {
 class _FavoriteBandsFieldState extends State<FavoriteBandsField> {
   static const _maxLength = 60;
   final _controller = TextEditingController();
-  bool _duplicate = false;
+  String? _error;
   bool _deleteMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Building the word lists takes a moment: do it once the screen is shown,
+    // not before, so opening the screen does not stall.
+    WidgetsBinding.instance.addPostFrameCallback((_) => prepareBandModeration());
+  }
 
   @override
   void dispose() {
@@ -39,8 +50,13 @@ class _FavoriteBandsFieldState extends State<FavoriteBandsField> {
   void _add() {
     final name = _controller.text.trim().replaceAll(RegExp(r'\s+'), ' ');
     if (bandKey(name).isEmpty) return;
+    final l = AppLocalizations.of(context)!;
     if (containsBand(widget.bands, name)) {
-      setState(() => _duplicate = true);
+      setState(() => _error = l.profileBandAlreadyAdded);
+      return;
+    }
+    if (isBandNameRefused(name)) {
+      setState(() => _error = l.profileBandNotAllowed);
       return;
     }
     widget.onChanged([...widget.bands, name]);
@@ -53,14 +69,8 @@ class _FavoriteBandsFieldState extends State<FavoriteBandsField> {
     widget.onChanged(remaining);
   }
 
-  OutlineInputBorder _border(Color color) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: color),
-      );
-
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,28 +78,15 @@ class _FavoriteBandsFieldState extends State<FavoriteBandsField> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: TextField(
+              child: BandTextField(
                 controller: _controller,
+                hint: widget.hint,
+                errorText: _error,
                 maxLength: _maxLength,
-                textInputAction: TextInputAction.done,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
                 onChanged: (_) {
-                  if (_duplicate) setState(() => _duplicate = false);
+                  if (_error != null) setState(() => _error = null);
                 },
-                onSubmitted: (_) => _add(),
-                decoration: InputDecoration(
-                  hintText: widget.hint,
-                  hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
-                  errorText: _duplicate ? l.profileBandAlreadyAdded : null,
-                  counterText: '',
-                  filled: true,
-                  fillColor: const Color(0xFF1A0A1F),
-                  border: _border(const Color(0xFF3D2A4A)),
-                  enabledBorder: _border(const Color(0xFF3D2A4A)),
-                  focusedBorder: _border(const Color(0xFF7B00D4)),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                ),
+                onSubmitted: _add,
               ),
             ),
             const SizedBox(width: 4),

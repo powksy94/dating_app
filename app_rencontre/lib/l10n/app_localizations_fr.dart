@@ -1419,6 +1419,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileBandAlreadyAdded => 'Ce groupe est déjà dans ta liste.';
 
   @override
+  String get profileBandNotAllowed => 'Ce nom de groupe n\'est pas autorisé.';
+
+  @override
   String get profileErrorSelectAddress => 'Sélectionne une adresse';
 
   @override

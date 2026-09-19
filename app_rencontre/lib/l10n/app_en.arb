@@ -597,6 +597,7 @@
     "profileSectionFavoriteBandsCaps": "FAVORITE ARTISTS",
     "profileHintBands": "One band at a time, e.g. Bauhaus",
     "profileBandAlreadyAdded": "This band is already in your list.",
+    "profileBandNotAllowed": "This band name isn't allowed.",
 
     "profileErrorSelectAddress": "Select an address",
     "profileSnackLocationUpdated": "Location updated!",

@@ -497,6 +497,7 @@
     "profileSectionFavoriteBandsCaps": "ARTISTES FAVORIS",
     "profileHintBands": "Un groupe à la fois, ex. : Bauhaus",
     "profileBandAlreadyAdded": "Ce groupe est déjà dans ta liste.",
+    "profileBandNotAllowed": "Ce nom de groupe n'est pas autorisé.",
 
     "profileErrorSelectAddress": "Sélectionne une adresse",
     "profileSnackLocationUpdated": "Localisation mise à jour !",
