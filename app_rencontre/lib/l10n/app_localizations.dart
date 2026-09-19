@@ -1679,7 +1679,7 @@ abstract class AppLocalizations {
   /// No description provided for @authHintBands.
   ///
   /// In en, this message translates to:
-  /// **'E.g: The Cure, Bauhaus...'**
+  /// **'One band at a time, e.g. The Cure'**
   String get authHintBands;
 
   /// No description provided for @authLocationPermissionDenied.
@@ -2645,8 +2645,14 @@ abstract class AppLocalizations {
   /// No description provided for @profileHintBands.
   ///
   /// In en, this message translates to:
-  /// **'Bauhaus, The Cure, Depeche Mode...'**
+  /// **'One band at a time, e.g. Bauhaus'**
   String get profileHintBands;
+
+  /// No description provided for @profileBandAlreadyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'This band is already in your list.'**
+  String get profileBandAlreadyAdded;
 
   /// No description provided for @profileErrorSelectAddress.
   ///

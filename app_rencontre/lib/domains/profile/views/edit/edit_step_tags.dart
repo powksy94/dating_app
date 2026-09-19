@@ -4,6 +4,7 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/shared/widgets/common/tag_section.dart';
+import 'package:nocturne/domains/profile/widgets/favorite_bands_field.dart';
 
 class EditStepTags extends StatefulWidget {
   final AlternativeProfile profile;
@@ -20,7 +21,7 @@ class _EditStepTagsState extends State<EditStepTags> {
   late List<String> _intensity;
   late List<String> _eras;
   late List<String> _discovery;
-  late final TextEditingController _bandsCtrl;
+  late List<String> _bands;
   bool _saving = false;
 
   @override
@@ -32,14 +33,7 @@ class _EditStepTagsState extends State<EditStepTags> {
     _intensity  = List.from(widget.profile.soundIntensity);
     _eras       = List.from(widget.profile.musicEras);
     _discovery  = List.from(widget.profile.discoveryFormats);
-    _bandsCtrl  = TextEditingController(
-        text: widget.profile.favoriteBands.join(', '));
-  }
-
-  @override
-  void dispose() {
-    _bandsCtrl.dispose();
-    super.dispose();
+    _bands      = List.from(widget.profile.favoriteBands);
   }
 
   void _toggle(List<String> list, bool add, String tag) =>
@@ -55,11 +49,7 @@ class _EditStepTagsState extends State<EditStepTags> {
         'soundIntensity':   _intensity,
         'musicEras':        _eras,
         'discoveryFormats': _discovery,
-        'favoriteBands': _bandsCtrl.text
-            .split(',')
-            .map((s) => s.trim())
-            .where((s) => s.isNotEmpty)
-            .toList(),
+        'favoriteBands':    _bands,
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -138,24 +128,10 @@ class _EditStepTagsState extends State<EditStepTags> {
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2)),
           const SizedBox(height: 6),
-          TextField(
-            controller: _bandsCtrl,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
-            decoration: InputDecoration(
-              hintText: l.profileHintBands,
-              hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
-              filled: true,
-              fillColor: const Color(0xFF1A0A1F),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF3D2A4A))),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF3D2A4A))),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF7B00D4))),
-            ),
+          FavoriteBandsField(
+            bands: _bands,
+            hint: l.profileHintBands,
+            onChanged: (bands) => setState(() => _bands = bands),
           ),
           const SizedBox(height: 32),
           SizedBox(

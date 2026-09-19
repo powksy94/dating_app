@@ -361,7 +361,7 @@
     "authSectionMusicEras": "Era",
     "authSectionDiscoveryFormats": "Music discovery",
     "authSectionFavoriteBands": "Favorite bands / artists (optional)",
-    "authHintBands": "E.g: The Cure, Bauhaus...",
+    "authHintBands": "One band at a time, e.g. The Cure",
 
     "authLocationPermissionDenied": "Permission denied. You can skip this step",
     "authLocationError": "Couldn't get your location. You can skip this step.",
@@ -595,7 +595,8 @@
     "profileSubtitleEra": "Your generational nostalgia",
     "profileSubtitleDiscovery": "Your listening habits",
     "profileSectionFavoriteBandsCaps": "FAVORITE ARTISTS",
-    "profileHintBands": "Bauhaus, The Cure, Depeche Mode...",
+    "profileHintBands": "One band at a time, e.g. Bauhaus",
+    "profileBandAlreadyAdded": "This band is already in your list.",
 
     "profileErrorSelectAddress": "Select an address",
     "profileSnackLocationUpdated": "Location updated!",

@@ -297,7 +297,7 @@
     "authSectionMusicEras": "Époque",
     "authSectionDiscoveryFormats": "Découverte musicale",
     "authSectionFavoriteBands": "Groupes / Artistes favoris (optionnel)",
-    "authHintBands": "Ex: The Cure, Bauhaus...",
+    "authHintBands": "Un groupe à la fois, ex. : The Cure",
 
     "authLocationPermissionDenied": "Permission refusée. Tu peux passer cette étape",
     "authLocationError": "Impossible d'obtenir la position. Tu peux passer cette étape.",
@@ -495,7 +495,8 @@
     "profileSubtitleEra": "Ta nostalgie générationnelle",
     "profileSubtitleDiscovery": "Tes habitudes d'écoute",
     "profileSectionFavoriteBandsCaps": "ARTISTES FAVORIS",
-    "profileHintBands": "Bauhaus, The Cure, Depeche Mode...",
+    "profileHintBands": "Un groupe à la fois, ex. : Bauhaus",
+    "profileBandAlreadyAdded": "Ce groupe est déjà dans ta liste.",
 
     "profileErrorSelectAddress": "Sélectionne une adresse",
     "profileSnackLocationUpdated": "Localisation mise à jour !",

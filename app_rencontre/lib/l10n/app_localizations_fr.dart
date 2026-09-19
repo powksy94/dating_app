@@ -877,7 +877,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Groupes / Artistes favoris (optionnel)';
 
   @override
-  String get authHintBands => 'Ex: The Cure, Bauhaus...';
+  String get authHintBands => 'Un groupe à la fois, ex. : The Cure';
 
   @override
   String get authLocationPermissionDenied =>
@@ -1413,7 +1413,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileSectionFavoriteBandsCaps => 'ARTISTES FAVORIS';
 
   @override
-  String get profileHintBands => 'Bauhaus, The Cure, Depeche Mode...';
+  String get profileHintBands => 'Un groupe à la fois, ex. : Bauhaus';
+
+  @override
+  String get profileBandAlreadyAdded => 'Ce groupe est déjà dans ta liste.';
 
   @override
   String get profileErrorSelectAddress => 'Sélectionne une adresse';
