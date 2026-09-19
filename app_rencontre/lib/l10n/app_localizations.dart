@@ -1784,12 +1784,6 @@ abstract class AppLocalizations {
   /// **'Delete account'**
   String get settingsBtnDeleteAccount;
 
-  /// No description provided for @settingsSectionDiscovery.
-  ///
-  /// In en, this message translates to:
-  /// **'Discovery'**
-  String get settingsSectionDiscovery;
-
   /// No description provided for @settingsLabelMaxDistance.
   ///
   /// In en, this message translates to:

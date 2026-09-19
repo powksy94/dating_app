@@ -320,7 +320,6 @@
     "settingsBtnLogout": "Se déconnecter",
     "settingsBtnDeleteAccount": "Supprimer le compte",
 
-    "settingsSectionDiscovery": "Découverte",
     "settingsLabelMaxDistance": "Distance max",
     "settingsValueKm": "{km} km",
     "settingsLabelAgeRange": "Tranche d'âge",

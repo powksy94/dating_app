@@ -384,7 +384,6 @@
     "settingsBtnLogout": "Log out",
     "settingsBtnDeleteAccount": "Delete account",
 
-    "settingsSectionDiscovery": "Discovery",
     "settingsLabelMaxDistance": "Max distance",
     "settingsValueKm": "{km} km",
     "@settingsValueKm": {

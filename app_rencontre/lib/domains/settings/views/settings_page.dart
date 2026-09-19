@@ -4,7 +4,6 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/settings/sections/notifications_section.dart';
-import 'package:nocturne/domains/settings/sections/discovery_section.dart';
 import 'package:nocturne/domains/settings/sections/privacy_section.dart';
 import 'package:nocturne/domains/settings/sections/account_section.dart';
 import 'package:nocturne/domains/settings/sections/about_section.dart';
@@ -25,8 +24,6 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _notifMessages  = true;
   bool _notifElegies   = true;
   bool _profileVisible = true;
-  double _maxDistance  = 50;
-  RangeValues _ageRange = const RangeValues(18, 45);
   String _username = '';
   AlternativeProfile? _profile;
   bool _loading = true;
@@ -52,11 +49,6 @@ class _SettingsPageState extends State<SettingsPage> {
       _notifMessages   = prefs.getBool('notif_messages')   ?? true;
       _notifElegies    = prefs.getBool('notif_elegies')    ?? true;
       _profileVisible  = prefs.getBool('profile_visible')  ?? true;
-      _maxDistance     = prefs.getDouble('max_distance')   ?? 50;
-      _ageRange = RangeValues(
-        prefs.getDouble('age_min') ?? 18,
-        prefs.getDouble('age_max') ?? 45,
-      );
       _loading = false;
     });
   }
@@ -64,11 +56,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _saveBool(String key, bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(key, value);
-  }
-
-  Future<void> _saveDouble(String key, double value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(key, value);
   }
 
   void _editProfile() {
@@ -133,19 +120,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   onElegiesChanged: (v) {
                     setState(() => _notifElegies = v);
                     _saveBool('notif_elegies', v);
-                  },
-                ),
-                DiscoverySection(
-                  maxDistance: _maxDistance,
-                  ageRange: _ageRange,
-                  onDistanceChanged: (v) {
-                    setState(() => _maxDistance = v);
-                    _saveDouble('max_distance', v);
-                  },
-                  onAgeRangeChanged: (v) {
-                    setState(() => _ageRange = v);
-                    _saveDouble('age_min', v.start);
-                    _saveDouble('age_max', v.end);
                   },
                 ),
                 PrivacySection(

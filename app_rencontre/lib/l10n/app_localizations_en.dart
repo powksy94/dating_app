@@ -930,9 +930,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsBtnDeleteAccount => 'Delete account';
 
   @override
-  String get settingsSectionDiscovery => 'Discovery';
-
-  @override
   String get settingsLabelMaxDistance => 'Max distance';
 
   @override

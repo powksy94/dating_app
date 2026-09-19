@@ -935,9 +935,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsBtnDeleteAccount => 'Supprimer le compte';
 
   @override
-  String get settingsSectionDiscovery => 'Découverte';
-
-  @override
   String get settingsLabelMaxDistance => 'Distance max';
 
   @override
