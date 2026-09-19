@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/settings/widgets/section_header.dart';
@@ -35,18 +34,6 @@ class AboutSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(l.settingsSectionAbout),
-        FutureBuilder<PackageInfo>(
-          future: PackageInfo.fromPlatform(),
-          builder: (context, snapshot) {
-            final version = snapshot.data?.version ?? '';
-            return ActionTile(
-              icon: Icons.info_outline,
-              label: '${l.settingsVersionLabel} $version',
-              onTap: null,
-              trailing: const SizedBox.shrink(),
-            );
-          },
-        ),
         ActionTile(
           icon: Icons.description_outlined,
           label: l.settingsTermsOfService,
