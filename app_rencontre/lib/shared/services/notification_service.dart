@@ -1,8 +1,10 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nocturne/shared/services/api_service.dart';
+import 'package:nocturne/shared/services/connectivity_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -12,25 +14,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class NotificationService {
   static final _messaging = FirebaseMessaging.instance;
 
+  // False until the current FCM token has been accepted by the backend, so a
+  // failed upload (offline, logged out) is retried when the connection returns.
+  static bool _tokenSynced = false;
+
   static Future<void> init(GlobalKey<NavigatorState> navigatorKey) async {
-    // Permissions
-    await _messaging.requestPermission(
-      alert:    true,
-      badge:    true,
-      sound:    true,
-    );
-
-    // Background handler
+    // Listeners first: they need no network, so a launch without connection
+    // can no longer skip them (a notification tap would then open nothing).
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-    // FCM token -> backend
-    final token = await _messaging.getToken();
-    // ignore: avoid_print
-    print('🔑 FCM TOKEN: $token');
-    if (token != null) await _saveToken(token);
-
-    // Token renewed
-    _messaging.onTokenRefresh.listen(_saveToken);
 
     // Notification received in foreground
     FirebaseMessaging.onMessage.listen((message) {
@@ -42,20 +33,63 @@ class NotificationService {
       _handleNotificationTap(message, navigatorKey);
     });
 
+    // Token renewed
+    _messaging.onTokenRefresh.listen((token) async {
+      _tokenSynced = await _uploadToken(token);
+    });
+
+    // Retry a failed token upload when the connection comes back
+    ConnectivityService.reconnected.addListener(() {
+      if (!_tokenSynced) registerToken();
+    });
+
+    try {
+      await _messaging.requestPermission(
+        alert:    true,
+        badge:    true,
+        sound:    true,
+      );
+    } catch (_) {}
+
+    await registerToken();
+
     // Tap on notification (app closed)
-    final initial = await _messaging.getInitialMessage();
-    if (initial != null) {
-      _handleNotificationTap(initial, navigatorKey);
+    try {
+      final initial = await _messaging.getInitialMessage();
+      if (initial != null) {
+        _handleNotificationTap(initial, navigatorKey);
+      }
+    } catch (_) {}
+  }
+
+  /// Sends this device's FCM token to the backend for the logged-in user.
+  /// Safe to call at any time: it does nothing when logged out and never throws.
+  /// Also called after login and registration, because the launch-time call
+  /// runs before the user has a session.
+  static Future<void> registerToken() async {
+    try {
+      if (await ApiService.getToken() == null) return;
+      final token = await _messaging.getToken();
+      if (token == null) return;
+      if (kDebugMode) debugPrint('FCM token: $token');
+      _tokenSynced = await _uploadToken(token);
+    } catch (_) {
+      _tokenSynced = false;
     }
   }
 
-  static Future<void> _saveToken(String token) async {
-    final headers = await ApiService.authHeaders();
-    await http.post(
-      Uri.parse('${ApiService.baseUrl}/profile/fcm-token'),
-      headers: headers,
-      body: jsonEncode({'token': token}),
-    );
+  static Future<bool> _uploadToken(String token) async {
+    try {
+      final headers = await ApiService.authHeaders();
+      final res = await http.post(
+        Uri.parse('${ApiService.baseUrl}/profile/fcm-token'),
+        headers: headers,
+        body: jsonEncode({'token': token}),
+      ).timeout(const Duration(seconds: 10));
+      return res.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
   }
 
   static void _handleNotificationTap(

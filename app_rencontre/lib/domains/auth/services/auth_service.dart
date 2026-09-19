@@ -1,6 +1,7 @@
 ﻿import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:nocturne/shared/services/api_service.dart';
+import 'package:nocturne/shared/services/notification_service.dart';
 
 class AuthService {
   Future<String> register(String email, String password, String username) async {
@@ -14,6 +15,7 @@ class AuthService {
       await ApiService.saveToken(data['token']);
       await ApiService.saveRefreshToken(data['refreshToken']);
       await ApiService.saveUserId(data['userId']);
+      NotificationService.registerToken();
       return data['userId'];
     }
     throw Exception(data['message']);
@@ -30,6 +32,7 @@ class AuthService {
       await ApiService.saveToken(data['token']);
       await ApiService.saveRefreshToken(data['refreshToken']);
       await ApiService.saveUserId(data['userId']);
+      NotificationService.registerToken();
       return data['userId'];
     }
     throw Exception(data['message']);
