@@ -134,6 +134,18 @@ abstract class AppLocalizations {
   /// **'Couldn\'t load your profile'**
   String get profileLoadErrorTitle;
 
+  /// No description provided for @discoveryFiltersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SEARCH FILTERS'**
+  String get discoveryFiltersTitle;
+
+  /// No description provided for @discoveryFiltersApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get discoveryFiltersApply;
+
   /// No description provided for @commonComingSoon.
   ///
   /// In en, this message translates to:

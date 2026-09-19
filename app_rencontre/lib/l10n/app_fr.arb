@@ -6,6 +6,8 @@
     "commonBtnRetry": "Réessayer",
     "eventLoadErrorTitle": "Impossible de charger les événements",
     "profileLoadErrorTitle": "Impossible de charger ton profil",
+    "discoveryFiltersTitle": "FILTRES DE RECHERCHE",
+    "discoveryFiltersApply": "Appliquer",
     "commonComingSoon": "Bientôt disponible",
     "commonBtnOk": "OK",
     "updateRequiredTitle": "Mise à jour requise",

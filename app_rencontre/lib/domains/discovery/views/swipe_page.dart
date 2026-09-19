@@ -4,6 +4,7 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/discovery/services/swipe_empty_state_actions.dart';
+import 'package:nocturne/domains/discovery/widgets/search_filters_panel.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_body.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_empty_state.dart';
 import 'package:nocturne/domains/discovery/widgets/swipe_load_error.dart';
@@ -11,6 +12,7 @@ import 'package:nocturne/domains/discovery/widgets/swipe_overlays.dart';
 import 'package:nocturne/domains/discovery/services/swipe_service.dart';
 import 'package:nocturne/domains/subscription/services/boost_service.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
+import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
 
 class SwipePage extends StatefulWidget {
   final void Function(ChatMatch)? onNavigateToConversation;
@@ -21,7 +23,7 @@ class SwipePage extends StatefulWidget {
   State<SwipePage> createState() => _SwipePageState();
 }
 
-class _SwipePageState extends State<SwipePage> {
+class _SwipePageState extends State<SwipePage> with ReloadOnReconnect<SwipePage> {
   CardSwiperController _controller = CardSwiperController();
   final _firestore = FirestoreService();
 
@@ -36,6 +38,7 @@ class _SwipePageState extends State<SwipePage> {
   bool _canRewind  = false;
   AlternativeProfile?   _lastSwipedProfile;
   int  _swiperKey  = 0;
+  bool _showFilters = false;
 
   @override
   void initState() {
@@ -43,6 +46,12 @@ class _SwipePageState extends State<SwipePage> {
     _loadAll();
     widget.refreshNotifier?.addListener(_loadStatus);
   }
+
+  @override
+  bool get needsReload => _loadError;
+
+  @override
+  void reloadAfterReconnect() => _loadAll();
 
   @override
   void dispose() {
@@ -139,33 +148,61 @@ class _SwipePageState extends State<SwipePage> {
   @override
   Widget build(BuildContext context) {
     if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    final emptyStateActions = SwipeEmptyStateActions(
-        context: context, onProfilesChanged: _loadProfiles);
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.discoverySwipePageTitle)),
-      body: _loadError
-          ? SwipeLoadError(onRetry: _loadProfiles)
-          : _profiles.isEmpty
-          ? SwipeEmptyState(
-              onResetLikes: emptyStateActions.resetLikes,
-              onEditFilters: emptyStateActions.editFilters,
-              onWaitForMoon: emptyStateActions.waitForMoon,
-            )
-          : SwipeBody(
-              key:                      ValueKey(_swiperKey),
-              profiles:                 _profiles,
-              controller:               _controller,
-              onSwipe:                  _onSwipe,
-              onRewind:                 _onRewind,
-              onBoost:                  _onBoost,
-              currentIndex:             _currentIndex,
-              unlimited:                _unlimited,
-              remaining:                _remaining,
-              limit:                    _limit,
-              boostCredits:             _boostCredits,
-              canRewind:                _canRewind,
-              onNavigateToConversation: widget.onNavigateToConversation,
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.discoverySwipePageTitle),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.tune,
+              color: _showFilters ? const Color(0xFF7B00D4) : Colors.white,
             ),
+            onPressed: () => setState(() => _showFilters = !_showFilters),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Above the swipe content, which stays visible underneath.
+          if (_showFilters)
+            SearchFiltersPanel(
+              onApplied: () {
+                setState(() => _showFilters = false);
+                _loadProfiles();
+              },
+              onClose: () => setState(() => _showFilters = false),
+            ),
+          Expanded(child: _content()),
+        ],
+      ),
+    );
+  }
+
+  Widget _content() {
+    if (_loadError) return SwipeLoadError(onRetry: _loadProfiles);
+    if (_profiles.isEmpty) {
+      final actions = SwipeEmptyStateActions(
+          context: context, onProfilesChanged: _loadProfiles);
+      return SwipeEmptyState(
+        onResetLikes:  actions.resetLikes,
+        onEditFilters: () => setState(() => _showFilters = true),
+        onWaitForMoon: actions.waitForMoon,
+      );
+    }
+    return SwipeBody(
+      key:                      ValueKey(_swiperKey),
+      profiles:                 _profiles,
+      controller:               _controller,
+      onSwipe:                  _onSwipe,
+      onRewind:                 _onRewind,
+      onBoost:                  _onBoost,
+      currentIndex:             _currentIndex,
+      unlimited:                _unlimited,
+      remaining:                _remaining,
+      limit:                    _limit,
+      boostCredits:             _boostCredits,
+      canRewind:                _canRewind,
+      onNavigateToConversation: widget.onNavigateToConversation,
     );
   }
 }

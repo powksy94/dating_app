@@ -27,6 +27,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileLoadErrorTitle => 'Couldn\'t load your profile';
 
   @override
+  String get discoveryFiltersTitle => 'SEARCH FILTERS';
+
+  @override
+  String get discoveryFiltersApply => 'Apply';
+
+  @override
   String get commonComingSoon => 'Coming soon';
 
   @override

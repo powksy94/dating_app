@@ -16,8 +16,9 @@ class SwipeEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
+    // Scrollable so it still fits when the filters panel takes space above it.
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.nightlight, size: 64, color: Color(0xFF7B00D4)),

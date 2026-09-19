@@ -27,6 +27,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileLoadErrorTitle => 'Impossible de charger ton profil';
 
   @override
+  String get discoveryFiltersTitle => 'FILTRES DE RECHERCHE';
+
+  @override
+  String get discoveryFiltersApply => 'Appliquer';
+
+  @override
   String get commonComingSoon => 'Bientôt disponible';
 
   @override

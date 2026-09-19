@@ -6,6 +6,8 @@
     "commonBtnRetry": "Retry",
     "eventLoadErrorTitle": "Couldn't load events",
     "profileLoadErrorTitle": "Couldn't load your profile",
+    "discoveryFiltersTitle": "SEARCH FILTERS",
+    "discoveryFiltersApply": "Apply",
     "commonComingSoon": "Coming soon",
     "commonBtnOk": "OK",
     "updateRequiredTitle": "Update required",
