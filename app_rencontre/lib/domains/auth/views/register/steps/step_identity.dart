@@ -34,11 +34,14 @@ class _StepIdentityState extends State<StepIdentity> {
 
     Future<void> _pickDate() async {
         final l = AppLocalizations.of(context)!;
+        final today = DateTime.now();
         final picked = await showDatePicker(
             context: context,
             initialDate: DateTime(2000),
             firstDate: DateTime(1920),
-            lastDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
+            // Exactly 18 years ago, like the server's adult check. 365 * 18 days
+            // is a few days short of 18 years (leap days).
+            lastDate: DateTime(today.year - 18, today.month, today.day),
             helpText: l.authLabelBirthDate,
         );
         if (picked != null) setState(() => _birthDate = picked);
