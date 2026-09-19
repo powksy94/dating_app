@@ -110,6 +110,30 @@ abstract class AppLocalizations {
   /// **'Something went wrong, try again.'**
   String get commonGenericError;
 
+  /// No description provided for @commonLoadErrorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get commonLoadErrorSubtitle;
+
+  /// No description provided for @commonBtnRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get commonBtnRetry;
+
+  /// No description provided for @eventLoadErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load events'**
+  String get eventLoadErrorTitle;
+
+  /// No description provided for @profileLoadErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your profile'**
+  String get profileLoadErrorTitle;
+
   /// No description provided for @commonComingSoon.
   ///
   /// In en, this message translates to:

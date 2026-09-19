@@ -15,6 +15,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonGenericError => 'Une erreur est survenue, réessaie.';
 
   @override
+  String get commonLoadErrorSubtitle => 'Vérifie ta connexion et réessaie.';
+
+  @override
+  String get commonBtnRetry => 'Réessayer';
+
+  @override
+  String get eventLoadErrorTitle => 'Impossible de charger les événements';
+
+  @override
+  String get profileLoadErrorTitle => 'Impossible de charger ton profil';
+
+  @override
   String get commonComingSoon => 'Bientôt disponible';
 
   @override

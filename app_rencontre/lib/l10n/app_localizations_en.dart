@@ -15,6 +15,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonGenericError => 'Something went wrong, try again.';
 
   @override
+  String get commonLoadErrorSubtitle => 'Check your connection and try again.';
+
+  @override
+  String get commonBtnRetry => 'Retry';
+
+  @override
+  String get eventLoadErrorTitle => 'Couldn\'t load events';
+
+  @override
+  String get profileLoadErrorTitle => 'Couldn\'t load your profile';
+
+  @override
   String get commonComingSoon => 'Coming soon';
 
   @override
