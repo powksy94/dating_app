@@ -10,7 +10,7 @@ String bandKey(String name) {
   }
   var key = folded
       .toString()
-      .replaceAll(RegExp(r'[̀-ͯ]'), '')
+      .replaceAll(RegExp(r'\p{Mn}', unicode: true), '')
       .replaceAll(RegExp(r'[^\p{L}\p{N}\s]', unicode: true), ' ')
       .replaceAll(RegExp(r'\s+'), ' ')
       .trim();
