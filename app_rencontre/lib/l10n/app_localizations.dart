@@ -680,6 +680,18 @@ abstract class AppLocalizations {
   /// **'Free'**
   String get subscriptionPriceFree;
 
+  /// No description provided for @subscriptionPriceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Price unavailable'**
+  String get subscriptionPriceUnavailable;
+
+  /// No description provided for @subscriptionBtnRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get subscriptionBtnRetry;
+
   /// No description provided for @featureOmbreSwipes.
   ///
   /// In en, this message translates to:

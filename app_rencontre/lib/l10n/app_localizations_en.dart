@@ -334,6 +334,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subscriptionPriceFree => 'Free';
 
   @override
+  String get subscriptionPriceUnavailable => 'Price unavailable';
+
+  @override
+  String get subscriptionBtnRetry => 'Retry';
+
+  @override
   String get featureOmbreSwipes => '30 swipes per day';
 
   @override

@@ -109,6 +109,8 @@
     "subscriptionPlanAbyssal": "Abyssal",
     "subscriptionBadgePopular": "POPULAIRE",
     "subscriptionPriceFree": "Gratuit",
+    "subscriptionPriceUnavailable": "Prix indisponible",
+    "subscriptionBtnRetry": "Réessayer",
 
     "featureOmbreSwipes": "30 swipes par jour",
     "featureOmbreElegies": "3 élégies par mois",

@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/plan_pricing.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 
@@ -8,6 +9,8 @@ class PlanCard extends StatelessWidget {
     final bool isActive;
     final SubscriptionPeriod period;
     final Offering? offering;
+    final bool pricesLoading;
+    final VoidCallback? onRetry;
 
     const PlanCard({
         super.key,
@@ -15,6 +18,8 @@ class PlanCard extends StatelessWidget {
         required this.isActive,
         required this.period,
         this.offering,
+        this.pricesLoading = false,
+        this.onRetry,
     });
 
     @override
@@ -74,35 +79,7 @@ class PlanCard extends StatelessWidget {
                             ),
                         ),
                         const SizedBox(height: 4),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                                Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                        Text(
-                                            livePriceFor(offering, period, plan),
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 32,
-                                                fontWeight: FontWeight.bold,
-                                            ),
-                                        ),
-                                        if (!plan.isFree)
-                                            Padding(
-                                                padding: const EdgeInsets.only(bottom: 5, left: 6),
-                                                child: Text(
-                                                    periodLabel(context, period),
-                                                    style: const TextStyle(
-                                                        color: Color(0xFFAA9AB5),
-                                                        fontSize: 13,
-                                                    ),
-                                                ),
-                                            ),
-                                    ],
-                                ),
-                            ],
-                        ),
+                        SizedBox(height: 56, child: _priceArea(context)),
                         const SizedBox(height: 20),
                         const Divider(color: Color(0xFF3D2A4A)),
                         const SizedBox(height: 12),
@@ -111,6 +88,67 @@ class PlanCard extends StatelessWidget {
                     ],
                 ),
             ),
+        );
+    }
+
+    // Fixed height so the card does not jump when the price arrives.
+    Widget _priceArea(BuildContext context) {
+        const priceStyle = TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold);
+        final l = AppLocalizations.of(context)!;
+
+        if (plan.isFree) {
+            return Align(
+                alignment: Alignment.centerLeft,
+                child: Text(plan.freeLabel, style: priceStyle),
+            );
+        }
+
+        final price = storePriceFor(offering, period);
+        if (price != null) {
+            return Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                        Text(price, style: priceStyle),
+                        Padding(
+                            padding: const EdgeInsets.only(bottom: 5, left: 6),
+                            child: Text(
+                                periodLabel(context, period),
+                                style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
+                            ),
+                        ),
+                    ],
+                ),
+            );
+        }
+
+        if (pricesLoading) {
+            return Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: plan.accentColor),
+                ),
+            );
+        }
+
+        return Row(
+            children: [
+                Flexible(
+                    child: Text(
+                        l.subscriptionPriceUnavailable,
+                        style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 16),
+                    ),
+                ),
+                if (onRetry != null)
+                    TextButton(
+                        onPressed: onRetry,
+                        child: Text(l.subscriptionBtnRetry, style: TextStyle(color: plan.accentColor)),
+                    ),
+            ],
         );
     }
 }

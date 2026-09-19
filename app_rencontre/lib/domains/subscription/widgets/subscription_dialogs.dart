@@ -1,43 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 
 class SubscriptionDialogs {
-  static Future<bool> confirmSubscribe(
-    BuildContext context,
-    SubscriptionPlan plan,
-    SubscriptionPeriod period,
-  ) async {
-    final l = AppLocalizations.of(context)!;
-    return await showDialog<bool>(
-          context: context,
-          builder: (_) => AlertDialog(
-            backgroundColor: const Color(0xFF1A0A1F),
-            title: Text(
-              l.subscriptionDialogSubscribeTitle(plan.name),
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            content: Text(
-              '${plan.priceFor(period)} / ${periodName(context, period)}',
-              style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(l.subscriptionBtnDialogCancel,
-                    style: const TextStyle(color: Color(0xFF5A4A6A))),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(l.subscriptionBtnDialogConfirm,
-                    style: TextStyle(color: plan.accentColor)),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
-
   static Future<bool> confirmCancel(BuildContext context) async {
     final l = AppLocalizations.of(context)!;
     return await showDialog<bool>(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/subscription/models/subscription_period.dart';
 import 'package:nocturne/domains/subscription/models/plan_limits.dart';
 
 export 'package:nocturne/domains/subscription/models/subscription_period.dart';
@@ -19,13 +18,13 @@ class SubscriptionPlan {
     final Color accentColor;
     final IconData icon;
     final String? badge;
-    final String? weekPrice;
-    final String? monthPrice;
-    final String? yearPrice;
+    final bool isFree;
     final List<SubscriptionFeature> features;
     final PlanLimits limits;
     final String freeLabel;
 
+    // Paid plans carry no price here: the localized price always comes from
+    // the store (see storePriceFor), so it can never drift from what Play charges.
     const SubscriptionPlan({
         required this.id,
         required this.name,
@@ -33,37 +32,12 @@ class SubscriptionPlan {
         required this.accentColor,
         required this.icon,
         this.badge,
-        required this.weekPrice,
-        required this.monthPrice,
-        required this.yearPrice,
+        this.isFree = false,
         required this.features,
         required this.limits,
         required this.freeLabel,
     });
-
-    String priceFor(SubscriptionPeriod period) {
-        if (weekPrice == null) return freeLabel;
-        switch (period) {
-            case SubscriptionPeriod.week:  return weekPrice!;
-            case SubscriptionPeriod.month: return monthPrice!;
-            case SubscriptionPeriod.year:  return yearPrice!;
-        }
-    }
-
-    bool get isFree => weekPrice == null;
 }
-
-// ─── Fallback prices ────────────────────────────────────────────────────────────
-// Only shown before the store offering loads or when offline. The real,
-// localized prices come from RevenueCat (see livePriceFor).
-const kNocturneWeekPrice          = '6,99 €';
-const kNocturneMonthPrice         = '27,24 €';
-const kNocturneYearPrice          = '294,19 €';
-
-const kAbyssalWeekPrice           = '9,99 €';
-const kAbyssalMonthPrice          = '38,93 €';
-const kAbyssalYearPrice           = '420,44 €';
-// ──────────────────────────────────────────────────────────────────────────────
 
 /// Plan identifiers, in display order (stable, language-independent).
 const kSubscriptionPlanIds = ['ombre', 'nocturne', 'abyssal'];
@@ -73,7 +47,7 @@ List<SubscriptionPlan> subscriptionPlans(BuildContext context) {
     return [
         SubscriptionPlan(
             id: 'ombre', name: l.subscriptionPlanOmbre, color: const Color(0xFF2D2D2D), accentColor: const Color(0xFFAA9AB5),
-            icon: Icons.nightlight_outlined, weekPrice: null, monthPrice: null, yearPrice: null,
+            icon: Icons.nightlight_outlined, isFree: true,
             limits: kOmbreLimits,
             freeLabel: l.subscriptionPriceFree,
             features: [
@@ -90,8 +64,6 @@ List<SubscriptionPlan> subscriptionPlans(BuildContext context) {
         SubscriptionPlan(
             id: 'nocturne', name: l.subscriptionPlanNocturne, color: const Color(0xFF4A0072), accentColor: const Color(0xFF7B00D4),
             icon: Icons.nightlight, badge: l.subscriptionBadgePopular,
-            weekPrice: kNocturneWeekPrice, monthPrice: kNocturneMonthPrice,
-            yearPrice: kNocturneYearPrice,
             limits: kNocturneLimits,
             freeLabel: l.subscriptionPriceFree,
             features: [
@@ -108,8 +80,6 @@ List<SubscriptionPlan> subscriptionPlans(BuildContext context) {
         SubscriptionPlan(
             id: 'abyssal', name: l.subscriptionPlanAbyssal, color: const Color(0xFF1A0A1F), accentColor: const Color(0xFFD400FF),
             icon: Icons.auto_awesome,
-            weekPrice: kAbyssalWeekPrice, monthPrice: kAbyssalMonthPrice,
-            yearPrice: kAbyssalYearPrice,
             limits: kAbyssalLimits,
             freeLabel: l.subscriptionPriceFree,
             features: [

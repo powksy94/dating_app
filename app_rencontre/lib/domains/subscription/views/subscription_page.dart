@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/subscription/models/plan_pricing.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/period_selector.dart';
@@ -23,14 +24,27 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   SubscriptionPeriod _activePeriod = SubscriptionPeriod.month;
   String _activePlan              = 'ombre';
   bool _loading                   = true;
+  bool _offeringsLoading          = true;
   Offerings? _offerings;
 
   @override
   void initState() {
     super.initState();
     _loadSubscription();
-    RevenueCatService.getOfferings().then((o) {
-      if (mounted) setState(() => _offerings = o);
+    _loadOfferings();
+  }
+
+  Future<void> _retryOfferings() {
+    setState(() => _offeringsLoading = true);
+    return _loadOfferings();
+  }
+
+  Future<void> _loadOfferings() async {
+    final offerings = await RevenueCatService.getOfferings();
+    if (!mounted) return;
+    setState(() {
+      _offerings        = offerings;
+      _offeringsLoading = false;
     });
   }
 
@@ -144,6 +158,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   isActive: index == _current,
                   period: _period,
                   offering: _offerings?.getOffering(plans[index].id),
+                  pricesLoading: _offeringsLoading,
+                  onRetry: _retryOfferings,
                 ),
               ),
             ),
@@ -175,6 +191,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             activePeriod: _activePeriod,
             onSubscribed: _onSubscribed,
             onCancelled:  _onCancelled,
+            priceReady:   storePriceFor(_offerings?.getOffering(currentPlan.id), _period) != null,
           ),
           RestorePurchasesButton(onRestored: _onSubscribed),
           SizedBox(height: 16 + MediaQuery.of(context).padding.bottom),

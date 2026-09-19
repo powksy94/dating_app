@@ -14,6 +14,10 @@ class SubscriptionActionButton extends StatefulWidget {
   final void Function(String plan, SubscriptionPeriod period) onSubscribed;
   final VoidCallback onCancelled;
 
+  /// False while the store price of the selected plan is not known yet: buying
+  /// is disabled so nobody subscribes without seeing the real price.
+  final bool priceReady;
+
   const SubscriptionActionButton({
     super.key,
     required this.plan,
@@ -22,6 +26,7 @@ class SubscriptionActionButton extends StatefulWidget {
     required this.activePeriod,
     required this.onSubscribed,
     required this.onCancelled,
+    this.priceReady = true,
   });
 
   @override
@@ -46,7 +51,7 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
 
   bool get _buttonEnabled {
     if (widget.plan.isFree) return _onPaidPlan && !_loading;
-    return !_isFullyActive && !_loading;
+    return !_isFullyActive && !_loading && widget.priceReady;
   }
 
   Future<void> _onButtonPressed() {

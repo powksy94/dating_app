@@ -134,6 +134,8 @@
     "subscriptionPlanAbyssal": "Abyssal",
     "subscriptionBadgePopular": "POPULAR",
     "subscriptionPriceFree": "Free",
+    "subscriptionPriceUnavailable": "Price unavailable",
+    "subscriptionBtnRetry": "Retry",
 
     "featureOmbreSwipes": "30 swipes per day",
     "featureOmbreElegies": "3 elegies per month",
