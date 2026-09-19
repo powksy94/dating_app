@@ -30,7 +30,7 @@ class RevenueCatService {
                     ?? offerings.current;
       if (offering == null) return null;
 
-      final package = _packageFor(offering, periodName);
+      final package = packageFor(offering, periodName);
       if (package == null) return null;
 
       final result = await Purchases.purchase(PurchaseParams.package(package));
@@ -68,7 +68,9 @@ class RevenueCatService {
   /// (e.g. "Monthly Nocturne", "Yearly Abyssal") if the dashboard doesn't
   /// use the standard types, otherwise `offering.weekly`/`.monthly`/
   /// `.annual` return `null` even though the package does exist.
-  static Package? _packageFor(Offering offering, String periodName) {
+  /// Shared by the purchase flow and the price display so both resolve the
+  /// same package. [periodName] is one of 'week', 'month', 'year'.
+  static Package? packageFor(Offering offering, String periodName) {
     final standard = switch (periodName) {
       'week'  => offering.weekly,
       'month' => offering.monthly,
