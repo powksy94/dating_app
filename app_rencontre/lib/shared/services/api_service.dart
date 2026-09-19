@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Outcome of a token refresh. Only [rejected] means the session is over:
+/// [unreachable] (offline, timeout, server error) says nothing about the token.
+enum _RefreshResult { renewed, rejected, unreachable }
+
 class ApiService {
     static const String _prodBaseUrl = 'https://datingappbackend-production-a9e3.up.railway.app/api';
     static const String _debugUrlOverride = String.fromEnvironment('API_BASE_URL');
@@ -82,30 +86,33 @@ class ApiService {
     // if two concurrent calls refresh at the same time, the second one arrives
     // with a token already invalidated by the first and wipes the session by mistake.
     // So we merge concurrent calls into a single in-flight refresh.
-    static Future<bool>? _refreshInFlight;
+    static Future<_RefreshResult>? _refreshInFlight;
 
-    static Future<bool> refreshAccessToken() {
+    static Future<_RefreshResult> _refresh() {
         return _refreshInFlight ??=
             _doRefresh().whenComplete(() => _refreshInFlight = null);
     }
 
-    static Future<bool> _doRefresh() async {
+    static Future<_RefreshResult> _doRefresh() async {
         final refreshToken = await getRefreshToken();
-        if (refreshToken == null) return false;
+        if (refreshToken == null) return _RefreshResult.rejected;
         try {
             final res = await http.post(
                 Uri.parse('$baseUrl/auth/refresh'),
                 headers: {'Content-Type': 'application/json'},
                 body: jsonEncode({'refreshToken': refreshToken}),
-            );
+            ).timeout(const Duration(seconds: 10));
             if (res.statusCode == 200) {
                 final data = jsonDecode(res.body);
                 await saveToken(data['token'] as String);
                 await saveRefreshToken(data['refreshToken'] as String);
-                return true;
+                return _RefreshResult.renewed;
             }
+            // The backend answers 401 when the refresh token is invalid or expired.
+            if (res.statusCode == 401) return _RefreshResult.rejected;
         } catch (_) {}
-        return false;
+        // Offline, timeout or server error: the refresh token may still be valid.
+        return _RefreshResult.unreachable;
     }
 
     // ── Headers (with transparent auto-refresh) ───────────────────────────────────
@@ -113,9 +120,17 @@ class ApiService {
     static Future<Map<String, String>> authHeaders() async {
         var token = await getToken();
         if (token != null && _isTokenExpired(token)) {
-            final refreshed = await refreshAccessToken();
-            token = refreshed ? await getToken() : null;
-            if (!refreshed) await clearToken();
+            switch (await _refresh()) {
+                case _RefreshResult.renewed:
+                    token = await getToken();
+                case _RefreshResult.rejected:
+                    await clearToken();
+                    token = null;
+                case _RefreshResult.unreachable:
+                    // Keep the session: the expired token is still sent (it may
+                    // be valid for a few more minutes) and the next call retries.
+                    break;
+            }
         }
         return {
             'Content-Type': 'application/json',
