@@ -1052,6 +1052,12 @@ abstract class AppLocalizations {
   /// **'Dare to break the silence...'**
   String get chatEmptyElegiesSentSub;
 
+  /// No description provided for @chatMessageBlockedContactInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'For your safety, links and phone numbers aren\'t allowed until the other person has replied.'**
+  String get chatMessageBlockedContactInfo;
+
   /// No description provided for @chatNewMatch.
   ///
   /// In en, this message translates to:

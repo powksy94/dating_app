@@ -177,6 +177,7 @@
     "chatEmptyElegiesReceivedSub": "Quelqu'un pensera à toi bientôt...",
     "chatEmptyElegiesSentTitle": "Aucune élégie envoyée",
     "chatEmptyElegiesSentSub": "Ose briser le silence...",
+    "chatMessageBlockedContactInfo": "Pour ta sécurité, les liens et numéros de téléphone ne sont pas autorisés tant que l'autre personne n'a pas répondu.",
     "chatNewMatch": "Nouveau match",
     "chatElegiePending": "En attente",
     "chatTimeMinutesShort": "{count}m",

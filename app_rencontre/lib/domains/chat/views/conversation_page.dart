@@ -6,6 +6,7 @@ import 'package:record/record.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/chat/models/message.dart';
 import 'package:nocturne/domains/chat/services/chat_service.dart';
+import 'package:nocturne/domains/chat/mixins/blocked_message_notice.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/socket_service.dart';
 import 'package:nocturne/domains/chat/widgets/message_bubble.dart';
@@ -22,7 +23,7 @@ class ConversationPage extends StatefulWidget {
   State<ConversationPage> createState() => _ConversationPageState();
 }
 
-class _ConversationPageState extends State<ConversationPage> {
+class _ConversationPageState extends State<ConversationPage> with BlockedMessageNotice {
   final _ctrl   = TextEditingController();
   final _scroll = ScrollController();
 
@@ -106,6 +107,7 @@ class _ConversationPageState extends State<ConversationPage> {
         });
       }
     });
+    listenForBlockedMessages(widget.match.matchId, _ctrl);
     SocketService.instance.markRead(widget.match.matchId);
     SocketService.instance.getOnlineStatus(widget.match.userId);
   }
@@ -133,6 +135,7 @@ class _ConversationPageState extends State<ConversationPage> {
   void _send() {
     final text = _ctrl.text.trim();
     if (text.isEmpty && _replyingTo == null) return;
+    rememberSentText(text);
     _ctrl.clear();
     SocketService.instance.emitStopTyping(widget.match.matchId);
     SocketService.instance.sendMessage(widget.match.matchId, text,
@@ -216,7 +219,8 @@ class _ConversationPageState extends State<ConversationPage> {
   void dispose() {
     for (final e in ['new_message', 'user_typing', 'user_stop_typing',
         'online_status', 'user_online', 'user_offline',
-        'message_reacted', 'messages_read', 'message_deleted_for_all']) {
+        'message_reacted', 'messages_read', 'message_deleted_for_all',
+        'message_blocked']) {
       SocketService.instance.off(e);
     }
     SocketService.instance.emitStopTyping(widget.match.matchId);

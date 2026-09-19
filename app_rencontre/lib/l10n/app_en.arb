@@ -208,6 +208,7 @@
     "chatEmptyElegiesReceivedSub": "Someone will think of you soon...",
     "chatEmptyElegiesSentTitle": "No elegies sent",
     "chatEmptyElegiesSentSub": "Dare to break the silence...",
+    "chatMessageBlockedContactInfo": "For your safety, links and phone numbers aren't allowed until the other person has replied.",
     "chatNewMatch": "New match",
     "chatElegiePending": "Pending",
     "chatTimeMinutesShort": "{count}m",

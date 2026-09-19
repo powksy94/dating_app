@@ -528,6 +528,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chatEmptyElegiesSentSub => 'Ose briser le silence...';
 
   @override
+  String get chatMessageBlockedContactInfo =>
+      'Pour ta sécurité, les liens et numéros de téléphone ne sont pas autorisés tant que l\'autre personne n\'a pas répondu.';
+
+  @override
   String get chatNewMatch => 'Nouveau match';
 
   @override

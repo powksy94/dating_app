@@ -55,6 +55,13 @@ class SocketService {
         (data) => callback(Map<String, dynamic>.from(data as Map)));
   }
 
+  /// The server refused a message of this user (a link or a phone number before
+  /// the other person has replied). The callback receives the match id.
+  void onMessageBlocked(void Function(String matchId) callback) {
+    _socket?.on('message_blocked',
+        (data) => callback((data as Map)['matchId'].toString()));
+  }
+
   void onUserTyping(void Function(String) callback) {
     _socket?.on('user_typing', (data) => callback(data.toString()));
   }
