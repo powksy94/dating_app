@@ -4,6 +4,7 @@ import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/widgets/profile_card.dart';
 import 'package:nocturne/domains/profile/widgets/profile_menu.dart';
+import 'package:nocturne/shared/widgets/common/load_error_view.dart';
 
 class MyProfileTab extends StatefulWidget {
   const MyProfileTab({super.key});
@@ -16,6 +17,7 @@ class _MyProfileTabState extends State<MyProfileTab> {
   final _firestore = FirestoreService();
   AlternativeProfile? _profile;
   bool _loading = true;
+  bool _loadFailed = false;
 
   @override
   void initState() {
@@ -25,10 +27,20 @@ class _MyProfileTabState extends State<MyProfileTab> {
 
   Future<void> _loadProfile() async {
     AlternativeProfile? profile;
+    var failed = false;
     try {
       profile = await _firestore.getMyProfile();
-    } catch (_) {}
-    if (mounted) setState(() { _profile = profile; _loading = false; });
+    } catch (_) {
+      // A network failure must not look like "no profile yet", otherwise the
+      // "create my profile" screen would offer to overwrite an existing profile.
+      failed = true;
+    }
+    if (mounted) setState(() { _profile = profile; _loadFailed = failed; _loading = false; });
+  }
+
+  Future<void> _retryLoad() {
+    setState(() => _loading = true);
+    return _loadProfile();
   }
 
 
@@ -59,8 +71,20 @@ class _MyProfileTabState extends State<MyProfileTab> {
       ),
       body: SafeArea(
         top: false,
-        child: _profile == null ? _noProfile(context) : _profileContent(context),
+        child: _loadFailed
+            ? _loadError(context)
+            : _profile == null ? _noProfile(context) : _profileContent(context),
       ),
+    );
+  }
+
+  Widget _loadError(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return LoadErrorView(
+      title:      l.profileLoadErrorTitle,
+      subtitle:   l.commonLoadErrorSubtitle,
+      retryLabel: l.commonBtnRetry,
+      onRetry:    _retryLoad,
     );
   }
 

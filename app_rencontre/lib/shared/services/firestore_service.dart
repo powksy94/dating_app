@@ -17,16 +17,20 @@ class FirestoreService {
     return null;
   }
 
+  /// Returns null only when the user has no profile yet (404). Any other
+  /// failure (offline, timeout, server error) throws, so callers can tell
+  /// "no profile" apart from "could not load it".
   Future<AlternativeProfile?> getMyProfile() async {
     final headers = await ApiService.authHeaders();
     final res = await http.get(
       Uri.parse('${ApiService.baseUrl}/profile/me'),
       headers: headers,
-    );
+    ).timeout(const Duration(seconds: 15));
     if (res.statusCode == 200) {
       return AlternativeProfile.fromJson(jsonDecode(res.body));
     }
-    return null;
+    if (res.statusCode == 404) return null;
+    throw Exception('getMyProfile failed: HTTP ${res.statusCode}');
   }
 
   Future<void> saveProfile(Map<String, dynamic> data) async {

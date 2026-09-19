@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/discovery/services/swipe_service.dart';
+import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/profile/views/profil_edit_page.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 
@@ -24,8 +25,15 @@ class SwipeEmptyStateActions {
   }
 
   Future<void> editFilters() async {
-    final profile = await FirestoreService().getMyProfile();
-    if (!context.mounted || profile == null) return;
+    final AlternativeProfile profile;
+    try {
+      final fetched = await FirestoreService().getMyProfile();
+      if (fetched == null) return;
+      profile = fetched;
+    } catch (_) {
+      return;
+    }
+    if (!context.mounted) return;
     await Navigator.push(context,
         MaterialPageRoute(builder: (_) => ProfileEditPage(profile: profile)));
     if (context.mounted) onProfilesChanged();
