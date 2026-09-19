@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
@@ -6,8 +6,11 @@ import 'package:nocturne/domains/event/services/event_service.dart';
 import 'package:nocturne/domains/profile/services/favorites_service.dart';
 import 'package:nocturne/domains/event/widgets/event_card.dart';
 import 'package:nocturne/domains/event/widgets/event_filter_chips.dart';
+import 'package:nocturne/domains/event/widgets/event_filter_panel.dart';
+import 'package:nocturne/domains/event/widgets/events_empty_state.dart';
 import 'package:nocturne/domains/event/views/create_event_page.dart';
 import 'package:nocturne/domains/event/views/event_detail_page.dart';
+import 'package:nocturne/shared/widgets/common/load_error_view.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -20,6 +23,7 @@ class _EventsPageState extends State<EventsPage> {
   List<EventModel> _events    = [];
   Set<String>      _favorites = {};
   bool        _loading     = true;
+  bool        _loadFailed  = false;
   double      _maxDistance = 50;
   Position?   _position;
   bool        _showFilter  = false;
@@ -43,8 +47,14 @@ class _EventsPageState extends State<EventsPage> {
       if (permission == LocationPermission.denied) {
         await Geolocator.requestPermission();
       }
-      _position = await Geolocator.getCurrentPosition();
-    } catch (_) {}
+      // Without a time limit, a missing GPS fix would keep the page loading forever.
+      _position = await Geolocator.getCurrentPosition()
+          .timeout(const Duration(seconds: 8));
+    } catch (_) {
+      try {
+        _position = await Geolocator.getLastKnownPosition();
+      } catch (_) {}
+    }
   }
 
   Future<void> _loadFavorites() async {
@@ -54,14 +64,18 @@ class _EventsPageState extends State<EventsPage> {
 
   Future<void> _loadEvents() async {
     if (!mounted) return;
-    setState(() => _loading = true);
-    final events = await EventService.getEvents(
-      lat:          _position?.latitude,
-      lng:          _position?.longitude,
-      maxDistance:  _maxDistance,
-      filterGenres: _filterGenres,
-    );
-    if (mounted) setState(() { _events = events; _loading = false; });
+    setState(() { _loading = true; _loadFailed = false; });
+    try {
+      final events = await EventService.getEvents(
+        lat:          _position?.latitude,
+        lng:          _position?.longitude,
+        maxDistance:  _maxDistance,
+        filterGenres: _filterGenres,
+      );
+      if (mounted) setState(() { _events = events; _loading = false; });
+    } catch (_) {
+      if (mounted) setState(() { _loadFailed = true; _loading = false; });
+    }
   }
 
   List<EventModel> get _filteredEvents {
@@ -115,79 +129,19 @@ class _EventsPageState extends State<EventsPage> {
             current:   _filter,
             onChanged: (f) => setState(() => _filter = f),
           ),
-          if (_showFilter) _filterPanel(),
+          if (_showFilter)
+            EventFilterPanel(
+              maxDistance:          _maxDistance,
+              filterGenres:         _filterGenres,
+              onDistanceChanged:    (v) => setState(() => _maxDistance = v),
+              onDistanceChangeEnd:  _loadEvents,
+              onGenresChanged:      (v) {
+                setState(() => _filterGenres = v);
+                _loadEvents();
+              },
+            ),
           Expanded(child: _body()),
         ],
-      ),
-    );
-  }
-
-  Widget _filterPanel() {
-    final l = AppLocalizations.of(context)!;
-    return Container(
-      color: const Color(0xFF1A0A1F),
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(l.eventLabelMaxDistance,
-                  style: const TextStyle(color: Colors.white, fontSize: 13)),
-              Text(l.eventValueKm(_maxDistance.round()),
-                  style: const TextStyle(
-                      color: Color(0xFF7B00D4), fontSize: 13)),
-            ],
-          ),
-          Slider(
-            value: _maxDistance,
-            min: 5,
-            max: 300,
-            divisions: 59,
-            activeColor: const Color(0xFF7B00D4),
-            inactiveColor: const Color(0xFF3D2A4A),
-            onChanged: (v) => setState(() => _maxDistance = v),
-            onChangeEnd: (_) => _loadEvents(),
-          ),
-          const SizedBox(height: 4),
-          Text(l.eventLabelGenres,
-              style: const TextStyle(color: Colors.white, fontSize: 13)),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              _genreToggle(l.eventFilterAllGenres, !_filterGenres,
-                  () { setState(() => _filterGenres = false); _loadEvents(); }),
-              const SizedBox(width: 10),
-              _genreToggle(l.eventFilterMyGenres, _filterGenres,
-                  () { setState(() => _filterGenres = true); _loadEvents(); }),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _genreToggle(String label, bool active, VoidCallback onTap) {
-    return Material(
-      color: active ? const Color(0xFF7B00D4) : Colors.transparent,
-      borderRadius: BorderRadius.circular(20),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: active ? const Color(0xFF7B00D4) : const Color(0xFF3D2A4A),
-            ),
-          ),
-          child: Text(label,
-              style: TextStyle(
-                  color: active ? Colors.white : const Color(0xFF5A4A6A),
-                  fontSize: 12)),
-        ),
       ),
     );
   }
@@ -195,24 +149,20 @@ class _EventsPageState extends State<EventsPage> {
   Widget _body() {
     if (_loading) return const Center(child: CircularProgressIndicator());
 
+    if (_loadFailed) {
+      final l = AppLocalizations.of(context)!;
+      return LoadErrorView(
+        title:      l.eventLoadErrorTitle,
+        subtitle:   l.commonLoadErrorSubtitle,
+        retryLabel: l.commonBtnRetry,
+        onRetry:    _loadEvents,
+      );
+    }
+
     final filtered = _filteredEvents;
 
     if (filtered.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.event_busy, size: 48, color: Color(0xFF3D2A4A)),
-            const SizedBox(height: 12),
-            Text(
-              _filter == EventFilter.all
-                  ? AppLocalizations.of(context)!.eventEmptyZone
-                  : AppLocalizations.of(context)!.eventEmptyCategory,
-              style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
-            ),
-          ],
-        ),
-      );
+      return EventsEmptyState(isAllFilter: _filter == EventFilter.all);
     }
 
     return RefreshIndicator(

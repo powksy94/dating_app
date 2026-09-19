@@ -20,7 +20,8 @@ class EventService {
     final uri = Uri.parse('${ApiService.baseUrl}/events')
         .replace(queryParameters: params.isEmpty ? null : params);
 
-    final res = await http.get(uri, headers: headers);
+    final res = await http.get(uri, headers: headers)
+        .timeout(const Duration(seconds: 15));
     if (res.statusCode != 200) return [];
     final list = jsonDecode(res.body) as List<dynamic>;
     return list.map((e) => EventModel.fromJson(e)).toList();
