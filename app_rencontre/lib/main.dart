@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:nocturne/app.dart';
 import 'package:nocturne/shared/services/app_http_overrides.dart';
+import 'package:nocturne/shared/services/connectivity_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/shared/services/stripe_config.dart';
 
@@ -21,6 +22,7 @@ Future<void> _announceAppVersion() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _announceAppVersion();
+  await ConnectivityService.init();
   await Firebase.initializeApp();
   await RevenueCatService.initialize();
   await StripeConfig.initialize();

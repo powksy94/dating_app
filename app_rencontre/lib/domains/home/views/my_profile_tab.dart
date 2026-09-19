@@ -4,6 +4,7 @@ import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/widgets/profile_card.dart';
 import 'package:nocturne/domains/profile/widgets/profile_menu.dart';
+import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
 import 'package:nocturne/shared/widgets/common/load_error_view.dart';
 
 class MyProfileTab extends StatefulWidget {
@@ -13,7 +14,7 @@ class MyProfileTab extends StatefulWidget {
   State<MyProfileTab> createState() => _MyProfileTabState();
 }
 
-class _MyProfileTabState extends State<MyProfileTab> {
+class _MyProfileTabState extends State<MyProfileTab> with ReloadOnReconnect<MyProfileTab> {
   final _firestore = FirestoreService();
   AlternativeProfile? _profile;
   bool _loading = true;
@@ -24,6 +25,12 @@ class _MyProfileTabState extends State<MyProfileTab> {
     super.initState();
     _loadProfile();
   }
+
+  @override
+  bool get needsReload => _loadFailed;
+
+  @override
+  void reloadAfterReconnect() => _retryLoad();
 
   Future<void> _loadProfile() async {
     AlternativeProfile? profile;
@@ -80,11 +87,21 @@ class _MyProfileTabState extends State<MyProfileTab> {
 
   Widget _loadError(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    return LoadErrorView(
-      title:      l.profileLoadErrorTitle,
-      subtitle:   l.commonLoadErrorSubtitle,
-      retryLabel: l.commonBtnRetry,
-      onRetry:    _retryLoad,
+    return Column(
+      children: [
+        Expanded(
+          child: LoadErrorView(
+            title:      l.profileLoadErrorTitle,
+            subtitle:   l.commonLoadErrorSubtitle,
+            retryLabel: l.commonBtnRetry,
+            onRetry:    _retryLoad,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: _premiumBanner(context),
+        ),
+      ],
     );
   }
 
@@ -130,27 +147,33 @@ class _MyProfileTabState extends State<MyProfileTab> {
             child: ProfileCard(profile: p),
           ),
           const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            height: 52,
-            child: ElevatedButton.icon(
-              onPressed: () => Navigator.pushNamed(context, '/subscription'),
-              icon: const Icon(Icons.auto_awesome, size: 18),
-              label: Text(
-                AppLocalizations.of(context)!.homePremiumBanner,
-                style: const TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4A0072),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  side: const BorderSide(color: Color(0xFF7B00D4)),
-                ),
-              ),
-            ),
-          ),
+          _premiumBanner(context),
           const SizedBox(height: 20),
         ],
+      ),
+    );
+  }
+
+  // Also shown when the profile fails to load, so the subscription screen
+  // stays reachable (it only opens from this tab).
+  Widget _premiumBanner(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: ElevatedButton.icon(
+        onPressed: () => Navigator.pushNamed(context, '/subscription'),
+        icon: const Icon(Icons.auto_awesome, size: 18),
+        label: Text(
+          AppLocalizations.of(context)!.homePremiumBanner,
+          style: const TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF4A0072),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: const BorderSide(color: Color(0xFF7B00D4)),
+          ),
+        ),
       ),
     );
   }

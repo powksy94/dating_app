@@ -10,6 +10,7 @@ import 'package:nocturne/domains/event/widgets/event_filter_panel.dart';
 import 'package:nocturne/domains/event/widgets/events_empty_state.dart';
 import 'package:nocturne/domains/event/views/create_event_page.dart';
 import 'package:nocturne/domains/event/views/event_detail_page.dart';
+import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
 import 'package:nocturne/shared/widgets/common/load_error_view.dart';
 
 class EventsPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class EventsPage extends StatefulWidget {
   State<EventsPage> createState() => _EventsPageState();
 }
 
-class _EventsPageState extends State<EventsPage> {
+class _EventsPageState extends State<EventsPage> with ReloadOnReconnect<EventsPage> {
   List<EventModel> _events    = [];
   Set<String>      _favorites = {};
   bool        _loading     = true;
@@ -35,6 +36,12 @@ class _EventsPageState extends State<EventsPage> {
     super.initState();
     _init();
   }
+
+  @override
+  bool get needsReload => _loadFailed;
+
+  @override
+  void reloadAfterReconnect() => _loadEvents();
 
   Future<void> _init() async {
     await _getLocation();

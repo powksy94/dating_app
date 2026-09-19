@@ -8,6 +8,7 @@ import 'package:nocturne/domains/subscription/widgets/period_selector.dart';
 import 'package:nocturne/domains/subscription/widgets/plan_card.dart';
 import 'package:nocturne/domains/subscription/widgets/restore_purchases_button.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_action_button.dart';
+import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class SubscriptionPage extends StatefulWidget {
   State<SubscriptionPage> createState() => _SubscriptionPageState();
 }
 
-class _SubscriptionPageState extends State<SubscriptionPage> {
+class _SubscriptionPageState extends State<SubscriptionPage> with ReloadOnReconnect<SubscriptionPage> {
   late PageController _controller;
   int _current                    = 0;
   SubscriptionPeriod _period      = SubscriptionPeriod.month;
@@ -33,6 +34,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     _loadSubscription();
     _loadOfferings();
   }
+
+  @override
+  bool get needsReload => !_offeringsLoading && _offerings == null;
+
+  @override
+  void reloadAfterReconnect() => _retryOfferings();
 
   Future<void> _retryOfferings() {
     setState(() => _offeringsLoading = true);
