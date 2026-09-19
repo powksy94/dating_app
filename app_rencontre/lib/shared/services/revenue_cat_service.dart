@@ -49,7 +49,9 @@ class RevenueCatService {
 
   static Future<Offerings?> getOfferings() async {
     try {
-      return await Purchases.getOfferings();
+      // The SDK can keep retrying while offline: cap the wait so the screen
+      // can show its "price unavailable" state.
+      return await Purchases.getOfferings().timeout(const Duration(seconds: 10));
     } catch (_) {
       return null;
     }
