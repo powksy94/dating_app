@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
@@ -36,8 +37,19 @@ class _LoginPageState extends State<LoginPage> {
       );
       await RevenueCatService.identify(userId);
       if (mounted) Navigator.pushReplacementNamed(context, '/home');
+    } on TimeoutException {
+      // The server (local in debug) isn't reachable or isn't answering: distinct
+      // from a real 401, so "wrong password" isn't wrongly implied.
+      if (mounted) {
+        setState(() => _error = AppLocalizations.of(context)!.commonLoadErrorSubtitle);
+      }
     } catch (e) {
-      setState(() => _error = AppLocalizations.of(context)!.authLoginError);
+      // Surfaces the backend's actual message (wrong credentials, rate limit,
+      // banned account...) instead of always blaming the password.
+      final message = e.toString().replaceFirst('Exception: ', '');
+      setState(() => _error = message.isNotEmpty
+          ? message
+          : AppLocalizations.of(context)!.authLoginError);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
