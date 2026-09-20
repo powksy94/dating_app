@@ -13,7 +13,7 @@ class AuthService {
         'email': email, 'password': password, 'username': username,
         'testBuild': kTestBuild,
       }),
-    );
+    ).timeout(const Duration(seconds: 15));
     final data = jsonDecode(res.body);
     if (res.statusCode == 201) {
       await ApiService.saveToken(data['token']);
@@ -30,7 +30,7 @@ class AuthService {
       Uri.parse('${ApiService.baseUrl}/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
-    );
+    ).timeout(const Duration(seconds: 15));
     final data = jsonDecode(res.body);
     if (res.statusCode == 200) {
       await ApiService.saveToken(data['token']);

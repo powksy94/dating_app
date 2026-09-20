@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
@@ -25,9 +25,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _login() async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
-      final userId = await _auth.login(_emailCtrl.text.trim(), _passCtrl.text.trim());
+      final userId = await _auth.login(
+        _emailCtrl.text.trim(),
+        _passCtrl.text.trim(),
+      );
       await RevenueCatService.identify(userId);
       if (mounted) Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
@@ -37,65 +43,92 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Icon(Icons.nightlight,
-                  size: 64, color: Color(0xFF7B00D4)),
-              const SizedBox(height: 12),
-              Text(
-                AppLocalizations.of(context)!.authLoginTitle,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 4,
-                  color: Color(0xFFE8E0EE),
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            // Keeps the form vertically centered when it fits (the normal case),
+            // and lets it scroll instead of overflowing once the keyboard or the
+            // error message takes more room than the screen has.
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Icon(
+                      Icons.nightlight,
+                      size: 64,
+                      color: Color(0xFF7B00D4),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      AppLocalizations.of(context)!.authLoginTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 4,
+                        color: Color(0xFFE8E0EE),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    TextField(
+                      controller: _emailCtrl,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.authLabelEmail,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _passCtrl,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(
+                          context,
+                        )!.authLabelPassword,
+                      ),
+                    ),
+                    if (_error != null) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        _error!,
+                        style: const TextStyle(color: Color(0xFF8B0000)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: _loading ? null : _login,
+                      child: _loading
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(AppLocalizations.of(context)!.authBtnLogin),
+                    ),
+                    const SizedBox(height: 12),
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, '/register'),
+                      child: Text(
+                        AppLocalizations.of(context)!.authBtnGoToRegister,
+                        style: const TextStyle(color: Color(0xFFAA9AB5)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 40),
-              TextField(
-                controller: _emailCtrl,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.authLabelEmail),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passCtrl,
-                obscureText: true,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.authLabelPassword),
-              ),
-              if (_error != null) ...[
-                const SizedBox(height: 12),
-                Text(_error!,
-                    style: const TextStyle(color: Color(0xFF8B0000)),
-                    textAlign: TextAlign.center),
-              ],
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _loading ? null : _login,
-                child: _loading
-                    ? const SizedBox(
-                        height: 20, width: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2,
-                            color: Colors.white))
-                    : Text(AppLocalizations.of(context)!.authBtnLogin),
-              ),
-              const SizedBox(height: 12),
-              TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/register'),
-                child: Text(AppLocalizations.of(context)!.authBtnGoToRegister,
-                    style: const TextStyle(color: Color(0xFFAA9AB5))),
-              ),
-            ],
+            ),
           ),
         ),
       ),
