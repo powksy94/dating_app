@@ -350,6 +350,12 @@ abstract class AppLocalizations {
   /// **'Banned'**
   String get reportReviewBannedBadge;
 
+  /// No description provided for @reportReviewTestAccountBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Test account'**
+  String get reportReviewTestAccountBadge;
+
   /// No description provided for @reportReviewBtnDismiss.
   ///
   /// In en, this message translates to:

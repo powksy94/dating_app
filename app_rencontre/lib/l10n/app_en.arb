@@ -49,6 +49,7 @@
     "reportReviewReporterLabel": "Reported by",
     "reportReviewReasonLabel": "Reason",
     "reportReviewBannedBadge": "Banned",
+    "reportReviewTestAccountBadge": "Test account",
     "reportReviewBtnDismiss": "Dismiss",
     "reportReviewBtnBan": "Ban",
     "reportReviewBtnUnban": "Unban",

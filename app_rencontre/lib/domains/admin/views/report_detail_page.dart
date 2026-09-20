@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/report_review_actions.dart';
+import 'package:nocturne/domains/admin/widgets/test_account_badge.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 
 class ReportDetailPage extends StatefulWidget {
@@ -74,6 +75,10 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
+                    if (reported['isTestAccount'] as bool? ?? false) ...[
+                      const TestAccountBadge(),
+                      const SizedBox(width: 6),
+                    ],
                     if (_banned)
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -87,8 +92,15 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text('${l.reportReviewReporterLabel} ${reporter['username'] as String? ?? '?'}',
-                    style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text('${l.reportReviewReporterLabel} ${reporter['username'] as String? ?? '?'}',
+                          style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13)),
+                    ),
+                    if (reporter['isTestAccount'] as bool? ?? false) const TestAccountBadge(),
+                  ],
+                ),
                 if (createdAt != null) ...[
                   const SizedBox(height: 2),
                   Text('${l.reportDetailDateLabel} ${formatEventDateCompact(context, createdAt)}',

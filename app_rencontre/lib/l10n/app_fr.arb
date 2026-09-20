@@ -46,6 +46,7 @@
     "reportReviewReporterLabel": "Signalé par",
     "reportReviewReasonLabel": "Motif",
     "reportReviewBannedBadge": "Banni",
+    "reportReviewTestAccountBadge": "Compte test",
     "reportReviewBtnDismiss": "Classer sans suite",
     "reportReviewBtnBan": "Bannir",
     "reportReviewBtnUnban": "Débannir",

@@ -142,6 +142,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportReviewBannedBadge => 'Banned';
 
   @override
+  String get reportReviewTestAccountBadge => 'Test account';
+
+  @override
   String get reportReviewBtnDismiss => 'Dismiss';
 
   @override

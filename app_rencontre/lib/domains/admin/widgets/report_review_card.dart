@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/admin/widgets/test_account_badge.dart';
 
 class ReportReviewCard extends StatelessWidget {
   final Map<String, dynamic> report;
@@ -27,6 +28,7 @@ class ReportReviewCard extends StatelessWidget {
     final reporterName = reporter['username'] as String? ?? '?';
     final reportedName = reported['username'] as String? ?? '?';
     final banned       = reported['banned'] as bool? ?? false;
+    final isTestAccount = reported['isTestAccount'] as bool? ?? false;
     final reason       = report['reason'] as String? ?? '';
     final createdAt    = DateTime.tryParse(report['createdAt'] as String? ?? '');
 
@@ -66,6 +68,10 @@ class ReportReviewCard extends StatelessWidget {
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                         ),
+                        if (isTestAccount) ...[
+                          const SizedBox(width: 6),
+                          const TestAccountBadge(),
+                        ],
                         if (banned) ...[
                           const SizedBox(width: 6),
                           Container(
