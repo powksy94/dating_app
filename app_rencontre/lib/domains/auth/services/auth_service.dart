@@ -1,5 +1,6 @@
 ﻿import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:nocturne/core/build_channel.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
 
@@ -8,7 +9,10 @@ class AuthService {
     final res = await http.post(
       Uri.parse('${ApiService.baseUrl}/auth/register'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'password': password, 'username': username}),
+      body: jsonEncode({
+        'email': email, 'password': password, 'username': username,
+        'testBuild': kTestBuild,
+      }),
     );
     final data = jsonDecode(res.body);
     if (res.statusCode == 201) {
