@@ -1172,6 +1172,234 @@ abstract class AppLocalizations {
   /// **'Couldn\'t open the conversation'**
   String get chatOpenErrorTitle;
 
+  /// No description provided for @commonBtnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonBtnCancel;
+
+  /// No description provided for @commonBtnSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get commonBtnSend;
+
+  /// No description provided for @starterCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To break the ice'**
+  String get starterCardTitle;
+
+  /// No description provided for @starterConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send this message?'**
+  String get starterConfirmTitle;
+
+  /// No description provided for @starterNoCommonDialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profiles share no tags, but you still liked each other. Here are some ideas to start the conversation.'**
+  String get starterNoCommonDialog;
+
+  /// No description provided for @starterToggleClassic.
+  ///
+  /// In en, this message translates to:
+  /// **'Classic ideas'**
+  String get starterToggleClassic;
+
+  /// No description provided for @starterToggleShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on what you share'**
+  String get starterToggleShared;
+
+  /// No description provided for @starterHookShared.
+  ///
+  /// In en, this message translates to:
+  /// **'You both have {tag} in common.'**
+  String starterHookShared(String tag);
+
+  /// No description provided for @starterHookRare.
+  ///
+  /// In en, this message translates to:
+  /// **'Few profiles have {tag}, and you both do.'**
+  String starterHookRare(String tag);
+
+  /// No description provided for @starterHookCombo.
+  ///
+  /// In en, this message translates to:
+  /// **'You both have {tag1} and {tag2} in common.'**
+  String starterHookCombo(String tag1, String tag2);
+
+  /// No description provided for @starterHookBand.
+  ///
+  /// In en, this message translates to:
+  /// **'You both like {band}.'**
+  String starterHookBand(String band);
+
+  /// No description provided for @starterHookEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re both attending the event {event}.'**
+  String starterHookEvent(String event);
+
+  /// No description provided for @starterHookMood.
+  ///
+  /// In en, this message translates to:
+  /// **'You share the same musical mood.'**
+  String get starterHookMood;
+
+  /// No description provided for @starterHookOtherBand.
+  ///
+  /// In en, this message translates to:
+  /// **'This person likes {band}.'**
+  String starterHookOtherBand(String band);
+
+  /// No description provided for @starterMsgGenre1.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m deep into a {tag} phase right now. What track do you keep on repeat?'**
+  String starterMsgGenre1(String tag);
+
+  /// No description provided for @starterMsgGenre2.
+  ///
+  /// In en, this message translates to:
+  /// **'What was the first {tag} band that pulled you in?'**
+  String starterMsgGenre2(String tag);
+
+  /// No description provided for @starterMsgGenre3.
+  ///
+  /// In en, this message translates to:
+  /// **'If I could only listen to one {tag} album this week, which would you recommend?'**
+  String starterMsgGenre3(String tag);
+
+  /// No description provided for @starterMsgVibe1.
+  ///
+  /// In en, this message translates to:
+  /// **'If your {tag} playlist became a film soundtrack, which film would it be?'**
+  String starterMsgVibe1(String tag);
+
+  /// No description provided for @starterMsgVibe2.
+  ///
+  /// In en, this message translates to:
+  /// **'Which track instantly puts you in a {tag} mood?'**
+  String starterMsgVibe2(String tag);
+
+  /// No description provided for @starterMsgVibeSensitive.
+  ///
+  /// In en, this message translates to:
+  /// **'Which track keeps you company in those moments?'**
+  String get starterMsgVibeSensitive;
+
+  /// No description provided for @starterMsgAesthetic1.
+  ///
+  /// In en, this message translates to:
+  /// **'Where does your {tag} world start: clothes, your room, record sleeves?'**
+  String starterMsgAesthetic1(String tag);
+
+  /// No description provided for @starterMsgIntensity1.
+  ///
+  /// In en, this message translates to:
+  /// **'For {tag} intensity, which track suits you best?'**
+  String starterMsgIntensity1(String tag);
+
+  /// No description provided for @starterMsgEra1.
+  ///
+  /// In en, this message translates to:
+  /// **'Which record from the {tag} era would you take to a desert island?'**
+  String starterMsgEra1(String tag);
+
+  /// No description provided for @starterMsgFormatConcerts.
+  ///
+  /// In en, this message translates to:
+  /// **'The last concert that left a mark on you, and the worst one too?'**
+  String get starterMsgFormatConcerts;
+
+  /// No description provided for @starterMsgFormatVinyl.
+  ///
+  /// In en, this message translates to:
+  /// **'Which piece in your collection means the most to you?'**
+  String get starterMsgFormatVinyl;
+
+  /// No description provided for @starterMsgFormatBandcamp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your latest Bandcamp find? I\'m looking for something for my next listen.'**
+  String get starterMsgFormatBandcamp;
+
+  /// No description provided for @starterMsgFormatPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'A playlist you keep on repeat? Send me the link.'**
+  String get starterMsgFormatPlaylist;
+
+  /// No description provided for @starterMsgFormatUnderground.
+  ///
+  /// In en, this message translates to:
+  /// **'A small venue or local scene that deserves more attention where you live?'**
+  String get starterMsgFormatUnderground;
+
+  /// No description provided for @starterMsgBand1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your favorite {band} album, and the one you defend even if it divides people?'**
+  String starterMsgBand1(String band);
+
+  /// No description provided for @starterMsgEvent1.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you looking forward to most at this event?'**
+  String get starterMsgEvent1;
+
+  /// No description provided for @starterMsgOtherBand1.
+  ///
+  /// In en, this message translates to:
+  /// **'I saw you like {band}. What\'s your favorite album?'**
+  String starterMsgOtherBand1(String band);
+
+  /// No description provided for @starterMsgCombo1.
+  ///
+  /// In en, this message translates to:
+  /// **'{tag1} and {tag2} sound like a perfect night. Which track would you open with?'**
+  String starterMsgCombo1(String tag1, String tag2);
+
+  /// No description provided for @starterFallback1.
+  ///
+  /// In en, this message translates to:
+  /// **'The last album you listened to from start to finish?'**
+  String get starterFallback1;
+
+  /// No description provided for @starterFallback2.
+  ///
+  /// In en, this message translates to:
+  /// **'If your playlist of the moment were a film, what would it be called?'**
+  String get starterFallback2;
+
+  /// No description provided for @starterFallback3.
+  ///
+  /// In en, this message translates to:
+  /// **'A band you defend even though nobody gets it?'**
+  String get starterFallback3;
+
+  /// No description provided for @starterFallback4.
+  ///
+  /// In en, this message translates to:
+  /// **'A song that still gets to you, even after a hundred listens?'**
+  String get starterFallback4;
+
+  /// No description provided for @starterFallback5.
+  ///
+  /// In en, this message translates to:
+  /// **'A dream concert, and your worst concert memory?'**
+  String get starterFallback5;
+
+  /// No description provided for @starterFallback6.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge: we each send a track the other probably doesn\'t know. Deal?'**
+  String get starterFallback6;
+
   /// No description provided for @chatEmptyElegiesReceivedTitle.
   ///
   /// In en, this message translates to:

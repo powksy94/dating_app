@@ -246,6 +246,99 @@
     "matchesTileSubtitle": "Bound by the darkness",
     "matchesBtnMessage": "Message",
     "chatOpenErrorTitle": "Couldn't open the conversation",
+
+    "commonBtnCancel": "Cancel",
+    "commonBtnSend": "Send",
+    "starterCardTitle": "To break the ice",
+    "starterConfirmTitle": "Send this message?",
+    "starterNoCommonDialog": "Your profiles share no tags, but you still liked each other. Here are some ideas to start the conversation.",
+    "starterToggleClassic": "Classic ideas",
+    "starterToggleShared": "Based on what you share",
+
+    "starterHookShared": "You both have {tag} in common.",
+    "@starterHookShared": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterHookRare": "Few profiles have {tag}, and you both do.",
+    "@starterHookRare": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterHookCombo": "You both have {tag1} and {tag2} in common.",
+    "@starterHookCombo": {
+        "placeholders": { "tag1": { "type": "String" }, "tag2": { "type": "String" } }
+    },
+    "starterHookBand": "You both like {band}.",
+    "@starterHookBand": {
+        "placeholders": { "band": { "type": "String" } }
+    },
+    "starterHookEvent": "You're both attending the event {event}.",
+    "@starterHookEvent": {
+        "placeholders": { "event": { "type": "String" } }
+    },
+    "starterHookMood": "You share the same musical mood.",
+    "starterHookOtherBand": "This person likes {band}.",
+    "@starterHookOtherBand": {
+        "placeholders": { "band": { "type": "String" } }
+    },
+
+    "starterMsgGenre1": "I'm deep into a {tag} phase right now. What track do you keep on repeat?",
+    "@starterMsgGenre1": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgGenre2": "What was the first {tag} band that pulled you in?",
+    "@starterMsgGenre2": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgGenre3": "If I could only listen to one {tag} album this week, which would you recommend?",
+    "@starterMsgGenre3": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgVibe1": "If your {tag} playlist became a film soundtrack, which film would it be?",
+    "@starterMsgVibe1": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgVibe2": "Which track instantly puts you in a {tag} mood?",
+    "@starterMsgVibe2": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgVibeSensitive": "Which track keeps you company in those moments?",
+    "starterMsgAesthetic1": "Where does your {tag} world start: clothes, your room, record sleeves?",
+    "@starterMsgAesthetic1": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgIntensity1": "For {tag} intensity, which track suits you best?",
+    "@starterMsgIntensity1": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgEra1": "Which record from the {tag} era would you take to a desert island?",
+    "@starterMsgEra1": {
+        "placeholders": { "tag": { "type": "String" } }
+    },
+    "starterMsgFormatConcerts": "The last concert that left a mark on you, and the worst one too?",
+    "starterMsgFormatVinyl": "Which piece in your collection means the most to you?",
+    "starterMsgFormatBandcamp": "Your latest Bandcamp find? I'm looking for something for my next listen.",
+    "starterMsgFormatPlaylist": "A playlist you keep on repeat? Send me the link.",
+    "starterMsgFormatUnderground": "A small venue or local scene that deserves more attention where you live?",
+    "starterMsgBand1": "Your favorite {band} album, and the one you defend even if it divides people?",
+    "@starterMsgBand1": {
+        "placeholders": { "band": { "type": "String" } }
+    },
+    "starterMsgEvent1": "What are you looking forward to most at this event?",
+    "starterMsgOtherBand1": "I saw you like {band}. What's your favorite album?",
+    "@starterMsgOtherBand1": {
+        "placeholders": { "band": { "type": "String" } }
+    },
+    "starterMsgCombo1": "{tag1} and {tag2} sound like a perfect night. Which track would you open with?",
+    "@starterMsgCombo1": {
+        "placeholders": { "tag1": { "type": "String" }, "tag2": { "type": "String" } }
+    },
+
+    "starterFallback1": "The last album you listened to from start to finish?",
+    "starterFallback2": "If your playlist of the moment were a film, what would it be called?",
+    "starterFallback3": "A band you defend even though nobody gets it?",
+    "starterFallback4": "A song that still gets to you, even after a hundred listens?",
+    "starterFallback5": "A dream concert, and your worst concert memory?",
+    "starterFallback6": "Challenge: we each send a track the other probably doesn't know. Deal?",
     "chatEmptyElegiesReceivedTitle": "No elegies received",
     "chatEmptyElegiesReceivedSub": "Someone will think of you soon...",
     "chatEmptyElegiesSentTitle": "No elegies sent",

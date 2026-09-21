@@ -601,6 +601,169 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chatOpenErrorTitle => 'Impossible d\'ouvrir la conversation';
 
   @override
+  String get commonBtnCancel => 'Annuler';
+
+  @override
+  String get commonBtnSend => 'Envoyer';
+
+  @override
+  String get starterCardTitle => 'Pour briser la glace';
+
+  @override
+  String get starterConfirmTitle => 'Envoyer ce message ?';
+
+  @override
+  String get starterNoCommonDialog =>
+      'Vos profils n\'ont pas de tag en commun, mais vous vous êtes quand même plu. Voici des idées pour lancer la conversation.';
+
+  @override
+  String get starterToggleClassic => 'Idées classiques';
+
+  @override
+  String get starterToggleShared => 'Selon vos points communs';
+
+  @override
+  String starterHookShared(String tag) {
+    return 'Vous avez $tag en commun.';
+  }
+
+  @override
+  String starterHookRare(String tag) {
+    return 'Peu de profils ont $tag, et vous en faites partie tous les deux.';
+  }
+
+  @override
+  String starterHookCombo(String tag1, String tag2) {
+    return 'Vous avez $tag1 et $tag2 en commun.';
+  }
+
+  @override
+  String starterHookBand(String band) {
+    return 'Vous aimez tous les deux $band.';
+  }
+
+  @override
+  String starterHookEvent(String event) {
+    return 'Vous participez tous les deux à l\'événement $event.';
+  }
+
+  @override
+  String get starterHookMood =>
+      'Vous vous retrouvez dans la même ambiance musicale.';
+
+  @override
+  String starterHookOtherBand(String band) {
+    return 'Cette personne aime $band.';
+  }
+
+  @override
+  String starterMsgGenre1(String tag) {
+    return 'Je suis en pleine phase $tag en ce moment. Et toi, quel morceau tu remets en boucle ?';
+  }
+
+  @override
+  String starterMsgGenre2(String tag) {
+    return 'Quel est le premier groupe de $tag qui t\'a fait plonger dedans ?';
+  }
+
+  @override
+  String starterMsgGenre3(String tag) {
+    return 'Si je ne devais écouter qu\'un album de $tag cette semaine, tu me conseillerais lequel ?';
+  }
+
+  @override
+  String starterMsgVibe1(String tag) {
+    return 'Si ta playlist $tag devenait la bande-son d\'un film, ce serait lequel ?';
+  }
+
+  @override
+  String starterMsgVibe2(String tag) {
+    return 'Quel morceau te met tout de suite dans une ambiance $tag ?';
+  }
+
+  @override
+  String get starterMsgVibeSensitive =>
+      'Quel morceau t\'accompagne dans ces moments-là ?';
+
+  @override
+  String starterMsgAesthetic1(String tag) {
+    return 'Ton univers $tag, ça commence où : les vêtements, la chambre, les pochettes de disques ?';
+  }
+
+  @override
+  String starterMsgIntensity1(String tag) {
+    return 'Côté intensité $tag, quel morceau te correspond le mieux ?';
+  }
+
+  @override
+  String starterMsgEra1(String tag) {
+    return 'Quel disque de la période $tag tu emporterais sur une île déserte ?';
+  }
+
+  @override
+  String get starterMsgFormatConcerts =>
+      'Le dernier concert qui t\'a marqué, et le pire aussi ?';
+
+  @override
+  String get starterMsgFormatVinyl =>
+      'La pièce de ta collection qui compte le plus pour toi ?';
+
+  @override
+  String get starterMsgFormatBandcamp =>
+      'Ta dernière trouvaille sur Bandcamp ? Je cherche de quoi remplir ma prochaine écoute.';
+
+  @override
+  String get starterMsgFormatPlaylist =>
+      'Une playlist que tu écoutes en boucle ? Envoie-moi le lien.';
+
+  @override
+  String get starterMsgFormatUnderground =>
+      'Un petit lieu ou une scène locale qui mérite d\'être connue, chez toi ?';
+
+  @override
+  String starterMsgBand1(String band) {
+    return 'Ton album préféré de $band, et celui que tu défends même s\'il divise ?';
+  }
+
+  @override
+  String get starterMsgEvent1 =>
+      'Qu\'est-ce que tu attends le plus de cet événement ?';
+
+  @override
+  String starterMsgOtherBand1(String band) {
+    return 'J\'ai vu que tu aimes $band. Quel est ton album préféré ?';
+  }
+
+  @override
+  String starterMsgCombo1(String tag1, String tag2) {
+    return '$tag1 et $tag2, ça sonne comme une soirée parfaite. Tu la commencerais par quel morceau ?';
+  }
+
+  @override
+  String get starterFallback1 =>
+      'Le dernier album que tu as écouté d\'un bout à l\'autre ?';
+
+  @override
+  String get starterFallback2 =>
+      'Si ta playlist du moment était un film, il s\'appellerait comment ?';
+
+  @override
+  String get starterFallback3 =>
+      'Un groupe que tu défends alors que personne ne comprend ?';
+
+  @override
+  String get starterFallback4 =>
+      'Une chanson qui te fait toujours quelque chose, même après cent écoutes ?';
+
+  @override
+  String get starterFallback5 =>
+      'Un concert de rêve, et ton pire souvenir de concert ?';
+
+  @override
+  String get starterFallback6 =>
+      'Défi : chacun envoie un morceau que l\'autre ne connaît sûrement pas. Deal ?';
+
+  @override
   String get chatEmptyElegiesReceivedTitle => 'Aucune élégie reçue';
 
   @override

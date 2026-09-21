@@ -15,6 +15,7 @@ import 'package:nocturne/domains/chat/widgets/chat_input_bar.dart';
 import 'package:nocturne/domains/chat/widgets/chat_app_bar.dart';
 import 'package:nocturne/domains/chat/widgets/reply_bar.dart';
 import 'package:nocturne/domains/chat/widgets/message_options_sheet.dart';
+import 'package:nocturne/domains/chat/widgets/conversation_starters.dart';
 
 class ConversationPage extends StatefulWidget {
   final ChatMatch match;
@@ -148,6 +149,12 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
     if (mounted) setState(() => _replyingTo = null);
   }
 
+  // A conversation starter the user confirmed: it goes out like a typed message.
+  void _sendStarter(String text) {
+    rememberSentText(text);
+    SocketService.instance.sendMessage(widget.match.matchId, text);
+  }
+
   void _onTypingChanged() {
     final typing = _ctrl.text.isNotEmpty;
     if (typing == _wasTyping) return;
@@ -251,7 +258,12 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
           : Column(
               children: [
                 Expanded(
-                  child: ListView.builder(
+                  child: _messages.isEmpty
+                      ? ConversationStarters(
+                          matchId: widget.match.matchId,
+                          onSend:  _sendStarter,
+                        )
+                      : ListView.builder(
                     controller: _scroll,
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     itemCount: _messages.length,

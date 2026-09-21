@@ -2,6 +2,7 @@
 import 'package:http/http.dart' as http;
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/chat/models/message.dart';
+import 'package:nocturne/domains/chat/models/starter_suggestion.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 
 class ChatService {
@@ -25,6 +26,18 @@ class ChatService {
     if (res.statusCode != 200) throw Exception('Erreur chargement messages');
     final List data = jsonDecode(res.body);
     return data.map((e) => Message.fromJson(e)).toList();
+  }
+
+  /// Conversation starters for a new match. The server decides what to offer
+  /// (and how many, from the user's plan); the app only writes the texts.
+  static Future<StarterSuggestions> getSuggestions(String matchId) async {
+    final headers = await ApiService.authHeaders();
+    final res = await http.get(
+      Uri.parse('${ApiService.baseUrl}/matches/$matchId/suggestions'),
+      headers: headers,
+    ).timeout(const Duration(seconds: 10));
+    if (res.statusCode != 200) throw Exception('Erreur chargement suggestions');
+    return StarterSuggestions.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
   static Future<void> sendMessage(String matchId, String text) async {
