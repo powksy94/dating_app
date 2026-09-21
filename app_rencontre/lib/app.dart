@@ -7,6 +7,7 @@ import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/app_version_service.dart';
+import 'package:nocturne/shared/services/connectivity_service.dart';
 import 'package:nocturne/shared/widgets/common/offline_banner.dart';
 import 'package:nocturne/shared/widgets/common/update_available_dialog.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
@@ -82,11 +83,23 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       onGenerateRoute: Routes.generateRoute,
       builder: (context, child) => Stack(
         children: [
-          Column(
-            children: [
-              const OfflineBanner(),
-              Expanded(child: child!),
-            ],
+          ValueListenableBuilder<bool>(
+            valueListenable: ConnectivityService.online,
+            builder: (context, online, _) => Column(
+              children: [
+                const OfflineBanner(),
+                // While the banner is shown it already covers the status bar
+                // area, so the screens below must not reserve it a second time
+                // (that doubled gap is what pushed their content off screen).
+                Expanded(
+                  child: MediaQuery.removePadding(
+                    context: context,
+                    removeTop: !online,
+                    child: child!,
+                  ),
+                ),
+              ],
+            ),
           ),
           if (_obscured)
             Positioned.fill(

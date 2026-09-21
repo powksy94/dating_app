@@ -5,6 +5,8 @@
     "commonLoadErrorSubtitle": "Vérifie ta connexion et réessaie.",
     "commonBtnRetry": "Réessayer",
     "commonOfflineBanner": "Pas de connexion",
+    "subscriptionOfflineTitle": "Connexion requise",
+    "subscriptionOfflineBody": "Reconnecte-toi à Internet pour voir et gérer les abonnements.",
     "eventLoadErrorTitle": "Impossible de charger les événements",
     "profileLoadErrorTitle": "Impossible de charger ton profil",
     "discoveryFiltersTitle": "FILTRES DE RECHERCHE",

@@ -27,18 +27,22 @@ class OfflineBanner extends StatelessWidget {
       child: Container(
         width: double.infinity,
         color: const Color(0xFF7F1D1D),
-        padding: const EdgeInsets.symmetric(vertical: 6),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.cloud_off, size: 14, color: Colors.white),
+            const Icon(Icons.cloud_off, size: 12, color: Colors.white),
             const SizedBox(width: 6),
-            Text(
-              AppLocalizations.of(context)!.commonOfflineBanner,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+            Flexible(
+              child: Text(
+                AppLocalizations.of(context)!.commonOfflineBanner,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],

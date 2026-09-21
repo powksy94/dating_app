@@ -128,6 +128,18 @@ abstract class AppLocalizations {
   /// **'No connection'**
   String get commonOfflineBanner;
 
+  /// No description provided for @subscriptionOfflineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection required'**
+  String get subscriptionOfflineTitle;
+
+  /// No description provided for @subscriptionOfflineBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Get back online to view and manage subscriptions.'**
+  String get subscriptionOfflineBody;
+
   /// No description provided for @eventLoadErrorTitle.
   ///
   /// In en, this message translates to:

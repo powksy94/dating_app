@@ -24,6 +24,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonOfflineBanner => 'No connection';
 
   @override
+  String get subscriptionOfflineTitle => 'Connection required';
+
+  @override
+  String get subscriptionOfflineBody =>
+      'Get back online to view and manage subscriptions.';
+
+  @override
   String get eventLoadErrorTitle => 'Couldn\'t load events';
 
   @override

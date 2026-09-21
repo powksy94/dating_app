@@ -24,6 +24,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonOfflineBanner => 'Pas de connexion';
 
   @override
+  String get subscriptionOfflineTitle => 'Connexion requise';
+
+  @override
+  String get subscriptionOfflineBody =>
+      'Reconnecte-toi à Internet pour voir et gérer les abonnements.';
+
+  @override
   String get eventLoadErrorTitle => 'Impossible de charger les événements';
 
   @override

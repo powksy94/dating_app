@@ -5,6 +5,8 @@
     "commonLoadErrorSubtitle": "Check your connection and try again.",
     "commonBtnRetry": "Retry",
     "commonOfflineBanner": "No connection",
+    "subscriptionOfflineTitle": "Connection required",
+    "subscriptionOfflineBody": "Get back online to view and manage subscriptions.",
     "eventLoadErrorTitle": "Couldn't load events",
     "profileLoadErrorTitle": "Couldn't load your profile",
     "discoveryFiltersTitle": "SEARCH FILTERS",
