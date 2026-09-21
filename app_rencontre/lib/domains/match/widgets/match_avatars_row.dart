@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class MatchAvatarRow extends StatelessWidget {
     final String myAvatarUrl;
@@ -30,7 +31,7 @@ class MatchAvatarRow extends StatelessWidget {
                             opacity: slideValue,
                             child: _Avatar(
                                 url: myAvatarUrl,
-                                label: 'Toi',
+                                label: AppLocalizations.of(context)!.matchAvatarYou,
                                 size: 110,
                                 borderColor: const Color(0xFF7B00D4),
                             ),

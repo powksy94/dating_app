@@ -1,5 +1,6 @@
 ﻿import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/address_result.dart';
 import 'package:nocturne/shared/services/address_search_service.dart';
 
@@ -61,7 +62,7 @@ class _AddressSearchFieldState extends State<AddressSearchField> {
           controller: _ctrl,
           style: const TextStyle(color: Colors.white, fontSize: 14),
           decoration: InputDecoration(
-            labelText: 'Adresse *',
+            labelText: AppLocalizations.of(context)!.commonAddressLabel,
             labelStyle:
                 const TextStyle(color: Color(0xFF5A4A6A), fontSize: 13),
             filled: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 
 class StepProgressBar extends StatelessWidget {
   final int currentStep;
@@ -18,7 +19,7 @@ class StepProgressBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Étape $currentStep sur $totalSteps',
+            AppLocalizations.of(context)!.commonStepProgress(currentStep, totalSteps),
             style: const TextStyle(
               color: Color(0xFFAA9AB5),
               fontSize: 12,

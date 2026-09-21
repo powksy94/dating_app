@@ -43,9 +43,9 @@ class _MatchesPageState extends State<MatchesPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'MES MATCHS',
-          style: TextStyle(fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
+        title: Text(
+          AppLocalizations.of(context)!.profileMenuMatches.toUpperCase(),
+          style: const TextStyle(fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -104,9 +104,9 @@ class _MatchTile extends StatelessWidget {
           fontSize: 15,
         ),
       ),
-      subtitle: const Text(
-        'Liés par les ténèbres',
-        style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
+      subtitle: Text(
+        AppLocalizations.of(context)!.matchesTileSubtitle,
+        style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),
       ),
       trailing: ElevatedButton(
         onPressed: () => Navigator.push(
@@ -125,9 +125,9 @@ class _MatchTile extends StatelessWidget {
           minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        child: const Text(
-          'Message',
-          style: TextStyle(color: Colors.white, fontSize: 12),
+        child: Text(
+          AppLocalizations.of(context)!.matchesBtnMessage,
+          style: const TextStyle(color: Colors.white, fontSize: 12),
         ),
       ),
     );
@@ -139,20 +139,21 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    final l = AppLocalizations.of(context)!;
+    return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.people_outline, size: 64, color: Color(0xFF7B00D4)),
-          SizedBox(height: 16),
+          const Icon(Icons.people_outline, size: 64, color: Color(0xFF7B00D4)),
+          const SizedBox(height: 16),
           Text(
-            'Aucun match pour l\'instant',
-            style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 16),
+            l.chatEmptyMatchesTitle,
+            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 16),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
-            'Continue à swiper pour trouver ta connexion obscure',
-            style: TextStyle(color: Color(0xFF5A4A6A), fontSize: 13),
+            l.chatEmptyMatchesSub,
+            style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 13),
             textAlign: TextAlign.center,
           ),
         ],

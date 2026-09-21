@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/profile/views/profile_page.dart';
@@ -74,8 +75,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const ReportReviewPage());
       default:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('Page introuvable: ${settings.name}')),
+          builder: (context) => Scaffold(
+            body: Center(
+              child: Text(AppLocalizations.of(context)!.commonPageNotFound(settings.name ?? '')),
+            ),
           ),
         );
     }

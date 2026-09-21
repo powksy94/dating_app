@@ -5,6 +5,28 @@
     "commonLoadErrorSubtitle": "Check your connection and try again.",
     "commonBtnRetry": "Retry",
     "commonOfflineBanner": "No connection",
+    "commonStepProgress": "Step {current} of {total}",
+    "@commonStepProgress": {
+        "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+    },
+    "commonAddressLabel": "Address *",
+    "commonTotal": "Total",
+    "commonPageNotFound": "Page not found: {name}",
+    "@commonPageNotFound": {
+        "placeholders": { "name": { "type": "String" } }
+    },
+    "commonAgoMinutes": "{count}min ago",
+    "@commonAgoMinutes": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "commonAgoHours": "{count}h ago",
+    "@commonAgoHours": {
+        "placeholders": { "count": { "type": "int" } }
+    },
+    "commonAgoDays": "{count}d ago",
+    "@commonAgoDays": {
+        "placeholders": { "count": { "type": "int" } }
+    },
     "commonConnectionRequiredTitle": "Connection required",
     "commonConnectionRequiredBody": "Get back online to continue.",
     "subscriptionOfflineBody": "Get back online to view and manage subscriptions.",
@@ -209,6 +231,19 @@
     "chatTabElegiesSent": "SENT ELEGIES",
     "chatEmptyMatchesTitle": "No matches yet...",
     "chatEmptyMatchesSub": "Keep exploring the darkness",
+    "matchTitleBond": "A DARK BOND",
+    "matchTitleBorn": "IS BORN",
+    "matchTitleElegie": "YOUR ELEGY HAS BEEN HEARD",
+    "matchSubtitleElegie": "The darkness has answered your prayer",
+    "matchSubtitleBond": "You & {username} are bound by the darkness",
+    "@matchSubtitleBond": {
+        "placeholders": { "username": { "type": "String" } }
+    },
+    "matchBtnMessage": "SEND A MESSAGE",
+    "matchBtnKeepExploring": "Keep exploring",
+    "matchAvatarYou": "You",
+    "matchesTileSubtitle": "Bound by the darkness",
+    "matchesBtnMessage": "Message",
     "chatEmptyElegiesReceivedTitle": "No elegies received",
     "chatEmptyElegiesReceivedSub": "Someone will think of you soon...",
     "chatEmptyElegiesSentTitle": "No elegies sent",

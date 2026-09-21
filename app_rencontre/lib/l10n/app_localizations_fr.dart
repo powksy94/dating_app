@@ -24,6 +24,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonOfflineBanner => 'Pas de connexion';
 
   @override
+  String commonStepProgress(int current, int total) {
+    return 'Étape $current sur $total';
+  }
+
+  @override
+  String get commonAddressLabel => 'Adresse *';
+
+  @override
+  String get commonTotal => 'Total';
+
+  @override
+  String commonPageNotFound(String name) {
+    return 'Page introuvable : $name';
+  }
+
+  @override
+  String commonAgoMinutes(int count) {
+    return 'il y a ${count}min';
+  }
+
+  @override
+  String commonAgoHours(int count) {
+    return 'il y a ${count}h';
+  }
+
+  @override
+  String commonAgoDays(int count) {
+    return 'il y a ${count}j';
+  }
+
+  @override
   String get commonConnectionRequiredTitle => 'Connexion requise';
 
   @override
@@ -530,6 +561,38 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatEmptyMatchesSub => 'Continue d\'explorer les ténèbres';
+
+  @override
+  String get matchTitleBond => 'UN LIEN OBSCUR';
+
+  @override
+  String get matchTitleBorn => 'EST NÉ';
+
+  @override
+  String get matchTitleElegie => 'TON ÉLÉGIE A ÉTÉ ENTENDUE';
+
+  @override
+  String get matchSubtitleElegie => 'Les ténèbres ont exaucé ta prière';
+
+  @override
+  String matchSubtitleBond(String username) {
+    return 'Toi & $username êtes liés par les ténèbres';
+  }
+
+  @override
+  String get matchBtnMessage => 'ENVOYER UN MESSAGE';
+
+  @override
+  String get matchBtnKeepExploring => 'Continuer à explorer';
+
+  @override
+  String get matchAvatarYou => 'Toi';
+
+  @override
+  String get matchesTileSubtitle => 'Liés par les ténèbres';
+
+  @override
+  String get matchesBtnMessage => 'Message';
 
   @override
   String get chatEmptyElegiesReceivedTitle => 'Aucune élégie reçue';

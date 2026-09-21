@@ -128,6 +128,48 @@ abstract class AppLocalizations {
   /// **'No connection'**
   String get commonOfflineBanner;
 
+  /// No description provided for @commonStepProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String commonStepProgress(int current, int total);
+
+  /// No description provided for @commonAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address *'**
+  String get commonAddressLabel;
+
+  /// No description provided for @commonTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get commonTotal;
+
+  /// No description provided for @commonPageNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Page not found: {name}'**
+  String commonPageNotFound(String name);
+
+  /// No description provided for @commonAgoMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}min ago'**
+  String commonAgoMinutes(int count);
+
+  /// No description provided for @commonAgoHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String commonAgoHours(int count);
+
+  /// No description provided for @commonAgoDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String commonAgoDays(int count);
+
   /// No description provided for @commonConnectionRequiredTitle.
   ///
   /// In en, this message translates to:
@@ -1057,6 +1099,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Keep exploring the darkness'**
   String get chatEmptyMatchesSub;
+
+  /// No description provided for @matchTitleBond.
+  ///
+  /// In en, this message translates to:
+  /// **'A DARK BOND'**
+  String get matchTitleBond;
+
+  /// No description provided for @matchTitleBorn.
+  ///
+  /// In en, this message translates to:
+  /// **'IS BORN'**
+  String get matchTitleBorn;
+
+  /// No description provided for @matchTitleElegie.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR ELEGY HAS BEEN HEARD'**
+  String get matchTitleElegie;
+
+  /// No description provided for @matchSubtitleElegie.
+  ///
+  /// In en, this message translates to:
+  /// **'The darkness has answered your prayer'**
+  String get matchSubtitleElegie;
+
+  /// No description provided for @matchSubtitleBond.
+  ///
+  /// In en, this message translates to:
+  /// **'You & {username} are bound by the darkness'**
+  String matchSubtitleBond(String username);
+
+  /// No description provided for @matchBtnMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'SEND A MESSAGE'**
+  String get matchBtnMessage;
+
+  /// No description provided for @matchBtnKeepExploring.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep exploring'**
+  String get matchBtnKeepExploring;
+
+  /// No description provided for @matchAvatarYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get matchAvatarYou;
+
+  /// No description provided for @matchesTileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bound by the darkness'**
+  String get matchesTileSubtitle;
+
+  /// No description provided for @matchesBtnMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get matchesBtnMessage;
 
   /// No description provided for @chatEmptyElegiesReceivedTitle.
   ///

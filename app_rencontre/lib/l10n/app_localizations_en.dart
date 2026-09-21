@@ -24,6 +24,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonOfflineBanner => 'No connection';
 
   @override
+  String commonStepProgress(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get commonAddressLabel => 'Address *';
+
+  @override
+  String get commonTotal => 'Total';
+
+  @override
+  String commonPageNotFound(String name) {
+    return 'Page not found: $name';
+  }
+
+  @override
+  String commonAgoMinutes(int count) {
+    return '${count}min ago';
+  }
+
+  @override
+  String commonAgoHours(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String commonAgoDays(int count) {
+    return '${count}d ago';
+  }
+
+  @override
   String get commonConnectionRequiredTitle => 'Connection required';
 
   @override
@@ -528,6 +559,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatEmptyMatchesSub => 'Keep exploring the darkness';
+
+  @override
+  String get matchTitleBond => 'A DARK BOND';
+
+  @override
+  String get matchTitleBorn => 'IS BORN';
+
+  @override
+  String get matchTitleElegie => 'YOUR ELEGY HAS BEEN HEARD';
+
+  @override
+  String get matchSubtitleElegie => 'The darkness has answered your prayer';
+
+  @override
+  String matchSubtitleBond(String username) {
+    return 'You & $username are bound by the darkness';
+  }
+
+  @override
+  String get matchBtnMessage => 'SEND A MESSAGE';
+
+  @override
+  String get matchBtnKeepExploring => 'Keep exploring';
+
+  @override
+  String get matchAvatarYou => 'You';
+
+  @override
+  String get matchesTileSubtitle => 'Bound by the darkness';
+
+  @override
+  String get matchesBtnMessage => 'Message';
 
   @override
   String get chatEmptyElegiesReceivedTitle => 'No elegies received';

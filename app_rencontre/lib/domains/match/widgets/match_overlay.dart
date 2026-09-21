@@ -1,12 +1,8 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/match/widgets/match_avatars_row.dart';
 import 'package:nocturne/domains/match/widgets/match_particles.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
-
-// ─── Customizable texts ───────────────────────────────────────────────────────
-const kElegieMatchTitle    = 'TON ÉLÉGIE A ÉTÉ ENTENDUE';
-const kElegieMatchSubtitle = 'Les ténèbres ont exaucé ta prière';
-// ──────────────────────────────────────────────────────────────────────────────
 
 class MatchOverlay extends StatefulWidget {
     final AlternativeProfile matchedProfile;
@@ -89,6 +85,7 @@ class _MatchOverlayState extends State<MatchOverlay>
 
         @override
         Widget build(BuildContext context) {
+            final l = AppLocalizations.of(context)!;
             return Scaffold(
             backgroundColor: Colors.transparent,
             body: AnimatedBuilder(
@@ -142,7 +139,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                                 child: Column(
                                 children: [
                                     Text(
-                                    widget.isElegieMatch ? kElegieMatchTitle : 'UN LIEN OBSCUR',
+                                    widget.isElegieMatch ? l.matchTitleElegie : l.matchTitleBond,
                                     style: TextStyle(
                                         color: const Color(0xFF7B00D4),
                                         fontSize: 13,
@@ -159,7 +156,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                                     if (!widget.isElegieMatch) ...[
                                     const SizedBox(height: 4),
                                     Text(
-                                        'EST NÉ',
+                                        l.matchTitleBorn,
                                         style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 38,
@@ -197,8 +194,8 @@ class _MatchOverlayState extends State<MatchOverlay>
                             opacity: _textFade.value,
                             child: Text(
                                 widget.isElegieMatch
-                                    ? kElegieMatchSubtitle
-                                    : 'Toi & ${widget.matchedProfile.username} êtes liés par les ténèbres',
+                                    ? l.matchSubtitleElegie
+                                    : l.matchSubtitleBond(widget.matchedProfile.username),
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                 color: Color(0xFFAA9AB5),
@@ -261,9 +258,9 @@ class _MatchOverlayState extends State<MatchOverlay>
                                           widget.onMessage?.call();
                                         },
                                         icon: const Icon(Icons.chat_bubble_outline, size: 18),
-                                        label: const Text(
-                                        'ENVOYER UN MESSAGE',
-                                        style: TextStyle(
+                                        label: Text(
+                                        l.matchBtnMessage,
+                                        style: const TextStyle(
                                             letterSpacing: 1.5,
                                             fontWeight: FontWeight.bold,
                                         ),
@@ -279,9 +276,9 @@ class _MatchOverlayState extends State<MatchOverlay>
                                     const SizedBox(height: 12),
                                     TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text(
-                                        'Continuer à explorer',
-                                        style: TextStyle(
+                                    child: Text(
+                                        l.matchBtnKeepExploring,
+                                        style: const TextStyle(
                                         color: Color(0xFF5A4A6A),
                                         fontSize: 14,
                                         ),

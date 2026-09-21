@@ -95,8 +95,8 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Total',
-                    style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 14)),
+                Text(l.commonTotal,
+                    style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 14)),
                 Text('$amount €',
                     style: const TextStyle(
                         color: Colors.white,

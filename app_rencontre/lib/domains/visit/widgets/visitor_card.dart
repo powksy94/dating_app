@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/visit/models/visitor.dart';
 
 class VisitorCard extends StatelessWidget {
@@ -47,7 +48,7 @@ class VisitorCard extends StatelessWidget {
                     border: Border.all(color: const Color(0xFF7B00D4), width: 0.5),
                   ),
                   child: Text(
-                    _timeAgo(visitor.visitedAt!),
+                    _timeAgo(context, visitor.visitedAt!),
                     style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 9),
                   ),
                 ),
@@ -67,10 +68,11 @@ class VisitorCard extends StatelessWidget {
     );
   }
 
-  String _timeAgo(DateTime dt) {
+  String _timeAgo(BuildContext context, DateTime dt) {
+    final l    = AppLocalizations.of(context)!;
     final diff = DateTime.now().difference(dt);
-    if (diff.inMinutes < 60) return 'il y a ${diff.inMinutes}min';
-    if (diff.inHours < 24)   return 'il y a ${diff.inHours}h';
-    return 'il y a ${diff.inDays}j';
+    if (diff.inMinutes < 60) return l.commonAgoMinutes(diff.inMinutes);
+    if (diff.inHours < 24)   return l.commonAgoHours(diff.inHours);
+    return l.commonAgoDays(diff.inDays);
   }
 }
