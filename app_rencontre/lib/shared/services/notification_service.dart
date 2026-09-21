@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/connectivity_service.dart';
 
@@ -78,13 +79,23 @@ class NotificationService {
     }
   }
 
+  /// Language the app is shown in: the device language when the app is
+  /// translated into it, English otherwise (the same fallback as the UI). The
+  /// backend uses it to write push notifications in the user's language.
+  static String _appLanguage() {
+    final device = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+    final supported = AppLocalizations.supportedLocales
+        .any((locale) => locale.languageCode == device);
+    return supported ? device : 'en';
+  }
+
   static Future<bool> _uploadToken(String token) async {
     try {
       final headers = await ApiService.authHeaders();
       final res = await http.post(
         Uri.parse('${ApiService.baseUrl}/profile/fcm-token'),
         headers: headers,
-        body: jsonEncode({'token': token}),
+        body: jsonEncode({'token': token, 'locale': _appLanguage()}),
       ).timeout(const Duration(seconds: 10));
       return res.statusCode == 200;
     } catch (_) {
