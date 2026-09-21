@@ -24,7 +24,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonOfflineBanner => 'Pas de connexion';
 
   @override
-  String get subscriptionOfflineTitle => 'Connexion requise';
+  String get commonConnectionRequiredTitle => 'Connexion requise';
+
+  @override
+  String get commonConnectionRequiredBody =>
+      'Reconnecte-toi à Internet pour continuer.';
 
   @override
   String get subscriptionOfflineBody =>

@@ -8,6 +8,7 @@ import 'package:nocturne/domains/chat/views/conversation_page.dart';
 import 'package:nocturne/domains/event/views/events_page.dart';
 import 'package:nocturne/domains/home/views/my_profile_tab.dart';
 import 'package:nocturne/domains/home/widgets/exit_confirm_dialog.dart';
+import 'package:nocturne/shared/widgets/common/requires_connection.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,9 +41,15 @@ class _HomePageState extends State<HomePage> {
         body: IndexedStack(
           index: _tab,
           children: [
-            SwipePage(onNavigateToConversation: _navigateToConversation, refreshNotifier: _swipeRefresh),
+            RequiresConnection(
+              pageTitle: l.discoverySwipePageTitle,
+              child: SwipePage(onNavigateToConversation: _navigateToConversation, refreshNotifier: _swipeRefresh),
+            ),
             const EventsPage(),
-            const ConversationListPage(),
+            RequiresConnection(
+              pageTitle: l.chatListTitle,
+              child: const ConversationListPage(),
+            ),
             const MyProfileTab(),
           ],
         ),

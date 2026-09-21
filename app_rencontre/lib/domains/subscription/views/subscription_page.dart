@@ -8,10 +8,9 @@ import 'package:nocturne/domains/subscription/widgets/period_selector.dart';
 import 'package:nocturne/domains/subscription/widgets/plan_card.dart';
 import 'package:nocturne/domains/subscription/widgets/restore_purchases_button.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_action_button.dart';
-import 'package:nocturne/domains/subscription/widgets/subscription_offline_view.dart';
 import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
-import 'package:nocturne/shared/services/connectivity_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
+import 'package:nocturne/shared/widgets/common/requires_connection.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});
@@ -106,10 +105,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> with ReloadOnReconn
   // Offline, no plan is offered and nothing can be bought: the store needs a
   // connection. The page comes back by itself once the device is online again.
   @override
-  Widget build(BuildContext context) => ValueListenableBuilder<bool>(
-        valueListenable: ConnectivityService.online,
-        builder: (context, online, _) =>
-            online ? _buildPage(context) : const SubscriptionOfflineView(),
+  Widget build(BuildContext context) => RequiresConnection(
+        pageTitle: AppLocalizations.of(context)!.subscriptionPageTitle,
+        message: AppLocalizations.of(context)!.subscriptionOfflineBody,
+        child: _buildPage(context),
       );
 
   Widget _buildPage(BuildContext context) {

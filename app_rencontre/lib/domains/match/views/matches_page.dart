@@ -1,7 +1,9 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/chat/services/chat_service.dart';
 import 'package:nocturne/domains/chat/views/conversation_page.dart';
+import 'package:nocturne/shared/widgets/common/requires_connection.dart';
 
 class MatchesPage extends StatefulWidget {
   const MatchesPage({super.key});
@@ -30,7 +32,12 @@ class _MatchesPageState extends State<MatchesPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => RequiresConnection(
+        pageTitle: AppLocalizations.of(context)!.profileMenuMatches,
+        child: _buildPage(),
+      );
+
+  Widget _buildPage() {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0010),
       appBar: AppBar(

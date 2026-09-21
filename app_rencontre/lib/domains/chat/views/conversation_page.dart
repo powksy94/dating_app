@@ -9,6 +9,7 @@ import 'package:nocturne/domains/chat/services/chat_service.dart';
 import 'package:nocturne/domains/chat/mixins/blocked_message_notice.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/socket_service.dart';
+import 'package:nocturne/shared/widgets/common/requires_connection.dart';
 import 'package:nocturne/domains/chat/widgets/message_bubble.dart';
 import 'package:nocturne/domains/chat/widgets/chat_input_bar.dart';
 import 'package:nocturne/domains/chat/widgets/chat_app_bar.dart';
@@ -231,7 +232,12 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => RequiresConnection(
+        pageTitle: widget.match.username,
+        child: _buildChat(context),
+      );
+
+  Widget _buildChat(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0010),
       appBar: ChatAppBar(
