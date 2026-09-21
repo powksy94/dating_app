@@ -3,6 +3,7 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/chat/models/starter_suggestion.dart';
 import 'package:nocturne/domains/chat/services/chat_service.dart';
 import 'package:nocturne/domains/chat/services/starter_texts.dart';
+import 'package:nocturne/domains/chat/widgets/starter_mode_toggle.dart';
 import 'package:nocturne/domains/chat/widgets/starter_option_tile.dart';
 
 /// Shown in place of an empty conversation: ideas to start it, built from what
@@ -95,38 +96,49 @@ class _ConversationStartersState extends State<ConversationStarters> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l.starterCardTitle,
-                  style: const TextStyle(
-                    color: Color(0xFFAA9AB5),
-                    fontSize: 13,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              if (canToggle)
-                Flexible(
-                  child: TextButton(
-                    onPressed: () => setState(() => _showClassic = !_showClassic),
-                    child: Text(
-                      _showClassic ? l.starterToggleShared : l.starterToggleClassic,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 4, 4, 12),
+            child: Row(
+              children: [
+                const Icon(Icons.nightlight_round, size: 16, color: Color(0xFF7B00D4)),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    l.starterCardTitle.toUpperCase(),
+                    style: const TextStyle(
+                      color: Color(0xFFAA9AB5),
+                      fontSize: 12.5,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          for (final item in _items(l))
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: StarterOptionTile(text: item, onTap: () => _confirmAndSend(item.message)),
+              ],
             ),
+          ),
+          if (canToggle) ...[
+            StarterModeToggle(
+              classicSelected: _showClassic,
+              sharedLabel:     l.starterToggleShared,
+              classicLabel:    l.starterToggleClassic,
+              onChanged:       (classic) => setState(() => _showClassic = classic),
+            ),
+            const SizedBox(height: 14),
+          ],
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: Column(
+              key: ValueKey(_showClassic),
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final item in _items(l))
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: StarterOptionTile(text: item, onTap: () => _confirmAndSend(item.message)),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );
