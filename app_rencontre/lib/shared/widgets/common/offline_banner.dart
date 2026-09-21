@@ -22,30 +22,34 @@ class OfflineBanner extends StatelessWidget {
   }
 
   Widget _banner(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Container(
-        width: double.infinity,
-        color: const Color(0xFF7F1D1D),
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.cloud_off, size: 12, color: Colors.white),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                AppLocalizations.of(context)!.commonOfflineBanner,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
+    // Above the Navigator there is no Material, so a bare Text would get the
+    // app's fallback style (monospace, yellow double underline). The Material
+    // also puts the red under the status bar, outside the SafeArea.
+    return Material(
+      color: const Color(0xFF7F1D1D),
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.cloud_off, size: 12, color: Colors.white),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  AppLocalizations.of(context)!.commonOfflineBanner,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
