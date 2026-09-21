@@ -62,6 +62,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
       isFree:         _data['isFree'],
       price:          _data['price'],
       coverImagePath: _data['coverPath'],
+      unknownError:   AppLocalizations.of(context)!.commonUnknownError,
     );
 
     if (!mounted) return;

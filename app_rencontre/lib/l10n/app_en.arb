@@ -27,6 +27,7 @@
     "@commonAgoDays": {
         "placeholders": { "count": { "type": "int" } }
     },
+    "commonUnknownError": "Unknown error",
     "commonConnectionRequiredTitle": "Connection required",
     "commonConnectionRequiredBody": "Get back online to continue.",
     "subscriptionOfflineBody": "Get back online to view and manage subscriptions.",
@@ -244,6 +245,7 @@
     "matchAvatarYou": "You",
     "matchesTileSubtitle": "Bound by the darkness",
     "matchesBtnMessage": "Message",
+    "chatOpenErrorTitle": "Couldn't open the conversation",
     "chatEmptyElegiesReceivedTitle": "No elegies received",
     "chatEmptyElegiesReceivedSub": "Someone will think of you soon...",
     "chatEmptyElegiesSentTitle": "No elegies sent",

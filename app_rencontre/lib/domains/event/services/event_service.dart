@@ -59,6 +59,7 @@ class EventService {
     required bool isFree,
     double? price,
     String? coverImagePath,
+    required String unknownError,
   }) async {
     final authHeaders = await ApiService.authHeaders();
     final req = http.MultipartRequest(
@@ -94,9 +95,9 @@ class EventService {
         final decoded = jsonDecode(body);
         // Returns the limit code if reached
         if (decoded['code'] == 'EVENT_LIMIT_REACHED') return decoded['code'];
-        return decoded['message'] ?? 'Erreur inconnue';
+        return decoded['message'] ?? unknownError;
       } catch (_) {
-        return 'Erreur inconnue';
+        return unknownError;
       }
   }
 

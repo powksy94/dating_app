@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'{count}d ago'**
   String commonAgoDays(int count);
 
+  /// No description provided for @commonUnknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get commonUnknownError;
+
   /// No description provided for @commonConnectionRequiredTitle.
   ///
   /// In en, this message translates to:
@@ -1159,6 +1165,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message'**
   String get matchesBtnMessage;
+
+  /// No description provided for @chatOpenErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the conversation'**
+  String get chatOpenErrorTitle;
 
   /// No description provided for @chatEmptyElegiesReceivedTitle.
   ///

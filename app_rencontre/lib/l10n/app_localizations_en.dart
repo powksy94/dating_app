@@ -55,6 +55,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get commonUnknownError => 'Unknown error';
+
+  @override
   String get commonConnectionRequiredTitle => 'Connection required';
 
   @override
@@ -591,6 +594,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get matchesBtnMessage => 'Message';
+
+  @override
+  String get chatOpenErrorTitle => 'Couldn\'t open the conversation';
 
   @override
   String get chatEmptyElegiesReceivedTitle => 'No elegies received';

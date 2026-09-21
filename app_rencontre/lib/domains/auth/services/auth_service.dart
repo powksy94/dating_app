@@ -42,8 +42,13 @@ class AuthService {
     throw Exception(data['message']);
   }
 
-  /// Returns null on success, otherwise the error message
-  Future<String?> changePassword(String currentPassword, String newPassword) async {
+  /// Returns null on success, otherwise the error message ([unknownError] when
+  /// the backend sent none).
+  Future<String?> changePassword(
+    String currentPassword,
+    String newPassword, {
+    required String unknownError,
+  }) async {
     final headers = await ApiService.authHeaders();
     final res = await http.post(
       Uri.parse('${ApiService.baseUrl}/auth/change-password'),
@@ -55,7 +60,7 @@ class AuthService {
     );
     if (res.statusCode == 200) return null;
     final data = jsonDecode(res.body);
-    return (data['message'] as String?) ?? 'Erreur inconnue';
+    return (data['message'] as String?) ?? unknownError;
   }
 
   Future<void> logout() async {
@@ -66,7 +71,9 @@ class AuthService {
     await ApiService.clearToken();
   }
 
-  Future<String?> deleteAccount() async {
+  /// Returns null on success, otherwise the error message ([unknownError] when
+  /// the backend sent none).
+  Future<String?> deleteAccount({required String unknownError}) async {
     final headers = await ApiService.authHeaders();
     final res = await http.delete(
       Uri.parse('${ApiService.baseUrl}/auth/account'),
@@ -77,7 +84,7 @@ class AuthService {
       return null;
     }
     final data = jsonDecode(res.body);
-    return (data['message'] as String?) ?? 'Erreur inconnue';
+    return (data['message'] as String?) ?? unknownError;
   }
 
   Future<bool> isLoggedIn() async {

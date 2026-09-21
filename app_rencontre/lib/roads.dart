@@ -4,10 +4,8 @@ import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/profile/views/profile_page.dart';
 import 'package:nocturne/domains/profile/views/profil_edit_page.dart';
-import 'package:nocturne/domains/chat/views/conversation_page.dart';
+import 'package:nocturne/domains/chat/views/conversation_loader_page.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
-import 'package:nocturne/domains/match/models/chat_match.dart';
-import 'package:nocturne/domains/chat/services/chat_service.dart';
 import 'package:nocturne/domains/auth/views/register/register_flow.dart';
 import 'package:nocturne/domains/subscription/views/subscription_page.dart';
 import 'package:nocturne/domains/discovery/views/likes_history_page.dart';
@@ -48,21 +46,7 @@ class Routes {
         final args    = settings.arguments as Map<String, dynamic>;
         final matchId = args['matchId'] as String;
         return MaterialPageRoute(
-          builder: (_) => FutureBuilder<List<ChatMatch>>(
-            future: ChatService.getMatches(),
-            builder: (ctx, snap) {
-              if (!snap.hasData) {
-                return const Scaffold(
-                    body: Center(child: CircularProgressIndicator()));
-              }
-              final match = snap.data!.firstWhere(
-                (m) => m.matchId == matchId,
-                orElse: () => ChatMatch(
-                    matchId: matchId, userId: '', username: '', avatarUrl: ''),
-              );
-              return ConversationPage(match: match);
-            },
-          ),
+          builder: (_) => ConversationLoaderPage(matchId: matchId),
         );
       case '/admin-auth':
         final sessionId = settings.arguments as String;

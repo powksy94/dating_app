@@ -44,7 +44,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     }
 
     setState(() { _loading = true; _error = null; });
-    final err = await AuthService().changePassword(current, next);
+    final err = await AuthService().changePassword(current, next, unknownError: l.commonUnknownError);
     if (!mounted) return;
 
     if (err == null) {

@@ -25,7 +25,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
 
   Future<void> _delete() async {
     setState(() { _loading = true; _error = null; });
-    final err = await AuthService().deleteAccount();
+    final err = await AuthService().deleteAccount(
+      unknownError: AppLocalizations.of(context)!.commonUnknownError,
+    );
     if (!mounted) return;
     if (err == null) {
       final nav = Navigator.of(context);
