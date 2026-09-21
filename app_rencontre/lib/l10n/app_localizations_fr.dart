@@ -21,6 +21,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonBtnRetry => 'Réessayer';
 
   @override
+  String get commonOfflineBanner => 'Pas de connexion';
+
+  @override
   String get eventLoadErrorTitle => 'Impossible de charger les événements';
 
   @override

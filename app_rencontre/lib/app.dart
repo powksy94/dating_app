@@ -7,6 +7,7 @@ import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/app_version_service.dart';
+import 'package:nocturne/shared/widgets/common/offline_banner.dart';
 import 'package:nocturne/shared/widgets/common/update_available_dialog.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
@@ -81,7 +82,12 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       onGenerateRoute: Routes.generateRoute,
       builder: (context, child) => Stack(
         children: [
-          child!,
+          Column(
+            children: [
+              const OfflineBanner(),
+              Expanded(child: child!),
+            ],
+          ),
           if (_obscured)
             Positioned.fill(
               child: Container(

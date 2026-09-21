@@ -50,11 +50,14 @@ class _EventsPageState extends State<EventsPage> with ReloadOnReconnect<EventsPa
 
   Future<void> _getLocation() async {
     try {
-      final permission = await Geolocator.checkPermission();
+      // Without a time limit, a stuck permission dialog or a missing GPS fix
+      // would keep the page loading forever (seen on a real device where the
+      // system permission prompt behaves differently than on an emulator).
+      final permission = await Geolocator.checkPermission()
+          .timeout(const Duration(seconds: 8));
       if (permission == LocationPermission.denied) {
-        await Geolocator.requestPermission();
+        await Geolocator.requestPermission().timeout(const Duration(seconds: 30));
       }
-      // Without a time limit, a missing GPS fix would keep the page loading forever.
       _position = await Geolocator.getCurrentPosition()
           .timeout(const Duration(seconds: 8));
     } catch (_) {

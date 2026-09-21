@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get commonBtnRetry;
 
+  /// No description provided for @commonOfflineBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection'**
+  String get commonOfflineBanner;
+
   /// No description provided for @eventLoadErrorTitle.
   ///
   /// In en, this message translates to:

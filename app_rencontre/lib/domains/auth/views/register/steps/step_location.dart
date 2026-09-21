@@ -21,7 +21,19 @@ class _StepLocationState extends State<StepLocation> {
         final l = AppLocalizations.of(context)!;
         setState(() { _loading = true; _error = null; });
 
-        final permission = await Geolocator.requestPermission();
+        final LocationPermission permission;
+        try {
+            // Without a time limit, a stuck system permission dialog would keep
+            // this step loading forever (seen on some real devices).
+            permission = await Geolocator.requestPermission()
+                .timeout(const Duration(seconds: 30));
+        } catch (_) {
+            setState(() {
+                _error = l.authLocationError;
+                _loading = false;
+            });
+            return;
+        }
         if (permission == LocationPermission.denied ||
             permission == LocationPermission.deniedForever) {
             setState(() {

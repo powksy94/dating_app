@@ -4,6 +4,7 @@
     "commonGenericError": "Something went wrong, try again.",
     "commonLoadErrorSubtitle": "Check your connection and try again.",
     "commonBtnRetry": "Retry",
+    "commonOfflineBanner": "No connection",
     "eventLoadErrorTitle": "Couldn't load events",
     "profileLoadErrorTitle": "Couldn't load your profile",
     "discoveryFiltersTitle": "SEARCH FILTERS",

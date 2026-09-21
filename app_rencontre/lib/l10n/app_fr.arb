@@ -4,6 +4,7 @@
     "commonGenericError": "Une erreur est survenue, réessaie.",
     "commonLoadErrorSubtitle": "Vérifie ta connexion et réessaie.",
     "commonBtnRetry": "Réessayer",
+    "commonOfflineBanner": "Pas de connexion",
     "eventLoadErrorTitle": "Impossible de charger les événements",
     "profileLoadErrorTitle": "Impossible de charger ton profil",
     "discoveryFiltersTitle": "FILTRES DE RECHERCHE",

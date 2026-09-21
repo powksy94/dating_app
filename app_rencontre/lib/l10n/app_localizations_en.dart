@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonBtnRetry => 'Retry';
 
   @override
+  String get commonOfflineBanner => 'No connection';
+
+  @override
   String get eventLoadErrorTitle => 'Couldn\'t load events';
 
   @override
