@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/match/widgets/match_burst_painter.dart';
 
 class MatchAvatarRow extends StatelessWidget {
     final String myAvatarUrl;
     final String matchAvatarUrl;
     final String matchUsername;
+    /// Slide-in progress. It may go a little over 1 while the avatars bounce.
     final double slideValue;
     final double glowValue;
+    /// Progress of the rings spreading when the two people meet.
+    final double burstValue;
+
+    // Distance from the middle to each avatar once they have met: wide enough
+    // for the moon (44 wide) to sit between two 110 wide avatars.
+    static const double _gap = 78;
+    static const double _travel = 90;
 
     const MatchAvatarRow({
         super.key,
@@ -15,20 +24,32 @@ class MatchAvatarRow extends StatelessWidget {
         required this.matchUsername,
         required this.slideValue,
         required this.glowValue,
+        required this.burstValue,
     });
 
     @override
     Widget build(BuildContext context) {
+        final visible = slideValue.clamp(0.0, 1.0);
+        // The moon appears with a spring once the avatars are nearly together.
+        final moonScale = Curves.elasticOut.transform(((slideValue - 0.55) / 0.45).clamp(0.0, 1.0));
+
         return SizedBox(
             height: 160,
             child: Stack(
                 alignment: Alignment.center,
+                // The rings spread well beyond the row.
+                clipBehavior: Clip.none,
                 children: [
+                    CustomPaint(
+                        size: const Size(340, 160),
+                        painter: MatchBurstPainter(burstValue),
+                    ),
+
                     // Left avatar (me)
                     Transform.translate(
-                        offset: Offset(-90 + (90 * slideValue) - 60, 0),
+                        offset: Offset(-(_gap + _travel) + _travel * slideValue, 0),
                         child: Opacity(
-                            opacity: slideValue,
+                            opacity: visible,
                             child: _Avatar(
                                 url: myAvatarUrl,
                                 label: AppLocalizations.of(context)!.matchAvatarYou,
@@ -39,8 +60,8 @@ class MatchAvatarRow extends StatelessWidget {
                     ),
 
                     // Central moon icon with glow
-                    Opacity(
-                        opacity: slideValue,
+                    Transform.scale(
+                        scale: moonScale,
                         child: Container(
                             width: 44,
                             height: 44,
@@ -70,9 +91,9 @@ class MatchAvatarRow extends StatelessWidget {
 
                     // Right avatar (match)
                     Transform.translate(
-                        offset: Offset(90 - (90 * slideValue) + 60, 0),
+                        offset: Offset((_gap + _travel) - _travel * slideValue, 0),
                         child: Opacity(
-                            opacity: slideValue,
+                            opacity: visible,
                             child: _Avatar(
                                 url: matchAvatarUrl,
                                 label: matchUsername,

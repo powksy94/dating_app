@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/match/widgets/match_avatars_row.dart';
+import 'package:nocturne/domains/match/widgets/match_backdrop.dart';
 import 'package:nocturne/domains/match/widgets/match_particles.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 
@@ -32,6 +34,7 @@ class _MatchOverlayState extends State<MatchOverlay>
         late final AnimationController _textCtrl;
         late final AnimationController _buttonsCtrl;
         late final AnimationController _particlesCtrl;
+        late final AnimationController _burstCtrl;
 
         late final Animation<double> _bgFade;
         late final Animation<double> _slideAnim;
@@ -51,9 +54,10 @@ class _MatchOverlayState extends State<MatchOverlay>
             _textCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
             _buttonsCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
             _particlesCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+            _burstCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 900));
 
             _bgFade        = CurvedAnimation(parent: _bgCtrl,       curve: Curves.easeIn);
-            _slideAnim     = CurvedAnimation(parent: _avatarsCtrl,  curve: Curves.easeOutCubic);
+            _slideAnim     = CurvedAnimation(parent: _avatarsCtrl,  curve: Curves.easeOutBack);
             _glowPulse     = CurvedAnimation(parent: _glowCtrl,     curve: Curves.easeInOut);
             _textFade      = CurvedAnimation(parent: _textCtrl,     curve: Curves.easeIn);
             _buttonsFade   = CurvedAnimation(parent: _buttonsCtrl,  curve: Curves.easeIn);
@@ -66,6 +70,9 @@ class _MatchOverlayState extends State<MatchOverlay>
             await _bgCtrl.forward();
             _particlesCtrl.forward();
             await _avatarsCtrl.forward();
+            // The two people have met: rings spread and the phone gives a light tap.
+            _burstCtrl.forward();
+            HapticFeedback.mediumImpact();
             await Future.delayed(const Duration(milliseconds: 200));
             await _textCtrl.forward();
             await Future.delayed(const Duration(milliseconds: 200));
@@ -80,6 +87,7 @@ class _MatchOverlayState extends State<MatchOverlay>
             _textCtrl.dispose();
             _buttonsCtrl.dispose();
             _particlesCtrl.dispose();
+            _burstCtrl.dispose();
             super.dispose();
         }
 
@@ -91,28 +99,13 @@ class _MatchOverlayState extends State<MatchOverlay>
             body: AnimatedBuilder(
                 animation: Listenable.merge([
                 _bgFade, _slideAnim, _glowPulse,
-                _textFade, _buttonsFade, _particlesFade,
+                _textFade, _buttonsFade, _particlesFade, _burstCtrl,
                 ]),
                 builder: (context, _) {
                 return Stack(
                     children: [
-                    // Gradient background
-                    Opacity(
-                        opacity: _bgFade.value,
-                        child: Container(
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                                Color(0xEE0D0010),
-                                Color(0xEE1A0030),
-                                Color(0xEE0D0010),
-                            ],
-                            ),
-                        ),
-                        ),
-                    ),
+                    // Blurred gradient background
+                    MatchBackdrop(fade: _bgFade.value),
 
                     // Particles
                     Opacity(
@@ -134,8 +127,11 @@ class _MatchOverlayState extends State<MatchOverlay>
                             // Title
                             Opacity(
                             opacity: _textFade.value,
-                            child: Transform.translate(
-                                offset: Offset(0, 20 * (1 - _textFade.value)),
+                            child: Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.translationValues(0, 20 * (1 - _textFade.value), 0)
+                                    * Matrix4.diagonal3Values(
+                                        0.85 + 0.15 * _textFade.value, 0.85 + 0.15 * _textFade.value, 1),
                                 child: Column(
                                 children: [
                                     Text(
@@ -185,6 +181,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                             matchUsername: widget.matchedProfile.username,
                             slideValue: _slideAnim.value,
                             glowValue: _glowPulse.value,
+                            burstValue: _burstCtrl.value,
                             ),
 
                             const SizedBox(height: 16),
@@ -279,7 +276,7 @@ class _MatchOverlayState extends State<MatchOverlay>
                                     child: Text(
                                         l.matchBtnKeepExploring,
                                         style: const TextStyle(
-                                        color: Color(0xFF5A4A6A),
+                                        color: Color(0xFF9A8AA8),
                                         fontSize: 14,
                                         ),
                                     ),
