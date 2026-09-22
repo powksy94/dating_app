@@ -365,6 +365,9 @@
     "authSectionDiscoveryFormats": "Découverte musicale",
     "authSectionFavoriteBands": "Groupes / Artistes favoris (optionnel)",
     "authHintBands": "Un groupe à la fois, ex. : The Cure",
+    "bandSearchAttribution": "Résultats via Spotify",
+    "authSectionSpotifyLink": "Profil Spotify (optionnel)",
+    "authHintSpotifyLink": "Lien vers ton profil Spotify",
 
     "authLocationPermissionDenied": "Permission refusée. Tu peux passer cette étape",
     "authLocationError": "Impossible d'obtenir la position. Tu peux passer cette étape.",
@@ -563,6 +566,8 @@
     "profileSubtitleDiscovery": "Tes habitudes d'écoute",
     "profileSectionFavoriteBandsCaps": "ARTISTES FAVORIS",
     "profileHintBands": "Un groupe à la fois, ex. : Bauhaus",
+    "profileSectionSpotifyLinkCaps": "PROFIL SPOTIFY",
+    "profileHintSpotifyLink": "Lien vers ton profil Spotify (optionnel)",
     "profileBandAlreadyAdded": "Ce groupe est déjà dans ta liste.",
     "profileBandNotAllowed": "Ce nom de groupe n'est pas autorisé.",
 

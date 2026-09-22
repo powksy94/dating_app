@@ -1,5 +1,7 @@
 // lib/models/alternative_profile.dart
 
+import 'package:nocturne/domains/profile/models/favorite_band.dart';
+
 int? _ageFromBirthDate(dynamic birthDate) {
   if (birthDate == null) return null;
   try {
@@ -33,7 +35,7 @@ class AlternativeProfile {
   final List<String> soundIntensity;
   final List<String> musicEras;
   final List<String> discoveryFormats;
-  final List<String> favoriteBands;
+  final List<FavoriteBand> favoriteBands;
   final List<String> upcomingEvents;
   final Map<String, String> socialLinks;
   final List<String> photos;
@@ -83,7 +85,9 @@ class AlternativeProfile {
       soundIntensity:    List<String>.from(data['soundIntensity']   ?? []),
       musicEras:         List<String>.from(data['musicEras']        ?? []),
       discoveryFormats:  List<String>.from(data['discoveryFormats'] ?? []),
-      favoriteBands:     List<String>.from(data['favoriteBands']    ?? []),
+      favoriteBands:     (data['favoriteBands'] as List? ?? [])
+          .map(FavoriteBand.fromJson)
+          .toList(),
       upcomingEvents:    List<String>.from(data['upcomingEvents']   ?? []),
       socialLinks:       Map<String, String>.from(data['socialLinks'] ?? {}),
       photos:            List<String>.from(data['photos']           ?? []),
@@ -102,7 +106,7 @@ class AlternativeProfile {
     'soundIntensity':   soundIntensity,
     'musicEras':        musicEras,
     'discoveryFormats': discoveryFormats,
-    'favoriteBands':    favoriteBands,
+    'favoriteBands':    favoriteBands.map((b) => b.toJson()).toList(),
     'upcomingEvents':   upcomingEvents,
     'socialLinks':      socialLinks,
     'photos':           photos,

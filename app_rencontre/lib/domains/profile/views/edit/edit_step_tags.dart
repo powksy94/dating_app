@@ -4,7 +4,9 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/shared/widgets/common/tag_section.dart';
+import 'package:nocturne/domains/profile/models/favorite_band.dart';
 import 'package:nocturne/domains/profile/widgets/favorite_bands_field.dart';
+import 'package:nocturne/domains/profile/widgets/spotify_link_field.dart';
 
 class EditStepTags extends StatefulWidget {
   final AlternativeProfile profile;
@@ -21,7 +23,8 @@ class _EditStepTagsState extends State<EditStepTags> {
   late List<String> _intensity;
   late List<String> _eras;
   late List<String> _discovery;
-  late List<String> _bands;
+  late List<FavoriteBand> _bands;
+  final _spotifyLinkController = TextEditingController();
   bool _saving = false;
 
   @override
@@ -34,6 +37,13 @@ class _EditStepTagsState extends State<EditStepTags> {
     _eras       = List.from(widget.profile.musicEras);
     _discovery  = List.from(widget.profile.discoveryFormats);
     _bands      = List.from(widget.profile.favoriteBands);
+    _spotifyLinkController.text = widget.profile.socialLinks['spotify'] ?? '';
+  }
+
+  @override
+  void dispose() {
+    _spotifyLinkController.dispose();
+    super.dispose();
   }
 
   void _toggle(List<String> list, bool add, String tag) =>
@@ -49,7 +59,8 @@ class _EditStepTagsState extends State<EditStepTags> {
         'soundIntensity':   _intensity,
         'musicEras':        _eras,
         'discoveryFormats': _discovery,
-        'favoriteBands':    _bands,
+        'favoriteBands':    _bands.map((b) => b.toJson()).toList(),
+        'socialLinks':      {'spotify': _spotifyLinkController.text.trim()},
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -133,6 +144,15 @@ class _EditStepTagsState extends State<EditStepTags> {
             hint: l.profileHintBands,
             onChanged: (bands) => setState(() => _bands = bands),
           ),
+          const SizedBox(height: 20),
+          Text(l.profileSectionSpotifyLinkCaps,
+              style: const TextStyle(
+                  color: Color(0xFF7B00D4),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2)),
+          const SizedBox(height: 6),
+          SpotifyLinkField(controller: _spotifyLinkController, hint: l.profileHintSpotifyLink),
           const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,

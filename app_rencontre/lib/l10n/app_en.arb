@@ -498,6 +498,9 @@
     "authSectionDiscoveryFormats": "Music discovery",
     "authSectionFavoriteBands": "Favorite bands / artists (optional)",
     "authHintBands": "One band at a time, e.g. The Cure",
+    "bandSearchAttribution": "Results via Spotify",
+    "authSectionSpotifyLink": "Spotify profile (optional)",
+    "authHintSpotifyLink": "Link to your Spotify profile",
 
     "authLocationPermissionDenied": "Permission denied. You can skip this step",
     "authLocationError": "Couldn't get your location. You can skip this step.",
@@ -732,6 +735,8 @@
     "profileSubtitleDiscovery": "Your listening habits",
     "profileSectionFavoriteBandsCaps": "FAVORITE ARTISTS",
     "profileHintBands": "One band at a time, e.g. Bauhaus",
+    "profileSectionSpotifyLinkCaps": "SPOTIFY PROFILE",
+    "profileHintSpotifyLink": "Link to your Spotify profile (optional)",
     "profileBandAlreadyAdded": "This band is already in your list.",
     "profileBandNotAllowed": "This band name isn't allowed.",
 

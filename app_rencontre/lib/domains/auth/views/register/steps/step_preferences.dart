@@ -66,6 +66,10 @@ class _StepPreferencesState extends State<StepPreferences> {
                 'soundIntensity':       d['soundIntensity']     ?? [],
                 'musicEras':            d['musicEras']          ?? [],
                 'discoveryFormats':     d['discoveryFormats']   ?? [],
+                // Was missing entirely before: StepTags collected it, but nothing
+                // in this final save ever forwarded it, so it was silently lost.
+                'favoriteBands':        d['favoriteBands']      ?? [],
+                if (d['socialLinks'] != null) 'socialLinks': d['socialLinks'],
                 'ageMin':               _ageRange.start.round(),
                 'ageMax':               _ageRange.end.round(),
                 'maxDistance':          _maxDistance.round(),

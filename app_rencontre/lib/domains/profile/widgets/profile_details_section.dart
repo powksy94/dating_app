@@ -4,6 +4,7 @@ import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/profile/widgets/profile_card.dart';
 import 'package:nocturne/domains/profile/widgets/profile_tag_wrap.dart';
 import 'package:nocturne/domains/profile/widgets/profile_social_link.dart';
+import 'package:nocturne/domains/profile/widgets/band_chip.dart';
 import 'package:nocturne/shared/widgets/common/section_block.dart';
 
 class ProfileDetailsSection extends StatelessWidget {
@@ -87,8 +88,20 @@ class ProfileDetailsSection extends StatelessWidget {
           const SizedBox(height: 16),
           SectionBlock(
             title: l.profileSectionFavoriteBands,
-            child: Text(profile.favoriteBands.join(' · '),
-                style: const TextStyle(color: Color(0xFFE8E0EE))),
+            child: Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              children: [
+                for (final band in profile.favoriteBands)
+                  BandChip(
+                    label: band.name,
+                    imageUrl: band.imageUrl,
+                    deleteMode: false,
+                    index: 0,
+                    onDelete: () {},
+                  ),
+              ],
+            ),
           ),
         ],
 

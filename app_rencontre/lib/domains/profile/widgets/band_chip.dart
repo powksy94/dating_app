@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 /// badge at its top right corner, which removes it.
 class BandChip extends StatelessWidget {
   final String label;
+  final String? imageUrl;
   final bool deleteMode;
   final int index;
   final VoidCallback onDelete;
@@ -12,6 +13,7 @@ class BandChip extends StatelessWidget {
   const BandChip({
     super.key,
     required this.label,
+    this.imageUrl,
     required this.deleteMode,
     required this.index,
     required this.onDelete,
@@ -26,6 +28,9 @@ class BandChip extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8, right: 8),
           child: Chip(
+            avatar: imageUrl != null
+                ? CircleAvatar(backgroundImage: NetworkImage(imageUrl!))
+                : null,
             label: Text(label, style: const TextStyle(color: Colors.white)),
             backgroundColor: const Color(0xFF2A1A35),
           ),

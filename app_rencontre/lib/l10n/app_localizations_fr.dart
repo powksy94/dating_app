@@ -1133,6 +1133,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authHintBands => 'Un groupe à la fois, ex. : The Cure';
 
   @override
+  String get bandSearchAttribution => 'Résultats via Spotify';
+
+  @override
+  String get authSectionSpotifyLink => 'Profil Spotify (optionnel)';
+
+  @override
+  String get authHintSpotifyLink => 'Lien vers ton profil Spotify';
+
+  @override
   String get authLocationPermissionDenied =>
       'Permission refusée. Tu peux passer cette étape';
 
@@ -1667,6 +1676,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profileHintBands => 'Un groupe à la fois, ex. : Bauhaus';
+
+  @override
+  String get profileSectionSpotifyLinkCaps => 'PROFIL SPOTIFY';
+
+  @override
+  String get profileHintSpotifyLink =>
+      'Lien vers ton profil Spotify (optionnel)';
 
   @override
   String get profileBandAlreadyAdded => 'Ce groupe est déjà dans ta liste.';

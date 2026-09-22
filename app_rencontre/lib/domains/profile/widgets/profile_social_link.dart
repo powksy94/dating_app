@@ -35,6 +35,7 @@ class ProfileSocialLink extends StatelessWidget {
   IconData _platformIcon(String p) {
     switch (p.toLowerCase()) {
       case 'instagram': return Icons.camera_alt;
+      case 'spotify':   return Icons.graphic_eq;
       case 'bandcamp':  return Icons.music_note;
       case 'lastfm':    return Icons.bar_chart;
       case 'tumblr':    return Icons.dashboard;

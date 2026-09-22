@@ -2060,6 +2060,24 @@ abstract class AppLocalizations {
   /// **'One band at a time, e.g. The Cure'**
   String get authHintBands;
 
+  /// No description provided for @bandSearchAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Results via Spotify'**
+  String get bandSearchAttribution;
+
+  /// No description provided for @authSectionSpotifyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Spotify profile (optional)'**
+  String get authSectionSpotifyLink;
+
+  /// No description provided for @authHintSpotifyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link to your Spotify profile'**
+  String get authHintSpotifyLink;
+
   /// No description provided for @authLocationPermissionDenied.
   ///
   /// In en, this message translates to:
@@ -3025,6 +3043,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One band at a time, e.g. Bauhaus'**
   String get profileHintBands;
+
+  /// No description provided for @profileSectionSpotifyLinkCaps.
+  ///
+  /// In en, this message translates to:
+  /// **'SPOTIFY PROFILE'**
+  String get profileSectionSpotifyLinkCaps;
+
+  /// No description provided for @profileHintSpotifyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link to your Spotify profile (optional)'**
+  String get profileHintSpotifyLink;
 
   /// No description provided for @profileBandAlreadyAdded.
   ///
