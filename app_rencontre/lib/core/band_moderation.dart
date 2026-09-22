@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:safe_text/safe_text.dart';
 
 /// Words from the profanity lists that are everyday material in dark music band
@@ -12,17 +13,26 @@ const _allowedInBandNames = [
 // links and handles are refused too.
 final _linkPattern = RegExp(r'(https?:|www\.|://|@)', caseSensitive: false);
 
-/// Loads the English and French word lists. Call it early (for example when the
-/// field appears) so the first check does not pay for building them.
-void prepareBandModeration() {
+void _loadWordLists() {
   if (SafeTextFilter.isInitialized) return;
   SafeTextFilter.init(languages: [Language.english, Language.french]);
+}
+
+/// Warms the English and French word lists up during idle time (never while
+/// a frame is busy, e.g. mid-animation), so the first real check is already
+/// paid for by the time it happens. Call this once when the field appears.
+/// Safe to call more than once: a pending or finished load is a no-op.
+void prepareBandModeration() {
+  if (SafeTextFilter.isInitialized) return;
+  SchedulerBinding.instance.scheduleTask(_loadWordLists, Priority.idle);
 }
 
 /// True when [name] contains a link, a handle or an insult.
 bool isBandNameRefused(String name) {
   if (_linkPattern.hasMatch(name)) return true;
-  prepareBandModeration();
+  // The idle warm-up above may not have run yet (e.g. a very fast typer): this
+  // blocks instead of skipping the check, moderation is never bypassed to stay fast.
+  _loadWordLists();
   return SafeTextFilter.containsBadWord(
     text: name,
     excludedWords: _allowedInBandNames,
