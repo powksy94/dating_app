@@ -56,7 +56,10 @@ class _MyProfileTabState extends State<MyProfileTab> with ReloadOnReconnect<MyPr
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (_) => const ProfileMenu(),
+      builder: (_) => ProfileMenu(
+        socialLinks: _profile?.socialLinks ?? const {},
+        onLinksChanged: _loadProfile,
+      ),
     );
   }
 

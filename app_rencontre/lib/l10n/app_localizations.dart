@@ -230,6 +230,12 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get commonBtnOk;
 
+  /// No description provided for @commonBtnRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get commonBtnRemove;
+
   /// No description provided for @updateRequiredTitle.
   ///
   /// In en, this message translates to:
@@ -2066,18 +2072,6 @@ abstract class AppLocalizations {
   /// **'Results via Spotify'**
   String get bandSearchAttribution;
 
-  /// No description provided for @authSectionSpotifyLink.
-  ///
-  /// In en, this message translates to:
-  /// **'Spotify profile (optional)'**
-  String get authSectionSpotifyLink;
-
-  /// No description provided for @authHintSpotifyLink.
-  ///
-  /// In en, this message translates to:
-  /// **'Link to your Spotify profile'**
-  String get authHintSpotifyLink;
-
   /// No description provided for @authLocationPermissionDenied.
   ///
   /// In en, this message translates to:
@@ -3044,17 +3038,35 @@ abstract class AppLocalizations {
   /// **'One band at a time, e.g. Bauhaus'**
   String get profileHintBands;
 
-  /// No description provided for @profileSectionSpotifyLinkCaps.
+  /// No description provided for @profileSectionSocialLinksCaps.
   ///
   /// In en, this message translates to:
-  /// **'SPOTIFY PROFILE'**
-  String get profileSectionSpotifyLinkCaps;
+  /// **'LINKS'**
+  String get profileSectionSocialLinksCaps;
 
-  /// No description provided for @profileHintSpotifyLink.
+  /// No description provided for @profileHintSocialLink.
   ///
   /// In en, this message translates to:
-  /// **'Link to your Spotify profile (optional)'**
-  String get profileHintSpotifyLink;
+  /// **'Paste a link: Spotify, Instagram, Bandcamp, Discord...'**
+  String get profileHintSocialLink;
+
+  /// No description provided for @profileLinkNotRecognized.
+  ///
+  /// In en, this message translates to:
+  /// **'Link not recognized. Accepted: Spotify, Instagram, Bandcamp, Discord, Last.fm, Tumblr.'**
+  String get profileLinkNotRecognized;
+
+  /// No description provided for @profileLinkWrongPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'This link doesn\'t match {platform}.'**
+  String profileLinkWrongPlatform(String platform);
+
+  /// No description provided for @profileDiscordComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Discord connection is coming soon.'**
+  String get profileDiscordComingSoon;
 
   /// No description provided for @profileBandAlreadyAdded.
   ///

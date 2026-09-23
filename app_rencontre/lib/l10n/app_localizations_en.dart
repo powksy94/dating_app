@@ -86,6 +86,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonBtnOk => 'OK';
 
   @override
+  String get commonBtnRemove => 'Remove';
+
+  @override
   String get updateRequiredTitle => 'Update required';
 
   @override
@@ -1129,12 +1132,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bandSearchAttribution => 'Results via Spotify';
 
   @override
-  String get authSectionSpotifyLink => 'Spotify profile (optional)';
-
-  @override
-  String get authHintSpotifyLink => 'Link to your Spotify profile';
-
-  @override
   String get authLocationPermissionDenied =>
       'Permission denied. You can skip this step';
 
@@ -1667,11 +1664,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileHintBands => 'One band at a time, e.g. Bauhaus';
 
   @override
-  String get profileSectionSpotifyLinkCaps => 'SPOTIFY PROFILE';
+  String get profileSectionSocialLinksCaps => 'LINKS';
 
   @override
-  String get profileHintSpotifyLink =>
-      'Link to your Spotify profile (optional)';
+  String get profileHintSocialLink =>
+      'Paste a link: Spotify, Instagram, Bandcamp, Discord...';
+
+  @override
+  String get profileLinkNotRecognized =>
+      'Link not recognized. Accepted: Spotify, Instagram, Bandcamp, Discord, Last.fm, Tumblr.';
+
+  @override
+  String profileLinkWrongPlatform(String platform) {
+    return 'This link doesn\'t match $platform.';
+  }
+
+  @override
+  String get profileDiscordComingSoon => 'Discord connection is coming soon.';
 
   @override
   String get profileBandAlreadyAdded => 'This band is already in your list.';

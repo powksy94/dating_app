@@ -5,7 +5,6 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 import 'package:nocturne/domains/profile/models/favorite_band.dart';
 import 'package:nocturne/domains/profile/widgets/favorite_bands_field.dart';
-import 'package:nocturne/domains/profile/widgets/spotify_link_field.dart';
 
 class StepTags extends StatefulWidget {
     final void Function(Map<String, dynamic>) onNext;
@@ -17,7 +16,6 @@ class StepTags extends StatefulWidget {
 
 class _StepTagsState extends State<StepTags> {
     List<FavoriteBand> _favoriteBands = [];
-    final _spotifyLinkController      = TextEditingController();
     final List<String> _genres        = [];
     final List<String> _vibes         = [];
     final List<String> _aesthetics    = [];
@@ -35,7 +33,6 @@ class _StepTagsState extends State<StepTags> {
             setState(() => _error = AppLocalizations.of(context)!.authErrorSelectGenreAesthetic);
             return;
         }
-        final spotifyLink = _spotifyLinkController.text.trim();
         widget.onNext({
             'musicGenres':          _genres,
             'musicVibes':           _vibes,
@@ -44,14 +41,7 @@ class _StepTagsState extends State<StepTags> {
             'musicEras':            _eras,
             'discoveryFormats':     _discovery,
             'favoriteBands':        _favoriteBands.map((b) => b.toJson()).toList(),
-            if (spotifyLink.isNotEmpty) 'socialLinks': {'spotify': spotifyLink},
         });
-    }
-
-    @override
-    void dispose() {
-        _spotifyLinkController.dispose();
-        super.dispose();
     }
 
     Widget _section(String title, List<String> options, List<String> selected, int delayMs) {
@@ -122,11 +112,6 @@ class _StepTagsState extends State<StepTags> {
                             hint: l.authHintBands,
                             onChanged: (bands) => setState(() => _favoriteBands = bands),
                         ).animate().fadeIn(delay: 900.ms, duration: 400.ms),
-                        const SizedBox(height: 24),
-
-                        _section(l.authSectionSpotifyLink, const [], const [], 950),
-                        SpotifyLinkField(controller: _spotifyLinkController, hint: l.authHintSpotifyLink)
-                            .animate().fadeIn(delay: 950.ms, duration: 400.ms),
                         const SizedBox(height: 24),
 
                         if (_error != null) ...[

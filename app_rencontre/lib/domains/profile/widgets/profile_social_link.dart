@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:nocturne/domains/profile/services/social_link_detector.dart';
 
 class ProfileSocialLink extends StatelessWidget {
   final String platform;
@@ -20,7 +21,7 @@ class ProfileSocialLink extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(_platformIcon(platform),
+            Icon(socialPlatformIcon(platform),
                 size: 16, color: const Color(0xFF7B00D4)),
             const SizedBox(width: 6),
             Text(platform,
@@ -30,16 +31,5 @@ class ProfileSocialLink extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  IconData _platformIcon(String p) {
-    switch (p.toLowerCase()) {
-      case 'instagram': return Icons.camera_alt;
-      case 'spotify':   return Icons.graphic_eq;
-      case 'bandcamp':  return Icons.music_note;
-      case 'lastfm':    return Icons.bar_chart;
-      case 'tumblr':    return Icons.dashboard;
-      default:          return Icons.link;
-    }
   }
 }

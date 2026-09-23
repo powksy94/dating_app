@@ -37,6 +37,7 @@
     "discoveryFiltersApply": "Apply",
     "commonComingSoon": "Coming soon",
     "commonBtnOk": "OK",
+    "commonBtnRemove": "Remove",
     "updateRequiredTitle": "Update required",
     "updateRequiredBody": "A new version of Nocturne is available. Update the app to continue.",
     "updateRequiredBtn": "Update",
@@ -499,8 +500,6 @@
     "authSectionFavoriteBands": "Favorite bands / artists (optional)",
     "authHintBands": "One band at a time, e.g. The Cure",
     "bandSearchAttribution": "Results via Spotify",
-    "authSectionSpotifyLink": "Spotify profile (optional)",
-    "authHintSpotifyLink": "Link to your Spotify profile",
 
     "authLocationPermissionDenied": "Permission denied. You can skip this step",
     "authLocationError": "Couldn't get your location. You can skip this step.",
@@ -735,8 +734,14 @@
     "profileSubtitleDiscovery": "Your listening habits",
     "profileSectionFavoriteBandsCaps": "FAVORITE ARTISTS",
     "profileHintBands": "One band at a time, e.g. Bauhaus",
-    "profileSectionSpotifyLinkCaps": "SPOTIFY PROFILE",
-    "profileHintSpotifyLink": "Link to your Spotify profile (optional)",
+    "profileSectionSocialLinksCaps": "LINKS",
+    "profileHintSocialLink": "Paste a link: Spotify, Instagram, Bandcamp, Discord...",
+    "profileLinkNotRecognized": "Link not recognized. Accepted: Spotify, Instagram, Bandcamp, Discord, Last.fm, Tumblr.",
+    "profileLinkWrongPlatform": "This link doesn't match {platform}.",
+    "@profileLinkWrongPlatform": {
+        "placeholders": { "platform": { "type": "String" } }
+    },
+    "profileDiscordComingSoon": "Discord connection is coming soon.",
     "profileBandAlreadyAdded": "This band is already in your list.",
     "profileBandNotAllowed": "This band name isn't allowed.",
 
