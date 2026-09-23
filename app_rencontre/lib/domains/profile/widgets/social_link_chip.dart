@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nocturne/domains/profile/services/social_link_detector.dart';
 
 /// One profile-link pastille: filled violet once a link is set for that
@@ -21,7 +22,7 @@ class SocialLinkChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionChip(
-      avatar: Icon(
+      avatar: FaIcon(
         socialPlatformIcon(platform),
         size: 16,
         color: isSet ? Colors.white : const Color(0xFF7B00D4),

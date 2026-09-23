@@ -4,7 +4,7 @@ description: "Nocturne - dating app for the alternative & goth community."
 publish_to: 'none'
 
 
-version: 1.0.0+16
+version: 1.0.0+17
 
 environment:
   sdk: ^3.10.1
@@ -46,6 +46,7 @@ dependencies:
   flutter_stripe: ^11.5.0
   connectivity_plus: ^7.3.1
   safe_text: ^3.0.2
+  font_awesome_flutter: ^11.0.0
 
 dev_dependencies:
   flutter_test:

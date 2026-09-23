@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// Mirrors social-links.ts on the server, which has the final say: a link
 /// that matches no known platform here but somehow would there (or the
@@ -29,14 +29,17 @@ String? detectSocialPlatform(String value) {
   return null;
 }
 
-IconData socialPlatformIcon(String platform) {
+/// The platform's real logo (Font Awesome's free brand icons), not a generic
+/// stand-in. Render with `FaIcon`, not a plain `Icon`: `FaIconData` isn't an
+/// `IconData`, it carries information `Icon` doesn't know how to use.
+FaIconData socialPlatformIcon(String platform) {
   switch (platform.toLowerCase()) {
-    case 'instagram': return Icons.camera_alt;
-    case 'spotify':   return Icons.graphic_eq;
-    case 'bandcamp':  return Icons.music_note;
-    case 'lastfm':    return Icons.bar_chart;
-    case 'tumblr':    return Icons.dashboard;
-    case 'discord':   return Icons.forum;
-    default:          return Icons.link;
+    case 'instagram': return FontAwesomeIcons.instagram;
+    case 'spotify':   return FontAwesomeIcons.spotify;
+    case 'bandcamp':  return FontAwesomeIcons.bandcamp;
+    case 'lastfm':    return FontAwesomeIcons.lastfm;
+    case 'tumblr':    return FontAwesomeIcons.tumblr;
+    case 'discord':   return FontAwesomeIcons.discord;
+    default:          return FontAwesomeIcons.link;
   }
 }
