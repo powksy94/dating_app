@@ -3062,11 +3062,29 @@ abstract class AppLocalizations {
   /// **'This link doesn\'t match {platform}.'**
   String profileLinkWrongPlatform(String platform);
 
-  /// No description provided for @profileDiscordComingSoon.
+  /// No description provided for @profileDiscordConnectPrompt.
   ///
   /// In en, this message translates to:
-  /// **'Discord connection is coming soon.'**
-  String get profileDiscordComingSoon;
+  /// **'Connect your Discord account? You\'ll be asked to sign in and approve access in your browser.'**
+  String get profileDiscordConnectPrompt;
+
+  /// No description provided for @profileDiscordConnectedAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected as {username}.'**
+  String profileDiscordConnectedAs(String username);
+
+  /// No description provided for @profileDiscordBtnConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get profileDiscordBtnConnect;
+
+  /// No description provided for @profileDiscordConnectFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t connect Discord. Try again.'**
+  String get profileDiscordConnectFailed;
 
   /// No description provided for @profileBandAlreadyAdded.
   ///

@@ -741,7 +741,13 @@
     "@profileLinkWrongPlatform": {
         "placeholders": { "platform": { "type": "String" } }
     },
-    "profileDiscordComingSoon": "Discord connection is coming soon.",
+    "profileDiscordConnectPrompt": "Connect your Discord account? You'll be asked to sign in and approve access in your browser.",
+    "profileDiscordConnectedAs": "Connected as {username}.",
+    "@profileDiscordConnectedAs": {
+        "placeholders": { "username": { "type": "String" } }
+    },
+    "profileDiscordBtnConnect": "Connect",
+    "profileDiscordConnectFailed": "Couldn't connect Discord. Try again.",
     "profileBandAlreadyAdded": "This band is already in your list.",
     "profileBandNotAllowed": "This band name isn't allowed.",
 

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/profile/dialogs/discord_coming_soon_dialog.dart';
+import 'package:nocturne/domains/profile/dialogs/discord_connection_dialog.dart';
 import 'package:nocturne/domains/profile/dialogs/social_link_edit_dialog.dart';
+import 'package:nocturne/domains/profile/services/discord_oauth_service.dart';
 import 'package:nocturne/domains/profile/widgets/profile_menu_item.dart';
 import 'package:nocturne/domains/profile/widgets/social_link_chip.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 
 // Every platform this app has icons and validation for (see social-links.ts on
-// the server, which must stay in sync with this list).
+// the server, which must stay in sync with this list). Discord isn't part of
+// _links: it's a real connection (see DiscordOAuthService), not a pasted link.
 const _kPlatforms = ['spotify', 'instagram', 'bandcamp', 'discord', 'lastfm', 'tumblr'];
 
 /// Profile menu bottom sheet: navigation to the like history, visitors, matches
 /// and settings screens, plus the profile's external links as tappable
 /// pastilles (editing itself lives in social_link_edit_dialog.dart and
-/// discord_coming_soon_dialog.dart, this widget only wires them to a save).
+/// discord_connection_dialog.dart, this widget only wires them to a save).
 class ProfileMenu extends StatefulWidget {
   final Map<String, String> socialLinks;
   final VoidCallback onLinksChanged;
@@ -30,7 +32,16 @@ class ProfileMenu extends StatefulWidget {
 
 class _ProfileMenuState extends State<ProfileMenu> {
   late Map<String, String> _links = Map.from(widget.socialLinks);
+  DiscordConnectionStatus _discord = const DiscordConnectionStatus(connected: false);
   bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    DiscordOAuthService.status().then((status) {
+      if (mounted) setState(() => _discord = status);
+    });
+  }
 
   Future<void> _apply(Map<String, String> updated) async {
     final previous = _links;
@@ -51,9 +62,38 @@ class _ProfileMenuState extends State<ProfileMenu> {
     }
   }
 
+  Future<void> _onDiscordTap() async {
+    final action = await showDiscordConnectionDialog(
+      context,
+      connected: _discord.connected,
+      username: _discord.username,
+    );
+    if (!mounted || action == null) return;
+
+    setState(() => _saving = true);
+    try {
+      if (action == 'disconnect') {
+        await DiscordOAuthService.disconnect();
+        if (mounted) setState(() => _discord = const DiscordConnectionStatus(connected: false));
+      } else {
+        final status = await DiscordOAuthService.connect();
+        if (mounted) setState(() => _discord = status);
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.profileDiscordConnectFailed),
+          backgroundColor: const Color(0xFF7F1D1D),
+        ));
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
   Future<void> _onChipTap(String platform) async {
     if (platform == 'discord') {
-      await showDiscordComingSoonDialog(context);
+      await _onDiscordTap();
       return;
     }
     final result = await showSocialLinkEditDialog(
@@ -158,7 +198,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                         for (final platform in _kPlatforms)
                           SocialLinkChip(
                             platform: platform,
-                            isSet: _links.containsKey(platform),
+                            isSet: platform == 'discord' ? _discord.connected : _links.containsKey(platform),
                             enabled: !_saving,
                             onTap: () => _onChipTap(platform),
                           ),

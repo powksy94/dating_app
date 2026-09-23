@@ -1680,7 +1680,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get profileDiscordComingSoon => 'Discord connection is coming soon.';
+  String get profileDiscordConnectPrompt =>
+      'Connect your Discord account? You\'ll be asked to sign in and approve access in your browser.';
+
+  @override
+  String profileDiscordConnectedAs(String username) {
+    return 'Connected as $username.';
+  }
+
+  @override
+  String get profileDiscordBtnConnect => 'Connect';
+
+  @override
+  String get profileDiscordConnectFailed =>
+      'Couldn\'t connect Discord. Try again.';
 
   @override
   String get profileBandAlreadyAdded => 'This band is already in your list.';

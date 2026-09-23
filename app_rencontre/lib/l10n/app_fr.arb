@@ -569,7 +569,10 @@
     "profileHintSocialLink": "Colle un lien : Spotify, Instagram, Bandcamp, Discord...",
     "profileLinkNotRecognized": "Lien non reconnu. Acceptés : Spotify, Instagram, Bandcamp, Discord, Last.fm, Tumblr.",
     "profileLinkWrongPlatform": "Ce lien ne correspond pas à {platform}.",
-    "profileDiscordComingSoon": "La connexion Discord arrive bientôt.",
+    "profileDiscordConnectPrompt": "Connecter ton compte Discord ? Tu devras te connecter et autoriser l'accès dans ton navigateur.",
+    "profileDiscordConnectedAs": "Connecté en tant que {username}.",
+    "profileDiscordBtnConnect": "Connecter",
+    "profileDiscordConnectFailed": "Impossible de connecter Discord. Réessaie.",
     "profileBandAlreadyAdded": "Ce groupe est déjà dans ta liste.",
     "profileBandNotAllowed": "Ce nom de groupe n'est pas autorisé.",
 
