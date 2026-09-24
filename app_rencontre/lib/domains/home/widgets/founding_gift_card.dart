@@ -28,6 +28,7 @@ class FoundingGiftRevealCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2,
+              shadows: [Shadow(color: Color(0xFF9B4DFF), blurRadius: 16)],
             ),
           ).animate().fadeIn(delay: 150.ms, duration: 500.ms).slideY(begin: 0.15, end: 0, curve: Curves.easeOutCubic),
           const SizedBox(height: 10),

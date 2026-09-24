@@ -23,6 +23,10 @@ class FoundingGiftSealStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sealGone = stage == GiftStage.opening || stage == GiftStage.revealed;
+    // While waiting on the claim call, the seal glows harder and faster
+    // instead of showing a generic spinner that would clash with the wax.
+    final claiming = stage == GiftStage.claiming;
+    final glow = claiming ? 0.6 + glowCtrl.value * 0.4 : 0.35 + glowCtrl.value * 0.35;
 
     return Stack(
       clipBehavior: Clip.none,
@@ -57,9 +61,9 @@ class FoundingGiftSealStack extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF7B00D4).withValues(alpha: 0.35 + glowCtrl.value * 0.35),
-                      blurRadius: 24 + glowCtrl.value * 20,
-                      spreadRadius: 2 + glowCtrl.value * 4,
+                      color: const Color(0xFF9B4DFF).withValues(alpha: glow),
+                      blurRadius: (claiming ? 30 : 24) + glowCtrl.value * 20,
+                      spreadRadius: (claiming ? 4 : 2) + glowCtrl.value * 4,
                     ),
                   ],
                 ),
@@ -68,20 +72,6 @@ class FoundingGiftSealStack extends StatelessWidget {
             ),
           ),
         ),
-        if (stage == GiftStage.claiming)
-          const Positioned(
-            top: 40 + kGiftFlapHeight - kGiftSealSize / 2,
-            child: SizedBox(
-              width: kGiftSealSize,
-              height: kGiftSealSize,
-              child: Center(
-                child: SizedBox(
-                  width: 22, height: 22,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                ),
-              ),
-            ),
-          ),
       ],
     );
   }
