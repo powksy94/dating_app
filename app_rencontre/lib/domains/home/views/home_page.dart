@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
+import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/shared/services/unread_service.dart';
 import 'package:nocturne/domains/discovery/views/swipe_page.dart';
@@ -8,6 +9,7 @@ import 'package:nocturne/domains/chat/views/conversation_page.dart';
 import 'package:nocturne/domains/event/views/events_page.dart';
 import 'package:nocturne/domains/home/views/my_profile_tab.dart';
 import 'package:nocturne/domains/home/widgets/exit_confirm_dialog.dart';
+import 'package:nocturne/domains/home/widgets/founding_gift_reveal.dart';
 import 'package:nocturne/shared/widgets/common/requires_connection.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +22,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _tab = 0;
   final _swipeRefresh = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkFoundingGift());
+  }
+
+  Future<void> _checkFoundingGift() async {
+    final reward = await AuthService().getFoundingMemberReward();
+    if (!mounted || reward != 'pending') return;
+    Navigator.push(context, PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (_, __, ___) => FoundingGiftReveal(
+        onClaim: () => AuthService().claimFoundingMemberReward(),
+      ),
+    ));
+  }
 
   void _navigateToConversation(ChatMatch match) {
     setState(() => _tab = 2);

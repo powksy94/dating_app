@@ -103,6 +103,21 @@ class AuthService {
     }
   }
 
+  /// True once RevenueCat has granted the gift and the server has recorded
+  /// the reward as claimed. False on any failure: the reward stays 'pending'
+  /// so the reveal can be retried on next launch.
+  Future<bool> claimFoundingMemberReward() async {
+    try {
+      final headers = await ApiService.authHeaders();
+      final res = await http
+          .post(Uri.parse('${ApiService.baseUrl}/users/me/reward/claim'), headers: headers)
+          .timeout(const Duration(seconds: 15));
+      return res.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<bool> isLoggedIn() async {
     final token = await ApiService.getToken();
     return token != null;
