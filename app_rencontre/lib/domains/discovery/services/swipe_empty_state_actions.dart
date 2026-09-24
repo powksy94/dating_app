@@ -14,18 +14,22 @@ class SwipeEmptyStateActions {
     if (!context.mounted) return;
     if (ok) {
       onProfilesChanged();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.discoveryEmptyResetSuccess),
-        backgroundColor: const Color(0xFF4A0072),
-      ));
+      _showSnack(AppLocalizations.of(context)!.discoveryEmptyResetSuccess);
     }
   }
 
   void waitForMoon() {
     onProfilesChanged();
+    _showSnack(AppLocalizations.of(context)!.discoveryEmptyWaitMoonMessage);
+  }
+
+  // Same styling for every message here: an explicit light text color, since
+  // the theme's default SnackBar text color assumes a light background and
+  // reads as near-invisible on our dark purple one otherwise.
+  void _showSnack(String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.discoveryEmptyWaitMoonMessage),
-      backgroundColor: const Color(0xFF2D0040),
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      backgroundColor: const Color(0xFF4A0072),
     ));
   }
 }

@@ -80,6 +80,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryFiltersApply => 'Apply';
 
   @override
+  String get discoveryFiltersConfirmTitle => 'Apply these filters?';
+
+  @override
+  String get discoveryFiltersConfirmMessage =>
+      'Your discovery feed will be reloaded with the new distance and age range.';
+
+  @override
+  String get discoveryFiltersConfirmCancel => 'Cancel';
+
+  @override
   String get commonComingSoon => 'Coming soon';
 
   @override

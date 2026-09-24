@@ -56,6 +56,28 @@ class _SearchFiltersPanelState extends State<SearchFiltersPanel> {
     widget.onClose();
   }
 
+  Future<void> _confirmAndApply() async {
+    final l = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l.discoveryFiltersConfirmTitle),
+        content: Text(l.discoveryFiltersConfirmMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(l.discoveryFiltersConfirmCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(l.discoveryFiltersApply),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) await _apply();
+  }
+
   Future<void> _apply() async {
     setState(() => _saving = true);
     try {
@@ -106,7 +128,7 @@ class _SearchFiltersPanelState extends State<SearchFiltersPanel> {
           max: SearchFilters.ageLimitMax,
           onChanged: (v) => setState(() => _filters = filters.copyWith(ageRange: v)),
         ),
-        FiltersApplyButton(saving: _saving, onPressed: _apply),
+        FiltersApplyButton(saving: _saving, onPressed: _confirmAndApply),
       ],
     );
   }

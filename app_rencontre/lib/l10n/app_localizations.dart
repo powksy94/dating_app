@@ -218,6 +218,24 @@ abstract class AppLocalizations {
   /// **'Apply'**
   String get discoveryFiltersApply;
 
+  /// No description provided for @discoveryFiltersConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply these filters?'**
+  String get discoveryFiltersConfirmTitle;
+
+  /// No description provided for @discoveryFiltersConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your discovery feed will be reloaded with the new distance and age range.'**
+  String get discoveryFiltersConfirmMessage;
+
+  /// No description provided for @discoveryFiltersConfirmCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get discoveryFiltersConfirmCancel;
+
   /// No description provided for @commonComingSoon.
   ///
   /// In en, this message translates to:
