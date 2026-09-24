@@ -12,9 +12,9 @@ const _kFlapTop    = Color(0xFF3A0066);
 const _kFlapBottom = Color(0xFF1A0030);
 
 /// The envelope's flat back: a two-tone rounded rectangle (lighter at the
-/// top, near the flap, darker toward the bottom) with a clearly visible
-/// V-fold seam, so it still reads as an envelope once the flap has rotated
-/// away from it.
+/// top, near the flap, darker toward the bottom). No fold lines of its own:
+/// the flap's own triangle outline, drawn on top, is the only "V" shape, so
+/// the two don't combine into a busy double cross.
 class EnvelopeBodyPainter extends CustomPainter {
   const EnvelopeBodyPainter();
 
@@ -32,14 +32,6 @@ class EnvelopeBodyPainter extends CustomPainter {
       ..color = _kInkBorder.withValues(alpha: 0.55)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4);
-
-    final fold = Paint()
-      ..color = _kInkBorder.withValues(alpha: 0.4)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-    final apex = Offset(size.width / 2, size.height * 0.42);
-    canvas.drawLine(Offset(0, size.height), apex, fold);
-    canvas.drawLine(Offset(size.width, size.height), apex, fold);
 
     // A short shadow just under where the flap's edge sits, so the flap
     // reads as sitting on top of the body rather than merging into it.
@@ -96,33 +88,18 @@ class EnvelopeFlapPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-/// A wax disc with a hand-dripped (slightly irregular) edge, a crescent moon
-/// engraved into it, and jagged crack lines that grow outward from the
-/// center as [crackProgress] goes 0 to 1.
+/// A wax disc with a crescent moon engraved into it, plus jagged crack
+/// lines that grow outward from the center as [crackProgress] goes 0 to 1.
 class WaxSealPainter extends CustomPainter {
   final double crackProgress;
   const WaxSealPainter({required this.crackProgress});
-
-  Path _driedEdgeCircle(Offset center, double radius) {
-    const points = 28;
-    final path = Path();
-    for (var i = 0; i <= points; i++) {
-      final angle = (i / points) * 2 * math.pi;
-      final wobble = math.sin(angle * 5) * radius * 0.035 + math.sin(angle * 3 + 1.1) * radius * 0.025;
-      final r = radius + wobble;
-      final p = Offset(center.dx + math.cos(angle) * r, center.dy + math.sin(angle) * r);
-      i == 0 ? path.moveTo(p.dx, p.dy) : path.lineTo(p.dx, p.dy);
-    }
-    path.close();
-    return path;
-  }
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
     final radius = size.width / 2 - 2;
 
-    final sealPath = _driedEdgeCircle(center, radius);
+    final sealPath = Path()..addOval(Rect.fromCircle(center: center, radius: radius));
     canvas.drawPath(
       sealPath,
       Paint()
