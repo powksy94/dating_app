@@ -150,8 +150,12 @@ class WaxSealPainter extends CustomPainter {
     // Crescent moon, glowing like real moonlight rather than plain engraved
     // wax: a soft blurred halo behind a bright crescent, with a thin dark
     // seat line so it still reads as sitting in the wax, not floating on it.
-    final moonOuter = Path()..addOval(Rect.fromCircle(center: center.translate(-radius * 0.12, 0), radius: radius * 0.4));
-    final moonInner = Path()..addOval(Rect.fromCircle(center: center.translate(radius * 0.08, 0), radius: radius * 0.34));
+    // The outer circle stays exactly on the seal's own center, so the
+    // crescent's convex edge is centered; only the "bite" that carves the
+    // crescent is offset sideways, the usual way to draw a moon icon.
+    final moonRadius = radius * 0.4;
+    final moonOuter = Path()..addOval(Rect.fromCircle(center: center, radius: moonRadius));
+    final moonInner = Path()..addOval(Rect.fromCircle(center: center.translate(moonRadius * 0.55, 0), radius: moonRadius * 0.92));
     final crescent = Path.combine(PathOperation.difference, moonOuter, moonInner);
 
     canvas.drawPath(crescent, Paint()

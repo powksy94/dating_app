@@ -101,29 +101,26 @@ class _FoundingGiftRevealState extends State<FoundingGiftReveal> with TickerProv
                 builder: (context, child) {
                   if (!_showingMoon) return child!;
                   final t = _moonExit.value;
-                  // Fade is eased (safe range for Opacity); the dive itself
-                  // accelerates, like a gaze dropping fast from sky to ground.
-                  final dive = Curves.easeInCubic.transform(_moonExitCtrl.value);
+                  // Fade is eased (safe range for Opacity). Both the moon and
+                  // the letter scroll upward by the same distance, like a
+                  // single gaze tilting down from the sky to the ground: the
+                  // moon leaves through the top edge as the letter, which was
+                  // waiting below the frame, arrives from the bottom.
+                  final travel = MediaQuery.sizeOf(context).height * 0.32;
+                  final dive = Curves.easeInOutCubic.transform(_moonExitCtrl.value);
                   return Stack(
                     alignment: Alignment.center,
                     children: [
-                      // The moon rushes past overhead, growing as it nears,
-                      // then fades as we drop below it.
                       Opacity(
                         opacity: 1 - t,
                         child: Transform.translate(
-                          offset: Offset(0, -dive * 140),
-                          child: Transform.scale(
-                            scale: 1 + dive * 0.6,
-                            child: FoundingGiftMoonIntro(glowCtrl: _glowCtrl),
-                          ),
+                          offset: Offset(0, -dive * travel),
+                          child: FoundingGiftMoonIntro(glowCtrl: _glowCtrl),
                         ),
                       ),
-                      // The letter grows from a distant speck into full view,
-                      // as if the ground is rising up to meet us.
                       Opacity(
                         opacity: t,
-                        child: Transform.scale(scale: 0.2 + dive * 0.8, child: child),
+                        child: Transform.translate(offset: Offset(0, (1 - dive) * travel), child: child),
                       ),
                     ],
                   );
