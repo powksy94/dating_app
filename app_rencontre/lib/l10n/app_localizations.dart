@@ -1112,6 +1112,48 @@ abstract class AppLocalizations {
   /// **'Keep exploring the darkness'**
   String get chatEmptyMatchesSub;
 
+  /// No description provided for @giftRevealHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the seal to open it'**
+  String get giftRevealHint;
+
+  /// No description provided for @giftRevealTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TWO MONTHS OF NOCTURNE'**
+  String get giftRevealTitle;
+
+  /// No description provided for @giftRevealSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A gift for the first fifty souls who dared enter 🌙'**
+  String get giftRevealSubtitle;
+
+  /// No description provided for @giftRevealClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get giftRevealClose;
+
+  /// No description provided for @giftRevealErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The wax wouldn\'t break'**
+  String get giftRevealErrorTitle;
+
+  /// No description provided for @giftRevealErrorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get giftRevealErrorSubtitle;
+
+  /// No description provided for @giftRevealRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get giftRevealRetry;
+
   /// No description provided for @matchTitleBond.
   ///
   /// In en, this message translates to:

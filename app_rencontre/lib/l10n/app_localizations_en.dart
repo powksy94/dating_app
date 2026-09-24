@@ -567,6 +567,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatEmptyMatchesSub => 'Keep exploring the darkness';
 
   @override
+  String get giftRevealHint => 'Tap the seal to open it';
+
+  @override
+  String get giftRevealTitle => 'TWO MONTHS OF NOCTURNE';
+
+  @override
+  String get giftRevealSubtitle =>
+      'A gift for the first fifty souls who dared enter 🌙';
+
+  @override
+  String get giftRevealClose => 'Continue';
+
+  @override
+  String get giftRevealErrorTitle => 'The wax wouldn\'t break';
+
+  @override
+  String get giftRevealErrorSubtitle => 'Something went wrong. Try again.';
+
+  @override
+  String get giftRevealRetry => 'Try again';
+
+  @override
   String get matchTitleBond => 'A DARK BOND';
 
   @override

@@ -569,6 +569,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chatEmptyMatchesSub => 'Continue d\'explorer les ténèbres';
 
   @override
+  String get giftRevealHint => 'Touche le sceau pour l\'ouvrir';
+
+  @override
+  String get giftRevealTitle => 'DEUX MOIS DE NOCTURNE';
+
+  @override
+  String get giftRevealSubtitle =>
+      'Un cadeau pour les cinquante premières âmes qui ont osé entrer 🌙';
+
+  @override
+  String get giftRevealClose => 'Continuer';
+
+  @override
+  String get giftRevealErrorTitle => 'La cire n\'a pas voulu céder';
+
+  @override
+  String get giftRevealErrorSubtitle => 'Une erreur est survenue. Réessaie.';
+
+  @override
+  String get giftRevealRetry => 'Réessayer';
+
+  @override
   String get matchTitleBond => 'UN LIEN OBSCUR';
 
   @override
