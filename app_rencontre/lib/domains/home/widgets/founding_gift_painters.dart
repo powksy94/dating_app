@@ -88,43 +88,80 @@ class EnvelopeFlapPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-/// A wax disc with a crescent moon engraved into it, plus jagged crack
-/// lines that grow outward from the center as [crackProgress] goes 0 to 1.
+/// A wax disc styled like a real stamped seal: a scalloped outer ring lit
+/// from the top-left, a smooth recessed inner disc, a glowing crescent moon
+/// where a monogram would normally sit, and jagged crack lines that grow
+/// outward from the center as [crackProgress] goes 0 to 1.
 class WaxSealPainter extends CustomPainter {
   final double crackProgress;
   const WaxSealPainter({required this.crackProgress});
+
+  /// A ring of small, even scallops (a real dripped-wax edge is bumpy all
+  /// around, not lopsided), built from a single fixed-frequency wave so no
+  /// one bump dominates and turns the disc into a "bean".
+  Path _scallopedRing(Offset center, double radius) {
+    const bumps = 16;
+    final path = Path();
+    for (var i = 0; i <= bumps * 3; i++) {
+      final angle = (i / (bumps * 3)) * 2 * math.pi;
+      final r = radius + math.sin(angle * bumps) * radius * 0.03;
+      final p = Offset(center.dx + math.cos(angle) * r, center.dy + math.sin(angle) * r);
+      i == 0 ? path.moveTo(p.dx, p.dy) : path.lineTo(p.dx, p.dy);
+    }
+    path.close();
+    return path;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
     final radius = size.width / 2 - 2;
 
-    final sealPath = Path()..addOval(Rect.fromCircle(center: center, radius: radius));
+    // Light comes from the top-left throughout the seal, like the reference
+    // photo: every gradient below shares this axis for a consistent relief.
+    final outerRing = _scallopedRing(center, radius);
     canvas.drawPath(
-      sealPath,
+      outerRing,
       Paint()
-        ..shader = const RadialGradient(
-          center: Alignment(-0.3, -0.3),
+        ..shader = const LinearGradient(
+          begin: Alignment(-0.7, -0.7), end: Alignment(0.7, 0.7),
           colors: [_kSealBright, _kSealColor, _kSealDark],
-          stops: [0.0, 0.55, 1.0],
+          stops: [0.0, 0.5, 1.0],
         ).createShader(Rect.fromCircle(center: center, radius: radius)),
     );
-    canvas.drawPath(sealPath, Paint()
+    canvas.drawPath(outerRing, Paint()
       ..color = _kSealDark.withValues(alpha: 0.7)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.2);
 
-    // Crescent moon, engraved: a dark crescent shadow plus a thin bright
-    // highlight along its outer rim, so it reads on top of the gradient
-    // regardless of how bright that spot of the wax is.
-    final moonOuter = Path()..addOval(Rect.fromCircle(center: center.translate(-radius * 0.14, 0), radius: radius * 0.5));
-    final moonInner = Path()..addOval(Rect.fromCircle(center: center.translate(radius * 0.06, 0), radius: radius * 0.44));
-    final crescent = Path.combine(PathOperation.difference, moonOuter, moonInner);
-    canvas.drawPath(crescent, Paint()..color = Colors.black.withValues(alpha: 0.45));
-    canvas.drawPath(crescent, Paint()
-      ..color = _kSealBright.withValues(alpha: 0.5)
+    // Inner disc: smooth (not scalloped), slightly smaller, its own subtler
+    // version of the same top-left light so it reads as a recessed platform.
+    final innerRadius = radius * 0.72;
+    canvas.drawCircle(center, innerRadius, Paint()
+      ..shader = LinearGradient(
+        begin: const Alignment(-0.7, -0.7), end: const Alignment(0.7, 0.7),
+        colors: [_kSealColor, Color.lerp(_kSealDark, Colors.black, 0.25)!],
+      ).createShader(Rect.fromCircle(center: center, radius: innerRadius)));
+    canvas.drawCircle(center, innerRadius, Paint()
+      ..color = Colors.black.withValues(alpha: 0.35)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1);
+
+    // Crescent moon, glowing like real moonlight rather than plain engraved
+    // wax: a soft blurred halo behind a bright crescent, with a thin dark
+    // seat line so it still reads as sitting in the wax, not floating on it.
+    final moonOuter = Path()..addOval(Rect.fromCircle(center: center.translate(-radius * 0.12, 0), radius: radius * 0.4));
+    final moonInner = Path()..addOval(Rect.fromCircle(center: center.translate(radius * 0.08, 0), radius: radius * 0.34));
+    final crescent = Path.combine(PathOperation.difference, moonOuter, moonInner);
+
+    canvas.drawPath(crescent, Paint()
+      ..color = Colors.white.withValues(alpha: 0.55)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, radius * 0.12));
+    canvas.drawPath(crescent, Paint()..color = const Color(0xFFF3E9FF));
+    canvas.drawPath(crescent, Paint()
+      ..color = Colors.black.withValues(alpha: 0.25)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.8);
 
     if (crackProgress <= 0) return;
     final crackPaint = Paint()
