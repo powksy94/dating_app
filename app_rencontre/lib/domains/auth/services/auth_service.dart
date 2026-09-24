@@ -87,6 +87,22 @@ class AuthService {
     return (data['message'] as String?) ?? unknownError;
   }
 
+  /// 'pending' once the founding-member gift is owed, 'claimed' once the user
+  /// has opened it, or null (no gift, or the account/backend is unreachable).
+  Future<String?> getFoundingMemberReward() async {
+    try {
+      final headers = await ApiService.authHeaders();
+      final res = await http
+          .get(Uri.parse('${ApiService.baseUrl}/auth/me'), headers: headers)
+          .timeout(const Duration(seconds: 10));
+      if (res.statusCode != 200) return null;
+      final data = jsonDecode(res.body) as Map<String, dynamic>;
+      return data['foundingMemberReward'] as String?;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<bool> isLoggedIn() async {
     final token = await ApiService.getToken();
     return token != null;
