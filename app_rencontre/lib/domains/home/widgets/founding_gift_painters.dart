@@ -33,6 +33,20 @@ class EnvelopeBodyPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4);
 
+    // The flap fully covers this V while closed, but as it lifts open it
+    // reveals this soft crease shadow underneath, like paper that's been
+    // folded there for a while: real depth, not just a stack of flat shapes.
+    // 96 matches kGiftFlapHeight (founding_gift_seal_stack.dart); the blur
+    // makes exact pixel alignment unnecessary.
+    final crease = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width / 2, 96)
+      ..close();
+    canvas.drawPath(crease, Paint()
+      ..color = Colors.black.withValues(alpha: 0.3)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10));
+
     // A short shadow just under where the flap's edge sits, so the flap
     // reads as sitting on top of the body rather than merging into it.
     canvas.drawRect(

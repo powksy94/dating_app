@@ -32,6 +32,19 @@ class FoundingGiftSealStack extends StatelessWidget {
       clipBehavior: Clip.none,
       alignment: Alignment.topCenter,
       children: [
+        // Ambient drop shadow: without it the envelope reads as a flat
+        // decal pasted on the stars instead of an object sitting in space.
+        Positioned(
+          top: 48,
+          child: Container(
+            width: kGiftEnvelopeWidth,
+            height: kGiftEnvelopeHeight,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(14)),
+              boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 28, spreadRadius: -6)],
+            ),
+          ),
+        ),
         const Positioned(
           top: 40,
           child: CustomPaint(size: Size(kGiftEnvelopeWidth, kGiftEnvelopeHeight), painter: EnvelopeBodyPainter()),
@@ -43,7 +56,13 @@ class FoundingGiftSealStack extends StatelessWidget {
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.002)
               ..rotateX(-flapCtrl.value * 2.4),
-            child: const CustomPaint(size: Size(kGiftEnvelopeWidth, kGiftFlapHeight), painter: EnvelopeFlapPainter()),
+            // Rounded to match the body's own corner radius: the flap's
+            // bounding box is a plain rectangle, so without this its sharp
+            // top corners poke out past the body's rounded ones.
+            child: const ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
+              child: CustomPaint(size: Size(kGiftEnvelopeWidth, kGiftFlapHeight), painter: EnvelopeFlapPainter()),
+            ),
           ),
         ),
         Positioned(
