@@ -8,6 +8,7 @@ import 'package:nocturne/domains/settings/sections/privacy_section.dart';
 import 'package:nocturne/domains/settings/sections/account_section.dart';
 import 'package:nocturne/domains/settings/sections/about_section.dart';
 import 'package:nocturne/domains/settings/sections/admin_section.dart';
+import 'package:nocturne/domains/settings/sections/debug_section.dart';
 import 'package:nocturne/domains/settings/widgets/app_info_footer.dart';
 import 'package:nocturne/domains/settings/dialogs/change_password_dialog.dart';
 import 'package:nocturne/domains/settings/dialogs/delete_account_dialog.dart';
@@ -138,6 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const AboutSection(),
                 const AdminSection(),
+                const DebugSection(),
                 const AppInfoFooter(),
               ],
             ),
