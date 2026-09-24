@@ -94,7 +94,18 @@ class _FoundingGiftRevealState extends State<FoundingGiftReveal> with TickerProv
         backgroundColor: const Color(0xFF04000A),
         body: Stack(
           children: [
-            const Positioned.fill(child: StarField()),
+            // The stars belong to the sky beat: they fade out with the moon,
+            // so the ground/letter beat doesn't keep a starry sky behind it.
+            Positioned.fill(
+              child: AnimatedBuilder(
+                animation: _moonExit,
+                builder: (context, child) => Opacity(
+                  opacity: _showingMoon ? 1 - _moonExit.value : 0,
+                  child: child,
+                ),
+                child: const StarField(),
+              ),
+            ),
             Center(
               child: AnimatedBuilder(
                 animation: Listenable.merge([_glowCtrl, _moonExit, _moonExitCtrl]),
