@@ -3,9 +3,11 @@ import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:http/http.dart' as http;
 import 'package:nocturne/shared/services/api_service.dart';
 
-/// Must match DISCORD_REDIRECT_URI on the server (discord.ts) and the scheme
-/// declared in AndroidManifest.xml for flutter_web_auth_2's callback activity.
-const _kCallbackScheme = 'nocturne';
+/// Discord requires this exact scheme for a mobile redirect, built from the
+/// app's own Application ID (same value as its OAuth2 Client ID) — not an
+/// arbitrary custom scheme. Must match DISCORD_REDIRECT_URI on the server
+/// (discord.ts) and the scheme declared in AndroidManifest.xml.
+const _kCallbackScheme = 'discord-1552285088606064660';
 
 class DiscordConnectionStatus {
   final bool connected;

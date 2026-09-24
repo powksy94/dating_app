@@ -40,8 +40,11 @@
             </intent-filter>
         </activity>
         <!-- Catches the browser's redirect back into the app after a Discord
-             (or any future OAuth platform) authorization, for flutter_web_auth_2.
-             Must match DISCORD_REDIRECT_URI on the server (discord.ts). -->
+             authorization, for flutter_web_auth_2. Discord does not accept an
+             arbitrary custom scheme for mobile: it requires this exact format,
+             built from the app's own Application ID (same value as its OAuth2
+             Client ID). Must match DISCORD_REDIRECT_URI on the server
+             (discord.ts) and _kCallbackScheme in discord_oauth_service.dart. -->
         <activity
             android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
             android:exported="true"
@@ -50,7 +53,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="nocturne" />
+                <data android:scheme="discord-1552285088606064660" />
             </intent-filter>
         </activity>
 
