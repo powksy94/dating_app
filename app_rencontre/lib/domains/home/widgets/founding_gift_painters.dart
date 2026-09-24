@@ -80,9 +80,11 @@ class EnvelopeFlapPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4);
 
-    // Center crease, from the top edge down to the apex, sells the fold.
+    // Center crease, kept short near the apex only: the seal sits right on
+    // top of the upper part of the flap, so a full-length line would poke
+    // out above it as a stray thread.
     canvas.drawLine(
-      Offset(size.width / 2, 0),
+      Offset(size.width / 2, size.height * 0.62),
       apex,
       Paint()
         ..color = Colors.black.withValues(alpha: 0.3)
@@ -138,8 +140,8 @@ class WaxSealPainter extends CustomPainter {
     // Crescent moon, engraved: a dark crescent shadow plus a thin bright
     // highlight along its outer rim, so it reads on top of the gradient
     // regardless of how bright that spot of the wax is.
-    final moonOuter = Path()..addOval(Rect.fromCircle(center: center.translate(-radius * 0.28, -radius * 0.05), radius: radius * 0.68));
-    final moonInner = Path()..addOval(Rect.fromCircle(center: center.translate(-radius * 0.05, -radius * 0.05), radius: radius * 0.58));
+    final moonOuter = Path()..addOval(Rect.fromCircle(center: center.translate(-radius * 0.14, 0), radius: radius * 0.5));
+    final moonInner = Path()..addOval(Rect.fromCircle(center: center.translate(radius * 0.06, 0), radius: radius * 0.44));
     final crescent = Path.combine(PathOperation.difference, moonOuter, moonInner);
     canvas.drawPath(crescent, Paint()..color = Colors.black.withValues(alpha: 0.45));
     canvas.drawPath(crescent, Paint()

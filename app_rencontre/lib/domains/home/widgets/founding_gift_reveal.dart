@@ -4,6 +4,7 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/widgets/star_field.dart';
 import 'package:nocturne/domains/home/widgets/founding_gift_card.dart';
 import 'package:nocturne/domains/home/widgets/founding_gift_envelope.dart';
+import 'package:nocturne/domains/home/widgets/founding_gift_moon_intro.dart';
 import 'package:nocturne/domains/home/widgets/founding_gift_stage.dart';
 
 /// Full-screen founding-member gift reveal: a wax-sealed envelope the user
@@ -20,10 +21,13 @@ class FoundingGiftReveal extends StatefulWidget {
 
 class _FoundingGiftRevealState extends State<FoundingGiftReveal> with TickerProviderStateMixin {
   GiftStage _stage = GiftStage.sealed;
+  bool _showingMoon = true;
 
   late final AnimationController _glowCtrl;
   late final AnimationController _crackCtrl;
   late final AnimationController _flapCtrl;
+  late final AnimationController _moonExitCtrl;
+  late final Animation<double> _moonExit;
 
   @override
   void initState() {
@@ -31,6 +35,16 @@ class _FoundingGiftRevealState extends State<FoundingGiftReveal> with TickerProv
     _glowCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..repeat(reverse: true);
     _crackCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _flapCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _moonExitCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _moonExit = CurvedAnimation(parent: _moonExitCtrl, curve: Curves.easeInOut);
+
+    // The moon hangs for a moment, then the view drops down to the letter,
+    // as if lowering one's gaze from the sky.
+    Future.delayed(const Duration(milliseconds: 1500), () async {
+      if (!mounted) return;
+      await _moonExitCtrl.forward();
+      if (mounted) setState(() => _showingMoon = false);
+    });
   }
 
   @override
@@ -38,6 +52,7 @@ class _FoundingGiftRevealState extends State<FoundingGiftReveal> with TickerProv
     _glowCtrl.dispose();
     _crackCtrl.dispose();
     _flapCtrl.dispose();
+    _moonExitCtrl.dispose();
     super.dispose();
   }
 
@@ -81,20 +96,45 @@ class _FoundingGiftRevealState extends State<FoundingGiftReveal> with TickerProv
           children: [
             const Positioned.fill(child: StarField()),
             Center(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: _stage == GiftStage.revealed
-                    ? FoundingGiftRevealCard(key: const ValueKey('revealed'), l: l, onClose: () => Navigator.pop(context))
-                    : FoundingGiftEnvelope(
-                        key: const ValueKey('envelope'),
-                        stage: _stage,
-                        glowCtrl: _glowCtrl,
-                        crackCtrl: _crackCtrl,
-                        flapCtrl: _flapCtrl,
-                        onTap: _handleTap,
-                        onRetry: _retry,
-                        l: l,
+              child: AnimatedBuilder(
+                animation: Listenable.merge([_glowCtrl, _moonExit]),
+                builder: (context, child) {
+                  if (!_showingMoon) return child!;
+                  final t = _moonExit.value;
+                  // The moon recedes upward as the letter rises into view
+                  // from below, like lowering one's gaze from sky to hand.
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Opacity(
+                        opacity: 1 - t,
+                        child: Transform.translate(
+                          offset: Offset(0, -t * 70),
+                          child: FoundingGiftMoonIntro(glowCtrl: _glowCtrl),
+                        ),
                       ),
+                      Opacity(
+                        opacity: t,
+                        child: Transform.translate(offset: Offset(0, (1 - t) * 70), child: child),
+                      ),
+                    ],
+                  );
+                },
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child: _stage == GiftStage.revealed
+                      ? FoundingGiftRevealCard(key: const ValueKey('revealed'), l: l, onClose: () => Navigator.pop(context))
+                      : FoundingGiftEnvelope(
+                          key: const ValueKey('envelope'),
+                          stage: _stage,
+                          glowCtrl: _glowCtrl,
+                          crackCtrl: _crackCtrl,
+                          flapCtrl: _flapCtrl,
+                          onTap: _handleTap,
+                          onRetry: _retry,
+                          l: l,
+                        ),
+                ),
               ),
             ),
           ],
