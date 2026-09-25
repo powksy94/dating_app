@@ -6,6 +6,7 @@ import 'package:nocturne/domains/discovery/widgets/filters_apply_button.dart';
 import 'package:nocturne/domains/discovery/widgets/filters_panel_header.dart';
 import 'package:nocturne/domains/settings/widgets/range_tile.dart';
 import 'package:nocturne/domains/settings/widgets/slider_tile.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 /// Age range and max distance filters, shown above the discovery content.
 class SearchFiltersPanel extends StatefulWidget {
@@ -44,10 +45,7 @@ class _SearchFiltersPanelState extends State<SearchFiltersPanel> {
   }
 
   void _showError() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.commonGenericError),
-      backgroundColor: const Color(0xFF7F1D1D),
-    ));
+    showAppSnackBar(context, AppLocalizations.of(context)!.commonGenericError, backgroundColor: const Color(0xFF7F1D1D));
   }
 
   void _fail() {

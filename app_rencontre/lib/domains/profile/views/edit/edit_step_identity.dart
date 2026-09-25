@@ -6,6 +6,7 @@ import 'package:nocturne/domains/profile/widgets/profile_bio_field.dart';
 import 'package:nocturne/domains/profile/widgets/profile_locked_username.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/auth/widgets/chip_selector.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EditStepIdentity extends StatefulWidget {
   final AlternativeProfile profile;
@@ -44,12 +45,7 @@ class _EditStepIdentityState extends State<EditStepIdentity> {
         'pronouns': _pronouns,
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.profileSnackIdentityUpdated),
-            backgroundColor: const Color(0xFF7B00D4),
-          ),
-        );
+        showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackIdentityUpdated, backgroundColor: const Color(0xFF7B00D4));
       }
     } catch (_) {} finally {
       if (mounted) setState(() => _saving = false);

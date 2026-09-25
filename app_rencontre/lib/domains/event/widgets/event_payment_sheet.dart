@@ -3,6 +3,7 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/domains/event/services/event_payment_service.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EventPaymentSheet extends StatefulWidget {
   final EventModel event;
@@ -33,10 +34,7 @@ class _EventPaymentSheetState extends State<EventPaymentSheet> {
     }
 
     setState(() => _loading = false);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.eventPaymentError),
-      backgroundColor: const Color(0xFF7F1D1D),
-    ));
+    showAppSnackBar(context, AppLocalizations.of(context)!.eventPaymentError, backgroundColor: const Color(0xFF7F1D1D));
   }
 
   @override

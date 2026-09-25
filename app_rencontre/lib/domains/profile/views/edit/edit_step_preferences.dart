@@ -3,6 +3,7 @@ import 'package:nocturne/core/gender_options.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EditStepPreferences extends StatefulWidget {
   final AlternativeProfile profile;
@@ -41,12 +42,7 @@ class _EditStepPreferencesState extends State<EditStepPreferences> {
         'genderPreferences':  _genderPrefs,
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.profileSnackPreferencesUpdated),
-            backgroundColor: const Color(0xFF7B00D4),
-          ),
-        );
+        showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackPreferencesUpdated, backgroundColor: const Color(0xFF7B00D4));
       }
     } catch (_) {} finally {
       if (mounted) setState(() => _saving = false);

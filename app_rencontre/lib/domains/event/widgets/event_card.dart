@@ -10,6 +10,7 @@ import 'package:nocturne/domains/event/widgets/event_card_cover.dart';
 import 'package:nocturne/domains/event/widgets/event_card_genre_chips.dart';
 import 'package:nocturne/domains/event/widgets/event_card_date_location_row.dart';
 import 'package:nocturne/domains/event/widgets/event_attend_button.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EventCard extends StatefulWidget {
   final EventModel event;
@@ -66,10 +67,7 @@ class _EventCardState extends State<EventCard> {
         );
       });
     } else if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.commonGenericError),
-        backgroundColor: const Color(0xFF7F1D1D),
-      ));
+      showAppSnackBar(context, AppLocalizations.of(context)!.commonGenericError, backgroundColor: const Color(0xFF7F1D1D));
     }
     if (mounted) setState(() => _loadingAttend = false);
   }

@@ -11,6 +11,7 @@ import 'package:nocturne/domains/event/widgets/event_info_section.dart';
 import 'package:nocturne/domains/event/widgets/register_sheet.dart';
 import 'package:nocturne/domains/event/widgets/event_payment_sheet.dart';
 import 'package:nocturne/domains/subscription/widgets/paywall_sheet.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EventDetailPage extends StatefulWidget {
   final EventModel event;
@@ -82,13 +83,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
         );
       });
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(wasAttending
-              ? AppLocalizations.of(context)!.eventUnregisterConfirmed
-              : AppLocalizations.of(context)!.eventRegisterConfirmed),
-          backgroundColor: const Color(0xFF7B00D4),
-        ),
+      showAppSnackBar(
+        context,
+        wasAttending
+            ? AppLocalizations.of(context)!.eventUnregisterConfirmed
+            : AppLocalizations.of(context)!.eventRegisterConfirmed,
+        backgroundColor: const Color(0xFF7B00D4),
       );
     }
     return success;
@@ -101,12 +101,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
         attendeeCount: _event.attendeeCount + 1,
       );
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(AppLocalizations.of(context)!.eventRegisterConfirmed),
-        backgroundColor: const Color(0xFF7B00D4),
-      ),
-    );
+    showAppSnackBar(context, AppLocalizations.of(context)!.eventRegisterConfirmed, backgroundColor: const Color(0xFF7B00D4));
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/restore_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class RestorePurchasesButton extends StatefulWidget {
   final void Function(String plan, SubscriptionPeriod period) onRestored;
@@ -23,9 +24,11 @@ class _RestorePurchasesButtonState extends State<RestorePurchasesButton> {
 
     final l = AppLocalizations.of(context)!;
     if (plan != null) widget.onRestored(plan, SubscriptionPeriod.month);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(plan != null ? l.subscriptionRestoreSuccess : l.subscriptionRestoreEmpty),
-    ));
+    showAppSnackBar(
+      context,
+      plan != null ? l.subscriptionRestoreSuccess : l.subscriptionRestoreEmpty,
+      backgroundColor: const Color(0xFF4A0072),
+    );
   }
 
   @override

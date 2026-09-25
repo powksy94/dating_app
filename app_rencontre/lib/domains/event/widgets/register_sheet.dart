@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/event/models/event_model.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class RegisterSheet extends StatefulWidget {
   final EventModel event;
@@ -26,10 +27,7 @@ class _RegisterSheetState extends State<RegisterSheet> {
     if (!mounted) return;
     if (!success) {
       setState(() => _loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.commonGenericError),
-        backgroundColor: const Color(0xFF7F1D1D),
-      ));
+      showAppSnackBar(context, AppLocalizations.of(context)!.commonGenericError, backgroundColor: const Color(0xFF7F1D1D));
     }
     // On success, onConfirm already closes the sheet itself.
   }

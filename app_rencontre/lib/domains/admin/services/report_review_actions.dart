@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/admin_report_review_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 /// Actions available from the report review list: dismiss a report, or
 /// ban/unban the reported user, then update the caller's list and show
@@ -22,10 +23,7 @@ class ReportReviewActions {
 
     onDismissed(reportId);
     final l = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(l.reportReviewDismissed),
-      backgroundColor: const Color(0xFF4A0072),
-    ));
+    showAppSnackBar(context, l.reportReviewDismissed, backgroundColor: const Color(0xFF4A0072));
   }
 
   Future<void> setBanned(String reportId, String userId, bool banned) async {
@@ -36,9 +34,10 @@ class ReportReviewActions {
 
     onBanChanged(reportId, banned);
     final l = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(banned ? l.reportReviewBanned : l.reportReviewUnbanned),
+    showAppSnackBar(
+      context,
+      banned ? l.reportReviewBanned : l.reportReviewUnbanned,
       backgroundColor: banned ? const Color(0xFF7F1D1D) : const Color(0xFF4A0072),
-    ));
+    );
   }
 }

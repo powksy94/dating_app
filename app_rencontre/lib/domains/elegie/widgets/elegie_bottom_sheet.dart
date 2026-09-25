@@ -6,6 +6,7 @@ import 'package:nocturne/domains/elegie/services/elegie_service.dart';
 import 'package:nocturne/domains/elegie/widgets/elegie_sheet_body.dart';
 import 'package:nocturne/domains/match/widgets/match_overlay.dart';
 import 'package:nocturne/domains/subscription/widgets/paywall_sheet.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 void showElegieBottomSheet(
   BuildContext context,
@@ -87,10 +88,11 @@ class _ElegieSheetState extends State<_ElegieSheet> {
           ),
         ));
       } else {
-        ScaffoldMessenger.of(pageCtx).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(pageCtx)!.elegieSnackSent(widget.profile.username)),
+        showAppSnackBar(
+          pageCtx,
+          AppLocalizations.of(pageCtx)!.elegieSnackSent(widget.profile.username),
           backgroundColor: const Color(0xFF4A0072),
-        ));
+        );
       }
     } catch (_) {
       if (mounted) setState(() => _sending = false);

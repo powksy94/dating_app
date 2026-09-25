@@ -6,6 +6,7 @@ import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/shared/widgets/common/tag_section.dart';
 import 'package:nocturne/domains/profile/models/favorite_band.dart';
 import 'package:nocturne/domains/profile/widgets/favorite_bands_field.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EditStepTags extends StatefulWidget {
   final AlternativeProfile profile;
@@ -53,12 +54,7 @@ class _EditStepTagsState extends State<EditStepTags> {
         'favoriteBands':    _bands.map((b) => b.toJson()).toList(),
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.profileSnackTagsUpdated),
-            backgroundColor: const Color(0xFF7B00D4),
-          ),
-        );
+        showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackTagsUpdated, backgroundColor: const Color(0xFF7B00D4));
       }
     } catch (_) {} finally {
       if (mounted) setState(() => _saving = false);

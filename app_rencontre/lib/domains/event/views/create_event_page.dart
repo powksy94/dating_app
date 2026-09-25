@@ -8,6 +8,7 @@ import 'package:nocturne/domains/event/views/steps/step_location.dart';
 import 'package:nocturne/domains/event/views/steps/step_genres.dart';
 import 'package:nocturne/domains/event/views/steps/step_capacity.dart';
 import 'package:nocturne/domains/event/views/steps/step_price.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({super.key});
@@ -69,17 +70,10 @@ class _CreateEventPageState extends State<CreateEventPage> {
     setState(() => _submitting = false);
 
     if (err == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context)!.eventSubmittedForModeration),
-          backgroundColor: const Color(0xFF7B00D4),
-        ),
-      );
+      showAppSnackBar(context, AppLocalizations.of(context)!.eventSubmittedForModeration, backgroundColor: const Color(0xFF7B00D4));
       Navigator.pop(context);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(err), backgroundColor: Colors.red),
-      );
+      showAppSnackBar(context, err, backgroundColor: const Color(0xFF7F1D1D));
     }
   }
 

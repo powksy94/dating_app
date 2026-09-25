@@ -13,6 +13,7 @@ import 'package:nocturne/domains/discovery/services/swipe_service.dart';
 import 'package:nocturne/domains/subscription/services/boost_service.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class SwipePage extends StatefulWidget {
   final void Function(ChatMatch)? onNavigateToConversation;
@@ -133,15 +134,9 @@ class _SwipePageState extends State<SwipePage> with ReloadOnReconnect<SwipePage>
     if (!mounted) return;
     if (res != null) {
       setState(() => _boostCredits = res['remaining'] as int? ?? 0);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.discoveryBoostActivated),
-        backgroundColor: const Color(0xFF4A0072),
-      ));
+      showAppSnackBar(context, AppLocalizations.of(context)!.discoveryBoostActivated, backgroundColor: const Color(0xFF4A0072));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.commonGenericError),
-        backgroundColor: const Color(0xFF7F1D1D),
-      ));
+      showAppSnackBar(context, AppLocalizations.of(context)!.commonGenericError, backgroundColor: const Color(0xFF7F1D1D));
     }
   }
 

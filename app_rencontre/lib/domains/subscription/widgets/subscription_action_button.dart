@@ -5,6 +5,7 @@ import 'package:nocturne/domains/subscription/models/subscription_plan.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
 import 'package:nocturne/domains/subscription/widgets/subscription_dialogs.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class SubscriptionActionButton extends StatefulWidget {
   final SubscriptionPlan plan;
@@ -114,11 +115,7 @@ class _SubscriptionActionButtonState extends State<SubscriptionActionButton> {
   }
 
   void _showSnack(String msg, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg),
-      backgroundColor: color,
-      duration: const Duration(seconds: 2),
-    ));
+    showAppSnackBar(context, msg, backgroundColor: color, duration: const Duration(seconds: 2));
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/socket_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 /// Handles a message the server refused (a link or a phone number before the
 /// other person has replied): explains why, and puts the text back in the input
@@ -21,11 +22,12 @@ mixin BlockedMessageNotice<T extends StatefulWidget> on State<T> {
           selection: TextSelection.collapsed(offset: _lastSentText.length),
         );
       }
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.chatMessageBlockedContactInfo),
+      showAppSnackBar(
+        context,
+        AppLocalizations.of(context)!.chatMessageBlockedContactInfo,
         backgroundColor: const Color(0xFF7F1D1D),
         duration: const Duration(seconds: 5),
-      ));
+      );
     });
   }
 }

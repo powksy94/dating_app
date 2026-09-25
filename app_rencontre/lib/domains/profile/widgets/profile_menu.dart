@@ -6,6 +6,7 @@ import 'package:nocturne/domains/profile/services/discord_oauth_service.dart';
 import 'package:nocturne/domains/profile/widgets/profile_menu_item.dart';
 import 'package:nocturne/domains/profile/widgets/social_link_chip.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 // Every platform this app has icons and validation for (see social-links.ts on
 // the server, which must stay in sync with this list). Discord isn't part of
@@ -52,10 +53,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
     } catch (_) {
       if (mounted) {
         setState(() => _links = previous);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context)!.commonGenericError),
-          backgroundColor: const Color(0xFF7F1D1D),
-        ));
+        showAppSnackBar(context, AppLocalizations.of(context)!.commonGenericError, backgroundColor: const Color(0xFF7F1D1D));
       }
     } finally {
       if (mounted) setState(() => _saving = false);
@@ -81,10 +79,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
       }
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context)!.profileDiscordConnectFailed),
-          backgroundColor: const Color(0xFF7F1D1D),
-        ));
+        showAppSnackBar(context, AppLocalizations.of(context)!.profileDiscordConnectFailed, backgroundColor: const Color(0xFF7F1D1D));
       }
     } finally {
       if (mounted) setState(() => _saving = false);

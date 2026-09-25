@@ -4,6 +4,7 @@ import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/shared/services/address_result.dart';
 import 'package:nocturne/shared/widgets/location/address_search_field.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EditStepLocation extends StatefulWidget {
   final AlternativeProfile profile;
@@ -19,9 +20,7 @@ class _EditStepLocationState extends State<EditStepLocation> {
 
   Future<void> _save() async {
     if (_selected == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.profileErrorSelectAddress)),
-      );
+      showAppSnackBar(context, AppLocalizations.of(context)!.profileErrorSelectAddress, backgroundColor: const Color(0xFF7F1D1D));
       return;
     }
     setState(() => _saving = true);
@@ -33,12 +32,7 @@ class _EditStepLocationState extends State<EditStepLocation> {
         },
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.profileSnackLocationUpdated),
-            backgroundColor: const Color(0xFF7B00D4),
-          ),
-        );
+        showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackLocationUpdated, backgroundColor: const Color(0xFF7B00D4));
       }
     } catch (_) {} finally {
       if (mounted) setState(() => _saving = false);

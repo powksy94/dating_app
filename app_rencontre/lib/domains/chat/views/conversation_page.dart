@@ -10,6 +10,7 @@ import 'package:nocturne/domains/chat/mixins/blocked_message_notice.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/socket_service.dart';
 import 'package:nocturne/shared/widgets/common/requires_connection.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 import 'package:nocturne/domains/chat/widgets/message_bubble.dart';
 import 'package:nocturne/domains/chat/widgets/chat_input_bar.dart';
 import 'package:nocturne/domains/chat/widgets/chat_app_bar.dart';
@@ -166,10 +167,7 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
 
   void _showGenericError() {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.commonGenericError),
-      backgroundColor: const Color(0xFF7F1D1D),
-    ));
+    showAppSnackBar(context, AppLocalizations.of(context)!.commonGenericError, backgroundColor: const Color(0xFF7F1D1D));
   }
 
   Future<void> _toggleRecording() async {

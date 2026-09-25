@@ -5,6 +5,7 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
+import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EditStepPhotos extends StatefulWidget {
   final AlternativeProfile profile;
@@ -27,9 +28,7 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
 
   Future<void> _pickPhoto() async {
     if (_existingPhotos.length + _newPaths.length >= 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.profileSnackMaxPhotos)),
-      );
+      showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackMaxPhotos, backgroundColor: const Color(0xFF7F1D1D));
       return;
     }
     final img = await ImagePicker().pickImage(
@@ -57,12 +56,7 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
           _existingPhotos = allPhotos;
           _newPaths.clear();
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.profileSnackPhotosUpdated),
-            backgroundColor: const Color(0xFF7B00D4),
-          ),
-        );
+        showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackPhotosUpdated, backgroundColor: const Color(0xFF7B00D4));
       }
     } catch (_) {} finally {
       if (mounted) setState(() => _saving = false);
