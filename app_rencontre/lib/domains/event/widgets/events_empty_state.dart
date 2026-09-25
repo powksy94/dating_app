@@ -15,11 +15,11 @@ class EventsEmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.event_busy, size: 48, color: Color(0xFF3D2A4A)),
-          const SizedBox(height: 12),
+          const Icon(Icons.event_busy, size: 64, color: Color(0xFF7B00D4)),
+          const SizedBox(height: 16),
           Text(
             isAllFilter ? l.eventEmptyZone : l.eventEmptyCategory,
-            style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 14),
+            style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 16),
           ),
         ],
       ),
