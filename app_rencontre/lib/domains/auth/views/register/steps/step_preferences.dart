@@ -50,9 +50,13 @@ class _StepPreferencesState extends State<StepPreferences> {
             await RevenueCatService.identify(userId);
 
             final photos = d['photos'] as List<String>? ?? [];
+            // Only the photos Rekognition approved outright end up on the
+            // profile; any sent to moderation just aren't there yet (see
+            // profile.controller.ts uploadPhotos) and will appear once an
+            // admin reviews them.
             List<String> photosUrls = [];
             if (photos.isNotEmpty) {
-                photosUrls = await PhotoService.uploadPhotos(photos);
+                photosUrls = (await PhotoService.uploadPhotos(photos)).approved;
             }
 
             await FirestoreService().saveProfile({

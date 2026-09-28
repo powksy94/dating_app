@@ -44,11 +44,19 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
   Future<void> _save() async {
     setState(() => _saving = true);
     try {
-      List<String> uploadedUrls = [];
+      var approvedFromUpload = <String>[];
+      var pendingCount = 0;
+      var rejectedCount = 0;
       if (_newPaths.isNotEmpty) {
-        uploadedUrls = await PhotoService.uploadPhotos(_newPaths);
+        final result = await PhotoService.uploadPhotos(_newPaths);
+        approvedFromUpload = result.approved;
+        pendingCount       = result.pendingCount;
+        rejectedCount      = result.rejectedCount;
       }
-      final allPhotos = [..._existingPhotos, ...uploadedUrls];
+      // Only already-approved photos ever reach this call: a photo still
+      // waiting for moderation isn't part of Profile.photos yet (see
+      // uploadPhotos on the backend), so it has nothing to merge in here.
+      final allPhotos = [..._existingPhotos, ...approvedFromUpload];
       await FirestoreService().saveProfile({'photos': allPhotos});
 
       if (mounted) {
@@ -56,7 +64,16 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
           _existingPhotos = allPhotos;
           _newPaths.clear();
         });
-        showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackPhotosUpdated, backgroundColor: const Color(0xFF7B00D4));
+        final l = AppLocalizations.of(context)!;
+        if (pendingCount > 0 || rejectedCount > 0) {
+          final parts = [
+            if (pendingCount > 0) l.profileSnackPhotosPending(pendingCount),
+            if (rejectedCount > 0) l.profileSnackPhotosAutoRejected(rejectedCount),
+          ];
+          showAppSnackBar(context, parts.join('. '), backgroundColor: const Color(0xFF7B00D4));
+        } else {
+          showAppSnackBar(context, l.profileSnackPhotosUpdated, backgroundColor: const Color(0xFF7B00D4));
+        }
       }
     } catch (_) {} finally {
       if (mounted) setState(() => _saving = false);

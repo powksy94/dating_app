@@ -41,6 +41,11 @@ class _AdminSectionState extends State<AdminSection> {
           label: l.settingsAdminReports,
           onTap: () => Navigator.pushNamed(context, '/report-review'),
         ),
+        ActionTile(
+          icon: Icons.image_search_outlined,
+          label: l.settingsAdminPhotos,
+          onTap: () => Navigator.pushNamed(context, '/photo-review'),
+        ),
       ],
     );
   }

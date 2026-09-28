@@ -187,6 +187,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventReviewRejected => 'Event rejected';
 
   @override
+  String get photoReviewTitle => 'PHOTOS TO REVIEW';
+
+  @override
+  String get photoReviewEmpty => 'No photos pending review';
+
+  @override
+  String get photoReviewBtnApprove => 'Approve';
+
+  @override
+  String get photoReviewBtnReject => 'Reject';
+
+  @override
+  String get photoReviewApproved => 'Photo approved';
+
+  @override
+  String get photoReviewRejected => 'Photo rejected';
+
+  @override
+  String profileSnackPhotosPending(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count photos are pending review',
+      one: '1 photo is pending review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String profileSnackPhotosAutoRejected(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count photos were rejected',
+      one: '1 photo was rejected',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get reportReviewTitle => 'REPORTS TO REVIEW';
 
   @override
@@ -1272,6 +1312,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAdminReports => 'Reports';
+
+  @override
+  String get settingsAdminPhotos => 'Photos';
 
   @override
   String get settingsDeleteAccountWarning =>

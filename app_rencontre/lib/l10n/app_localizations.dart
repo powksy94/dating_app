@@ -416,6 +416,54 @@ abstract class AppLocalizations {
   /// **'Event rejected'**
   String get eventReviewRejected;
 
+  /// No description provided for @photoReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PHOTOS TO REVIEW'**
+  String get photoReviewTitle;
+
+  /// No description provided for @photoReviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No photos pending review'**
+  String get photoReviewEmpty;
+
+  /// No description provided for @photoReviewBtnApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get photoReviewBtnApprove;
+
+  /// No description provided for @photoReviewBtnReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get photoReviewBtnReject;
+
+  /// No description provided for @photoReviewApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo approved'**
+  String get photoReviewApproved;
+
+  /// No description provided for @photoReviewRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo rejected'**
+  String get photoReviewRejected;
+
+  /// No description provided for @profileSnackPhotosPending.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 photo is pending review} other{{count} photos are pending review}}'**
+  String profileSnackPhotosPending(num count);
+
+  /// No description provided for @profileSnackPhotosAutoRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 photo was rejected} other{{count} photos were rejected}}'**
+  String profileSnackPhotosAutoRejected(num count);
+
   /// No description provided for @reportReviewTitle.
   ///
   /// In en, this message translates to:
@@ -2335,6 +2383,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reports'**
   String get settingsAdminReports;
+
+  /// No description provided for @settingsAdminPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get settingsAdminPhotos;
 
   /// No description provided for @settingsDeleteAccountWarning.
   ///

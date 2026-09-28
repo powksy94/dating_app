@@ -74,6 +74,14 @@
     "eventReviewBtnReject": "Reject",
     "eventReviewApproved": "Event approved",
     "eventReviewRejected": "Event rejected",
+    "photoReviewTitle": "PHOTOS TO REVIEW",
+    "photoReviewEmpty": "No photos pending review",
+    "photoReviewBtnApprove": "Approve",
+    "photoReviewBtnReject": "Reject",
+    "photoReviewApproved": "Photo approved",
+    "photoReviewRejected": "Photo rejected",
+    "profileSnackPhotosPending": "{count, plural, =1{1 photo is pending review} other{{count} photos are pending review}}",
+    "profileSnackPhotosAutoRejected": "{count, plural, =1{1 photo was rejected} other{{count} photos were rejected}}",
 
     "reportReviewTitle": "REPORTS TO REVIEW",
     "reportReviewEmpty": "No pending reports",
@@ -558,6 +566,7 @@
     "settingsRateApp": "Rate the app",
     "settingsSectionAdmin": "Administration",
     "settingsAdminReports": "Reports",
+    "settingsAdminPhotos": "Photos",
 
     "settingsDeleteAccountWarning": "This action is irreversible.\nType your username to confirm.",
     "settingsBtnCancel": "Cancel",

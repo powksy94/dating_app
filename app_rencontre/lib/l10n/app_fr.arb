@@ -56,6 +56,14 @@
     "eventReviewBtnReject": "Rejeter",
     "eventReviewApproved": "Évènement approuvé",
     "eventReviewRejected": "Évènement rejeté",
+    "photoReviewTitle": "PHOTOS À VÉRIFIER",
+    "photoReviewEmpty": "Aucune photo en attente",
+    "photoReviewBtnApprove": "Approuver",
+    "photoReviewBtnReject": "Rejeter",
+    "photoReviewApproved": "Photo approuvée",
+    "photoReviewRejected": "Photo rejetée",
+    "profileSnackPhotosPending": "{count, plural, =1{1 photo en cours de vérification} other{{count} photos en cours de vérification}}",
+    "profileSnackPhotosAutoRejected": "{count, plural, =1{1 photo a été refusée} other{{count} photos ont été refusées}}",
 
     "reportReviewTitle": "SIGNALEMENTS À TRAITER",
     "reportReviewEmpty": "Aucun signalement en attente",
@@ -419,6 +427,7 @@
     "settingsRateApp": "Noter l'application",
     "settingsSectionAdmin": "Administration",
     "settingsAdminReports": "Signalements",
+    "settingsAdminPhotos": "Photos",
 
     "settingsDeleteAccountWarning": "Cette action est irréversible.\nTape ton pseudo pour confirmer.",
     "settingsBtnCancel": "Annuler",
