@@ -1,10 +1,13 @@
-﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/shared/services/firestore_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
+import 'package:nocturne/domains/profile/widgets/photo_tile_existing.dart';
+import 'package:nocturne/domains/profile/widgets/photo_tile_pending.dart';
+import 'package:nocturne/domains/profile/widgets/photo_tile_new.dart';
+import 'package:nocturne/domains/profile/widgets/photo_tile_add.dart';
 import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 
 class EditStepPhotos extends StatefulWidget {
@@ -18,16 +21,23 @@ class EditStepPhotos extends StatefulWidget {
 class _EditStepPhotosState extends State<EditStepPhotos> {
   late List<String> _existingPhotos;
   final List<String> _newPaths = [];
+  List<String> _pendingPhotos = [];
   bool _saving = false;
 
   @override
   void initState() {
     super.initState();
     _existingPhotos = List.from(widget.profile.photos);
+    _loadPending();
+  }
+
+  Future<void> _loadPending() async {
+    final pending = await PhotoService.getPending();
+    if (mounted) setState(() => _pendingPhotos = pending);
   }
 
   Future<void> _pickPhoto() async {
-    if (_existingPhotos.length + _newPaths.length >= 6) {
+    if (_existingPhotos.length + _pendingPhotos.length + _newPaths.length >= 6) {
       showAppSnackBar(context, AppLocalizations.of(context)!.profileSnackMaxPhotos, backgroundColor: const Color(0xFF7F1D1D));
       return;
     }
@@ -58,6 +68,7 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
       // uploadPhotos on the backend), so it has nothing to merge in here.
       final allPhotos = [..._existingPhotos, ...approvedFromUpload];
       await FirestoreService().saveProfile({'photos': allPhotos});
+      if (pendingCount > 0) await _loadPending();
 
       if (mounted) {
         setState(() {
@@ -83,7 +94,7 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final total = _existingPhotos.length + _newPaths.length;
+    final total = _existingPhotos.length + _pendingPhotos.length + _newPaths.length;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
           20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
@@ -114,13 +125,23 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
             itemCount: total + (total < 6 ? 1 : 0),
             itemBuilder: (_, i) {
               if (i < _existingPhotos.length) {
-                return _existingTile(_existingPhotos[i], i);
+                return PhotoTileExisting(
+                  url: _existingPhotos[i],
+                  onRemove: () => _removeExisting(i),
+                );
               }
-              final newIdx = i - _existingPhotos.length;
+              final pendingIdx = i - _existingPhotos.length;
+              if (pendingIdx < _pendingPhotos.length) {
+                return PhotoTilePending(url: _pendingPhotos[pendingIdx]);
+              }
+              final newIdx = pendingIdx - _pendingPhotos.length;
               if (newIdx < _newPaths.length) {
-                return _newTile(_newPaths[newIdx], newIdx);
+                return PhotoTileNew(
+                  path: _newPaths[newIdx],
+                  onRemove: () => _removeNew(newIdx),
+                );
               }
-              return _addTile();
+              return PhotoTileAdd(onTap: _pickPhoto);
             },
           ),
           const SizedBox(height: 32),
@@ -148,87 +169,4 @@ class _EditStepPhotosState extends State<EditStepPhotos> {
       ),
     );
   }
-
-  Widget _existingTile(String url, int i) => ClipRRect(
-    borderRadius: BorderRadius.circular(10),
-    child: Stack(
-      fit: StackFit.expand,
-      children: [
-        Image.network(url, fit: BoxFit.cover),
-        Positioned(
-          top: 4, right: 4,
-          child: GestureDetector(
-            onTap: () => _removeExisting(i),
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.black54, shape: BoxShape.circle),
-              padding: const EdgeInsets.all(4),
-              child: const Icon(Icons.close,
-                  size: 14, color: Colors.white),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-
-  Widget _newTile(String path, int i) => ClipRRect(
-    borderRadius: BorderRadius.circular(10),
-    child: Stack(
-      fit: StackFit.expand,
-      children: [
-        Image.file(File(path), fit: BoxFit.cover),
-        Positioned(
-          top: 4, right: 4,
-          child: GestureDetector(
-            onTap: () => _removeNew(i),
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.black54, shape: BoxShape.circle),
-              padding: const EdgeInsets.all(4),
-              child: const Icon(Icons.close,
-                  size: 14, color: Colors.white),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 4, left: 4,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
-              color: const Color(0xFF7B00D4),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(AppLocalizations.of(context)!.profileBadgeNew,
-                style: const TextStyle(
-                    color: Colors.white, fontSize: 9)),
-          ),
-        ),
-      ],
-    ),
-  );
-
-  Widget _addTile() => GestureDetector(
-    onTap: _pickPhoto,
-    child: Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A0A1F),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-            color: const Color(0xFF3D2A4A), style: BorderStyle.solid),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.add_photo_alternate_outlined,
-              size: 28, color: Color(0xFF5A4A6A)),
-          const SizedBox(height: 4),
-          Text(AppLocalizations.of(context)!.profileBtnAddPhoto,
-              style: const TextStyle(
-                  color: Color(0xFF5A4A6A), fontSize: 11)),
-        ],
-      ),
-    ),
-  );
 }

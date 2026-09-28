@@ -1717,6 +1717,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileBadgeNew => 'Nouveau';
 
   @override
+  String get profileBadgePending => 'En attente';
+
+  @override
   String get profileBtnAddPhoto => 'Ajouter';
 
   @override

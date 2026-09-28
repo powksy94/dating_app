@@ -3086,6 +3086,12 @@ abstract class AppLocalizations {
   /// **'New'**
   String get profileBadgeNew;
 
+  /// No description provided for @profileBadgePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get profileBadgePending;
+
   /// No description provided for @profileBtnAddPhoto.
   ///
   /// In en, this message translates to:

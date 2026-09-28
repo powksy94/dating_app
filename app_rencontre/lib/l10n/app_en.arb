@@ -741,6 +741,7 @@
         "placeholders": { "total": { "type": "int" } }
     },
     "profileBadgeNew": "New",
+    "profileBadgePending": "Pending",
     "profileBtnAddPhoto": "Add",
 
     "profileSnackTagsUpdated": "Music tags updated!",

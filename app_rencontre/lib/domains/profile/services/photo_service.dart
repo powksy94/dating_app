@@ -36,4 +36,22 @@ class PhotoService {
             rejectedCount: data['rejectedCount'] as int? ?? 0,
         );
     }
+
+    /// URLs of this account's own photos still awaiting moderation: they
+    /// aren't on the profile yet, so nowhere else in the app knows about them.
+    static Future<List<String>> getPending() async {
+        try {
+            final headers = await ApiService.authHeaders();
+            final res = await http.get(
+                Uri.parse('${ApiService.baseUrl}/profile/photos/pending'),
+                headers: headers,
+            );
+            if (res.statusCode == 200) {
+                return (jsonDecode(res.body) as List)
+                    .map((p) => p['url'] as String)
+                    .toList();
+            }
+        } catch (_) {}
+        return [];
+    }
 }

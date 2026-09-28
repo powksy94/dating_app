@@ -572,6 +572,7 @@
     "profileSnackPhotosUpdated": "Photos mises à jour !",
     "profilePhotoCount": "{total} / 6 photos",
     "profileBadgeNew": "Nouveau",
+    "profileBadgePending": "En attente",
     "profileBtnAddPhoto": "Ajouter",
 
     "profileSnackTagsUpdated": "Tags musicaux mis à jour !",
