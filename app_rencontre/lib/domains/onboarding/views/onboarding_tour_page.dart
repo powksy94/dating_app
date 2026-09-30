@@ -3,6 +3,10 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/onboarding/models/onboarding_tour_step.dart';
 import 'package:nocturne/domains/onboarding/widgets/onboarding_tour_slide.dart';
 import 'package:nocturne/domains/onboarding/widgets/onboarding_tour_dots.dart';
+import 'package:nocturne/domains/onboarding/widgets/previews/discover_preview.dart';
+import 'package:nocturne/domains/onboarding/widgets/previews/events_preview.dart';
+import 'package:nocturne/domains/onboarding/widgets/previews/messages_preview.dart';
+import 'package:nocturne/domains/onboarding/widgets/previews/profile_preview.dart';
 
 /// Shown once, right after registration, before the user ever reaches Home:
 /// a short feature tour so the navigation bar's tabs aren't a mystery on
@@ -20,25 +24,25 @@ class _OnboardingTourPageState extends State<OnboardingTourPage> {
 
   List<OnboardingTourStep> _steps(AppLocalizations l) => [
         OnboardingTourStep(
-          icon: Icons.nightlight,
+          preview: const DiscoverPreview(),
           color: const Color(0xFF7B00D4),
           title: l.onboardingTourTitle1,
           subtitle: l.onboardingTourSubtitle1,
         ),
         OnboardingTourStep(
-          icon: Icons.local_activity,
+          preview: const EventsPreview(),
           color: const Color(0xFFB667FF),
           title: l.onboardingTourTitle2,
           subtitle: l.onboardingTourSubtitle2,
         ),
         OnboardingTourStep(
-          icon: Icons.chat_bubble,
+          preview: const MessagesPreview(),
           color: const Color(0xFF9D2FE8),
           title: l.onboardingTourTitle3,
           subtitle: l.onboardingTourSubtitle3,
         ),
         OnboardingTourStep(
-          icon: Icons.person,
+          preview: const ProfilePreview(),
           color: const Color(0xFF5A2E8C),
           title: l.onboardingTourTitle4,
           subtitle: l.onboardingTourSubtitle4,

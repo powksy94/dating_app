@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/domains/onboarding/models/onboarding_tour_step.dart';
+import 'package:nocturne/domains/onboarding/widgets/feature_bubble.dart';
 
 class OnboardingTourSlide extends StatelessWidget {
   final OnboardingTourStep step;
@@ -12,17 +13,7 @@ class OnboardingTourSlide extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 120, height: 120,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: step.color.withValues(alpha: 0.12),
-              boxShadow: [
-                BoxShadow(color: step.color.withValues(alpha: 0.35), blurRadius: 40, spreadRadius: 4),
-              ],
-            ),
-            child: Icon(step.icon, size: 52, color: step.color),
-          ),
+          FeatureBubble(color: step.color, child: step.preview),
           const SizedBox(height: 40),
           Text(
             step.title,
