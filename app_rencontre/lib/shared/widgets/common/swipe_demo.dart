@@ -49,10 +49,16 @@ class _SwipeDemoState extends State<SwipeDemo> with SingleTickerProviderStateMix
     return AnimatedBuilder(
       animation: _ctrl,
       builder: (context, _) {
-        // Eased, non-overshooting: safe to feed the card's Opacity directly.
+        // Eased, non-overshooting: safe to feed Opacity directly. The card's
+        // own fade runs faster than its travel (cardOpacity hits 0 around
+        // t=0.6) so it's fully gone well before it would reach the bubble's
+        // circular clip edge — otherwise the card's corners (e.g. the little
+        // bottom-left bar) get clipped at a different moment than its body,
+        // leaving a stray fragment visible on its own for a frame or two.
         final t = Curves.easeInCubic.transform(_ctrl.value);
         final dx = (_liking ? 1 : -1) * t * 150;
         final rotation = (_liking ? 1 : -1) * t * 0.4;
+        final cardOpacity = 1 - (t * 1.7).clamp(0.0, 1.0);
         final stampOpacity = (t * 2.2).clamp(0.0, 1.0);
 
         return Stack(
@@ -64,7 +70,7 @@ class _SwipeDemoState extends State<SwipeDemo> with SingleTickerProviderStateMix
               child: Transform.rotate(
                 angle: rotation,
                 child: Opacity(
-                  opacity: 1 - t,
+                  opacity: cardOpacity,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
