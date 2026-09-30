@@ -118,9 +118,13 @@ class _SwipeDemoState extends State<SwipeDemo> with SingleTickerProviderStateMix
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SwipeDemoActionDot(icon: Icons.close, color: const Color(0xFFEF4444), active: !_liking && t > 0.05),
+                  // A single short pulse right as the swipe starts (like a
+                  // tap being acknowledged), not held lit for the whole
+                  // swipe — otherwise its fade-in and fade-out read as two
+                  // separate flashes bracketing the animation.
+                  SwipeDemoActionDot(icon: Icons.close, color: const Color(0xFFEF4444), active: !_liking && t > 0.05 && t < 0.35),
                   const SizedBox(width: 14),
-                  SwipeDemoActionDot(icon: Icons.favorite, color: const Color(0xFF7B00D4), active: _liking && t > 0.05),
+                  SwipeDemoActionDot(icon: Icons.favorite, color: const Color(0xFF7B00D4), active: _liking && t > 0.05 && t < 0.35),
                 ],
               ),
             ),
