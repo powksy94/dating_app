@@ -286,6 +286,43 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeMyProfileTitle => 'MON PROFIL';
 
   @override
+  String get onboardingTourSkip => 'Passer';
+
+  @override
+  String get onboardingTourNext => 'Suivant';
+
+  @override
+  String get onboardingTourGetStarted => 'Entrer dans Nocturne';
+
+  @override
+  String get onboardingTourTitle1 => 'GLISSE DANS L\'OBSCURITÉ';
+
+  @override
+  String get onboardingTourSubtitle1 =>
+      'Swipe des profils qui partagent ton esthétique et tes goûts musicaux.';
+
+  @override
+  String get onboardingTourTitle2 => 'RASSEMBLEZ-VOUS DANS LA NUIT';
+
+  @override
+  String get onboardingTourSubtitle2 =>
+      'Trouve des concerts et rassemblements près de toi, et rejoins d\'autres oiseaux de nuit.';
+
+  @override
+  String get onboardingTourTitle3 => 'ENVOIE UNE ÉLÉGIE';
+
+  @override
+  String get onboardingTourSubtitle3 =>
+      'Brise la glace avec une élégie sincère plutôt qu\'un simple bonjour.';
+
+  @override
+  String get onboardingTourTitle4 => 'FAÇONNE TON OMBRE';
+
+  @override
+  String get onboardingTourSubtitle4 =>
+      'Personnalise tes photos, groupes favoris et liens sociaux.';
+
+  @override
   String get homeExitConfirmTitle => 'Quitter Nocturne ?';
 
   @override

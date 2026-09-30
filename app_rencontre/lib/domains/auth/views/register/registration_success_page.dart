@@ -24,7 +24,7 @@ class _RegistrationSuccessPageState extends State<RegistrationSuccessPage>
     )..repeat(reverse: true);
 
     Future.delayed(const Duration(milliseconds: 3600), () {
-      if (mounted) Navigator.pushReplacementNamed(context, '/home');
+      if (mounted) Navigator.pushReplacementNamed(context, '/onboarding-tour');
     });
   }
 

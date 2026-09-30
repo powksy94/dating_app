@@ -15,6 +15,7 @@ import 'package:nocturne/domains/admin/views/admin_auth_page.dart';
 import 'package:nocturne/domains/admin/views/event_review_page.dart';
 import 'package:nocturne/domains/admin/views/report_review_page.dart';
 import 'package:nocturne/domains/admin/views/photo_review_page.dart';
+import 'package:nocturne/domains/onboarding/views/onboarding_tour_page.dart';
 import 'package:nocturne/domains/visit/views/visitors_page.dart';
 
 class Routes {
@@ -60,6 +61,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const ReportReviewPage());
       case '/photo-review':
         return MaterialPageRoute(builder: (_) => const PhotoReviewPage());
+      case '/onboarding-tour':
+        return MaterialPageRoute(builder: (_) => const OnboardingTourPage());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(

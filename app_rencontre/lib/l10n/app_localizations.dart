@@ -578,6 +578,72 @@ abstract class AppLocalizations {
   /// **'MY PROFILE'**
   String get homeMyProfileTitle;
 
+  /// No description provided for @onboardingTourSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingTourSkip;
+
+  /// No description provided for @onboardingTourNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingTourNext;
+
+  /// No description provided for @onboardingTourGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Nocturne'**
+  String get onboardingTourGetStarted;
+
+  /// No description provided for @onboardingTourTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'GLIDE THROUGH THE DARKNESS'**
+  String get onboardingTourTitle1;
+
+  /// No description provided for @onboardingTourSubtitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe through profiles that share your aesthetic and your sound.'**
+  String get onboardingTourSubtitle1;
+
+  /// No description provided for @onboardingTourTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'GATHER IN THE NIGHT'**
+  String get onboardingTourTitle2;
+
+  /// No description provided for @onboardingTourSubtitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Find concerts and gatherings nearby, and join fellow night owls.'**
+  String get onboardingTourSubtitle2;
+
+  /// No description provided for @onboardingTourTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'SEND AN ELEGY'**
+  String get onboardingTourTitle3;
+
+  /// No description provided for @onboardingTourSubtitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Break the ice with a heartfelt elegy instead of a plain hello.'**
+  String get onboardingTourSubtitle3;
+
+  /// No description provided for @onboardingTourTitle4.
+  ///
+  /// In en, this message translates to:
+  /// **'SHAPE YOUR SHADOW'**
+  String get onboardingTourTitle4;
+
+  /// No description provided for @onboardingTourSubtitle4.
+  ///
+  /// In en, this message translates to:
+  /// **'Curate your photos, favorite bands, and social links.'**
+  String get onboardingTourSubtitle4;
+
   /// No description provided for @homeExitConfirmTitle.
   ///
   /// In en, this message translates to:
