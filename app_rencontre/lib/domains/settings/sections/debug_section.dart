@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nocturne/domains/home/widgets/founding_gift_reveal.dart';
+import 'package:nocturne/domains/onboarding/views/onboarding_tour_page.dart';
 import 'package:nocturne/domains/settings/widgets/section_header.dart';
 import 'package:nocturne/domains/settings/widgets/action_tile.dart';
 
 /// Debug-build-only tools, invisible in release builds. Lets a dev replay
-/// visual flows (currently the founding-member gift reveal) without the
-/// real-world conditions that trigger them (a fresh, still-'pending' account).
+/// visual flows (the founding-member gift reveal, the post-registration
+/// onboarding tour) without the real-world conditions that trigger them
+/// (a fresh, still-'pending' account; a brand new registration).
 class DebugSection extends StatelessWidget {
   const DebugSection({super.key});
 
@@ -29,6 +31,13 @@ class DebugSection extends StatelessWidget {
                 return true;
               },
             ),
+          )),
+        ),
+        ActionTile(
+          icon: Icons.auto_stories_outlined,
+          label: 'Preview onboarding tour',
+          onTap: () => Navigator.push(context, MaterialPageRoute(
+            builder: (_) => OnboardingTourPage(onFinished: () => Navigator.pop(context)),
           )),
         ),
       ],

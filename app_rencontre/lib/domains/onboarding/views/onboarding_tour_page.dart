@@ -12,7 +12,10 @@ import 'package:nocturne/domains/onboarding/widgets/previews/profile_preview.dar
 /// a short feature tour so the navigation bar's tabs aren't a mystery on
 /// first launch (see nocturne_feedback.pdf, "User Onboarding").
 class OnboardingTourPage extends StatefulWidget {
-  const OnboardingTourPage({super.key});
+  /// Called instead of navigating to Home once the tour ends. Used by the
+  /// debug preview (see DebugSection) to just pop back to Settings.
+  final VoidCallback? onFinished;
+  const OnboardingTourPage({super.key, this.onFinished});
 
   @override
   State<OnboardingTourPage> createState() => _OnboardingTourPageState();
@@ -49,7 +52,13 @@ class _OnboardingTourPageState extends State<OnboardingTourPage> {
         ),
       ];
 
-  void _finish() => Navigator.pushReplacementNamed(context, '/home');
+  void _finish() {
+    if (widget.onFinished != null) {
+      widget.onFinished!();
+    } else {
+      Navigator.pushReplacementNamed(context, '/home');
+    }
+  }
 
   void _next(int lastIndex) {
     if (_page == lastIndex) {
