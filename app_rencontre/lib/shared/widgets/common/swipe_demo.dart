@@ -32,8 +32,12 @@ class _SwipeDemoState extends State<SwipeDemo> with SingleTickerProviderStateMix
       if (_stopped) return;
       await _ctrl.forward(from: 0);
       if (_stopped) return;
-      setState(() => _liking = !_liking);
+      // Reset the controller (t=0 keeps both buttons dark no matter what
+      // _liking is) before flipping _liking, not after: otherwise there's a
+      // frame where _liking has already flipped but t is still 1, lighting
+      // up the wrong button for an instant (looked like a stray second tap).
       _ctrl.value = 0;
+      setState(() => _liking = !_liking);
     }
   }
 
