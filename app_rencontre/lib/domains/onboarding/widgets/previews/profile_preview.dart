@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// A miniature profile card with an avatar and tag pills, echoing the real
-/// profile screen.
+/// A miniature of the real ProfileCard (profile_card.dart): full-bleed
+/// photo, bottom-up dark gradient, username/age/pronouns baseline row, and
+/// the colored aesthetic chips — same recipe used for both the swipe card
+/// and "My profile", just scaled down.
 class ProfilePreview extends StatelessWidget {
   const ProfilePreview({super.key});
 
@@ -9,34 +11,73 @@ class ProfilePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF0D0010),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        fit: StackFit.expand,
         children: [
-          Container(
-            width: 72, height: 72,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(colors: [Color(0xFF9D2FE8), Color(0xFF3D0066)]),
-            ),
-            child: const Icon(Icons.person, color: Colors.white70, size: 36),
-          ),
-          const SizedBox(height: 12),
-          Container(height: 8, width: 70, decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.circular(4))),
-          const SizedBox(height: 12),
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 6, runSpacing: 6,
-            children: ['', '', ''].asMap().entries.map((e) => Container(
-              width: 30 + e.key * 8.0, height: 14,
-              decoration: BoxDecoration(
-                color: const Color(0xFF5A2E8C).withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: const Color(0xFF5A2E8C)),
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment(-0.2, -0.3),
+                radius: 1.1,
+                colors: [Color(0xFF3D0066), Color(0xFF1A0A1F)],
               ),
-            )).toList(),
+            ),
+          ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter, end: Alignment.topCenter,
+                colors: [const Color(0xFF0D0009).withValues(alpha: 0.92), Colors.transparent],
+                stops: const [0.0, 0.65],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 14, right: 14,
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(color: Colors.black45, shape: BoxShape.circle),
+              child: const Icon(Icons.edit, size: 11, color: Colors.white70),
+            ),
+          ),
+          Positioned(
+            left: 18, right: 18, bottom: 22,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text('Ophelia', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
+                    SizedBox(width: 5),
+                    Text('26', style: TextStyle(color: Color(0xFFAA9AB5), fontSize: 11)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 4, runSpacing: 4,
+                  children: [
+                    _chip('GOTH', const Color(0xFF4A0072)),
+                    _chip('DARK WAVE', const Color(0xFF003366)),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+
+  Widget _chip(String label, Color color) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: 0.75),
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: color, width: 0.8),
+    ),
+    child: Text(label, style: const TextStyle(color: Colors.white, fontSize: 6.5, fontWeight: FontWeight.w600)),
+  );
 }
