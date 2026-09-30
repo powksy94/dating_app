@@ -44,7 +44,7 @@ class _FeatureBubbleState extends State<FeatureBubble> with SingleTickerProvider
         child: Transform.scale(scale: 0.6 + _scale.value * 0.4, child: child),
       ),
       child: Container(
-        width: 230, height: 230,
+        width: 250, height: 250,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: const Color(0xFF120018),
