@@ -60,11 +60,15 @@ class _SwipeDemoState extends State<SwipeDemo> with SingleTickerProviderStateMix
         final rotation = (_liking ? 1 : -1) * t * 0.4;
         final cardOpacity = 1 - (t * 1.7).clamp(0.0, 1.0);
         final stampOpacity = (t * 2.2).clamp(0.0, 1.0);
+        // The back card only fades in once the front one is essentially
+        // gone (past t=0.6): otherwise both are translucent at once and
+        // briefly look like two ghostly overlapping cards.
+        final backOpacity = ((t - 0.6) / 0.4).clamp(0.0, 1.0) * 0.6;
 
         return Stack(
           alignment: Alignment.center,
           children: [
-            Transform.scale(scale: 0.9, child: const SwipeDemoCard(accent: Color(0xFF2D0040), opacity: 0.6)),
+            Transform.scale(scale: 0.9, child: SwipeDemoCard(accent: const Color(0xFF2D0040), opacity: backOpacity)),
             Transform.translate(
               offset: Offset(dx, 0),
               child: Transform.rotate(
