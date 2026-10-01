@@ -32,7 +32,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
     if (err == null) {
       final nav = Navigator.of(context);
       Navigator.pop(context);
-      nav.pushReplacementNamed('/login');
+      // Clears the whole stack, not just the dialog/Settings: the account no
+      // longer exists, so there must be nothing left to "back" into.
+      nav.pushNamedAndRemoveUntil('/login', (_) => false);
     } else {
       setState(() { _loading = false; _error = err; });
     }

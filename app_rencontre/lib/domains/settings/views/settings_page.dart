@@ -78,7 +78,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _logout() async {
     await AuthService().logout();
-    if (mounted) Navigator.pushReplacementNamed(context, '/login');
+    // Clears the whole stack (Settings, Home...), not just replaces the top
+    // route: otherwise the system back button from Login could pop back into
+    // Home with a now-invalid session, showing a load error instead of
+    // actually leaving the logged-out flow.
+    if (mounted) Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
   }
 
   void _confirmDeleteAccount() {
