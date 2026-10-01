@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
 import 'package:nocturne/domains/subscription/services/subscription_service.dart';
+import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/domains/profile/widgets/profile_card.dart';
 import 'package:nocturne/domains/profile/widgets/profile_details_section.dart';
 import 'package:nocturne/domains/profile/widgets/profile_photo_viewer.dart';
@@ -25,7 +26,15 @@ class _ProfilePageState extends State<ProfilePage> {
     _loadLimit();
   }
 
+  // Your own photos are never paywalled — the limit only applies when
+  // looking at someone else's profile, based on the viewer's own plan
+  // (Tinder-style: the first 2 are free, the rest need premium).
   Future<void> _loadLimit() async {
+    final myId = await ApiService.getUserId();
+    if (myId != null && myId == widget.profile.uid) {
+      if (mounted) setState(() => _photoLimit = 6);
+      return;
+    }
     final plan = await SubscriptionService.getCachedPlan();
     if (mounted) setState(() => _photoLimit = SubscriptionService.photoLimit(plan));
   }
