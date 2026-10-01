@@ -8,7 +8,12 @@ import 'package:nocturne/shared/mixins/reload_on_reconnect.dart';
 import 'package:nocturne/shared/widgets/common/load_error_view.dart';
 
 class MyProfileTab extends StatefulWidget {
-  const MyProfileTab({super.key});
+  /// Bumped by HomePage when the user navigates back to this tab, so an edit
+  /// made elsewhere (Settings > Edit profile) shows up without needing to
+  /// restart the app — this tab is kept alive in an IndexedStack and
+  /// otherwise never reloads on its own.
+  final ValueNotifier<int>? refreshNotifier;
+  const MyProfileTab({super.key, this.refreshNotifier});
 
   @override
   State<MyProfileTab> createState() => _MyProfileTabState();
@@ -24,6 +29,13 @@ class _MyProfileTabState extends State<MyProfileTab> with ReloadOnReconnect<MyPr
   void initState() {
     super.initState();
     _loadProfile();
+    widget.refreshNotifier?.addListener(_loadProfile);
+  }
+
+  @override
+  void dispose() {
+    widget.refreshNotifier?.removeListener(_loadProfile);
+    super.dispose();
   }
 
   @override

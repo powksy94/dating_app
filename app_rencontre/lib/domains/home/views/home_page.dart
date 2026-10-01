@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _tab = 0;
   final _swipeRefresh = ValueNotifier<int>(0);
+  final _profileRefresh = ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               pageTitle: l.chatListTitle,
               child: const ConversationListPage(),
             ),
-            const MyProfileTab(),
+            MyProfileTab(refreshNotifier: _profileRefresh),
           ],
         ),
         bottomNavigationBar: ValueListenableBuilder<int>(
@@ -80,6 +81,7 @@ class _HomePageState extends State<HomePage> {
             selectedIndex: _tab,
             onDestinationSelected: (i) {
               if (i == 0 && _tab != 0) _swipeRefresh.value++;
+              if (i == 3 && _tab != 3) _profileRefresh.value++;
               setState(() => _tab = i);
             },
             destinations: [
