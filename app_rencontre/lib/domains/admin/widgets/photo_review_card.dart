@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nocturne/domains/admin/utils/moderation_label_fr.dart';
 
 class PhotoReviewCard extends StatelessWidget {
   final Map<String, dynamic> photo;
@@ -51,7 +52,7 @@ class PhotoReviewCard extends StatelessWidget {
                     if (labels.isNotEmpty) ...[
                       const SizedBox(height: 2),
                       Text(
-                        labels.map((l) => l['name'] as String? ?? '').join(', '),
+                        labels.map((l) => moderationLabelFr(l['name'] as String? ?? '')).join(', '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(color: Color(0xFF5A4A6A), fontSize: 12),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/photo_review_actions.dart';
+import 'package:nocturne/domains/admin/utils/moderation_label_fr.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 
 class PhotoReviewDetailPage extends StatefulWidget {
@@ -77,7 +78,7 @@ class _PhotoReviewDetailPageState extends State<PhotoReviewDetailPage> {
                       style: const TextStyle(color: Color(0xFF7B00D4), fontSize: 12, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 8),
                   ...labels.map((label) {
-                    final name = label['name'] as String? ?? '';
+                    final name = moderationLabelFr(label['name'] as String? ?? '');
                     final confidence = (label['confidence'] as num?)?.round() ?? 0;
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 6),
