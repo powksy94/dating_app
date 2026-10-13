@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/admin_photo_review_service.dart';
-import 'package:nocturne/domains/admin/services/photo_review_actions.dart';
+import 'package:nocturne/domains/admin/views/photo_review_detail_page.dart';
 import 'package:nocturne/domains/admin/widgets/photo_review_card.dart';
 
 class PhotoReviewPage extends StatefulWidget {
@@ -26,13 +26,19 @@ class _PhotoReviewPageState extends State<PhotoReviewPage> {
     if (mounted) setState(() { _photos = photos; _loading = false; });
   }
 
+  Future<void> _openDetail(Map<String, dynamic> photo) async {
+    final result = await Navigator.push<Map<String, dynamic>>(
+      context,
+      MaterialPageRoute(builder: (_) => PhotoReviewDetailPage(photo: photo)),
+    );
+    if (result == null || !mounted) return;
+
+    setState(() => _photos.removeWhere((p) => p['_id'] == photo['_id']));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final actions = PhotoReviewActions(
-      context: context,
-      onDecided: (photoId) => setState(() => _photos.removeWhere((p) => p['_id'] == photoId)),
-    );
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0010),
@@ -51,19 +57,13 @@ class _PhotoReviewPageState extends State<PhotoReviewPage> {
               : RefreshIndicator(
                   onRefresh: _load,
                   color: const Color(0xFF7B00D4),
-                  child: GridView.builder(
+                  child: ListView.separated(
                     padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 0.68,
-                    ),
                     itemCount: _photos.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
                     itemBuilder: (_, i) => PhotoReviewCard(
                       photo: _photos[i],
-                      onApprove: () => actions.approve(_photos[i]['_id'] as String),
-                      onReject: () => actions.reject(_photos[i]['_id'] as String),
+                      onTap: () => _openDetail(_photos[i]),
                     ),
                   ),
                 ),

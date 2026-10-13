@@ -80,6 +80,9 @@
     "photoReviewBtnReject": "Reject",
     "photoReviewApproved": "Photo approved",
     "photoReviewRejected": "Photo rejected",
+    "photoReviewDetailTitle": "Photo review",
+    "photoReviewLabelsLabel": "Detected labels",
+    "photoReviewDateLabel": "Uploaded on",
     "profileSnackPhotosPending": "{count, plural, =1{1 photo is pending review} other{{count} photos are pending review}}",
     "profileSnackPhotosAutoRejected": "{count, plural, =1{1 photo was rejected} other{{count} photos were rejected}}",
 

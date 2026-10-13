@@ -207,6 +207,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get photoReviewRejected => 'Photo rejetée';
 
   @override
+  String get photoReviewDetailTitle => 'Détail de la photo';
+
+  @override
+  String get photoReviewLabelsLabel => 'Éléments détectés';
+
+  @override
+  String get photoReviewDateLabel => 'Ajoutée le';
+
+  @override
   String profileSnackPhotosPending(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

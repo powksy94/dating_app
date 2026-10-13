@@ -452,6 +452,24 @@ abstract class AppLocalizations {
   /// **'Photo rejected'**
   String get photoReviewRejected;
 
+  /// No description provided for @photoReviewDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo review'**
+  String get photoReviewDetailTitle;
+
+  /// No description provided for @photoReviewLabelsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected labels'**
+  String get photoReviewLabelsLabel;
+
+  /// No description provided for @photoReviewDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded on'**
+  String get photoReviewDateLabel;
+
   /// No description provided for @profileSnackPhotosPending.
   ///
   /// In en, this message translates to:

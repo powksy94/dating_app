@@ -62,6 +62,9 @@
     "photoReviewBtnReject": "Rejeter",
     "photoReviewApproved": "Photo approuvée",
     "photoReviewRejected": "Photo rejetée",
+    "photoReviewDetailTitle": "Détail de la photo",
+    "photoReviewLabelsLabel": "Éléments détectés",
+    "photoReviewDateLabel": "Ajoutée le",
     "profileSnackPhotosPending": "{count, plural, =1{1 photo en cours de vérification} other{{count} photos en cours de vérification}}",
     "profileSnackPhotosAutoRejected": "{count, plural, =1{1 photo a été refusée} other{{count} photos ont été refusées}}",
 

@@ -7,7 +7,7 @@ import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
 /// pending photo, then update the caller's list and show feedback.
 class PhotoReviewActions {
   final BuildContext context;
-  final void Function(String photoId) onDecided;
+  final void Function(String photoId, bool approved) onDecided;
 
   PhotoReviewActions({required this.context, required this.onDecided});
 
@@ -20,7 +20,7 @@ class PhotoReviewActions {
         : await AdminPhotoReviewService.reject(photoId);
     if (!context.mounted || !ok) return;
 
-    onDecided(photoId);
+    onDecided(photoId, approve);
     final l = AppLocalizations.of(context)!;
     showAppSnackBar(
       context,
