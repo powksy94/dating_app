@@ -50,12 +50,12 @@ class ChatService {
   }
 
   static Future<String?> uploadChatImage(String imagePath) async {
-    final token = await ApiService.getToken();
+    final headers = await ApiService.authHeaders();
     final req   = http.MultipartRequest(
       'POST',
       Uri.parse('${ApiService.baseUrl}/chat/upload/image'),
     )
-      ..headers['Authorization'] = 'Bearer $token'
+      ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('image', imagePath));
 
     final stream = await req.send();
@@ -67,12 +67,12 @@ class ChatService {
   }
 
   static Future<String?> uploadChatAudio(String audioPath) async {
-    final token = await ApiService.getToken();
+    final headers = await ApiService.authHeaders();
     final req   = http.MultipartRequest(
       'POST',
       Uri.parse('${ApiService.baseUrl}/chat/upload/audio'),
     )
-      ..headers['Authorization'] = 'Bearer $token'
+      ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('audio', audioPath));
 
     final stream = await req.send();

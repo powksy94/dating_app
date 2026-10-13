@@ -11,7 +11,9 @@ class SocketService {
 
   Future<void> connect() async {
     if (connected) return;
-    final token = await ApiService.getToken();
+    // authHeaders() refreshes an expired token before handing it over, unlike
+    // getToken(): a stale token here would silently fail the socket auth.
+    final token = (await ApiService.authHeaders())['Authorization']?.replaceFirst('Bearer ', '');
     _socket = io.io(
       'https://datingappbackend-production-a9e3.up.railway.app',
       io.OptionBuilder()

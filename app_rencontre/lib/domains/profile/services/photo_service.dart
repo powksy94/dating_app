@@ -18,10 +18,9 @@ class PhotoUploadResult {
 
 class PhotoService {
     static Future<PhotoUploadResult> uploadPhotos(List<String> paths) async {
-        final token = await ApiService.getToken();
+        final headers = await ApiService.authHeaders();
         final uri = Uri.parse('${ApiService.baseUrl}/profile/photos');
-        final request = http.MultipartRequest('POST', uri);
-        request.headers['Authorization'] = 'Bearer $token';
+        final request = http.MultipartRequest('POST', uri)..headers.addAll(headers);
 
         for (final path in paths) {
             request.files.add(await http.MultipartFile.fromPath('photos', path));
