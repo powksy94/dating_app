@@ -2,6 +2,7 @@
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
+import 'package:nocturne/domains/auth/views/forgot_password/forgot_password_page.dart';
 import 'package:nocturne/domains/profile/views/profile_page.dart';
 import 'package:nocturne/domains/profile/views/profil_edit_page.dart';
 import 'package:nocturne/domains/chat/views/conversation_loader_page.dart';
@@ -26,6 +27,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const HomePage());
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginPage());
+      case '/forgot-password':
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
       case '/profile':
         final profile = settings.arguments as AlternativeProfile;
         return MaterialPageRoute(builder: (_) => ProfilePage(profile: profile));

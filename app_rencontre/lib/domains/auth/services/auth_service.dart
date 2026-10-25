@@ -63,6 +63,38 @@ class AuthService {
     return (data['message'] as String?) ?? unknownError;
   }
 
+  /// Returns null on success, otherwise an error message ([unknownError] when
+  /// the backend sent none). The backend answers the same way whether or not
+  /// the account exists, so null here just means "request accepted".
+  Future<String?> forgotPassword(String email, {required String unknownError}) async {
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/auth/forgot-password'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email}),
+    ).timeout(const Duration(seconds: 15));
+    if (res.statusCode == 202) return null;
+    final data = jsonDecode(res.body);
+    return (data['message'] as String?) ?? unknownError;
+  }
+
+  /// Returns null on success, otherwise an error message ([unknownError] when
+  /// the backend sent none).
+  Future<String?> resetPassword(
+    String email,
+    String code,
+    String newPassword, {
+    required String unknownError,
+  }) async {
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/auth/reset-password'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'code': code, 'newPassword': newPassword}),
+    ).timeout(const Duration(seconds: 15));
+    if (res.statusCode == 200) return null;
+    final data = jsonDecode(res.body);
+    return (data['message'] as String?) ?? unknownError;
+  }
+
   Future<void> logout() async {
     try {
       final headers = await ApiService.authHeaders();

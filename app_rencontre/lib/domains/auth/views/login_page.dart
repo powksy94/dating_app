@@ -137,6 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                         style: const TextStyle(color: Color(0xFFAA9AB5)),
                       ),
                     ),
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, '/forgot-password'),
+                      child: Text(
+                        AppLocalizations.of(context)!.authBtnForgotPassword,
+                        style: const TextStyle(color: Color(0xFFAA9AB5)),
+                      ),
+                    ),
                   ],
                 ),
               ),

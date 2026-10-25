@@ -1946,6 +1946,72 @@ abstract class AppLocalizations {
   /// **'Don\'t have an account yet? Create one'**
   String get authBtnGoToRegister;
 
+  /// No description provided for @authBtnForgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get authBtnForgotPassword;
+
+  /// No description provided for @authForgotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password'**
+  String get authForgotTitle;
+
+  /// No description provided for @authForgotSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email, we\'ll send you a 6-digit code.'**
+  String get authForgotSubtitle;
+
+  /// No description provided for @authBtnSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get authBtnSendCode;
+
+  /// No description provided for @authForgotSentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'If an account exists for this email, a code has been sent.'**
+  String get authForgotSentMessage;
+
+  /// No description provided for @authResetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get authResetTitle;
+
+  /// No description provided for @authResetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code you received by email and your new password.'**
+  String get authResetSubtitle;
+
+  /// No description provided for @authLabelResetCode.
+  ///
+  /// In en, this message translates to:
+  /// **'6-digit code'**
+  String get authLabelResetCode;
+
+  /// No description provided for @authLabelNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get authLabelNewPassword;
+
+  /// No description provided for @authBtnResetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get authBtnResetPassword;
+
+  /// No description provided for @authResetSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset. Log in with your new password.'**
+  String get authResetSuccessMessage;
+
   /// No description provided for @authWelcomeTitle.
   ///
   /// In en, this message translates to:

@@ -466,6 +466,18 @@
     "authBtnLogin": "Log in",
     "authBtnGoToRegister": "Don't have an account yet? Create one",
 
+    "authBtnForgotPassword": "Forgot password?",
+    "authForgotTitle": "Forgot password",
+    "authForgotSubtitle": "Enter your email, we'll send you a 6-digit code.",
+    "authBtnSendCode": "Send code",
+    "authForgotSentMessage": "If an account exists for this email, a code has been sent.",
+    "authResetTitle": "Reset password",
+    "authResetSubtitle": "Enter the code you received by email and your new password.",
+    "authLabelResetCode": "6-digit code",
+    "authLabelNewPassword": "New password",
+    "authBtnResetPassword": "Reset password",
+    "authResetSuccessMessage": "Password reset. Log in with your new password.",
+
     "authWelcomeTitle": "WELCOME",
     "authWelcomeSubtitle": "into the darkness",
 

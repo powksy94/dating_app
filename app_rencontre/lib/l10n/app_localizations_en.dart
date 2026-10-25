@@ -1082,6 +1082,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authBtnGoToRegister => 'Don\'t have an account yet? Create one';
 
   @override
+  String get authBtnForgotPassword => 'Forgot password?';
+
+  @override
+  String get authForgotTitle => 'Forgot password';
+
+  @override
+  String get authForgotSubtitle =>
+      'Enter your email, we\'ll send you a 6-digit code.';
+
+  @override
+  String get authBtnSendCode => 'Send code';
+
+  @override
+  String get authForgotSentMessage =>
+      'If an account exists for this email, a code has been sent.';
+
+  @override
+  String get authResetTitle => 'Reset password';
+
+  @override
+  String get authResetSubtitle =>
+      'Enter the code you received by email and your new password.';
+
+  @override
+  String get authLabelResetCode => '6-digit code';
+
+  @override
+  String get authLabelNewPassword => 'New password';
+
+  @override
+  String get authBtnResetPassword => 'Reset password';
+
+  @override
+  String get authResetSuccessMessage =>
+      'Password reset. Log in with your new password.';
+
+  @override
   String get authWelcomeTitle => 'WELCOME';
 
   @override
