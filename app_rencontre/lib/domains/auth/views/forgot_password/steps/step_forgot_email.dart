@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/auth/services/auth_service.dart';
+import 'package:nocturne/domains/auth/services/password_reset_service.dart';
 
 /// First step: the user enters their email and requests a reset code.
 /// Owns its own form/loading/error state; only tells the parent once a code
@@ -15,7 +15,7 @@ class StepForgotEmail extends StatefulWidget {
 }
 
 class _StepForgotEmailState extends State<StepForgotEmail> {
-  final _auth = AuthService();
+  final _auth = PasswordResetService();
   final _emailCtrl = TextEditingController();
   bool _loading = false;
   String? _error;

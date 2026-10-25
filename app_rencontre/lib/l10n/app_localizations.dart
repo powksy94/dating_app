@@ -2276,6 +2276,42 @@ abstract class AppLocalizations {
   /// **'Create my account'**
   String get authBtnCreateAccount;
 
+  /// No description provided for @authStepVerifyEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email'**
+  String get authStepVerifyEmailTitle;
+
+  /// No description provided for @authStepVerifyEmailSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code sent to {email}'**
+  String authStepVerifyEmailSubtitle(String email);
+
+  /// No description provided for @authLabelVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'6-digit code'**
+  String get authLabelVerificationCode;
+
+  /// No description provided for @authBtnVerifyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authBtnVerifyEmail;
+
+  /// No description provided for @authBtnResendVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get authBtnResendVerificationCode;
+
+  /// No description provided for @authVerifyEmailResentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new code has been sent.'**
+  String get authVerifyEmailResentMessage;
+
   /// No description provided for @authErrorSelectGenreAesthetic.
   ///
   /// In en, this message translates to:

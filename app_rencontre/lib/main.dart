@@ -1,5 +1,7 @@
 ﻿import 'dart:io' show HttpOverrides;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -24,6 +26,13 @@ void main() async {
   await _announceAppVersion();
   await ConnectivityService.init();
   await Firebase.initializeApp();
+  // Play Integrity only validates a Play-Store-installed (or matching
+  // signed) build: the debug provider is what lets `flutter run` work at
+  // all during local testing (see Firebase Console > App Check > Manage
+  // debug tokens).
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: kReleaseMode ? AndroidProvider.playIntegrity : AndroidProvider.debug,
+  );
   await RevenueCatService.initialize();
   await StripeConfig.initialize();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

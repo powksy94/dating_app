@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/auth/services/auth_service.dart';
+import 'package:nocturne/domains/auth/services/password_reset_service.dart';
 import 'package:nocturne/domains/auth/widgets/password_field.dart';
 
 /// Final step: the code was already verified by step_verify_code.dart, so
@@ -23,7 +23,7 @@ class StepResetPassword extends StatefulWidget {
 }
 
 class _StepResetPasswordState extends State<StepResetPassword> {
-  final _auth = AuthService();
+  final _auth = PasswordResetService();
   final _newCtrl = TextEditingController();
   final _confirmCtrl = TextEditingController();
   bool _loading = false;

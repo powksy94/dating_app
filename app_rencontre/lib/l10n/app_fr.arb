@@ -402,6 +402,13 @@
     "authLabelGenderPreferences": "Genre(s) recherché(s)",
     "authBtnCreateAccount": "Créer mon compte",
 
+    "authStepVerifyEmailTitle": "Vérifie ton email",
+    "authStepVerifyEmailSubtitle": "Entre le code à 6 chiffres envoyé à {email}",
+    "authLabelVerificationCode": "Code à 6 chiffres",
+    "authBtnVerifyEmail": "Vérifier",
+    "authBtnResendVerificationCode": "Renvoyer le code",
+    "authVerifyEmailResentMessage": "Un nouveau code a été envoyé.",
+
     "authErrorSelectGenreAesthetic": "Sélectionne au moins un genre et une esthétique.",
     "authStepTagsTitle": "Ton univers musical",
     "authStepTagsSubtitle": "Ces tags servent à te matcher avec des profils compatibles.",

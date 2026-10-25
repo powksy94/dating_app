@@ -535,6 +535,16 @@
     "authLabelGenderPreferences": "Gender(s) you're looking for",
     "authBtnCreateAccount": "Create my account",
 
+    "authStepVerifyEmailTitle": "Verify your email",
+    "authStepVerifyEmailSubtitle": "Enter the 6-digit code sent to {email}",
+    "@authStepVerifyEmailSubtitle": {
+        "placeholders": { "email": { "type": "String" } }
+    },
+    "authLabelVerificationCode": "6-digit code",
+    "authBtnVerifyEmail": "Verify",
+    "authBtnResendVerificationCode": "Resend code",
+    "authVerifyEmailResentMessage": "A new code has been sent.",
+
     "authErrorSelectGenreAesthetic": "Select at least one genre and one aesthetic.",
     "authStepTagsTitle": "Your musical world",
     "authStepTagsSubtitle": "These tags are used to match you with compatible profiles.",

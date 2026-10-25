@@ -8,6 +8,7 @@ import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/domains/profile/services/photo_service.dart';
 import 'package:nocturne/domains/auth/widgets/animated_step.dart';
 import 'package:nocturne/domains/auth/views/register/registration_success_page.dart';
+import 'package:nocturne/domains/auth/views/register/steps/step_verify_email.dart';
 
 class StepPreferences extends StatefulWidget {
     final Map<String, dynamic> data;
@@ -18,12 +19,15 @@ class StepPreferences extends StatefulWidget {
     State<StepPreferences> createState() => _StepPreferencesState();
 }
 
+enum _SubStep { form, verifyEmail }
+
 class _StepPreferencesState extends State<StepPreferences> {
     RangeValues _ageRange = const RangeValues(18, 40);
     double _maxDistance = 50;
     final List<String> _genderPrefs = [];
     bool _loading = false;
     String? _error;
+    _SubStep _subStep = _SubStep.form;
 
     void _toggleGender(String g) {
         setState(() => _genderPrefs.contains(g)
@@ -41,67 +45,88 @@ class _StepPreferencesState extends State<StepPreferences> {
 
         try {
             final d = widget.data;
-
             final userId = await AuthService().register(
                 d['email'],
                 d['password'],
                 d['username'],
             );
             await RevenueCatService.identify(userId);
-
-            final photos = d['photos'] as List<String>? ?? [];
-            // Only the photos Rekognition approved outright end up on the
-            // profile; any sent to moderation just aren't there yet (see
-            // profile.controller.ts uploadPhotos) and will appear once an
-            // admin reviews them.
-            List<String> photosUrls = [];
-            if (photos.isNotEmpty) {
-                photosUrls = (await PhotoService.uploadPhotos(photos)).approved;
-            }
-
-            await FirestoreService().saveProfile({
-                'birthDate':            d['birthDate'],
-                'gender':               d['gender'],
-                'pronouns':             d['pronouns'],
-                'bio':                  d['bio'] ?? '',
-                'musicsGenres':         d['musicGenres']        ?? [],
-                'musicsVibes':          d['musicVibes']         ?? [],
-                'aesthetics':           d['aesthetics']         ?? [],
-                'soundIntensity':       d['soundIntensity']     ?? [],
-                'musicEras':            d['musicEras']          ?? [],
-                'discoveryFormats':     d['discoveryFormats']   ?? [],
-                // Was missing entirely before: StepTags collected it, but nothing
-                // in this final save ever forwarded it, so it was silently lost.
-                'favoriteBands':        d['favoriteBands']      ?? [],
-                if (d['socialLinks'] != null) 'socialLinks': d['socialLinks'],
-                'ageMin':               _ageRange.start.round(),
-                'ageMax':               _ageRange.end.round(),
-                'maxDistance':          _maxDistance.round(),
-                'genderPreferences':    _genderPrefs,
-                'profileComplete':      true,
-                if (photosUrls.isNotEmpty) 'photos': photosUrls,
-                if (d['location'] != null) 'location': d['location'],
-            });
-
             if (mounted) {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => const RegistrationSuccessPage(),
-                  transitionsBuilder: (_, anim, __, child) =>
-                      FadeTransition(opacity: anim, child: child),
-                  transitionDuration: const Duration(milliseconds: 600),
-                ),
-              );
+                setState(() { _subStep = _SubStep.verifyEmail; _loading = false; });
             }
         } catch (e) {
             setState(() {_error = e.toString(); _loading = false;});
         }
     }
 
+    // Runs once the mandatory email-verification gate passes: the rest of
+    // what used to be _submit() (photo upload, profile save, navigation).
+    Future<void> _finishRegistration() async {
+        final d = widget.data;
+
+        final photos = d['photos'] as List<String>? ?? [];
+        // Only the photos Rekognition approved outright end up on the
+        // profile; any sent to moderation just aren't there yet (see
+        // profile.controller.ts uploadPhotos) and will appear once an
+        // admin reviews them.
+        List<String> photosUrls = [];
+        if (photos.isNotEmpty) {
+            photosUrls = (await PhotoService.uploadPhotos(photos)).approved;
+        }
+
+        await FirestoreService().saveProfile({
+            'birthDate':            d['birthDate'],
+            'gender':               d['gender'],
+            'pronouns':             d['pronouns'],
+            'bio':                  d['bio'] ?? '',
+            'musicsGenres':         d['musicGenres']        ?? [],
+            'musicsVibes':          d['musicVibes']         ?? [],
+            'aesthetics':           d['aesthetics']         ?? [],
+            'soundIntensity':       d['soundIntensity']     ?? [],
+            'musicEras':            d['musicEras']          ?? [],
+            'discoveryFormats':     d['discoveryFormats']   ?? [],
+            // Was missing entirely before: StepTags collected it, but nothing
+            // in this final save ever forwarded it, so it was silently lost.
+            'favoriteBands':        d['favoriteBands']      ?? [],
+            if (d['socialLinks'] != null) 'socialLinks': d['socialLinks'],
+            'ageMin':               _ageRange.start.round(),
+            'ageMax':               _ageRange.end.round(),
+            'maxDistance':          _maxDistance.round(),
+            'genderPreferences':    _genderPrefs,
+            'profileComplete':      true,
+            if (photosUrls.isNotEmpty) 'photos': photosUrls,
+            if (d['location'] != null) 'location': d['location'],
+        });
+
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const RegistrationSuccessPage(),
+              transitionsBuilder: (_, anim, __, child) =>
+                  FadeTransition(opacity: anim, child: child),
+              transitionDuration: const Duration(milliseconds: 600),
+            ),
+          );
+        }
+    }
+
     @override
     Widget build(BuildContext context) {
         final l = AppLocalizations.of(context)!;
+
+        if (_subStep == _SubStep.verifyEmail) {
+            return AnimatedStep(
+                child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
+                    child: StepVerifyEmail(
+                        email: widget.data['email'] as String,
+                        onVerified: _finishRegistration,
+                    ),
+                ),
+            );
+        }
+
         return AnimatedStep(
             child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 28),

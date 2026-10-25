@@ -1264,6 +1264,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authBtnCreateAccount => 'Créer mon compte';
 
   @override
+  String get authStepVerifyEmailTitle => 'Vérifie ton email';
+
+  @override
+  String authStepVerifyEmailSubtitle(String email) {
+    return 'Entre le code à 6 chiffres envoyé à $email';
+  }
+
+  @override
+  String get authLabelVerificationCode => 'Code à 6 chiffres';
+
+  @override
+  String get authBtnVerifyEmail => 'Vérifier';
+
+  @override
+  String get authBtnResendVerificationCode => 'Renvoyer le code';
+
+  @override
+  String get authVerifyEmailResentMessage => 'Un nouveau code a été envoyé.';
+
+  @override
   String get authErrorSelectGenreAesthetic =>
       'Sélectionne au moins un genre et une esthétique.';
 

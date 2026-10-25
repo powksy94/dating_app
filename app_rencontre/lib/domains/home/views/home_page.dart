@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/auth/services/auth_service.dart';
+import 'package:nocturne/domains/auth/services/founding_member_reward_service.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/shared/services/unread_service.dart';
 import 'package:nocturne/domains/discovery/views/swipe_page.dart';
@@ -31,12 +31,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _checkFoundingGift() async {
-    final reward = await AuthService().getFoundingMemberReward();
+    final reward = await FoundingMemberRewardService().getFoundingMemberReward();
     if (!mounted || reward != 'pending') return;
     Navigator.push(context, PageRouteBuilder(
       opaque: false,
       pageBuilder: (_, __, ___) => FoundingGiftReveal(
-        onClaim: () => AuthService().claimFoundingMemberReward(),
+        onClaim: () => FoundingMemberRewardService().claimFoundingMemberReward(),
       ),
     ));
   }

@@ -5,6 +5,7 @@ import 'package:screen_protector/screen_protector.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/roads.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
+import 'package:nocturne/domains/auth/services/email_verification_service.dart';
 import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/app_version_service.dart';
@@ -51,6 +52,22 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  // A saved token alone isn't enough to show Home: an account whose
+  // registration was interrupted between register() (which already saves a
+  // token) and the mandatory email-verification step has no saved profile
+  // yet, so Home would be broken. Clears the stale session in that case,
+  // sending the user back to Login instead of a dead end.
+  Future<bool> _hasUsableSession() async {
+    final token = await ApiService.getToken();
+    if (token == null) return false;
+    final verified = await EmailVerificationService().isEmailVerified();
+    if (!verified) {
+      await ApiService.clearToken();
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -120,15 +137,15 @@ class _AppState extends State<App> with WidgetsBindingObserver {
             ),
         ],
       ),
-      home: FutureBuilder<String?>(
-        future: ApiService.getToken(),
+      home: FutureBuilder<bool>(
+        future: _hasUsableSession(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          if (snapshot.data != null) {
+          if (snapshot.data == true) {
             ApiService.getUserId().then((userId) {
               if (userId != null) RevenueCatService.identify(userId);
             });

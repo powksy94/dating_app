@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/auth/services/auth_service.dart';
+import 'package:nocturne/domains/auth/services/password_reset_service.dart';
 
 /// Middle step: the user enters the emailed 6-digit code and it's checked
 /// immediately (without being consumed yet) before moving on to the new
@@ -22,7 +22,7 @@ class StepVerifyCode extends StatefulWidget {
 }
 
 class _StepVerifyCodeState extends State<StepVerifyCode> {
-  final _auth = AuthService();
+  final _auth = PasswordResetService();
   final _codeCtrl = TextEditingController();
   bool _loading = false;
   String? _error;

@@ -1,14 +1,26 @@
 ﻿import 'dart:convert';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:http/http.dart' as http;
 import 'package:nocturne/core/build_channel.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
 
+/// Core session lifecycle: register, login, logout, account deletion and
+/// password change. See password_reset_service.dart, email_verification_service.dart
+/// and founding_member_reward_service.dart for the other auth-adjacent features.
 class AuthService {
   Future<String> register(String email, String password, String username) async {
+    final headers = {'Content-Type': 'application/json'};
+    try {
+      // Missing/failed token: let the backend reject with its own message
+      // rather than failing the request client-side.
+      final token = await FirebaseAppCheck.instance.getToken();
+      if (token != null) headers['X-Firebase-AppCheck'] = token;
+    } catch (_) {}
+
     final res = await http.post(
       Uri.parse('${ApiService.baseUrl}/auth/register'),
-      headers: {'Content-Type': 'application/json'},
+      headers: headers,
       body: jsonEncode({
         'email': email, 'password': password, 'username': username,
         'testBuild': kTestBuild,
@@ -63,52 +75,6 @@ class AuthService {
     return (data['message'] as String?) ?? unknownError;
   }
 
-  /// Returns null on success, otherwise an error message ([unknownError] when
-  /// the backend sent none). The backend answers the same way whether or not
-  /// the account exists, so null here just means "request accepted".
-  Future<String?> forgotPassword(String email, {required String unknownError}) async {
-    final res = await http.post(
-      Uri.parse('${ApiService.baseUrl}/auth/forgot-password'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email}),
-    ).timeout(const Duration(seconds: 15));
-    if (res.statusCode == 202) return null;
-    final data = jsonDecode(res.body);
-    return (data['message'] as String?) ?? unknownError;
-  }
-
-  /// Returns null if the code is valid, otherwise an error message
-  /// ([unknownError] when the backend sent none). Doesn't consume the code —
-  /// resetPassword re-checks and consumes it for real.
-  Future<String?> verifyResetCode(String email, String code, {required String unknownError}) async {
-    final res = await http.post(
-      Uri.parse('${ApiService.baseUrl}/auth/verify-reset-code'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'code': code}),
-    ).timeout(const Duration(seconds: 15));
-    if (res.statusCode == 200) return null;
-    final data = jsonDecode(res.body);
-    return (data['message'] as String?) ?? unknownError;
-  }
-
-  /// Returns null on success, otherwise an error message ([unknownError] when
-  /// the backend sent none).
-  Future<String?> resetPassword(
-    String email,
-    String code,
-    String newPassword, {
-    required String unknownError,
-  }) async {
-    final res = await http.post(
-      Uri.parse('${ApiService.baseUrl}/auth/reset-password'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'code': code, 'newPassword': newPassword}),
-    ).timeout(const Duration(seconds: 15));
-    if (res.statusCode == 200) return null;
-    final data = jsonDecode(res.body);
-    return (data['message'] as String?) ?? unknownError;
-  }
-
   Future<void> logout() async {
     try {
       final headers = await ApiService.authHeaders();
@@ -131,37 +97,6 @@ class AuthService {
     }
     final data = jsonDecode(res.body);
     return (data['message'] as String?) ?? unknownError;
-  }
-
-  /// 'pending' once the founding-member gift is owed, 'claimed' once the user
-  /// has opened it, or null (no gift, or the account/backend is unreachable).
-  Future<String?> getFoundingMemberReward() async {
-    try {
-      final headers = await ApiService.authHeaders();
-      final res = await http
-          .get(Uri.parse('${ApiService.baseUrl}/auth/me'), headers: headers)
-          .timeout(const Duration(seconds: 10));
-      if (res.statusCode != 200) return null;
-      final data = jsonDecode(res.body) as Map<String, dynamic>;
-      return data['foundingMemberReward'] as String?;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  /// True once RevenueCat has granted the gift and the server has recorded
-  /// the reward as claimed. False on any failure: the reward stays 'pending'
-  /// so the reveal can be retried on next launch.
-  Future<bool> claimFoundingMemberReward() async {
-    try {
-      final headers = await ApiService.authHeaders();
-      final res = await http
-          .post(Uri.parse('${ApiService.baseUrl}/users/me/reward/claim'), headers: headers)
-          .timeout(const Duration(seconds: 15));
-      return res.statusCode == 200;
-    } catch (_) {
-      return false;
-    }
   }
 
   Future<bool> isLoggedIn() async {

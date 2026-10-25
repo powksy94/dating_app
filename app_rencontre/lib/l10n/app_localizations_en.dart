@@ -1258,6 +1258,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authBtnCreateAccount => 'Create my account';
 
   @override
+  String get authStepVerifyEmailTitle => 'Verify your email';
+
+  @override
+  String authStepVerifyEmailSubtitle(String email) {
+    return 'Enter the 6-digit code sent to $email';
+  }
+
+  @override
+  String get authLabelVerificationCode => '6-digit code';
+
+  @override
+  String get authBtnVerifyEmail => 'Verify';
+
+  @override
+  String get authBtnResendVerificationCode => 'Resend code';
+
+  @override
+  String get authVerifyEmailResentMessage => 'A new code has been sent.';
+
+  @override
   String get authErrorSelectGenreAesthetic =>
       'Select at least one genre and one aesthetic.';
 
