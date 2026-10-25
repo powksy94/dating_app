@@ -27,11 +27,19 @@ class App extends StatefulWidget {
 class _AppState extends State<App> with WidgetsBindingObserver {
   bool _obscured = false;
   bool _updateDialogShown = false;
+  // Computed once at cold start, not inline in build(): build() reruns on
+  // every lifecycle blip (backgrounding, a dialog stealing focus...), and
+  // re-running this check on each of those would clear a mid-registration
+  // user's just-saved token the moment it (correctly, for THAT check's own
+  // purpose) sees emailVerified:false while they're still on the
+  // verify-email step of their own fresh signup.
+  late final Future<bool> _sessionFuture;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _sessionFuture = _hasUsableSession();
     // Screenshots are blocked in release builds only, so they stay possible while debugging.
     if (kReleaseMode) ScreenProtector.protectDataLeakageOn();
     NotificationService.init(widget.navigatorKey);
@@ -138,7 +146,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ],
       ),
       home: FutureBuilder<bool>(
-        future: _hasUsableSession(),
+        future: _sessionFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
