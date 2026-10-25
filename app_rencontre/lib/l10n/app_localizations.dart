@@ -1976,6 +1976,24 @@ abstract class AppLocalizations {
   /// **'If an account exists for this email, a code has been sent.'**
   String get authForgotSentMessage;
 
+  /// No description provided for @authVerifyCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify code'**
+  String get authVerifyCodeTitle;
+
+  /// No description provided for @authVerifyCodeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code you received by email.'**
+  String get authVerifyCodeSubtitle;
+
+  /// No description provided for @authBtnVerifyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authBtnVerifyCode;
+
   /// No description provided for @authResetTitle.
   ///
   /// In en, this message translates to:
@@ -1985,7 +2003,7 @@ abstract class AppLocalizations {
   /// No description provided for @authResetSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter the code you received by email and your new password.'**
+  /// **'Choose your new password.'**
   String get authResetSubtitle;
 
   /// No description provided for @authLabelResetCode.

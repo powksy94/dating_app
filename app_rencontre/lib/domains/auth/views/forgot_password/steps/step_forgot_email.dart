@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
@@ -41,15 +42,20 @@ class _StepForgotEmailState extends State<StepForgotEmail> {
       _loading = true;
       _error = null;
     });
-    final err = await _auth.forgotPassword(email, unknownError: l.commonUnknownError);
-    if (!mounted) return;
-    if (err == null) {
-      widget.onSent(email);
-    } else {
-      setState(() {
-        _loading = false;
-        _error = err;
-      });
+    try {
+      final err = await _auth.forgotPassword(email, unknownError: l.commonUnknownError);
+      if (!mounted) return;
+      if (err == null) {
+        widget.onSent(email);
+        return;
+      }
+      setState(() => _error = err);
+    } on TimeoutException {
+      if (mounted) setState(() => _error = l.commonLoadErrorSubtitle);
+    } catch (_) {
+      if (mounted) setState(() => _error = l.commonUnknownError);
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 

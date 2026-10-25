@@ -1099,11 +1099,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'If an account exists for this email, a code has been sent.';
 
   @override
+  String get authVerifyCodeTitle => 'Verify code';
+
+  @override
+  String get authVerifyCodeSubtitle =>
+      'Enter the 6-digit code you received by email.';
+
+  @override
+  String get authBtnVerifyCode => 'Verify';
+
+  @override
   String get authResetTitle => 'Reset password';
 
   @override
-  String get authResetSubtitle =>
-      'Enter the code you received by email and your new password.';
+  String get authResetSubtitle => 'Choose your new password.';
 
   @override
   String get authLabelResetCode => '6-digit code';

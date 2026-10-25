@@ -77,6 +77,20 @@ class AuthService {
     return (data['message'] as String?) ?? unknownError;
   }
 
+  /// Returns null if the code is valid, otherwise an error message
+  /// ([unknownError] when the backend sent none). Doesn't consume the code —
+  /// resetPassword re-checks and consumes it for real.
+  Future<String?> verifyResetCode(String email, String code, {required String unknownError}) async {
+    final res = await http.post(
+      Uri.parse('${ApiService.baseUrl}/auth/verify-reset-code'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'code': code}),
+    ).timeout(const Duration(seconds: 15));
+    if (res.statusCode == 200) return null;
+    final data = jsonDecode(res.body);
+    return (data['message'] as String?) ?? unknownError;
+  }
+
   /// Returns null on success, otherwise an error message ([unknownError] when
   /// the backend sent none).
   Future<String?> resetPassword(

@@ -1,20 +1,21 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/auth/services/auth_service.dart';
 import 'package:nocturne/domains/auth/widgets/password_field.dart';
 
-/// Second step: the user enters the emailed 6-digit code plus a new password.
-/// Owns its own form/loading/error state; only tells the parent once the
-/// reset has actually succeeded.
+/// Final step: the code was already verified by step_verify_code.dart, so
+/// this step only collects the new password. Owns its own form/loading/error
+/// state; only tells the parent once the reset has actually succeeded.
 class StepResetPassword extends StatefulWidget {
   final String email;
-  final String? infoMessage;
+  final String code;
   final VoidCallback onDone;
   const StepResetPassword({
     super.key,
     required this.email,
+    required this.code,
     required this.onDone,
-    this.infoMessage,
   });
 
   @override
@@ -23,7 +24,6 @@ class StepResetPassword extends StatefulWidget {
 
 class _StepResetPasswordState extends State<StepResetPassword> {
   final _auth = AuthService();
-  final _codeCtrl = TextEditingController();
   final _newCtrl = TextEditingController();
   final _confirmCtrl = TextEditingController();
   bool _loading = false;
@@ -31,7 +31,6 @@ class _StepResetPasswordState extends State<StepResetPassword> {
 
   @override
   void dispose() {
-    _codeCtrl.dispose();
     _newCtrl.dispose();
     _confirmCtrl.dispose();
     super.dispose();
@@ -39,11 +38,10 @@ class _StepResetPasswordState extends State<StepResetPassword> {
 
   Future<void> _submit() async {
     final l = AppLocalizations.of(context)!;
-    final code = _codeCtrl.text.trim();
     final next = _newCtrl.text.trim();
     final confirm = _confirmCtrl.text.trim();
 
-    if (code.isEmpty || next.isEmpty || confirm.isEmpty) {
+    if (next.isEmpty || confirm.isEmpty) {
       setState(() => _error = l.authErrorFillAllFields);
       return;
     }
@@ -60,18 +58,23 @@ class _StepResetPasswordState extends State<StepResetPassword> {
       _loading = true;
       _error = null;
     });
-    final err = await _auth.resetPassword(
-      widget.email, code, next,
-      unknownError: l.commonUnknownError,
-    );
-    if (!mounted) return;
-    if (err == null) {
-      widget.onDone();
-    } else {
-      setState(() {
-        _loading = false;
-        _error = err;
-      });
+    try {
+      final err = await _auth.resetPassword(
+        widget.email, widget.code, next,
+        unknownError: l.commonUnknownError,
+      );
+      if (!mounted) return;
+      if (err == null) {
+        widget.onDone();
+        return;
+      }
+      setState(() => _error = err);
+    } on TimeoutException {
+      if (mounted) setState(() => _error = l.commonLoadErrorSubtitle);
+    } catch (_) {
+      if (mounted) setState(() => _error = l.commonUnknownError);
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
@@ -81,19 +84,8 @@ class _StepResetPasswordState extends State<StepResetPassword> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (widget.infoMessage != null) ...[
-          Text(widget.infoMessage!, style: const TextStyle(color: Color(0xFFAA9AB5))),
-          const SizedBox(height: 12),
-        ],
         Text(l.authResetSubtitle, style: const TextStyle(color: Color(0xFFAA9AB5))),
         const SizedBox(height: 24),
-        TextField(
-          controller: _codeCtrl,
-          keyboardType: TextInputType.number,
-          maxLength: 6,
-          decoration: InputDecoration(labelText: l.authLabelResetCode),
-        ),
-        const SizedBox(height: 12),
         PasswordField(controller: _newCtrl, label: l.authLabelNewPassword),
         const SizedBox(height: 12),
         PasswordField(controller: _confirmCtrl, label: l.authLabelConfirmPassword),

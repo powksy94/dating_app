@@ -1102,11 +1102,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Si un compte existe avec cet email, un code a été envoyé.';
 
   @override
+  String get authVerifyCodeTitle => 'Vérifier le code';
+
+  @override
+  String get authVerifyCodeSubtitle =>
+      'Entre le code à 6 chiffres reçu par email.';
+
+  @override
+  String get authBtnVerifyCode => 'Vérifier';
+
+  @override
   String get authResetTitle => 'Réinitialiser le mot de passe';
 
   @override
-  String get authResetSubtitle =>
-      'Entre le code reçu par email et ton nouveau mot de passe.';
+  String get authResetSubtitle => 'Choisis ton nouveau mot de passe.';
 
   @override
   String get authLabelResetCode => 'Code à 6 chiffres';
