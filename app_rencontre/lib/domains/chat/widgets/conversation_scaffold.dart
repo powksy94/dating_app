@@ -28,6 +28,7 @@ class ConversationScaffold extends StatelessWidget {
   final void Function(String messageId, String emoji) onReact;
   final void Function(Message message) onDeleteForMe;
   final void Function(Message message) onDeleteForAll;
+  final void Function(String messageId) onMessageReported;
   final VoidCallback onCancelReply;
   final VoidCallback onSend;
   final VoidCallback onImagePick;
@@ -53,6 +54,7 @@ class ConversationScaffold extends StatelessWidget {
     required this.onReact,
     required this.onDeleteForMe,
     required this.onDeleteForAll,
+    required this.onMessageReported,
     required this.onCancelReply,
     required this.onSend,
     required this.onImagePick,
@@ -86,6 +88,7 @@ class ConversationScaffold extends StatelessWidget {
                     onReact:         onReact,
                     onDeleteForMe:   onDeleteForMe,
                     onDeleteForAll:  onDeleteForAll,
+                    onMessageReported: onMessageReported,
                   ),
                 ),
                 if (replyingTo != null)

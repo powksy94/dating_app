@@ -86,6 +86,21 @@ class MessageBubbleContent extends StatelessWidget {
                 style: const TextStyle(color: Colors.white, fontSize: 15))
           else
             const SizedBox.shrink(),
+          if (message.reportedByMe && !message.deletedForAll) ...[
+            const SizedBox(height: 6),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.shield_outlined, color: Color(0xFFAA9AB5), size: 12),
+                const SizedBox(width: 4),
+                Text(AppLocalizations.of(context)!.chatMessageUnderReview,
+                    style: const TextStyle(
+                        color: Color(0xFFAA9AB5),
+                        fontSize: 11,
+                        fontStyle: FontStyle.italic)),
+              ],
+            ),
+          ],
           const SizedBox(height: 4),
           MessageStatusRow(
             createdAt:       message.createdAt,

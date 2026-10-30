@@ -17,4 +17,7 @@ class MessageListOps {
 
   static List<Message> withDeletedForAll(List<Message> messages, String messageId) =>
       messages.map((m) => m.id == messageId ? m.copyWith(deletedForAll: true) : m).toList();
+
+  static List<Message> withReportedByMe(List<Message> messages, String messageId) =>
+      messages.map((m) => m.id == messageId ? m.copyWith(reportedByMe: true) : m).toList();
 }

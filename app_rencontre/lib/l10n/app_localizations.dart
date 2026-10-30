@@ -1178,6 +1178,12 @@ abstract class AppLocalizations {
   /// **'Why are you reporting this profile?'**
   String get socialReportRootQuestion;
 
+  /// No description provided for @socialReportRootQuestionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you reporting this message?'**
+  String get socialReportRootQuestionMessage;
+
   /// No description provided for @socialReportHint.
   ///
   /// In en, this message translates to:
@@ -1219,6 +1225,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message deleted'**
   String get chatMessageDeleted;
+
+  /// No description provided for @chatMessageUnderReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Report under review'**
+  String get chatMessageUnderReview;
 
   /// No description provided for @chatStatusRead.
   ///

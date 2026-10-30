@@ -33,6 +33,7 @@ class Message {
     final DateTime                 createdAt;
     final bool                     deletedForAll;
     final List<String>             readBy;
+    final bool                     reportedByMe;
 
     bool get isImage => imageUrl != null && imageUrl!.isNotEmpty;
     bool get isAudio => audioUrl != null && audioUrl!.isNotEmpty;
@@ -49,6 +50,7 @@ class Message {
         required this.createdAt,
         this.deletedForAll = false,
         this.readBy        = const [],
+        this.reportedByMe  = false,
     });
 
     bool isReadBy(String userId) => readBy.contains(userId);
@@ -70,6 +72,7 @@ class Message {
             createdAt:     DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
             deletedForAll: data['deletedForAll'] ?? false,
             readBy:        List<String>.from(data['readBy'] ?? []),
+            reportedByMe:  data['reportedByMe'] ?? false,
         );
     }
 
@@ -77,6 +80,7 @@ class Message {
         bool?                        deletedForAll,
         List<String>?                readBy,
         Map<String, List<String>>?   reactions,
+        bool?                        reportedByMe,
     }) => Message(
         id:            id,
         matchId:       matchId,
@@ -89,5 +93,6 @@ class Message {
         createdAt:     createdAt,
         deletedForAll: deletedForAll ?? this.deletedForAll,
         readBy:        readBy        ?? this.readBy,
+        reportedByMe:  reportedByMe  ?? this.reportedByMe,
     );
 }

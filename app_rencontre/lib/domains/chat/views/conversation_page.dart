@@ -171,6 +171,10 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
 
   void _deleteForAll(Message msg) => _actions.deleteForAll(msg.id);
 
+  void _onMessageReported(String messageId) {
+    if (mounted) setState(() => _messages = MessageListOps.withReportedByMe(_messages, messageId));
+  }
+
   @override
   void dispose() {
     _socketController.dispose();
@@ -202,6 +206,7 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
               .reactMessage(widget.match.matchId, messageId, emoji),
           onDeleteForMe:    _deleteForMe,
           onDeleteForAll:   _deleteForAll,
+          onMessageReported: _onMessageReported,
           onCancelReply:    () => setState(() => _replyingTo = null),
           onSend:           _send,
           onImagePick:      _pickAndSendImage,

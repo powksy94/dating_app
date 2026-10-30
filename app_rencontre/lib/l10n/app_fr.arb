@@ -196,6 +196,7 @@
 
     "socialReportHeaderTitle": "Signaler {username}",
     "socialReportRootQuestion": "Pourquoi signales-tu ce profil ?",
+    "socialReportRootQuestionMessage": "Pourquoi signales-tu ce message ?",
     "socialReportHint": "Décris le problème...",
     "socialBtnSendReport": "Envoyer le signalement",
     "socialReportSentTitle": "Signalement envoyé",
@@ -204,6 +205,7 @@
 
     "chatReplyPhoto": "Photo",
     "chatMessageDeleted": "Message supprimé",
+    "chatMessageUnderReview": "Signalement en cours de vérification",
     "chatStatusRead": "Lu",
     "chatStatusSent": "Envoyé",
 

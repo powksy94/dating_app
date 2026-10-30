@@ -15,7 +15,7 @@ class SocketService {
     // getToken(): a stale token here would silently fail the socket auth.
     final token = (await ApiService.authHeaders())['Authorization']?.replaceFirst('Bearer ', '');
     _socket = io.io(
-      'https://datingappbackend-production-a9e3.up.railway.app',
+      ApiService.socketUrl,
       io.OptionBuilder()
           .setTransports(['websocket'])
           .setAuth({'token': token})

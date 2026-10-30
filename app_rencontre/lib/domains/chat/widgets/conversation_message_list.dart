@@ -19,6 +19,7 @@ class ConversationMessageList extends StatelessWidget {
   final void Function(String messageId, String emoji) onReact;
   final void Function(Message message) onDeleteForMe;
   final void Function(Message message) onDeleteForAll;
+  final void Function(String messageId) onMessageReported;
 
   const ConversationMessageList({
     super.key,
@@ -31,6 +32,7 @@ class ConversationMessageList extends StatelessWidget {
     required this.onReact,
     required this.onDeleteForMe,
     required this.onDeleteForAll,
+    required this.onMessageReported,
   });
 
   @override
@@ -62,6 +64,8 @@ class ConversationMessageList extends StatelessWidget {
               userId:    match.userId,
               username:  match.username,
               messageId: m.id,
+              messageSnapshot: m.text,
+              onReported: () => onMessageReported(m.id),
             ),
           ),
         );

@@ -15,6 +15,8 @@ void showReportFlow(
   required String userId,
   required String username,
   String? messageId,
+  String? messageSnapshot,
+  VoidCallback? onReported,
 }) {
   showModalBottomSheet(
     context: context,
@@ -23,7 +25,13 @@ void showReportFlow(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (_) => _ReportFlow(userId: userId, username: username, messageId: messageId),
+    builder: (_) => _ReportFlow(
+      userId: userId,
+      username: username,
+      messageId: messageId,
+      messageSnapshot: messageSnapshot,
+      onReported: onReported,
+    ),
   );
 }
 
@@ -31,7 +39,15 @@ class _ReportFlow extends StatefulWidget {
   final String userId;
   final String username;
   final String? messageId;
-  const _ReportFlow({required this.userId, required this.username, this.messageId});
+  final String? messageSnapshot;
+  final VoidCallback? onReported;
+  const _ReportFlow({
+    required this.userId,
+    required this.username,
+    this.messageId,
+    this.messageSnapshot,
+    this.onReported,
+  });
 
   @override
   State<_ReportFlow> createState() => _ReportFlowState();
@@ -51,7 +67,8 @@ class _ReportFlowState extends State<_ReportFlow> {
 
   Future<void> _submit(String reason) async {
     setState(() => _sending = true);
-    await UserActionService.reportUser(widget.userId, reason, messageId: widget.messageId);
+    final success = await UserActionService.reportUser(widget.userId, reason, messageId: widget.messageId);
+    if (success) widget.onReported?.call();
     if (mounted) setState(() { _sending = false; _done = true; });
   }
 
@@ -60,36 +77,48 @@ class _ReportFlowState extends State<_ReportFlow> {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: _done
-              ? const ReportFlowDoneView()
-              : _selected == null
-                  ? ReportFlowRootView(
-                      username: widget.username,
-                      sending: _sending,
-                      onSelect: (cat) => cat.isLeaf ? _submit(cat.label) : setState(() => _selected = cat),
-                    )
-                  : _selected!.hasSubs
-                      ? ReportFlowSubsView(
-                          category: _selected!,
-                          sending: _sending,
-                          onBack: () => setState(() => _selected = null),
-                          onSelect: (sub) => _submit('${_selected!.label} — $sub'),
-                        )
-                      : ReportFlowTextFieldView(
-                          categoryLabel: _selected!.label,
-                          controller: _textCtrl,
-                          sending: _sending,
-                          onBack: () => setState(() => _selected = null),
-                          onSubmit: () {
-                            final t = _textCtrl.text.trim();
-                            if (t.isEmpty) return;
-                            _submit('Autre — $t');
-                          },
-                        ),
+        // The keyboard opening/closing (autofocus on the "Other" text field)
+        // animates viewInsets.bottom, which can transiently leave less room
+        // than the content's natural height — scrollable instead of a bare
+        // Column so that moment never overflows instead of showing one.
+        child: SingleChildScrollView(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: _buildStep(),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildStep() {
+    if (_done) return const ReportFlowDoneView();
+    if (_selected == null) {
+      return ReportFlowRootView(
+        username: widget.username,
+        messageSnapshot: widget.messageSnapshot,
+        sending: _sending,
+        onSelect: (cat) => cat.isLeaf ? _submit(cat.label) : setState(() => _selected = cat),
+      );
+    }
+    if (_selected!.hasSubs) {
+      return ReportFlowSubsView(
+        category: _selected!,
+        sending: _sending,
+        onBack: () => setState(() => _selected = null),
+        onSelect: (sub) => _submit('${_selected!.label} — $sub'),
+      );
+    }
+    return ReportFlowTextFieldView(
+      categoryLabel: _selected!.label,
+      controller: _textCtrl,
+      sending: _sending,
+      onBack: () => setState(() => _selected = null),
+      onSubmit: () {
+        final t = _textCtrl.text.trim();
+        if (t.isEmpty) return;
+        _submit('Autre — $t');
+      },
     );
   }
 }

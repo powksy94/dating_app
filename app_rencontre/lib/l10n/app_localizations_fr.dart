@@ -622,6 +622,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get socialReportRootQuestion => 'Pourquoi signales-tu ce profil ?';
 
   @override
+  String get socialReportRootQuestionMessage =>
+      'Pourquoi signales-tu ce message ?';
+
+  @override
   String get socialReportHint => 'Décris le problème...';
 
   @override
@@ -642,6 +646,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatMessageDeleted => 'Message supprimé';
+
+  @override
+  String get chatMessageUnderReview => 'Signalement en cours de vérification';
 
   @override
   String get chatStatusRead => 'Lu';

@@ -620,6 +620,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialReportRootQuestion => 'Why are you reporting this profile?';
 
   @override
+  String get socialReportRootQuestionMessage =>
+      'Why are you reporting this message?';
+
+  @override
   String get socialReportHint => 'Describe the problem...';
 
   @override
@@ -640,6 +644,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatMessageDeleted => 'Message deleted';
+
+  @override
+  String get chatMessageUnderReview => 'Report under review';
 
   @override
   String get chatStatusRead => 'Read';

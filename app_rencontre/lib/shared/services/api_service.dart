@@ -25,6 +25,11 @@ class ApiService {
         return Platform.isIOS ? 'http://localhost:3000/api' : 'http://10.0.2.2:3000/api';
     }
 
+    /// Same host as [baseUrl], without the trailing "/api" — what the socket
+    /// client connects to. Kept in sync with [baseUrl] so switching
+    /// environments (local/staging/prod) moves realtime chat along with REST.
+    static String get socketUrl => baseUrl.replaceFirst(RegExp(r'/api/?$'), '');
+
     // ── Token access ─────────────────────────────────────────────────────────────
 
     static Future<String?> getToken() async {

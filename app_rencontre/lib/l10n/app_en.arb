@@ -242,6 +242,7 @@
         "placeholders": { "username": { "type": "String" } }
     },
     "socialReportRootQuestion": "Why are you reporting this profile?",
+    "socialReportRootQuestionMessage": "Why are you reporting this message?",
     "socialReportHint": "Describe the problem...",
     "socialBtnSendReport": "Send report",
     "socialReportSentTitle": "Report sent",
@@ -250,6 +251,7 @@
 
     "chatReplyPhoto": "Photo",
     "chatMessageDeleted": "Message deleted",
+    "chatMessageUnderReview": "Report under review",
     "chatStatusRead": "Read",
     "chatStatusSent": "Sent",
 
