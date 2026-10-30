@@ -72,6 +72,7 @@
     "reportReviewEmpty": "Aucun signalement en attente",
     "reportReviewReporterLabel": "Signalé par",
     "reportReviewReasonLabel": "Motif",
+    "reportReviewMessageLabel": "Message signalé",
     "reportReviewBannedBadge": "Banni",
     "reportReviewTestAccountBadge": "Compte test",
     "reportReviewBtnDismiss": "Classer sans suite",
@@ -288,6 +289,7 @@
     "chatInputHint": "Message...",
 
     "chatEmojiHint": "Choisis un emoji...",
+    "chatBtnReportMessage": "Signaler ce message",
     "chatBtnDeleteForMe": "Supprimer pour moi",
     "chatBtnDeleteForAll": "Supprimer pour tout le monde",
 

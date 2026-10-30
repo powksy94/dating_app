@@ -11,6 +11,7 @@ void showMessageOptionsSheet(
   required void Function(String emoji) onReact,
   required VoidCallback onDeleteForMe,
   required VoidCallback onDeleteForAll,
+  VoidCallback? onReport,
 }) {
   showModalBottomSheet(
     context: context,
@@ -25,6 +26,7 @@ void showMessageOptionsSheet(
       onReact:       onReact,
       onDeleteForMe: onDeleteForMe,
       onDeleteForAll: onDeleteForAll,
+      onReport:      onReport,
     ),
   );
 }
@@ -35,6 +37,7 @@ class _MessageOptionsSheet extends StatefulWidget {
   final void Function(String) onReact;
   final VoidCallback onDeleteForMe;
   final VoidCallback onDeleteForAll;
+  final VoidCallback? onReport;
 
   const _MessageOptionsSheet({
     required this.message,
@@ -42,6 +45,7 @@ class _MessageOptionsSheet extends StatefulWidget {
     required this.onReact,
     required this.onDeleteForMe,
     required this.onDeleteForAll,
+    this.onReport,
   });
 
   @override
@@ -159,6 +163,18 @@ class _MessageOptionsSheetState extends State<_MessageOptionsSheet> {
             ],
 
             const Divider(color: Color(0xFF2D0040), height: 24),
+
+            // ── Report (only the other person's messages) ───────────────────
+            if (!widget.isMe && widget.onReport != null)
+              ListTile(
+                leading: const Icon(Icons.flag_outlined, color: Color(0xFFAA9AB5)),
+                title: Text(AppLocalizations.of(context)!.chatBtnReportMessage,
+                    style: const TextStyle(color: Colors.white)),
+                onTap: () {
+                  Navigator.pop(context);
+                  widget.onReport!();
+                },
+              ),
 
             // ── Delete options ──────────────────────────────────────────────
             ListTile(

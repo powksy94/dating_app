@@ -1,12 +1,20 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/social/services/user_action_service.dart';
 import 'package:nocturne/domains/social/widgets/report_reason_tree.dart';
+import 'package:nocturne/domains/social/widgets/report_flow/report_flow_root_view.dart';
+import 'package:nocturne/domains/social/widgets/report_flow/report_flow_subs_view.dart';
+import 'package:nocturne/domains/social/widgets/report_flow/report_flow_text_field_view.dart';
+import 'package:nocturne/domains/social/widgets/report_flow/report_flow_done_view.dart';
 
+/// Reports an account, optionally from a specific chat message (the message
+/// is passed through as evidence — see user_action_service.dart). Each step
+/// is its own widget (see widgets/report_flow/); this orchestrator only
+/// tracks which step is showing and submits the final reason.
 void showReportFlow(
   BuildContext context, {
   required String userId,
   required String username,
+  String? messageId,
 }) {
   showModalBottomSheet(
     context: context,
@@ -15,14 +23,15 @@ void showReportFlow(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (_) => _ReportFlow(userId: userId, username: username),
+    builder: (_) => _ReportFlow(userId: userId, username: username, messageId: messageId),
   );
 }
 
 class _ReportFlow extends StatefulWidget {
   final String userId;
   final String username;
-  const _ReportFlow({required this.userId, required this.username});
+  final String? messageId;
+  const _ReportFlow({required this.userId, required this.username, this.messageId});
 
   @override
   State<_ReportFlow> createState() => _ReportFlowState();
@@ -42,7 +51,7 @@ class _ReportFlowState extends State<_ReportFlow> {
 
   Future<void> _submit(String reason) async {
     setState(() => _sending = true);
-    await UserActionService.reportUser(widget.userId, reason);
+    await UserActionService.reportUser(widget.userId, reason, messageId: widget.messageId);
     if (mounted) setState(() { _sending = false; _done = true; });
   }
 
@@ -50,182 +59,37 @@ class _ReportFlowState extends State<_ReportFlow> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
           child: _done
-              ? _doneView()
+              ? const ReportFlowDoneView()
               : _selected == null
-                  ? _rootView()
+                  ? ReportFlowRootView(
+                      username: widget.username,
+                      sending: _sending,
+                      onSelect: (cat) => cat.isLeaf ? _submit(cat.label) : setState(() => _selected = cat),
+                    )
                   : _selected!.hasSubs
-                      ? _subsView()
-                      : _textFieldView(),
+                      ? ReportFlowSubsView(
+                          category: _selected!,
+                          sending: _sending,
+                          onBack: () => setState(() => _selected = null),
+                          onSelect: (sub) => _submit('${_selected!.label} — $sub'),
+                        )
+                      : ReportFlowTextFieldView(
+                          categoryLabel: _selected!.label,
+                          controller: _textCtrl,
+                          sending: _sending,
+                          onBack: () => setState(() => _selected = null),
+                          onSubmit: () {
+                            final t = _textCtrl.text.trim();
+                            if (t.isEmpty) return;
+                            _submit('Autre — $t');
+                          },
+                        ),
         ),
       ),
     );
   }
-
-  Widget _header({bool showBack = false}) => Column(
-    children: [
-      const SizedBox(height: 8),
-      Row(
-        children: [
-          if (showBack)
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios,
-                  size: 16, color: Color(0xFF5A4A6A)),
-              onPressed: () => setState(() => _selected = null),
-            )
-          else
-            const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              showBack ? _selected!.label : AppLocalizations.of(context)!.socialReportHeaderTitle(widget.username),
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.close,
-                size: 18, color: Color(0xFF5A4A6A)),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-      const Divider(color: Color(0xFF2D0040), height: 1),
-    ],
-  );
-
-  Widget _rootView() => Column(
-    key: const ValueKey('root'),
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      _header(),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-        child: Text(
-          AppLocalizations.of(context)!.socialReportRootQuestion,
-          style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
-        ),
-      ),
-      ...reportTree(context).map((cat) => ListTile(
-        title: Text(cat.label,
-            style: const TextStyle(color: Colors.white, fontSize: 14)),
-        trailing: cat.isLeaf
-            ? null
-            : const Icon(Icons.chevron_right,
-                color: Color(0xFF5A4A6A), size: 18),
-        onTap: _sending ? null : () => cat.isLeaf
-            ? _submit(cat.label)
-            : setState(() => _selected = cat),
-      )),
-      const SizedBox(height: 8),
-    ],
-  );
-
-  Widget _subsView() => Column(
-    key: const ValueKey('subs'),
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      _header(showBack: true),
-      const SizedBox(height: 4),
-      ..._selected!.subs.map((sub) => ListTile(
-        title: Text(sub,
-            style: const TextStyle(color: Colors.white, fontSize: 14)),
-        onTap: _sending ? null : () => _submit('${_selected!.label} — $sub'),
-      )),
-      const SizedBox(height: 8),
-    ],
-  );
-
-  Widget _textFieldView() => Column(
-    key: const ValueKey('text'),
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      _header(showBack: true),
-      Padding(
-        padding: const EdgeInsets.all(16),
-        child: TextField(
-          controller: _textCtrl,
-          autofocus: true,
-          maxLines: 3,
-          maxLength: 300,
-          style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)!.socialReportHint,
-            hintStyle: const TextStyle(color: Color(0xFF5A4A6A)),
-            filled: true,
-            fillColor: const Color(0xFF0D0010),
-            counterStyle: const TextStyle(
-                color: Color(0xFF5A4A6A), fontSize: 11),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF3D2A4A))),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF7B00D4))),
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: SizedBox(
-          width: double.infinity,
-          height: 48,
-          child: ElevatedButton(
-            onPressed: _sending ? null : () {
-              final t = _textCtrl.text.trim();
-              if (t.isEmpty) return;
-              _submit('Autre — $t');
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF7B00D4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-            ),
-            child: _sending
-                ? const CircularProgressIndicator(
-                    color: Colors.white, strokeWidth: 2)
-                : Text(AppLocalizations.of(context)!.socialBtnSendReport,
-                    style: const TextStyle(color: Colors.white)),
-          ),
-        ),
-      ),
-    ],
-  );
-
-  Widget _doneView() => Column(
-    key: const ValueKey('done'),
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      const SizedBox(height: 32),
-      const Icon(Icons.check_circle_outline,
-          color: Color(0xFF7B00D4), size: 56),
-      const SizedBox(height: 16),
-      Text(AppLocalizations.of(context)!.socialReportSentTitle,
-          style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold)),
-      const SizedBox(height: 8),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Text(
-          AppLocalizations.of(context)!.socialReportSentBody,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: Color(0xFFAA9AB5), fontSize: 13),
-        ),
-      ),
-      const SizedBox(height: 24),
-      TextButton(
-        onPressed: () => Navigator.pop(context),
-        child: Text(AppLocalizations.of(context)!.socialBtnClose,
-            style: const TextStyle(color: Color(0xFF7B00D4))),
-      ),
-      const SizedBox(height: 16),
-    ],
-  );
 }

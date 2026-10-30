@@ -250,6 +250,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportReviewReasonLabel => 'Motif';
 
   @override
+  String get reportReviewMessageLabel => 'Message signalé';
+
+  @override
   String get reportReviewBannedBadge => 'Banni';
 
   @override
@@ -930,6 +933,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatEmojiHint => 'Choisis un emoji...';
+
+  @override
+  String get chatBtnReportMessage => 'Signaler ce message';
 
   @override
   String get chatBtnDeleteForMe => 'Supprimer pour moi';

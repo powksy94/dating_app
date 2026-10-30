@@ -1,22 +1,17 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
 import 'package:nocturne/domains/match/models/chat_match.dart';
 import 'package:nocturne/domains/chat/models/message.dart';
 import 'package:nocturne/domains/chat/services/chat_service.dart';
+import 'package:nocturne/domains/chat/services/conversation_actions.dart';
+import 'package:nocturne/domains/chat/services/conversation_socket_controller.dart';
 import 'package:nocturne/domains/chat/mixins/blocked_message_notice.dart';
+import 'package:nocturne/domains/chat/utils/message_list_ops.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/socket_service.dart';
 import 'package:nocturne/shared/widgets/common/requires_connection.dart';
 import 'package:nocturne/shared/widgets/common/app_snackbar.dart';
-import 'package:nocturne/domains/chat/widgets/message_bubble.dart';
-import 'package:nocturne/domains/chat/widgets/chat_input_bar.dart';
-import 'package:nocturne/domains/chat/widgets/chat_app_bar.dart';
-import 'package:nocturne/domains/chat/widgets/reply_bar.dart';
-import 'package:nocturne/domains/chat/widgets/message_options_sheet.dart';
-import 'package:nocturne/domains/chat/widgets/conversation_starters.dart';
+import 'package:nocturne/domains/chat/widgets/conversation_scaffold.dart';
 
 class ConversationPage extends StatefulWidget {
   final ChatMatch match;
@@ -39,7 +34,9 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
   Message?      _replyingTo;
   bool          _wasTyping     = false;
   bool          _isRecording   = false;
-  final _recorder = AudioRecorder();
+
+  late final ConversationActions _actions = ConversationActions(matchId: widget.match.matchId);
+  late final ConversationSocketController _socketController;
 
   @override
   void initState() {
@@ -52,67 +49,43 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
     await _loadMessages();
     await SocketService.instance.connect();
     SocketService.instance.joinRoom(widget.match.matchId);
-    _setupListeners();
-  }
-
-  void _setupListeners() {
-    SocketService.instance.onNewMessage((data) {
-      if (mounted) {
-        final msg = Message.fromJson(data);
-        if (msg.text.isNotEmpty || msg.isImage || msg.isAudio) {
-          setState(() => _messages.add(msg));
-          _scrollToBottom();
-        }
-      }
-    });
-    SocketService.instance.onUserTyping((_) {
-      if (mounted) { setState(() => _otherTyping = true); }
-    });
-    SocketService.instance.onUserStopTyping((_) {
-      if (mounted) { setState(() => _otherTyping = false); }
-    });
-    SocketService.instance.onOnlineStatus((_, online, lastSeen) {
-      if (mounted) {
-        setState(() { _otherOnline = online; _otherLastSeen = lastSeen; });
-      }
-    });
-    SocketService.instance.onUserOnline((uid) {
-      if (uid != _myId && mounted) { setState(() => _otherOnline = true); }
-    });
-    SocketService.instance.onUserOffline((uid, lastSeen) {
-      if (uid != _myId && mounted) {
-        setState(() { _otherOnline = false; _otherLastSeen = lastSeen; });
-      }
-    });
-    SocketService.instance.onMessageReacted((msgId, reactions) {
-      if (mounted) {
-        setState(() {
-          _messages = _messages.map((m) =>
-              m.id == msgId ? m.copyWith(reactions: reactions) : m).toList();
-        });
-      }
-    });
-    SocketService.instance.onMessagesRead((matchId, readBy) {
-      if (mounted && matchId == widget.match.matchId) {
-        setState(() {
-          _messages = _messages.map((m) =>
-            m.sender == _myId && !m.isReadBy(readBy)
-                ? m.copyWith(readBy: [...m.readBy, readBy]) : m
-          ).toList();
-        });
-      }
-    });
-    SocketService.instance.onMessageDeletedForAll((msgId) {
-      if (mounted) {
-        setState(() {
-          _messages = _messages.map((m) =>
-              m.id == msgId ? m.copyWith(deletedForAll: true) : m).toList();
-        });
-      }
-    });
+    _socketController = ConversationSocketController(
+      matchId: widget.match.matchId,
+      otherId: widget.match.userId,
+      myId:    _myId,
+    )..start(
+        onNewMessage: (msg) {
+          if (mounted && (msg.text.isNotEmpty || msg.isImage || msg.isAudio)) {
+            setState(() => _messages.add(msg));
+            _scrollToBottom();
+          }
+        },
+        onTyping:     () { if (mounted) setState(() => _otherTyping = true); },
+        onStopTyping: () { if (mounted) setState(() => _otherTyping = false); },
+        onOnlineStatus: (online, lastSeen) {
+          if (mounted) setState(() { _otherOnline = online; _otherLastSeen = lastSeen; });
+        },
+        onUserOnline: () { if (mounted) setState(() => _otherOnline = true); },
+        onUserOffline: (lastSeen) {
+          if (mounted) setState(() { _otherOnline = false; _otherLastSeen = lastSeen; });
+        },
+        onMessageReacted: (msgId, reactions) {
+          if (mounted) {
+            setState(() => _messages = MessageListOps.withReaction(_messages, msgId, reactions));
+          }
+        },
+        onMessagesRead: (readBy) {
+          if (mounted) {
+            setState(() => _messages = MessageListOps.withRead(_messages, _myId ?? '', readBy));
+          }
+        },
+        onMessageDeletedForAll: (msgId) {
+          if (mounted) {
+            setState(() => _messages = MessageListOps.withDeletedForAll(_messages, msgId));
+          }
+        },
+      );
     listenForBlockedMessages(widget.match.matchId, _ctrl);
-    SocketService.instance.markRead(widget.match.matchId);
-    SocketService.instance.getOnlineStatus(widget.match.userId);
   }
 
   Future<void> _loadMessages() async {
@@ -140,8 +113,7 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
     if (text.isEmpty && _replyingTo == null) return;
     rememberSentText(text);
     _ctrl.clear();
-    SocketService.instance.emitStopTyping(widget.match.matchId);
-    SocketService.instance.sendMessage(widget.match.matchId, text,
+    _actions.sendText(text,
       replyTo: _replyingTo != null ? {
         'id': _replyingTo!.id, 'text': _replyingTo!.text, 'sender': _replyingTo!.sender,
         if (_replyingTo!.imageUrl != null) 'imageUrl': _replyingTo!.imageUrl,
@@ -153,7 +125,7 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
   // A conversation starter the user confirmed: it goes out like a typed message.
   void _sendStarter(String text) {
     rememberSentText(text);
-    SocketService.instance.sendMessage(widget.match.matchId, text);
+    _actions.sendStarter(text);
   }
 
   void _onTypingChanged() {
@@ -172,65 +144,38 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
 
   Future<void> _toggleRecording() async {
     if (_isRecording) {
-      final path = await _recorder.stop();
       setState(() => _isRecording = false);
-      if (path == null || !mounted) return;
-      final url = await ChatService.uploadChatAudio(path);
-      if (!mounted) return;
-      if (url == null) { _showGenericError(); return; }
-      SocketService.instance.sendMessage(widget.match.matchId, '', audioUrl: url);
+      final sent = await _actions.stopRecordingAndSend();
+      if (mounted && !sent) _showGenericError();
     } else {
-      final hasPermission = await _recorder.hasPermission();
-      if (!hasPermission) { _showGenericError(); return; }
-      final dir  = await getTemporaryDirectory();
-      final path = '${dir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
-      await _recorder.start(const RecordConfig(), path: path);
+      final started = await _actions.startRecording();
+      if (!started) { _showGenericError(); return; }
       if (mounted) setState(() => _isRecording = true);
     }
   }
 
   Future<void> _cancelRecording() async {
-    await _recorder.stop();
+    await _actions.cancelRecording();
     if (mounted) setState(() => _isRecording = false);
   }
 
   Future<void> _pickAndSendImage() async {
-    final img = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 80);
-    if (img == null) return;
-    final url = await ChatService.uploadChatImage(img.path);
-    if (!mounted) return;
-    if (url == null) { _showGenericError(); return; }
-    SocketService.instance.sendMessage(widget.match.matchId, '', imageUrl: url);
+    final result = await _actions.pickAndSendImage();
+    if (result == false) _showGenericError();
   }
 
   Future<void> _deleteForMe(Message msg) async {
-    await ChatService.deleteForMe(msg.id);
+    await _actions.deleteForMe(msg.id);
     if (mounted) setState(() => _messages.removeWhere((m) => m.id == msg.id));
   }
 
-  void _deleteForAll(Message msg) =>
-      SocketService.instance.emitDeleteForAll(widget.match.matchId, msg.id);
-
-  String _lastSeenText() {
-    if (_otherLastSeen == null) return '';
-    final l = AppLocalizations.of(context)!;
-    final diff = DateTime.now().difference(_otherLastSeen!);
-    if (diff.inMinutes < 1)  return l.chatLastSeenJustNow;
-    if (diff.inMinutes < 60) return l.chatLastSeenMinutesAgo(diff.inMinutes);
-    if (diff.inHours < 24)   return l.chatLastSeenHoursAgo(diff.inHours);
-    return l.chatLastSeenDaysAgo(diff.inDays);
-  }
+  void _deleteForAll(Message msg) => _actions.deleteForAll(msg.id);
 
   @override
   void dispose() {
-    for (final e in ['new_message', 'user_typing', 'user_stop_typing',
-        'online_status', 'user_online', 'user_offline',
-        'message_reacted', 'messages_read', 'message_deleted_for_all',
-        'message_blocked']) {
-      SocketService.instance.off(e);
-    }
-    SocketService.instance.emitStopTyping(widget.match.matchId);
-    _recorder.dispose();
+    _socketController.dispose();
+    SocketService.instance.off('message_blocked');
+    _actions.dispose();
     _ctrl.dispose();
     _scroll.dispose();
     super.dispose();
@@ -239,70 +184,30 @@ class _ConversationPageState extends State<ConversationPage> with BlockedMessage
   @override
   Widget build(BuildContext context) => RequiresConnection(
         pageTitle: widget.match.username,
-        child: _buildChat(context),
+        child: ConversationScaffold(
+          match:            widget.match,
+          loading:          _loading,
+          messages:         _messages,
+          myId:             _myId,
+          otherOnline:      _otherOnline,
+          otherTyping:      _otherTyping,
+          otherLastSeen:    _otherLastSeen,
+          replyingTo:       _replyingTo,
+          isRecording:      _isRecording,
+          scrollController: _scroll,
+          textController:   _ctrl,
+          onSendStarter:    _sendStarter,
+          onSwipeReply:     (m) => setState(() => _replyingTo = m),
+          onReact:          (messageId, emoji) => SocketService.instance
+              .reactMessage(widget.match.matchId, messageId, emoji),
+          onDeleteForMe:    _deleteForMe,
+          onDeleteForAll:   _deleteForAll,
+          onCancelReply:    () => setState(() => _replyingTo = null),
+          onSend:           _send,
+          onImagePick:      _pickAndSendImage,
+          onMicPress:       _toggleRecording,
+          onMicCancel:      _cancelRecording,
+          onTextChanged:    (_) => _onTypingChanged(),
+        ),
       );
-
-  Widget _buildChat(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0D0010),
-      appBar: ChatAppBar(
-        match:        widget.match,
-        otherOnline:  _otherOnline,
-        otherTyping:  _otherTyping,
-        lastSeenText: _otherOnline ? null : _lastSeenText(),
-      ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                Expanded(
-                  child: _messages.isEmpty
-                      ? ConversationStarters(
-                          matchId: widget.match.matchId,
-                          onSend:  _sendStarter,
-                        )
-                      : ListView.builder(
-                    controller: _scroll,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    itemCount: _messages.length,
-                    itemBuilder: (context, i) {
-                      final msg        = _messages[i];
-                      final isMe       = msg.sender == _myId;
-                      final isLastMine = isMe &&
-                          _messages.lastIndexWhere((m) => m.sender == _myId) == i;
-                      return MessageBubble(
-                        message:         msg,
-                        isMe:            isMe,
-                        showReadReceipt: isLastMine,
-                        otherId:         widget.match.userId,
-                        onSwipeReply:    (m) => setState(() => _replyingTo = m),
-                        onLongPress:     (m, me) => showMessageOptionsSheet(
-                          context, m, me,
-                          onReact:        (emoji) => SocketService.instance
-                              .reactMessage(widget.match.matchId, m.id, emoji),
-                          onDeleteForMe:  () => _deleteForMe(m),
-                          onDeleteForAll: () => _deleteForAll(m),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                if (_replyingTo != null)
-                  ReplyBar(
-                    replyingTo: _replyingTo!,
-                    onCancel:   () => setState(() => _replyingTo = null),
-                  ),
-                ChatInputBar(
-                  ctrl:        _ctrl,
-                  onSend:      _send,
-                  onImagePick: _pickAndSendImage,
-                  onMicPress:  _toggleRecording,
-                  onMicCancel: _cancelRecording,
-                  isRecording: _isRecording,
-                  onChanged:   (_) => _onTypingChanged(),
-                ),
-              ],
-            ),
-    );
-  }
 }

@@ -90,6 +90,7 @@
     "reportReviewEmpty": "No pending reports",
     "reportReviewReporterLabel": "Reported by",
     "reportReviewReasonLabel": "Reason",
+    "reportReviewMessageLabel": "Reported message",
     "reportReviewBannedBadge": "Banned",
     "reportReviewTestAccountBadge": "Test account",
     "reportReviewBtnDismiss": "Dismiss",
@@ -397,6 +398,7 @@
     "chatInputHint": "Message...",
 
     "chatEmojiHint": "Choose an emoji...",
+    "chatBtnReportMessage": "Report this message",
     "chatBtnDeleteForMe": "Delete for me",
     "chatBtnDeleteForAll": "Delete for everyone",
 

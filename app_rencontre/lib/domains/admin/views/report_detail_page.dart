@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/domains/admin/services/report_review_actions.dart';
 import 'package:nocturne/domains/admin/widgets/test_account_badge.dart';
+import 'package:nocturne/domains/admin/widgets/reported_message_block.dart';
 import 'package:nocturne/shared/utils/date_formatting.dart';
 
 class ReportDetailPage extends StatefulWidget {
@@ -37,6 +38,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
     final reported  = widget.report['reported'] as Map<String, dynamic>;
     final reason    = widget.report['reason'] as String? ?? '';
     final createdAt = DateTime.tryParse(widget.report['createdAt'] as String? ?? '');
+    final messageSnapshot = widget.report['messageSnapshot'] as String?;
 
     final actions = ReportReviewActions(
       context: context,
@@ -112,6 +114,8 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                 const SizedBox(height: 6),
                 Text(reason,
                     style: const TextStyle(color: Color(0xFFE8E0EE), fontSize: 14, height: 1.4)),
+                if (messageSnapshot != null && messageSnapshot.isNotEmpty)
+                  ReportedMessageBlock(messageSnapshot: messageSnapshot),
               ],
             ),
           ),

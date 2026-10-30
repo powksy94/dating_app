@@ -12,12 +12,15 @@ class UserActionService {
     return res.statusCode == 200;
   }
 
-  static Future<bool> reportUser(String userId, String reason) async {
+  static Future<bool> reportUser(String userId, String reason, {String? messageId}) async {
     final headers = await ApiService.authHeaders();
     final res = await http.post(
       Uri.parse('${ApiService.baseUrl}/users/$userId/report'),
       headers: headers,
-      body: jsonEncode({'reason': reason}),
+      body: jsonEncode({
+        'reason': reason,
+        if (messageId != null) 'messageId': messageId,
+      }),
     );
     return res.statusCode == 200;
   }

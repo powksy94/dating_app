@@ -248,6 +248,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportReviewReasonLabel => 'Reason';
 
   @override
+  String get reportReviewMessageLabel => 'Reported message';
+
+  @override
   String get reportReviewBannedBadge => 'Banned';
 
   @override
@@ -926,6 +929,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatEmojiHint => 'Choose an emoji...';
+
+  @override
+  String get chatBtnReportMessage => 'Report this message';
 
   @override
   String get chatBtnDeleteForMe => 'Delete for me';

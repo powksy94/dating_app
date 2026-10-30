@@ -506,6 +506,12 @@ abstract class AppLocalizations {
   /// **'Reason'**
   String get reportReviewReasonLabel;
 
+  /// No description provided for @reportReviewMessageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported message'**
+  String get reportReviewMessageLabel;
+
   /// No description provided for @reportReviewBannedBadge.
   ///
   /// In en, this message translates to:
@@ -1675,6 +1681,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose an emoji...'**
   String get chatEmojiHint;
+
+  /// No description provided for @chatBtnReportMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Report this message'**
+  String get chatBtnReportMessage;
 
   /// No description provided for @chatBtnDeleteForMe.
   ///
