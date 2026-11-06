@@ -19,6 +19,11 @@ class NotificationService {
   // failed upload (offline, logged out) is retried when the connection returns.
   static bool _tokenSynced = false;
 
+  // On a cold start, onMessageOpenedApp and getInitialMessage can both fire
+  // for the same tap (a known firebase_messaging quirk), each pushing a route
+  // — tracking the last handled message id keeps that single tap single.
+  static String? _lastHandledMessageId;
+
   static Future<void> init(GlobalKey<NavigatorState> navigatorKey) async {
     // Listeners first: they need no network, so a launch without connection
     // can no longer skip them (a notification tap would then open nothing).
@@ -107,6 +112,9 @@ class NotificationService {
     RemoteMessage message,
     GlobalKey<NavigatorState> navigatorKey,
   ) {
+    if (message.messageId != null && message.messageId == _lastHandledMessageId) return;
+    _lastHandledMessageId = message.messageId;
+
     final data    = message.data;
     final type    = data['type'];
     final matchId = data['matchId'];
