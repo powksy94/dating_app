@@ -66,6 +66,11 @@
     "adminAuthBiometricRequired": "Biometrics required to approve",
     "adminAuthBtnApprove": "Approve",
     "adminAuthBtnDeny": "Deny",
+    "adminLockTitle": "ACCESS LOCKED",
+    "adminLockSubtitle": "Authenticate to access the admin tools.",
+    "adminLockLocalizedReason": "Verify your identity to access the admin tools",
+    "adminLockBtnRetry": "Try again",
+    "adminLockBtnCancel": "Cancel",
 
     "eventReviewTitle": "EVENTS TO REVIEW",
     "eventReviewEmpty": "No events pending review",

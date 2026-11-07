@@ -16,6 +16,7 @@ import 'package:nocturne/domains/admin/views/admin_auth_page.dart';
 import 'package:nocturne/domains/admin/views/event_review_page.dart';
 import 'package:nocturne/domains/admin/views/report_review_page.dart';
 import 'package:nocturne/domains/admin/views/photo_review_page.dart';
+import 'package:nocturne/domains/admin/widgets/admin_lock_gate.dart';
 import 'package:nocturne/domains/onboarding/views/onboarding_tour_page.dart';
 import 'package:nocturne/domains/visit/views/visitors_page.dart';
 
@@ -59,11 +60,11 @@ class Routes {
           builder: (_) => AdminAuthPage(sessionId: sessionId),
         );
       case '/event-review':
-        return MaterialPageRoute(builder: (_) => const EventReviewPage());
+        return MaterialPageRoute(builder: (_) => const AdminLockGate(child: EventReviewPage()));
       case '/report-review':
-        return MaterialPageRoute(builder: (_) => const ReportReviewPage());
+        return MaterialPageRoute(builder: (_) => const AdminLockGate(child: ReportReviewPage()));
       case '/photo-review':
-        return MaterialPageRoute(builder: (_) => const PhotoReviewPage());
+        return MaterialPageRoute(builder: (_) => const AdminLockGate(child: PhotoReviewPage()));
       case '/onboarding-tour':
         return MaterialPageRoute(builder: (_) => const OnboardingTourPage());
       default:

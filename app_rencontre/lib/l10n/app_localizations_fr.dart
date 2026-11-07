@@ -168,6 +168,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminAuthBtnDeny => 'Refuser';
 
   @override
+  String get adminLockTitle => 'ACCÈS VERROUILLÉ';
+
+  @override
+  String get adminLockSubtitle =>
+      'Authentifie-toi pour accéder aux outils d\'administration.';
+
+  @override
+  String get adminLockLocalizedReason =>
+      'Vérifiez votre identité pour accéder aux outils d\'administration';
+
+  @override
+  String get adminLockBtnRetry => 'Réessayer';
+
+  @override
+  String get adminLockBtnCancel => 'Annuler';
+
+  @override
   String get eventReviewTitle => 'ÉVÈNEMENTS À VALIDER';
 
   @override

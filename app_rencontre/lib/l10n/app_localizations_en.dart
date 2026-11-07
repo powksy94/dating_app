@@ -166,6 +166,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAuthBtnDeny => 'Deny';
 
   @override
+  String get adminLockTitle => 'ACCESS LOCKED';
+
+  @override
+  String get adminLockSubtitle => 'Authenticate to access the admin tools.';
+
+  @override
+  String get adminLockLocalizedReason =>
+      'Verify your identity to access the admin tools';
+
+  @override
+  String get adminLockBtnRetry => 'Try again';
+
+  @override
+  String get adminLockBtnCancel => 'Cancel';
+
+  @override
   String get eventReviewTitle => 'EVENTS TO REVIEW';
 
   @override

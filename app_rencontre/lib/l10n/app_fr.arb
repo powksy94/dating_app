@@ -48,6 +48,11 @@
     "adminAuthBiometricRequired": "Biométrie requise pour approuver",
     "adminAuthBtnApprove": "Approuver",
     "adminAuthBtnDeny": "Refuser",
+    "adminLockTitle": "ACCÈS VERROUILLÉ",
+    "adminLockSubtitle": "Authentifie-toi pour accéder aux outils d'administration.",
+    "adminLockLocalizedReason": "Vérifiez votre identité pour accéder aux outils d'administration",
+    "adminLockBtnRetry": "Réessayer",
+    "adminLockBtnCancel": "Annuler",
 
     "eventReviewTitle": "ÉVÈNEMENTS À VALIDER",
     "eventReviewEmpty": "Aucun évènement en attente",

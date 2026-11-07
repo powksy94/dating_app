@@ -15,6 +15,7 @@ import 'package:nocturne/shared/widgets/common/update_available_dialog.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/shared/services/unread_service.dart';
+import 'package:nocturne/domains/admin/services/admin_lock_service.dart';
 
 class App extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -87,6 +88,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     // and the multitasking preview are already blocked by FLAG_SECURE via
     // ScreenProtector.protectDataLeakageOn().
     setState(() => _obscured = state == AppLifecycleState.paused);
+    // Same trigger as the screenshot-obscure above: backgrounded or closed
+    // re-locks the admin screens, so coming back always re-asks for a
+    // fingerprint (see AdminLockGate) instead of trusting the earlier check.
+    if (state == AppLifecycleState.paused) AdminLockService.lock();
     if (state == AppLifecycleState.resumed) _checkForUpdate();
   }
 

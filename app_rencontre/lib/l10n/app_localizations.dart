@@ -374,6 +374,36 @@ abstract class AppLocalizations {
   /// **'Deny'**
   String get adminAuthBtnDeny;
 
+  /// No description provided for @adminLockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ACCESS LOCKED'**
+  String get adminLockTitle;
+
+  /// No description provided for @adminLockSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to access the admin tools.'**
+  String get adminLockSubtitle;
+
+  /// No description provided for @adminLockLocalizedReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your identity to access the admin tools'**
+  String get adminLockLocalizedReason;
+
+  /// No description provided for @adminLockBtnRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get adminLockBtnRetry;
+
+  /// No description provided for @adminLockBtnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get adminLockBtnCancel;
+
   /// No description provided for @eventReviewTitle.
   ///
   /// In en, this message translates to:
