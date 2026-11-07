@@ -2,6 +2,7 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:http/http.dart' as http;
 import 'package:nocturne/core/build_channel.dart';
+import 'package:nocturne/domains/admin/services/admin_lock_service.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
 
@@ -81,6 +82,9 @@ class AuthService {
       await http.post(Uri.parse('${ApiService.baseUrl}/auth/logout'), headers: headers);
     } catch (_) {}
     await ApiService.clearToken();
+    // Otherwise the next login (same device, any account) would inherit
+    // this session's unlock instead of asking again (see AdminLockService).
+    AdminLockService.lock();
   }
 
   /// Returns null on success, otherwise the error message ([unknownError] when

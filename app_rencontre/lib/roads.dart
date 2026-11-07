@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:nocturne/l10n/app_localizations.dart';
-import 'package:nocturne/domains/home/views/home_page.dart';
+import 'package:nocturne/domains/admin/widgets/gated_home_page.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/auth/views/forgot_password/forgot_password_page.dart';
 import 'package:nocturne/domains/profile/views/profile_page.dart';
@@ -25,7 +25,7 @@ class Routes {
     switch (settings.name) {
       case '/':
       case '/home':
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => const GatedHomePage());
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case '/forgot-password':

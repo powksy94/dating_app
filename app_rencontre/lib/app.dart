@@ -6,7 +6,6 @@ import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/roads.dart';
 import 'package:nocturne/domains/auth/views/login_page.dart';
 import 'package:nocturne/domains/auth/services/email_verification_service.dart';
-import 'package:nocturne/domains/home/views/home_page.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/app_version_service.dart';
 import 'package:nocturne/shared/services/connectivity_service.dart';
@@ -16,6 +15,7 @@ import 'package:nocturne/shared/services/notification_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
 import 'package:nocturne/shared/services/unread_service.dart';
 import 'package:nocturne/domains/admin/services/admin_lock_service.dart';
+import 'package:nocturne/domains/admin/widgets/gated_home_page.dart';
 
 class App extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -162,7 +162,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
             ApiService.getUserId().then((userId) {
               if (userId != null) RevenueCatService.identify(userId);
             });
-            return const HomePage();
+            return const GatedHomePage();
           }
           return const LoginPage();
         },
