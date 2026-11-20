@@ -110,6 +110,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       supportedLocales: const [
         Locale('en'),
         Locale('fr'),
+        Locale('es'),
+        Locale('pt', 'BR'),
+        Locale('de'),
       ],
       theme: _nocturneTheme(),
       onGenerateRoute: Routes.generateRoute,
