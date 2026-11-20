@@ -15,7 +15,13 @@ final _linkPattern = RegExp(r'(https?:|www\.|://|@)', caseSensitive: false);
 
 void _loadWordLists() {
   if (SafeTextFilter.isInitialized) return;
-  SafeTextFilter.init(languages: [Language.english, Language.french]);
+  SafeTextFilter.init(languages: [
+    Language.english,
+    Language.french,
+    Language.spanish,
+    Language.portuguese,
+    Language.german,
+  ]);
 }
 
 /// Warms the English and French word lists up during idle time (never while
