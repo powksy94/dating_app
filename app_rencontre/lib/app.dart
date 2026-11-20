@@ -111,6 +111,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         Locale('en'),
         Locale('fr'),
         Locale('es'),
+        Locale('pt'),
         Locale('pt', 'BR'),
         Locale('de'),
       ],
