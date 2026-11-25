@@ -4,6 +4,7 @@ app_rencontre_backend/
 # ponctuellement en conversation — restent locaux, jamais commités.
 dev_features/
 /*.pdf
+herald-*.md
 
 # Android — fichiers locaux et signing
 **/android/local.properties
