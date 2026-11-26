@@ -13,6 +13,7 @@ import 'package:nocturne/domains/settings/widgets/app_info_footer.dart';
 import 'package:nocturne/domains/settings/dialogs/change_password_dialog.dart';
 import 'package:nocturne/domains/settings/dialogs/delete_account_dialog.dart';
 import 'package:nocturne/domains/profile/models/alternative_profile.dart';
+import 'package:nocturne/domains/settings/sections/language_section.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -135,6 +136,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     _saveBool('profile_visible', v);
                   },
                 ),
+                const LanguageSection(),
                 AccountSection(
                   onEditProfile: _editProfile,
                   onChangePassword: _showChangePasswordDialog,
