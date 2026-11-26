@@ -9,6 +9,7 @@ import 'package:nocturne/domains/auth/services/email_verification_service.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/app_version_service.dart';
 import 'package:nocturne/shared/services/connectivity_service.dart';
+import 'package:nocturne/shared/services/locale_override_service.dart';
 import 'package:nocturne/shared/widgets/common/offline_banner.dart';
 import 'package:nocturne/shared/widgets/common/update_available_dialog.dart';
 import 'package:nocturne/shared/services/notification_service.dart';
@@ -52,7 +53,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     if (_updateDialogShown) return;
     if (!await AppVersionService.isUpdateAvailable()) return;
     final navigatorContext = widget.navigatorKey.currentContext;
-    if (navigatorContext == null || !navigatorContext.mounted || _updateDialogShown) return;
+    if (navigatorContext == null ||
+        !navigatorContext.mounted ||
+        _updateDialogShown) {
+      return;
+    }
     _updateDialogShown = true;
     showUpdateAvailableDialog(navigatorContext);
   }
@@ -97,97 +102,101 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Nocturne',
-      debugShowCheckedModeBanner: false,
-      navigatorKey: widget.navigatorKey,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('fr'),
-        Locale('es'),
-        Locale('pt'),
-        Locale('pt', 'BR'),
-        Locale('de'),
-      ],
-      theme: _nocturneTheme(),
-      onGenerateRoute: Routes.generateRoute,
-      builder: (context, child) => Stack(
-        children: [
-          ValueListenableBuilder<bool>(
-            valueListenable: ConnectivityService.online,
-            builder: (context, online, _) => Column(
-              children: [
-                const OfflineBanner(),
-                // While the banner is shown it already covers the status bar
-                // area, so the screens below must not reserve it a second time
-                // (that doubled gap is what pushed their content off screen).
-                Expanded(
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: !online,
-                    child: child!,
+    return ValueListenableBuilder<Locale?>(
+      valueListenable: LocaleOverrideService.locale,
+      builder: (context, localeOverride, _) => MaterialApp(
+        title: 'Nocturne',
+        debugShowCheckedModeBanner: false,
+        navigatorKey: widget.navigatorKey,
+        locale: localeOverride,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('fr'),
+          Locale('es'),
+          Locale('pt'),
+          Locale('pt', 'BR'),
+          Locale('de'),
+        ],
+        theme: _nocturneTheme(),
+        onGenerateRoute: Routes.generateRoute,
+        builder: (context, child) => Stack(
+          children: [
+            ValueListenableBuilder<bool>(
+              valueListenable: ConnectivityService.online,
+              builder: (context, online, _) => Column(
+                children: [
+                  const OfflineBanner(),
+                  // While the banner is shown it already covers the status bar
+                  // area, so the screens below must not reserve it a second time
+                  // (that doubled gap is what pushed their content off screen).
+                  Expanded(
+                    child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: !online,
+                      child: child!,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          if (_obscured)
-            Positioned.fill(
-              child: Container(
-                color: const Color(0xFF0D0010),
-                child: const SafeArea(
-                  child: Center(
-                    child: Image(
-                      image: AssetImage('assets/icons/app_icon.png'),
-                      width: 80,
-                      height: 80,
+            if (_obscured)
+              Positioned.fill(
+                child: Container(
+                  color: const Color(0xFF0D0010),
+                  child: const SafeArea(
+                    child: Center(
+                      child: Image(
+                        image: AssetImage('assets/icons/app_icon.png'),
+                        width: 80,
+                        height: 80,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-        ],
-      ),
-      home: FutureBuilder<bool>(
-        future: _sessionFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
-          if (snapshot.data == true) {
-            ApiService.getUserId().then((userId) {
-              if (userId != null) RevenueCatService.identify(userId);
-            });
-            return const GatedHomePage();
-          }
-          return const LoginPage();
-        },
+          ],
+        ),
+        home: FutureBuilder<bool>(
+          future: _sessionFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            if (snapshot.data == true) {
+              ApiService.getUserId().then((userId) {
+                if (userId != null) RevenueCatService.identify(userId);
+              });
+              return const GatedHomePage();
+            }
+            return const LoginPage();
+          },
+        ),
       ),
     );
   }
 
   ThemeData _nocturneTheme() {
-    const Color bgDark        = Color(0xFF0D0009);
-    const Color surface       = Color(0xFF1A0A1F);
-    const Color primary       = Color(0xFF7B00D4);
-    const Color secondary     = Color(0xFF8B0000);
-    const Color textPrimary   = Color(0xFFE8E0EE);
+    const Color bgDark = Color(0xFF0D0009);
+    const Color surface = Color(0xFF1A0A1F);
+    const Color primary = Color(0xFF7B00D4);
+    const Color secondary = Color(0xFF8B0000);
+    const Color textPrimary = Color(0xFFE8E0EE);
     const Color textSecondary = Color(0xFFAA9AB5);
 
     return ThemeData(
       brightness: Brightness.dark,
       scaffoldBackgroundColor: bgDark,
       colorScheme: const ColorScheme.dark(
-        surface:   surface,
-        primary:   primary,
+        surface: surface,
+        primary: primary,
         secondary: secondary,
         onPrimary: Colors.white,
         onSurface: textPrimary,
@@ -198,9 +207,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
-          color:       textPrimary,
-          fontSize:    20,
-          fontWeight:  FontWeight.bold,
+          color: textPrimary,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
           letterSpacing: 2,
         ),
       ),
@@ -217,11 +226,12 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           backgroundColor: primary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12)),
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
       textTheme: const TextTheme(
-        bodyLarge:  TextStyle(color: textPrimary),
+        bodyLarge: TextStyle(color: textPrimary),
         bodyMedium: TextStyle(color: textSecondary),
       ),
     );
