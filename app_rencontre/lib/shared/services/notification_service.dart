@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:nocturne/l10n/app_localizations.dart';
 import 'package:nocturne/shared/services/api_service.dart';
 import 'package:nocturne/shared/services/connectivity_service.dart';
+import 'package:nocturne/shared/services/locale_override_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -88,7 +89,8 @@ class NotificationService {
   /// translated into it, English otherwise (the same fallback as the UI). The
   /// backend uses it to write push notifications in the user's language.
   static String _appLanguage() {
-    final device = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+    final override = LocaleOverrideService.locale.value;
+    final device = override?.languageCode ?? WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     final supported = AppLocalizations.supportedLocales
         .any((locale) => locale.languageCode == device);
     return supported ? device : 'en';
