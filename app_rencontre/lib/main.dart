@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:nocturne/app.dart';
+import 'package:nocturne/shared/services/locale_override_service.dart';
 import 'package:nocturne/shared/services/app_http_overrides.dart';
 import 'package:nocturne/shared/services/connectivity_service.dart';
 import 'package:nocturne/shared/services/revenue_cat_service.dart';
@@ -25,6 +26,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _announceAppVersion();
   await ConnectivityService.init();
+  await LocaleOverrideService.init();
   await Firebase.initializeApp();
   // Play Integrity only validates a Play-Store-installed (or matching
   // signed) build: the debug provider is what lets `flutter run` work at
