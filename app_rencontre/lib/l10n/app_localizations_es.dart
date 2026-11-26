@@ -1440,6 +1440,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsPrivacyVisible => 'Perfil visible en el swipe';
 
   @override
+  String get settingsSectionLanguage => 'Idioma';
+
+  @override
+  String get settingsLanguage => 'Idioma de la aplicación';
+
+  @override
+  String get settingsLanguageDevice => 'Idioma del dispositivo';
+
+  @override
   String get settingsSectionAbout => 'Acerca de';
 
   @override

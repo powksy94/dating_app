@@ -2607,6 +2607,24 @@ abstract class AppLocalizations {
   /// **'Profile visible in swipe'**
   String get settingsPrivacyVisible;
 
+  /// No description provided for @settingsSectionLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsSectionLanguage;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'App language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsLanguageDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language'**
+  String get settingsLanguageDevice;
+
   /// No description provided for @settingsSectionAbout.
   ///
   /// In en, this message translates to:

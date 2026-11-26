@@ -1441,6 +1441,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsPrivacyVisible => 'Perfil visível no swipe';
 
   @override
+  String get settingsSectionLanguage => 'Idioma';
+
+  @override
+  String get settingsLanguage => 'Idioma da aplicação';
+
+  @override
+  String get settingsLanguageDevice => 'Idioma do dispositivo';
+
+  @override
   String get settingsSectionAbout => 'Sobre';
 
   @override
@@ -3402,6 +3411,15 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get settingsPrivacyVisible => 'Perfil visível no swipe';
+
+  @override
+  String get settingsSectionLanguage => 'Idioma';
+
+  @override
+  String get settingsLanguage => 'Idioma do aplicativo';
+
+  @override
+  String get settingsLanguageDevice => 'Idioma do dispositivo';
 
   @override
   String get settingsSectionAbout => 'Sobre';
