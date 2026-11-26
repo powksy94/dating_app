@@ -607,6 +607,10 @@
     "settingsSectionPrivacy": "Privacy",
     "settingsPrivacyVisible": "Profile visible in swipe",
 
+    "settingsSectionLanguage": "Language",
+    "settingsLanguage": "App language",
+    "settingsLanguageDevice": "Device language",
+
     "settingsSectionAbout": "About",
     "settingsVersionLabel": "Version",
     "settingsTermsOfService": "Terms of service",

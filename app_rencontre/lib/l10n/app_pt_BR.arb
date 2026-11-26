@@ -465,6 +465,10 @@
     "settingsSectionPrivacy": "Privacidade",
     "settingsPrivacyVisible": "Perfil visível no swipe",
 
+    "settingsSectionLanguage": "Idioma",
+    "settingsLanguage": "Idioma do aplicativo",
+    "settingsLanguageDevice": "Idioma do dispositivo",
+
     "settingsSectionAbout": "Sobre",
     "settingsVersionLabel": "Versão",
     "settingsTermsOfService": "Termos de uso",
